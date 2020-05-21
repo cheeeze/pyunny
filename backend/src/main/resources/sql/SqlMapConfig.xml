@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration  
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- db의 column이름에 _가 있으면 이것을
+            자동으로 Java에서 관용적으로 쓰는 camelcase로 바꿔주는 설정 -->
+    </settings>
+
+    <typeAliases>
+        <package name="com.ssafy.backend.vo"/>
+    </typeAliases>
+
+    <mappers>
+        <mapper resource="sql/mybatis-product-mapping.xml"/>
+    </mappers>
+
+</configuration>
+ 

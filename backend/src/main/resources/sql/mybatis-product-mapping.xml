@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 상품, 할인상품 관련 SQL mapper 입니다 -->
+<mapper namespace="ProductMapper">
+
+    <sql id="select-product">
+        select * from product
+    </sql>
+
+    <sql id="select-sale">
+        select * from sale
+    </sql>
+
+    <!-- 상품 등록 -->
+    <insert id="addProduct" parameterType="product" useGeneratedKeys="true" keyProperty="id">
+        insert into product 
+        (name, franchise_id ,price, category, image) 
+        values (#{name}, #{franchiseId}, #{price}, #{category}, #{image})
+    </insert>
+
+    <!-- 할인 등록 -->
+    <insert id="addSale" parameterType="sale" useGeneratedKeys="true" keyProperty="id">
+        insert into sale 
+        (product_id, name, franchise_id, type, dum_image, dum_name, dum_price)
+        values 
+        (#{productId}, #{name}, #{franchiseId}, #{type}, #{dumImage}, #{dumName}, #{dumPrice})
+    </insert>
+
+    <!-- 상품 다 가져오기 -->
+    <select id="getProduct" resultType="product">
+        <include refid="select-product"/>
+    </select>
+
+    <!-- 할인 다 가져오기 -->
+    <select id="getSale" resultType="sale">
+        <include refid="select-product"/>
+    </select>
+
+    <!-- 상품 ID로 가져오기 -->
+    <select id="getProductById" parameterType="product" resultType="product">
+        <include refid="select-product"/>
+        where id=#{id}
+    </select>
+
+    <!-- 할인 ID로 가져오기 -->
+    <select id="getSaleById" parameterType="sale" resultType="sale">
+        <include refid="select-sale"/>
+        where id=#{id}
+    </select>
+
+    <!-- 상품 이름으로 가져오기 -->
+    <select id="getProductByName" parameterType="string" resultType="product">
+        <include refid="select-product"/>
+        where name like '%${value}%'
+    </select>
+
+
+    <!-- 할인 이름으로 가져오기 -->
+    <select id="getSaleByName" parameterType="string" resultType="sale">
+        <include refid="select-sale"/>
+        where name like '%${value}%'
+    </select>
+
+    <!-- 검색으로 가져오기 (편의점, 키워드) -->
+    <select id="getProductBySearch" parameterType="mainSearch" resultType="product">
+        <include refid="select-product"/>
+        <where>
+            <if test="franchise != null">                <!-- 전체가 아닐때 -->
+                franchise_id in #{franchise}
+            </if>
+            <if test="keyword != null">
+                and name like '%${keyword}%'
+            </if>
+        </where> 
+        order by name;
+    </select>
+
+    <!-- 검색으로 가져오기 (편의점, 키워드) -->
+    <select id="getSaleBySearch" parameterType="mainSearch" resultType="sale">
+        <include refid="select-sale"/>
+        <where>
+            <if test="franchise != null">                <!-- 전체가 아닐때 -->
+                franchise_id in #{franchise}
+            </if>
+            <if test="keyword != null">
+                and name like '%${keyword}%'
+            </if>
+        </where> 
+        order by name;
+    </select>
+
+    <!-- 상품 수정 -->
+    <update id="updateProduct" parameterType="product"> 
+        update from product
+        set 
+        name = #{name}, franchise_id = #{franchiseId}, price = #{price}, category = #{category}, image = #{image}
+        where id=#{id}
+    </update>
+
+    <!-- 할인 수정 -->
+    <update id="updateSale" parameterType="sale"> 
+        update from sale
+        set 
+        product_id = #{productId}, name = #{name}, franchise_id = #{franchiseId}, type = #{type}, dum_image = #{dumImage}, dum_name = #{dumName}, dum_price = #{dumPrice}
+        where id=#{id}
+    </update>
+
+    <!-- 상품 삭제 -->
+    <delete id="deleteProduct" parameterType="product">
+        delete from product where id = #{id}
+    </delete>
+
+    <!-- 할인 삭제 -->
+    <delete id="deleteSale" parameterType="sale">
+        delete from sale where id = #{id}
+    </delete>
+
+</mapper>
