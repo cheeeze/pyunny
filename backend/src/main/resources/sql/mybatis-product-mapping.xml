@@ -6,23 +6,23 @@
 <mapper namespace="ProductMapper">
 
     <sql id="select-product">
-        select * from product
+        select * from Product
     </sql>
 
     <sql id="select-sale">
-        select * from sale
+        select * from Sale
     </sql>
 
     <!-- 상품 등록 -->
-    <insert id="addProduct" parameterType="product" useGeneratedKeys="true" keyProperty="id">
-        insert into product 
+    <insert id="insertProduct" parameterType="product" useGeneratedKeys="true" keyProperty="id">
+        insert into Product 
         (name, franchise_id ,price, category, image) 
         values (#{name}, #{franchiseId}, #{price}, #{category}, #{image})
     </insert>
 
     <!-- 할인 등록 -->
-    <insert id="addSale" parameterType="sale" useGeneratedKeys="true" keyProperty="id">
-        insert into sale 
+    <insert id="insertSale" parameterType="sale" useGeneratedKeys="true" keyProperty="id">
+        insert into Sale 
         (product_id, name, franchise_id, type, dum_image, dum_name, dum_price)
         values 
         (#{productId}, #{name}, #{franchiseId}, #{type}, #{dumImage}, #{dumName}, #{dumPrice})
@@ -39,15 +39,15 @@
     </select>
 
     <!-- 상품 ID로 가져오기 -->
-    <select id="getProductById" parameterType="product" resultType="product">
+    <select id="getProductById" parameterType="int" resultType="product">
         <include refid="select-product"/>
-        where id=#{id}
+        where id=#{value}
     </select>
 
     <!-- 할인 ID로 가져오기 -->
-    <select id="getSaleById" parameterType="sale" resultType="sale">
+    <select id="getSaleById" parameterType="int" resultType="sale">
         <include refid="select-sale"/>
-        where id=#{id}
+        where id=#{value}
     </select>
 
     <!-- 상품 이름으로 가져오기 -->
@@ -68,7 +68,10 @@
         <include refid="select-product"/>
         <where>
             <if test="franchise != null">                <!-- 전체가 아닐때 -->
-                franchise_id in #{franchise}
+                franchise_id in 
+                <foreach collection="franchise" item="type" open="(" close=")" separator=",">
+                    #{type.value}
+                </foreach>
             </if>
             <if test="keyword != null">
                 and name like '%${keyword}%'
@@ -82,7 +85,10 @@
         <include refid="select-sale"/>
         <where>
             <if test="franchise != null">                <!-- 전체가 아닐때 -->
-                franchise_id in #{franchise}
+                franchise_id in 
+                <foreach collection="franchise" item="type" open="(" close=")" separator=",">
+                    #{type.value}
+                </foreach>
             </if>
             <if test="keyword != null">
                 and name like '%${keyword}%'
@@ -93,7 +99,7 @@
 
     <!-- 상품 수정 -->
     <update id="updateProduct" parameterType="product"> 
-        update from product
+        update Product
         set 
         name = #{name}, franchise_id = #{franchiseId}, price = #{price}, category = #{category}, image = #{image}
         where id=#{id}
@@ -101,7 +107,7 @@
 
     <!-- 할인 수정 -->
     <update id="updateSale" parameterType="sale"> 
-        update from sale
+        update Sale
         set 
         product_id = #{productId}, name = #{name}, franchise_id = #{franchiseId}, type = #{type}, dum_image = #{dumImage}, dum_name = #{dumName}, dum_price = #{dumPrice}
         where id=#{id}
@@ -109,12 +115,12 @@
 
     <!-- 상품 삭제 -->
     <delete id="deleteProduct" parameterType="product">
-        delete from product where id = #{id}
+        delete from Product where id = #{id}
     </delete>
 
     <!-- 할인 삭제 -->
     <delete id="deleteSale" parameterType="sale">
-        delete from sale where id = #{id}
+        delete from Sale where id = #{id}
     </delete>
 
 </mapper>
