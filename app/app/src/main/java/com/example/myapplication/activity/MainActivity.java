@@ -7,8 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toolbar;
 
 import com.example.myapplication.R;
+import com.example.myapplication.customView.CustomActionBar;
 import com.example.myapplication.fragment.FragmentMain;
 import com.example.myapplication.fragment.FragmentMap;
 import com.example.myapplication.fragment.FragmentMypage;
@@ -17,20 +19,32 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    //footer fragment
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentMain fragmentMain = new FragmentMain();
     private FragmentRecipe fragmentRecipe = new FragmentRecipe();
     private FragmentMap fragmentMap = new FragmentMap();
     private FragmentMypage fragmentMypage = new FragmentMypage();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        makeFooter();
+        setActionBar();
+    }
 
+    private void setActionBar(){
+        // 커스텀 엑션바 적용
+        CustomActionBar customActionBar = new CustomActionBar(this,getSupportActionBar());
+        customActionBar.setActionBar();
+    }
+
+
+    void makeFooter(){
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frameLayout, fragmentMain).commitAllowingStateLoss();
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
     }
