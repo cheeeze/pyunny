@@ -1,115 +1,232 @@
 <template>
-<div class="full">
-  <section id="banner" class="topbanner">
-    <div id="boxes">
-      <div class="small-box mountains" rel="mountains">
-        <div>
-          <a href="http://en.wikipedia.org/wiki/Derwentwater" target="_blank" class="lakes-visible">
-            <span>Derwentwater</span>
-            <img src="http://www.savorypixel.com/678799/lakes/derwentwater.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Black_forest" target="_blank" class="forests-visible">
-            <span>Black Forest</span>
-            <img src="http://www.savorypixel.com/678799/forests/black-forest.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/The_Maldives" target="_blank" class="beaches-visible">
-            <span>The Maldives</span>
-            <img src="http://www.savorypixel.com/678799/beaches/maldives.jpg" />
-          </a>
-          <a class="mountains-visible original">
-            <span>Mountains</span>
-          </a>
+  <div id="full">
+    <section id="banner" class="topbanner">
+      <div id="boxes" :class="tempClass">
+        <div
+          class="small-box mountains"
+          rel="mountains"
+          @click="filp('mountains')"
+        >
+          <div>
+            <a
+              href="http://en.wikipedia.org/wiki/Derwentwater"
+              target="_blank"
+              class="lakes-visible"
+            >
+              <span>Derwentwater</span>
+              <img
+                src="http://www.savorypixel.com/678799/lakes/derwentwater.jpg"
+              />
+            </a>
+            <a
+              href="http://en.wikipedia.org/wiki/Black_forest"
+              target="_blank"
+              class="forests-visible"
+            >
+              <span>Black Forest</span>
+              <img
+                src="http://www.savorypixel.com/678799/forests/black-forest.jpg"
+              />
+            </a>
+            <a
+              href="http://en.wikipedia.org/wiki/The_Maldives"
+              target="_blank"
+              class="beaches-visible"
+            >
+              <span>The Maldives</span>
+              <img
+                src="http://www.savorypixel.com/678799/beaches/maldives.jpg"
+              />
+            </a>
+            <a class="mountains-visible original">
+              <span>Mountains</span>
+            </a>
+          </div>
+        </div>
+        <div class="small-box lakes" rel="lakes" @click="filp('lakes')">
+          <div>
+            <a
+              href="http://en.wikipedia.org/wiki/Lhotse"
+              target="_blank"
+              class="mountains-visible"
+            >
+              <span>Lhotse</span>
+              <img
+                src="http://www.savorypixel.com/678799/mountains/lhotse.jpg"
+              />
+            </a>
+            <a
+              href="http://en.wikipedia.org/wiki/Sagano_Bamboo_Forest"
+              target="_blank"
+              class="forests-visible"
+            >
+              <span>Sagano Bamboo Forest</span>
+              <img
+                src="http://www.savorypixel.com/678799/forests/sagano-bamboo-forest.jpg"
+              />
+            </a>
+            <a
+              href="http://en.wikipedia.org/wiki/Lanikai_Beach"
+              target="_blank"
+              class="beaches-visible"
+            >
+              <span>Lanikai Beach</span>
+              <img
+                src="http://www.savorypixel.com/678799/beaches/lanikai-beach.jpg"
+              />
+            </a>
+            <a class="lakes-visible original">
+              <span>Lakes</span>
+            </a>
+          </div>
+        </div>
+        <div class="small-box forests" rel="forests" @click="filp('forests')">
+          <div>
+            <a
+              href="http://en.wikipedia.org/wiki/Kanchenjunga"
+              target="_blank"
+              class="mountains-visible"
+            >
+              <span>Kanchenjunga</span>
+              <img
+                src="http://www.savorypixel.com/678799/mountains/kanchenjunga.jpg"
+              />
+            </a>
+            <a
+              href="http://en.wikipedia.org/wiki/Lake_tahoe"
+              target="_blank"
+              class="lakes-visible"
+            >
+              <span>Lake Tahoe</span>
+              <img
+                src="http://www.savorypixel.com/678799/lakes/lake-tahoe.jpg"
+              />
+            </a>
+            <a
+              href="http://en.wikipedia.org/wiki/Hampton_Beach"
+              target="_blank"
+              class="beaches-visible"
+            >
+              <span>Hampton Beach</span>
+              <img
+                src="http://www.savorypixel.com/678799/beaches/hampton-beach.jpg"
+              />
+            </a>
+            <a class="forests-visible original">
+              <span>Forests</span>
+            </a>
+          </div>
+        </div>
+        <div class="small-box beaches" rel="beaches" @click="filp('beaches')">
+          <div>
+            <a
+              href="http://en.wikipedia.org/wiki/Mount_everest"
+              target="_blank"
+              class="mountains-visible"
+            >
+              <span>Mount Everest</span>
+              <img
+                src="http://www.savorypixel.com/678799/mountains/everest.jpg"
+              />
+            </a>
+            <a
+              href="http://en.wikipedia.org/wiki/Maligne_lake"
+              target="_blank"
+              class="lakes-visible"
+            >
+              <span>Maligne Lake</span>
+              <img
+                src="http://www.savorypixel.com/678799/lakes/maligne-lake.jpg"
+              />
+            </a>
+            <a
+              href="http://en.wikipedia.org/wiki/Sequoia_National_Forest"
+              target="_blank"
+              class="forests-visible"
+            >
+              <span>Sequoia National Forest</span>
+              <img
+                src="http://www.savorypixel.com/678799/forests/sequoia-forest.jpg"
+              />
+            </a>
+            <a class="beaches-visible original">
+              <span>Beaches</span>
+            </a>
+          </div>
+        </div>
+        <div class="big-box">
+          <div>
+            <a
+              href="http://en.wikipedia.org/wiki/Bora_bora"
+              target="_blank"
+              class="beaches-visible"
+            >
+              <span>Bora Bora</span>
+              <img
+                src="http://www.savorypixel.com/678799/beaches/bora-bora.jpg"
+              />
+            </a>
+            <a
+              href="http://en.wikipedia.org/wiki/Amazon_rainforest"
+              target="_blank"
+              class="forests-visible"
+            >
+              <span>Amazon Rainforest</span>
+              <img src="http://www.savorypixel.com/678799/forests/amazon.jpg" />
+            </a>
+            <a
+              href="http://en.wikipedia.org/wiki/Lake_Lucerne"
+              target="_blank"
+              class="lakes-visible"
+            >
+              <span>Lake Lucerne</span>
+              <img
+                src="http://www.savorypixel.com/678799/lakes/lake-lucerne.jpg"
+              />
+            </a>
+            <a
+              href="http://en.wikipedia.org/wiki/K2"
+              target="_blank"
+              class="mountains-visible"
+            >
+              <span>K2</span>
+              <img src="http://www.savorypixel.com/678799/mountains/k2.jpg" />
+            </a>
+            <a class="original">
+              <img
+                src="http://www.savorypixel.com/678799/beautiful-earth.jpg"
+              />
+            </a>
+          </div>
         </div>
       </div>
-      <div class="small-box lakes" rel="lakes">
-        <div>
-          <a href="http://en.wikipedia.org/wiki/Lhotse" target="_blank" class="mountains-visible">
-            <span>Lhotse</span>
-            <img src="http://www.savorypixel.com/678799/mountains/lhotse.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Sagano_Bamboo_Forest" target="_blank" class="forests-visible">
-            <span>Sagano Bamboo Forest</span>
-            <img src="http://www.savorypixel.com/678799/forests/sagano-bamboo-forest.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Lanikai_Beach" target="_blank" class="beaches-visible">
-            <span>Lanikai Beach</span>
-            <img src="http://www.savorypixel.com/678799/beaches/lanikai-beach.jpg" />
-          </a>
-          <a class="lakes-visible original">
-            <span>Lakes</span>
-          </a>
-        </div>
-      </div>
-      <div class="small-box forests" rel="forests">
-        <div>
-          <a href="http://en.wikipedia.org/wiki/Kanchenjunga" target="_blank" class="mountains-visible">
-            <span>Kanchenjunga</span>
-            <img src="http://www.savorypixel.com/678799/mountains/kanchenjunga.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Lake_tahoe" target="_blank" class="lakes-visible">
-            <span>Lake Tahoe</span>
-            <img src="http://www.savorypixel.com/678799/lakes/lake-tahoe.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Hampton_Beach" target="_blank" class="beaches-visible">
-            <span>Hampton Beach</span>
-            <img src="http://www.savorypixel.com/678799/beaches/hampton-beach.jpg" />
-          </a>
-          <a class="forests-visible original">
-            <span>Forests</span>
-          </a>
-        </div>
-      </div>
-      <div class="small-box beaches" rel="beaches">
-        <div>
-          <a href="http://en.wikipedia.org/wiki/Mount_everest" target="_blank" class="mountains-visible">
-            <span>Mount Everest</span>
-            <img src="http://www.savorypixel.com/678799/mountains/everest.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Maligne_lake" target="_blank" class="lakes-visible">
-            <span>Maligne Lake</span>
-            <img src="http://www.savorypixel.com/678799/lakes/maligne-lake.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Sequoia_National_Forest" target="_blank" class="forests-visible">
-            <span>Sequoia National Forest</span>
-            <img src="http://www.savorypixel.com/678799/forests/sequoia-forest.jpg" />
-          </a>
-          <a class="beaches-visible original">
-            <span>Beaches</span>
-          </a>
-        </div>
-      </div>
-      <div class="big-box">
-        <div>
-          <a href="http://en.wikipedia.org/wiki/Bora_bora" target="_blank" class="beaches-visible">
-            <span>Bora Bora</span>
-            <img src="http://www.savorypixel.com/678799/beaches/bora-bora.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Amazon_rainforest" target="_blank" class="forests-visible">
-            <span>Amazon Rainforest</span>
-            <img src="http://www.savorypixel.com/678799/forests/amazon.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Lake_Lucerne" target="_blank" class="lakes-visible">
-            <span>Lake Lucerne</span>
-            <img src="http://www.savorypixel.com/678799/lakes/lake-lucerne.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/K2" target="_blank" class="mountains-visible">
-            <span>K2</span>
-            <img src="http://www.savorypixel.com/678799/mountains/k2.jpg" />
-          </a>
-          <a class="original">
-            <img src="http://www.savorypixel.com/678799/beautiful-earth.jpg" />
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
+    </section>
+  </div>
 </template>
+
 <script>
+// var clickHandler;
+var prevSelect = "";
+
 export default {
-  
-}
+  data() {
+    return {
+      tempClass: "",
+    };
+  },
+  methods: {
+    filp(value) {
+      console.log(value);
+      // console.log()
+      if ($("#boxes").attr("class") !== "") {
+        $("#banner #boxes").attr("class", "");
+      } else {
+        prevSelect = value;
+        this.tempClass = value + "-chosen";
+      }
+    },
+  },
+};
 </script>
 
 <style>
@@ -150,8 +267,8 @@ body {
   height: 100%;
 }
 .small-box a {
-  -webkit-transition-duration: .4s;
-  transition-duration: .4s;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -176,29 +293,29 @@ body {
 .big-box a:before {
   content: "";
   display: block;
-  background: rgba(0,0,0,0);
+  background: rgba(0, 0, 0, 0);
   z-index: 98;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  -webkit-transition: background .2s;
-  transition: background .2s;
+  -webkit-transition: background 0.2s;
+  transition: background 0.2s;
 }
 .small-box a:hover:before,
 .big-box a:hover:before {
   z-index: 98;
-  background: rgba(0,0,0,.3);
-  -webkit-transition: background .2s;
-  transition: background .2s;
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-transition: background 0.2s;
+  transition: background 0.2s;
 }
 .big-box .original:hover:before {
-  background: rgba(0,0,0,0);
+  background: rgba(0, 0, 0, 0);
 }
 
 .original {
-  opacity: .9999;
+  opacity: 0.9999;
 }
 .small-box a:not(.original) {
   -webkit-transform: rotateY(180deg);
@@ -219,13 +336,13 @@ body {
   color: #fff;
   letter-spacing: 1px;
   z-index: 100;
-  background: rgba(0,0,0,.4);
+  background: rgba(0, 0, 0, 0.4);
   width: 100%;
   padding: 10px 20px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  text-shadow: 0 0 4px rgba(0,0,0,.8), 0 0 30px rgba(0,0,0,.8);
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.8);
 }
 .small-box .original img {
   display: none;
@@ -307,8 +424,8 @@ body {
 .lakes-chosen .small-box.mountains a.lakes-visible,
 .forests-chosen .small-box.mountains a.forests-visible,
 .beaches-chosen .small-box.mountains a.beaches-visible {
-  -webkit-transition-delay: .1s;
-  transition-delay: .1s;
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
 }
 .mountains-chosen .small-box:not(.mountains) a.forests-visible,
 .lakes-chosen .small-box:not(.lakes) a.forests-visible,
@@ -318,8 +435,8 @@ body {
 .lakes-chosen .small-box.forests a.lakes-visible,
 .forests-chosen .small-box.lakes a.forests-visible,
 .beaches-chosen .small-box.lakes a.beaches-visible {
-  -webkit-transition-delay: .2s;
-  transition-delay: .2s;
+  -webkit-transition-delay: 0.2s;
+  transition-delay: 0.2s;
 }
 .mountains-chosen .small-box:not(.mountains) a.beaches-visible,
 .lakes-chosen .small-box:not(.lakes) a.beaches-visible,
@@ -329,8 +446,8 @@ body {
 .lakes-chosen .small-box.beaches a.lakes-visible,
 .forests-chosen .small-box.beaches a.forests-visible,
 .beaches-chosen .small-box.forests a.beaches-visible {
-  -webkit-transition-delay: .3s;
-  transition-delay: .3s;
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
 }
 
 #boxes .big-box {
@@ -349,8 +466,8 @@ body {
   height: 100%;
 }
 .big-box > div > a {
-  -webkit-transition-duration: .4s;
-  transition-duration: .4s;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -402,8 +519,8 @@ body {
 .lakes-chosen .big-box a,
 .forests-chosen .big-box a,
 .beaches-chosen .big-box a {
-  -webkit-transition-delay: .4s;
-  transition-delay: .4s;
+  -webkit-transition-delay: 0.4s;
+  transition-delay: 0.4s;
 }
 
 .mountains .original {

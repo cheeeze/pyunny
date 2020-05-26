@@ -9,4 +9,9 @@ export default [
     view: 'MyPage',
     name: 'MyPage',
   },
+  {
+    path: '/shy',
+    view: 'shytest',
+    name: 'shytest',
+  },
 ]
