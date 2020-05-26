@@ -3,6 +3,7 @@ package com.example.myapplication.adapter;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.myapplication.fragment.FragmentMainAll;
@@ -12,11 +13,11 @@ import com.example.myapplication.fragment.FragmentMainGS;
 import com.example.myapplication.fragment.FragmentMainMinistop;
 import com.example.myapplication.fragment.FragmentMainSeven;
 
-public class MainPagerAdapter extends FragmentStatePagerAdapter {
+public class MainPagerAdapter extends FragmentPagerAdapter {
     private int mPageCount;
 
     public MainPagerAdapter(FragmentManager fm, int mPageCount){
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.mPageCount=mPageCount;
     }
 
@@ -34,11 +35,11 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
                 FragmentMainCU fragmentMainCU = new FragmentMainCU();
                 return fragmentMainCU;
             case 3:
-                FragmentMainEmart fragmentMainEmart = new FragmentMainEmart();
-                return fragmentMainEmart;
-            case 4:
                 FragmentMainSeven fragmentMainSeven = new FragmentMainSeven();
                 return fragmentMainSeven;
+            case 4:
+                FragmentMainEmart fragmentMainEmart = new FragmentMainEmart();
+                return fragmentMainEmart;
             case 5:
                 FragmentMainMinistop fragmentMainMinistop = new FragmentMainMinistop();
                 return fragmentMainMinistop;

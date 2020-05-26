@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
 import com.example.myapplication.R;
 import com.example.myapplication.customView.CustomActionBar;
