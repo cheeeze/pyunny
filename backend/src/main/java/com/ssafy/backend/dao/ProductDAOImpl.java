@@ -2,8 +2,11 @@ package com.ssafy.backend.dao;
 
 import java.util.List;
 
+import com.ssafy.backend.vo.Favorite;
 import com.ssafy.backend.vo.MainSearch;
 import com.ssafy.backend.vo.Product;
+import com.ssafy.backend.vo.ProductComment;
+import com.ssafy.backend.vo.Rating;
 import com.ssafy.backend.vo.Sale;
 
 import org.apache.ibatis.session.SqlSession;
@@ -81,14 +84,67 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void deleteProduct(Product p) throws Exception {
-        session.delete(ns + "deleteProduct", p);
+    public void deleteProduct(int id) throws Exception {
+        session.delete(ns + "deleteProduct", id);
 
     }
 
     @Override
-    public void deleteSale(Sale s) throws Exception {
-        session.delete(ns + "deleteSale", s);
+    public void deleteSale(int id) throws Exception {
+        session.delete(ns + "deleteSale", id);
+
+    }
+
+    @Override
+    public void insertFavorite(Favorite f) throws Exception {
+        session.insert(ns + "insertFavorite", f);
+
+    }
+
+    @Override
+    public void deleteFavorite(int id) throws Exception {
+        session.delete(ns + "deleteFavorite", id);
+
+    }
+
+    @Override
+    public void insertRating(Rating r) throws Exception {
+        session.insert(ns + "insertRating", r);
+
+    }
+
+    @Override
+    public void deleteRating(int id) throws Exception {
+        session.delete(ns + "deleteRating", id);
+
+    }
+
+    @Override
+    public void updateRating(Rating r) throws Exception {
+        session.update(ns + "updateRating", r);
+
+    }
+
+    @Override
+    public void insertComment(ProductComment pc) throws Exception {
+        session.insert(ns + "insertComment", pc);
+
+    }
+
+    @Override
+    public List<ProductComment> getCommentById(int id) throws Exception {
+        return session.selectList(ns + "getCommentById", id);
+    }
+
+    @Override
+    public void updateComment(ProductComment pc) throws Exception {
+        session.update(ns + "updateComment", pc);
+
+    }
+
+    @Override
+    public void deleteComment(int id) throws Exception {
+        session.delete(ns + "deleteComment", id);
 
     }
 

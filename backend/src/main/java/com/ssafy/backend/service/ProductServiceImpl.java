@@ -2,9 +2,13 @@ package com.ssafy.backend.service;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.ssafy.backend.dao.ProductDAO;
+import com.ssafy.backend.vo.Favorite;
 import com.ssafy.backend.vo.MainSearch;
 import com.ssafy.backend.vo.Product;
+import com.ssafy.backend.vo.ProductComment;
+import com.ssafy.backend.vo.Rating;
 import com.ssafy.backend.vo.Sale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,15 +85,67 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Product p) throws Exception {
-        dao.deleteProduct(p);
+    public void deleteProduct(int id) throws Exception {
+        dao.deleteProduct(id);
 
     }
 
     @Override
-    public void deleteSale(Sale s) throws Exception {
-        dao.deleteSale(s);
+    public void deleteSale(int id) throws Exception {
+        dao.deleteSale(id);
 
+    }
+
+    @Override
+    public void deleteFavorite(int id) throws Exception {
+        dao.deleteFavorite(id);
+
+    }
+
+    @Override
+    public void deleteRating(int id) throws Exception {
+        dao.deleteComment(id);
+
+    }
+
+    @Override
+    public void deleteComment(int id) throws Exception {
+        dao.deleteComment(id);
+    }
+
+    @Override
+    public void insertFavorite(Favorite f) throws Exception {
+        dao.insertFavorite(f);
+
+    }
+
+    @Override
+    public void insertRating(Rating r) throws Exception {
+        dao.insertRating(r);
+
+    }
+
+    @Override
+    public void updateRating(Rating r) throws Exception {
+        dao.updateRating(r);
+
+    }
+
+    @Override
+    public void insertComment(ProductComment pc) throws Exception {
+        dao.insertComment(pc);
+
+    }
+
+    @Override
+    public void updateComment(ProductComment pc) throws Exception {
+        dao.updateComment(pc);
+
+    }
+
+    @Override
+    public List<ProductComment> getCommentById(int id) throws Exception {
+        return dao.getCommentById(id);
     }
 
 }

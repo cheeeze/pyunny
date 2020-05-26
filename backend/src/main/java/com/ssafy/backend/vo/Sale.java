@@ -9,6 +9,7 @@ public class Sale {
     private String dumImage;
     private String dumName;
     private int dumPrice;
+    private Product product;
 
     public Sale() {
     }
@@ -23,6 +24,19 @@ public class Sale {
         this.dumImage = dumImage;
         this.dumName = dumName;
         this.dumPrice = dumPrice;
+    }
+
+    public Sale(int id, int productId, String name, int franchiseId, String type, String dumImage, String dumName,
+            int dumPrice, Product product) {
+        this.id = id;
+        this.productId = productId;
+        this.name = name;
+        this.franchiseId = franchiseId;
+        this.type = type;
+        this.dumImage = dumImage;
+        this.dumName = dumName;
+        this.dumPrice = dumPrice;
+        this.product = product;
     }
 
     public int getId() {
@@ -93,6 +107,14 @@ public class Sale {
     public String toString() {
         return "Sale [dumImage=" + dumImage + ", dumName=" + dumName + ", dumPrice=" + dumPrice + ", franchiseId="
                 + franchiseId + ", id=" + id + ", name=" + name + ", productId=" + productId + ", type=" + type + "]";
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
 }

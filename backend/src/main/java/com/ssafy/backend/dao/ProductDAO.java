@@ -2,8 +2,11 @@ package com.ssafy.backend.dao;
 
 import java.util.List;
 
+import com.ssafy.backend.vo.Favorite;
 import com.ssafy.backend.vo.MainSearch;
 import com.ssafy.backend.vo.Product;
+import com.ssafy.backend.vo.ProductComment;
+import com.ssafy.backend.vo.Rating;
 import com.ssafy.backend.vo.Sale;
 
 /* 
@@ -34,8 +37,26 @@ public interface ProductDAO {
 
     void updateSale(Sale s) throws Exception;
 
-    void deleteProduct(Product p) throws Exception;
+    void deleteProduct(int id) throws Exception;
 
-    void deleteSale(Sale s) throws Exception;
+    void deleteSale(int id) throws Exception;
+
+    void insertFavorite(Favorite f) throws Exception;
+
+    void deleteFavorite(int id) throws Exception;
+
+    void insertRating(Rating r) throws Exception;
+
+    void deleteRating(int id) throws Exception;
+
+    void updateRating(Rating r) throws Exception;
+
+    void insertComment(ProductComment pc) throws Exception;
+
+    List<ProductComment> getCommentById(int id) throws Exception;
+
+    void updateComment(ProductComment pc) throws Exception;
+
+    void deleteComment(int id) throws Exception;
 
 }

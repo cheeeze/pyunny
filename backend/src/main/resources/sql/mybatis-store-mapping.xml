@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 지도  -->
+<!-- 주어진 주소 기반으로 편의점 탐색 -->
+
+
+<mapper namespace="StoreMapper">
+    <sql id="select-store">
+        select * from Store
+    </sql>
+
+    <sql id="select-storeproduct">
+        select * from Store_Product
+    </sql>
+
+    <!-- 주변 편의점 검색 -->
+    <select id="getStoreNear" parameterType="mapSearch" resultType="store">
+        <sql refid="select-store"/>
+        
+        where 
+            (6371*acos(cos(radians(#{latitude}))*cos(radians(latitude))*cos(radians(longitude)
+	        -radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude)))) &lt;= #{distance}
+        
+            
+    </select>
+
+    <!-- 재고 검색 -->
+    <select id="getStoreProductById" parameterType="mapSearch" resultType="storeProduct">
+        <sql refid="select-storeproduct"/>
+        where 
+        store_id = #{storeId} 
+        and 
+        (name like '%${keyword}%' or description like '%${keyword}%')
+    </select>
+
+</mapper>

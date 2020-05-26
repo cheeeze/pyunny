@@ -3,34 +3,45 @@ package com.ssafy.backend.vo;
 public class Store {
     private int id;
     private int franchiseId;
+    private int franchiseName;
     private String storeName;
     private float latitude;
     private float longitude;
     private String address;
+    private String city;
     private String tel;
     private int isatm;
     private int islottery;
     private int isdelivery;
     private int ismedicine;
     private int isfulltime;
+    private String logoUrl;
+    private String deliveryBegin;
+    private String deliveryEnd;
 
     public Store() {
     }
 
-    public Store(int id, int franchiseId, String storeName, float latitude, float longitude, String address, String tel,
-            int isatm, int islottery, int isdelivery, int ismedicine, int isfulltime) {
+    public Store(int id, int franchiseId, int franchiseName, String storeName, float latitude, float longitude,
+            String address, String city, String tel, int isatm, int islottery, int isdelivery, int ismedicine,
+            int isfulltime, String logoUrl, String deliveryBegin, String deliveryEnd) {
         this.id = id;
         this.franchiseId = franchiseId;
+        this.franchiseName = franchiseName;
         this.storeName = storeName;
         this.latitude = latitude;
         this.longitude = longitude;
         this.address = address;
+        this.city = city;
         this.tel = tel;
         this.isatm = isatm;
         this.islottery = islottery;
         this.isdelivery = isdelivery;
         this.ismedicine = ismedicine;
         this.isfulltime = isfulltime;
+        this.logoUrl = logoUrl;
+        this.deliveryBegin = deliveryBegin;
+        this.deliveryEnd = deliveryEnd;
     }
 
     public int getId() {
@@ -129,12 +140,53 @@ public class Store {
         this.storeName = storeName;
     }
 
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getDeliveryBegin() {
+        return deliveryBegin;
+    }
+
+    public void setDeliveryBegin(String deliveryBegin) {
+        this.deliveryBegin = deliveryBegin;
+    }
+
+    public String getDeliveryEnd() {
+        return deliveryEnd;
+    }
+
+    public void setDeliveryEnd(String deliveryEnd) {
+        this.deliveryEnd = deliveryEnd;
+    }
+
+    public int getFranchiseName() {
+        return franchiseName;
+    }
+
+    public void setFranchiseName(int franchiseName) {
+        this.franchiseName = franchiseName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     @Override
     public String toString() {
-        return "Store [address=" + address + ", franchiseId=" + franchiseId + ", id=" + id + ", isatm=" + isatm
-                + ", isdelivery=" + isdelivery + ", isfulltime=" + isfulltime + ", islottery=" + islottery
-                + ", ismedicine=" + ismedicine + ", latitude=" + latitude + ", longitude=" + longitude + ", storeName="
-                + storeName + ", tel=" + tel + "]";
+        return "Store [address=" + address + ", city=" + city + ", deliveryBegin=" + deliveryBegin + ", deliveryEnd="
+                + deliveryEnd + ", franchiseId=" + franchiseId + ", franchiseName=" + franchiseName + ", id=" + id
+                + ", isatm=" + isatm + ", isdelivery=" + isdelivery + ", isfulltime=" + isfulltime + ", islottery="
+                + islottery + ", ismedicine=" + ismedicine + ", latitude=" + latitude + ", logoUrl=" + logoUrl
+                + ", longitude=" + longitude + ", storeName=" + storeName + ", tel=" + tel + "]";
     }
 
 }
