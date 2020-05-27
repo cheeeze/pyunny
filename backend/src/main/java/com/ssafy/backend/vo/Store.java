@@ -1,9 +1,15 @@
 package com.ssafy.backend.vo;
 
-public class Store {
+import java.io.Serializable;
+
+public class Store implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private int id;
     private int franchiseId;
-    private int franchiseName;
+    private String franchiseName;
     private String storeName;
     private float latitude;
     private float longitude;
@@ -22,7 +28,7 @@ public class Store {
     public Store() {
     }
 
-    public Store(int id, int franchiseId, int franchiseName, String storeName, float latitude, float longitude,
+    public Store(int id, int franchiseId, String franchiseName, String storeName, float latitude, float longitude,
             String address, String city, String tel, int isatm, int islottery, int isdelivery, int ismedicine,
             int isfulltime, String logoUrl, String deliveryBegin, String deliveryEnd) {
         this.id = id;
@@ -164,11 +170,11 @@ public class Store {
         this.deliveryEnd = deliveryEnd;
     }
 
-    public int getFranchiseName() {
+    public String getFranchiseName() {
         return franchiseName;
     }
 
-    public void setFranchiseName(int franchiseName) {
+    public void setFranchiseName(String franchiseName) {
         this.franchiseName = franchiseName;
     }
 

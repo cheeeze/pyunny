@@ -1,6 +1,5 @@
 package com.ssafy.backend.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.ssafy.backend.service.ProductService;

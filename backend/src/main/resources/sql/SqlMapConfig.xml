@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
     <mappers>
         <mapper resource="sql/mybatis-product-mapping.xml"/>
+        <mapper resource="sql/mybatis-store-mapping.xml"/>
     </mappers>
 
 </configuration>

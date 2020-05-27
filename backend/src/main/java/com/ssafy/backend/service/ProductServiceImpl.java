@@ -2,7 +2,6 @@ package com.ssafy.backend.service;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.ssafy.backend.dao.ProductDAO;
 import com.ssafy.backend.vo.Favorite;
 import com.ssafy.backend.vo.MainSearch;

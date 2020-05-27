@@ -1,51 +1,52 @@
 package com.ssafy.backend.vo;
 
+import java.util.List;
+
 public class MapSearch {
-    private float latitude;
-    private float longitude;
-    private int distance;
+    private double latitude;
+    private double longitude;
+    private float distance;
     private String keyword;
-    private int storeId;
+    private List<Integer> store;
 
     public MapSearch() {
     }
 
-    public MapSearch(float latitude, float longitude, int distance, String keyword) {
+    public MapSearch(double latitude, double longitude, float distance) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.distance = distance;
+    }
+
+    public MapSearch(double latitude, double longitude, float distance, String keyword, List<Integer> store) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.distance = distance;
         this.keyword = keyword;
+        this.store = store;
     }
 
-    public MapSearch(float latitude, float longitude, int distance, String keyword, int storeId) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.distance = distance;
-        this.keyword = keyword;
-        this.storeId = storeId;
-    }
-
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public int getDistance() {
+    public float getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(float distance) {
         this.distance = distance;
     }
 
@@ -57,18 +58,17 @@ public class MapSearch {
         this.keyword = keyword;
     }
 
-    public int getStoreId() {
-        return storeId;
+    public List<Integer> getStore() {
+        return store;
     }
 
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
+    public void setStore(List<Integer> store) {
+        this.store = store;
     }
 
     @Override
     public String toString() {
-        return "MapSearch [distance=" + distance + ", keyword=" + keyword + ", latitude=" + latitude + ", longitude="
-                + longitude + ", storeId=" + storeId + "]";
+        return "MapSearch [distance=" + distance + ", latitude=" + latitude + ", longitude=" + longitude + "]";
     }
 
 }
