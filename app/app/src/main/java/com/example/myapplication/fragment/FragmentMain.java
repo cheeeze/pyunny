@@ -83,7 +83,7 @@ public class FragmentMain extends Fragment {
         ImageView image_tab = tabView.findViewById(R.id.tab_image);
         switch (tabName){
             case "전체":
-                image_tab.setImageResource(R.drawable.map);
+                image_tab.setImageResource(R.drawable.all2);
                 break;
             case "GS25":
                 image_tab.setImageResource(R.drawable.gs);

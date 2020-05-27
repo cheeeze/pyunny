@@ -5,24 +5,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:weightSum="6">
+        android:weightSum="8">
         <ImageButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:id="@+id/button_barcode"
             android:background="@drawable/redbarcode"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_weight="1"/>
-        <TextView
+        <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:textAlignment="center"
-            android:text="편의뽕"
-            android:layout_weight="4"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/mainlogo"
+            android:layout_weight="6"/>
+
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="center_horizontal|center_vertical"-->
+<!--            android:textAlignment="center"-->
+<!--            android:text="편의뽕"-->
+<!--            android:layout_weight="4"/>-->
         <ImageButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical|center_horizontal"
             android:id="@+id/button_search"
             android:background="@drawable/search"
