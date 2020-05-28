@@ -2,226 +2,164 @@
   <div id="full">
     <section id="banner" class="topbanner">
       <div id="boxes" :class="tempClass">
-        <div
-          class="small-box mountains"
-          rel="mountains"
-          @click="filp('mountains')"
-        >
+        <!-- red box -->
+        <div class="small-box red" rel="red" @click="filp('red')">
           <div>
-            <a
-              href="http://en.wikipedia.org/wiki/Derwentwater"
-              target="_blank"
-              class="lakes-visible"
-            >
-              <span>Derwentwater</span>
-              <img
-                src="http://www.savorypixel.com/678799/lakes/derwentwater.jpg"
-              />
+            <a class="red-visible original">
+              <span>깊티콘관리</span>
             </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Black_forest"
-              target="_blank"
-              class="forests-visible"
-            >
-              <span>Black Forest</span>
-              <img
-                src="http://www.savorypixel.com/678799/forests/black-forest.jpg"
-              />
+
+            <a target="_blank" class="blue-visible">
+              <span>레시피관리1</span>
+              <img src="@/assets/images/bbongimg_circle_ver.jpg" />
             </a>
-            <a
-              href="http://en.wikipedia.org/wiki/The_Maldives"
-              target="_blank"
-              class="beaches-visible"
-            >
-              <span>The Maldives</span>
+
+            <a target="_blank" class="yellow-visible">
+              <span>품목설정1</span>
+            </a>
+
+            <a target="_blank" class="darkgray-visible">
+              <span>설정1</span>
               <img
                 src="http://www.savorypixel.com/678799/beaches/maldives.jpg"
               />
             </a>
-            <a class="mountains-visible original">
-              <span>Mountains</span>
-            </a>
           </div>
         </div>
-        <div class="small-box lakes" rel="lakes" @click="filp('lakes')">
+
+        <!-- blue-box -->
+        <div class="small-box blue" rel="blue" @click="filp('blue')">
           <div>
-            <a
-              href="http://en.wikipedia.org/wiki/Lhotse"
-              target="_blank"
-              class="mountains-visible"
-            >
-              <span>Lhotse</span>
-              <img
-                src="http://www.savorypixel.com/678799/mountains/lhotse.jpg"
-              />
+            <a class="blue-visible original">
+              <span>나만의 레시피 관리</span>
             </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Sagano_Bamboo_Forest"
-              target="_blank"
-              class="forests-visible"
-            >
-              <span>Sagano Bamboo Forest</span>
-              <img
-                src="http://www.savorypixel.com/678799/forests/sagano-bamboo-forest.jpg"
-              />
+
+            <a target="_blank" class="red-visible">
+              <span>깊티 관리2</span>
             </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Lanikai_Beach"
-              target="_blank"
-              class="beaches-visible"
-            >
-              <span>Lanikai Beach</span>
-              <img
-                src="http://www.savorypixel.com/678799/beaches/lanikai-beach.jpg"
-              />
+
+            <a target="_blank" class="yellow-visible">
+              <span>품목설정2</span>
             </a>
-            <a class="lakes-visible original">
-              <span>Lakes</span>
+
+            <a target="_blank" class="darkgray-visible">
+              <span>설정3</span>
             </a>
           </div>
         </div>
-        <div class="small-box forests" rel="forests" @click="filp('forests')">
+
+        <!-- yellow-box -->
+        <div class="small-box yellow" rel="yellow" @click="filp('yellow')">
           <div>
-            <a
-              href="http://en.wikipedia.org/wiki/Kanchenjunga"
-              target="_blank"
-              class="mountains-visible"
-            >
-              <span>Kanchenjunga</span>
-              <img
-                src="http://www.savorypixel.com/678799/mountains/kanchenjunga.jpg"
-              />
+            <a class="yellow-visible original">
+              <span>관심품목</span>
             </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Lake_tahoe"
-              target="_blank"
-              class="lakes-visible"
-            >
-              <span>Lake Tahoe</span>
-              <img
-                src="http://www.savorypixel.com/678799/lakes/lake-tahoe.jpg"
-              />
+
+            <a target="_blank" class="red-visible">
+              <span>깊티 관리1</span>
             </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Hampton_Beach"
-              target="_blank"
-              class="beaches-visible"
-            >
-              <span>Hampton Beach</span>
-              <img
-                src="http://www.savorypixel.com/678799/beaches/hampton-beach.jpg"
-              />
+
+            <a target="_blank" class="blue-visible">
+              <span>레시피관리2</span>
             </a>
-            <a class="forests-visible original">
-              <span>Forests</span>
+
+            <a target="_blank" class="darkgray-visible">
+              <span>설정2</span>
             </a>
           </div>
         </div>
-        <div class="small-box beaches" rel="beaches" @click="filp('beaches')">
+
+        <!-- black-box -->
+        <div
+          class="small-box darkgray"
+          rel="darkgray"
+          @click="filp('darkgray')"
+        >
           <div>
-            <a
-              href="http://en.wikipedia.org/wiki/Mount_everest"
-              target="_blank"
-              class="mountains-visible"
-            >
-              <span>Mount Everest</span>
-              <img
-                src="http://www.savorypixel.com/678799/mountains/everest.jpg"
-              />
+            <a class="darkgray-visible original">
+              <span>설정</span>
             </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Maligne_lake"
-              target="_blank"
-              class="lakes-visible"
-            >
-              <span>Maligne Lake</span>
-              <img
-                src="http://www.savorypixel.com/678799/lakes/maligne-lake.jpg"
-              />
+
+            <a target="_blank" class="red-visible">
+              <span>깊티 관리3</span>
             </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Sequoia_National_Forest"
-              target="_blank"
-              class="forests-visible"
-            >
-              <span>Sequoia National Forest</span>
-              <img
-                src="http://www.savorypixel.com/678799/forests/sequoia-forest.jpg"
-              />
+
+            <a target="_blank" class="blue-visible">
+              <span>레시피관리3</span>
             </a>
-            <a class="beaches-visible original">
-              <span>Beaches</span>
+
+            <a target="_blank" class="yellow-visible">
+              <span>품목설정3</span>
             </a>
           </div>
         </div>
+
+        <!-- big-box -->
         <div class="big-box">
-          <div>
-            <a
-              href="http://en.wikipedia.org/wiki/Bora_bora"
-              target="_blank"
-              class="beaches-visible"
-            >
-              <span>Bora Bora</span>
-              <img
-                src="http://www.savorypixel.com/678799/beaches/bora-bora.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Amazon_rainforest"
-              target="_blank"
-              class="forests-visible"
-            >
-              <span>Amazon Rainforest</span>
-              <img src="http://www.savorypixel.com/678799/forests/amazon.jpg" />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Lake_Lucerne"
-              target="_blank"
-              class="lakes-visible"
-            >
-              <span>Lake Lucerne</span>
-              <img
-                src="http://www.savorypixel.com/678799/lakes/lake-lucerne.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/K2"
-              target="_blank"
-              class="mountains-visible"
-            >
-              <span>K2</span>
-              <img src="http://www.savorypixel.com/678799/mountains/k2.jpg" />
-            </a>
-            <a class="original">
-              <img
-                src="http://www.savorypixel.com/678799/beautiful-earth.jpg"
-              />
-            </a>
+          <div class="right">
+            <div v-if="type == 1" target="_blank" class="red-visible">
+              <span>기프티콘 관리 page</span>
+            </div>
+
+            <div v-else-if="type == 2" target="_blank" class="yellow-visible">
+              <span>품목 관리 Page</span>
+            </div>
+
+            <div v-else-if="type == 3" target="_blank" class="blue-visible">
+              <span>레시피 관리 page</span>
+            </div>
+
+            <div v-else-if="type == 4" target="_blank" class="darkgray-visible">
+              <span>settings</span>
+            </div>
+
+            <div v-else class="original">
+              <img src="@/assets/images/bbongimg.jpg" />
+            </div>
           </div>
         </div>
       </div>
+      <!-- 
+      <div v-if="type == 1">red</div>
+      <div v-else-if="type == 2">yellow</div>
+      <div v-else-if="type == 3">blue</div>
+      <div v-else-if="type == 4">darkgray</div>
+      <div v-else>default</div> -->
     </section>
   </div>
 </template>
 
 <script>
-// var clickHandler;
-var prevSelect = "";
-
 export default {
   data() {
     return {
       tempClass: "",
+      type: "",
     };
   },
   methods: {
     filp(value) {
-      console.log(value);
-      // console.log()
+      this.tempClass = "";
+
+      if (this.type != 0) {
+        this.type = "0";
+      } else {
+        if (value == "red") {
+          this.type = 1;
+        }
+        if (value == "yellow") {
+          this.type = 2;
+        }
+        if (value == "blue") {
+          this.type = 3;
+        }
+        if (value == "darkgray") {
+          this.type = 4;
+        }
+      }
       if ($("#boxes").attr("class") !== "") {
         $("#banner #boxes").attr("class", "");
       } else {
-        prevSelect = value;
         this.tempClass = value + "-chosen";
       }
     },
@@ -230,10 +168,16 @@ export default {
 </script>
 
 <style>
-@import url(https://fonts.googleapis.com/css?family=Cabin);
+@font-face {
+  font-family: "KyoboHand";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
 body {
-  font-family: "Cabin";
+  font-family: "KyoboHand";
   min-width: 320px;
   padding: 0;
 }
@@ -289,8 +233,8 @@ body {
   background-position: 0 0;
   overflow: hidden;
 }
-.small-box a:before,
-.big-box a:before {
+.small-box div:before,
+.big-box div:before {
   content: "";
   display: block;
   background: rgba(0, 0, 0, 0);
@@ -303,8 +247,8 @@ body {
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
 }
-.small-box a:hover:before,
-.big-box a:hover:before {
+.small-box div:hover:before,
+.big-box div:hover:before {
   z-index: 98;
   background: rgba(0, 0, 0, 0.3);
   -webkit-transition: background 0.2s;
@@ -328,7 +272,7 @@ body {
   cursor: default;
 }
 .small-box a span,
-.big-box a span {
+.big-box .right span {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -350,28 +294,28 @@ body {
 .small-box .original span {
   height: 100%;
   text-align: center;
-  /*line-height: 249px;*/
+  /* line-height: 249px; */
   padding-top: 135px;
   background: none;
   text-shadow: none;
 }
-.big-box a span {
+/* .big-box div span {
   font-size: 24px;
   font-weight: normal;
-}
-.small-box.mountains {
+} */
+.small-box.red {
   top: 0;
   left: 0;
 }
-.small-box.lakes {
+.small-box.blue {
   top: 251px;
   left: 0;
 }
-.small-box.forests {
+.small-box.yellow {
   top: 0;
   left: 251px;
 }
-.small-box.beaches {
+.small-box.darkgray {
   top: 251px;
   left: 251px;
 }
@@ -385,71 +329,67 @@ body {
   margin-left: -32px;
   top: 80px;
 }
-.small-box.mountains .original span:before {
+.small-box.red .original span:before {
+  background: url("https://upload.wikimedia.org/wikipedia/commons/5/5d/UPC-A-036000291452.png");
+}
+.small-box.yellow .original span:before {
   background: url("http://www.savorypixel.com/678799/icon_mountains.svg");
 }
-.small-box.lakes .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_lakes.svg");
+.small-box.blue .original span:before {
+  background: url("http://www.savorypixel.com/678799/icon_mountains.svg");
 }
-.small-box.forests .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_forests.svg");
+.small-box.darkgray .original span:before {
+  background: url("http://www.savorypixel.com/678799/icon_mountains.svg");
 }
-.small-box.beaches .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_beaches.svg");
-}
-
 /* spin forward all correct cards (small-box) */
-.mountains-chosen .small-box:not(.mountains) a.mountains-visible,
-.lakes-chosen .small-box:not(.lakes) a.lakes-visible,
-.forests-chosen .small-box:not(.forests) a.forests-visible,
-.beaches-chosen .small-box:not(.beaches) a.beaches-visible {
+.red-chosen .small-box:not(.red) a.red-visible,
+.blue-chosen .small-box:not(.blue) a.blue-visible,
+.yellow-chosen .small-box:not(.yellow) a.yellow-visible,
+.darkgray-chosen .small-box:not(.darkgray) a.darkgray-visible {
   -webkit-transform: rotateY(360deg) translateZ(1px);
   transform: rotateY(360deg);
 }
-
 /* spin backward all non-correct cards (small-box)*/
-.mountains-chosen .small-box:not(.mountains) a:not(.mountains-visible),
-.lakes-chosen .small-box:not(.lakes) a:not(.lakes-visible),
-.forests-chosen .small-box:not(.forests) a:not(.forests-visible),
-.beaches-chosen .small-box:not(.beaches) a:not(.beaches-visible) {
+.red-chosen .small-box:not(.red) a:not(.red-visible),
+.blue-chosen .small-box:not(.blue) a:not(.blue-visible),
+.yellow-chosen .small-box:not(.yellow) a:not(.yellow-visible),
+.darkgray-chosen .small-box:not(.darkgray) a:not(.darkgray-visible) {
   -webkit-transform: rotateY(180deg) translateZ(-2px);
   transform: rotateY(180deg);
 }
-
-.mountains-chosen .small-box:not(.mountains) a.lakes-visible,
-.lakes-chosen .small-box:not(.lakes) a.mountains-visible,
-.forests-chosen .small-box:not(.forests) a.mountains-visible,
-.beaches-chosen .small-box:not(.beaches) a.mountains-visible,
-.mountains-chosen .small-box.lakes a.mountains-visible,
-.lakes-chosen .small-box.mountains a.lakes-visible,
-.forests-chosen .small-box.mountains a.forests-visible,
-.beaches-chosen .small-box.mountains a.beaches-visible {
+.red-chosen .small-box:not(.red) a.blue-visible,
+.blue-chosen .small-box:not(.blue) a.red-visible,
+.yellow-chosen .small-box:not(.yellow) a.red-visible,
+.darkgray-chosen .small-box:not(.darkgray) a.red-visible,
+.red-chosen .small-box.blue a.red-visible,
+.blue-chosen .small-box.red a.blue-visible,
+.yellow-chosen .small-box.red a.yellow-visible,
+.darkgray-chosen .small-box.red a.darkgray-visible {
   -webkit-transition-delay: 0.1s;
   transition-delay: 0.1s;
 }
-.mountains-chosen .small-box:not(.mountains) a.forests-visible,
-.lakes-chosen .small-box:not(.lakes) a.forests-visible,
-.forests-chosen .small-box:not(.forests) a.lakes-visible,
-.beaches-chosen .small-box:not(.beaches) a.lakes-visible,
-.mountains-chosen .small-box.forests a.mountains-visible,
-.lakes-chosen .small-box.forests a.lakes-visible,
-.forests-chosen .small-box.lakes a.forests-visible,
-.beaches-chosen .small-box.lakes a.beaches-visible {
+.red-chosen .small-box:not(.red) a.yellow-visible,
+.blue-chosen .small-box:not(.blue) a.yellow-visible,
+.yellow-chosen .small-box:not(.yellow) a.blue-visible,
+.darkgray-chosen .small-box:not(.darkgray) a.blue-visible,
+.red-chosen .small-box.yellow a.red-visible,
+.blue-chosen .small-box.yellow a.blue-visible,
+.yellow-chosen .small-box.blue a.yellow-visible,
+.darkgray-chosen .small-box.blue a.darkgray-visible {
   -webkit-transition-delay: 0.2s;
   transition-delay: 0.2s;
 }
-.mountains-chosen .small-box:not(.mountains) a.beaches-visible,
-.lakes-chosen .small-box:not(.lakes) a.beaches-visible,
-.forests-chosen .small-box:not(.forests) a.beaches-visible,
-.beaches-chosen .small-box:not(.beaches) a.forests-visible,
-.mountains-chosen .small-box.beaches a.mountains-visible,
-.lakes-chosen .small-box.beaches a.lakes-visible,
-.forests-chosen .small-box.beaches a.forests-visible,
-.beaches-chosen .small-box.forests a.beaches-visible {
+.red-chosen .small-box:not(.red) a.darkgray-visible,
+.blue-chosen .small-box:not(.blue) a.darkgray-visible,
+.yellow-chosen .small-box:not(.yellow) a.darkgray-visible,
+.darkgray-chosen .small-box:not(.darkgray) a.yellow-visible,
+.red-chosen .small-box.darkgray a.red-visible,
+.blue-chosen .small-box.darkgray a.blue-visible,
+.yellow-chosen .small-box.darkgray a.yellow-visible,
+.darkgray-chosen .small-box.yellow a.darkgray-visible {
   -webkit-transition-delay: 0.3s;
   transition-delay: 0.3s;
 }
-
 #boxes .big-box {
   -webkit-perspective: 1000;
   perspective: 1000;
@@ -465,7 +405,7 @@ body {
   width: 100%;
   height: 100%;
 }
-.big-box > div > a {
+.big-box > div > div {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   -webkit-box-sizing: border-box;
@@ -486,179 +426,50 @@ body {
   background-position: 0 0;
   overflow: hidden;
 }
-.big-box > div > a.original {
+.big-box > .right > div.original {
   background-color: #ddd;
 }
-.big-box > div > a:not(.original) {
+.big-box > .right > div:not(.original) {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-transform: rotateX(180deg);
   transform: rotateX(180deg);
   overflow: hidden;
 }
-
 /* spin forward correct card (big-box) */
-.mountains-chosen .big-box a.mountains-visible,
-.lakes-chosen .big-box a.lakes-visible,
-.forests-chosen .big-box a.forests-visible,
-.beaches-chosen .big-box a.beaches-visible {
+.red-chosen .big-box div.red-visible,
+.blue-chosen .big-box div.blue-visible,
+.yellow-chosen .big-box div.yellow-visible,
+.darkgray-chosen .big-box div.darkgray-visible {
   -webkit-transform: rotateX(360deg) translateZ(1px);
   transform: rotateX(360deg);
 }
-
 /* spin backward all correct cards (big-box) */
-.mountains-chosen .big-box a:not(.mountains-visible),
-.lakes-chosen .big-box a:not(.lakes-visible),
-.forests-chosen .big-box a:not(.forests-visible),
-.beaches-chosen .big-box a:not(.beaches-visible) {
+.red-chosen .big-box div:not(.red-visible),
+.blue-chosen .big-box div:not(.blue-visible),
+.yellow-chosen .big-box div:not(.yellow-visible),
+.darkgray-chosen .big-box div:not(.darkgray-visible) {
   -webkit-transform: rotateX(180deg) translateZ(-1px);
   transform: rotateX(180deg);
 }
-
-.mountains-chosen .big-box a,
-.lakes-chosen .big-box a,
-.forests-chosen .big-box a,
-.beaches-chosen .big-box a {
+.red-chosen .big-box div,
+.blue-chosen .big-box div,
+.yellow-chosen .big-box div,
+.darkgray-chosen .big-box div {
   -webkit-transition-delay: 0.4s;
   transition-delay: 0.4s;
 }
-
-.mountains .original {
-  background-color: #ee451a;
+/* #ff7473 / #ffc952 / #47b8e0 / #34314c */
+.red .original {
+  background-color: #ff7473;
 }
-.lakes .original {
-  background-color: #019eeb;
+.blue .original {
+  background-color: #47b8e0;
 }
-.forests .original {
-  background-color: #109d69;
+.yellow .original {
+  background-color: #ffc952;
 }
-.beaches .original {
-  background-color: #ffb200;
+.darkgray .original {
+  background-color: #34314c;
 }
-
-/* Responsive layout still needs a little work */
-/* @media (max-width:1199px) {
-  .topbanner {
-    width: 940px;
-  }
-  #banner #boxes {
-    height: 402px;
-  }
-  #banner #boxes .small-box {
-    height: 200px;
-    width: 200px;
-  }
-  #banner #boxes .small-box.mountains {
-    top: 0;
-    left: 0;
-  }
-  #banner #boxes .small-box.lakes {
-    top: 202px;
-    left: 0;
-  }
-  #banner #boxes .small-box.forests {
-    top: 0;
-    left: 202px;
-  }
-  #banner #boxes .small-box.beaches {
-    top: 202px;
-    left: 202px;
-  }
-  #banner #boxes .big-box {
-    height: 402px;
-    width: 536px;
-  }
-}
-@media (max-width:994px) {
-  .topbanner {
-    width: 720px;
-  }
-  #banner #boxes {
-    height: 400px;
-    overflow: hidden;
-  }
-  #banner #boxes .small-box {
-    height: 25%;
-    width: 25%;
-  }
-  #banner #boxes .small-box.mountains {
-    top: 0;
-    left: 0;
-  }
-  #banner #boxes .small-box.lakes {
-    top: 25%;
-    left: 0;
-  }
-  #banner #boxes .small-box.forests {
-    top: 50%;
-    left: 0;
-  }
-  #banner #boxes .small-box.beaches {
-    top: 75%;
-    left: 0;
-  }
-  #banner #boxes .small-box img {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
-  #banner #boxes .big-box {
-    height: 100%;
-    width: 75%;
-    overflow: hidden;
-  }
-  #banner #boxes .big-box img {
-    width: 100%;
-  }
-  .small-box a span {
-    background: transparent;
-    text-shadow: 0 0 10px rgba(0,0,0,.8), 0 0 4px rgba(0,0,0,.6);
-  }
-}
-@media (max-width:767px) {
-  .topbanner {
-    width: 100%;    
-  }
-  .small-box a span {
-    font-size: 16px;
-  }
-  #banner #boxes .big-box {
-    height: 75%;
-    width: 100%;
-  }
-  #banner #boxes .small-box {
-    bottom: 0;
-  }
-  #banner #boxes .small-box.mountains {
-    top: auto;
-    left: 0;
-  }
-  #banner #boxes .small-box.lakes {
-    top: auto;
-    left: 25%;
-  }
-  #banner #boxes .small-box.forests {
-    top: auto;
-    left: 50%;
-  }
-  #banner #boxes .small-box.beaches {
-    top: auto;
-    left: 75%;
-  }
-}
-@media (max-width:480px) {
-  #banner #boxes {
-    height: 300px;
-  }
-  .small-box a span {
-    display: none;
-  }
-}
-@media (max-width:994px) {
-  #banner {
-    background-color: #fff;
-    margin-top: 20px;
-  }
-}
-*/
 </style>
