@@ -10,10 +10,10 @@ import android.view.MenuItem;
 
 import com.example.myapplication.R;
 import com.example.myapplication.customView.CustomActionBar;
-import com.example.myapplication.fragment.FragmentMain;
-import com.example.myapplication.fragment.FragmentMap;
-import com.example.myapplication.fragment.FragmentMypage;
-import com.example.myapplication.fragment.FragmentRecipe;
+import com.example.myapplication.fragment.main.FragmentMain;
+import com.example.myapplication.fragment.map.FragmentMap;
+import com.example.myapplication.fragment.mypage.FragmentMypage;
+import com.example.myapplication.fragment.recipe.FragmentRecipe;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private FragmentRecipe fragmentRecipe = new FragmentRecipe();
     private FragmentMap fragmentMap = new FragmentMap();
     private FragmentMypage fragmentMypage = new FragmentMypage();
+
+    private BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -45,9 +47,10 @@ public class MainActivity extends AppCompatActivity {
     void makeFooter(){
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frameLayout, fragmentMain).commitAllowingStateLoss();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
+        bottomNavigationView = findViewById(R.id.navigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
     }
+
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
 

@@ -1,4 +1,4 @@
-package com.example.myapplication.fragment;
+package com.example.myapplication.fragment.main;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,24 +16,28 @@ import com.example.myapplication.adapter.MainSaleAdapter;
 import com.example.myapplication.vo.Sale;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class FragmentMainAll extends Fragment {
+public class FragmentMainAllSale extends Fragment {
+
 
     private Context mContext;
     private RecyclerView recyclerView;
     private MainSaleAdapter mainSaleAdapter;
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_all, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_main_all_sale, container, false);
         init(view);
-
-
         return view;
     }
+
+
     private void init(View view){
+
         mContext = view.getContext();
         recyclerView = view.findViewById(R.id.recyclerView_event);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext,2);

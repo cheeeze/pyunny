@@ -4,14 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.myapplication.fragment.FragmentMainAll;
-import com.example.myapplication.fragment.FragmentMainCU;
-import com.example.myapplication.fragment.FragmentMainEmart;
-import com.example.myapplication.fragment.FragmentMainGS;
-import com.example.myapplication.fragment.FragmentMainMinistop;
-import com.example.myapplication.fragment.FragmentMainSeven;
+import com.example.myapplication.fragment.main.FragmentMainAll;
+import com.example.myapplication.fragment.main.FragmentMainCU;
+import com.example.myapplication.fragment.main.FragmentMainEmart;
+import com.example.myapplication.fragment.main.FragmentMainGS;
+import com.example.myapplication.fragment.main.FragmentMainMinistop;
+import com.example.myapplication.fragment.main.FragmentMainSeven;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
     private int mPageCount;
@@ -46,6 +45,11 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             default:
                 return null;
         }
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 
     @Override

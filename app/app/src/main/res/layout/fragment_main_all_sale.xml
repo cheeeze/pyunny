@@ -3,32 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".fragment.main.FragmentMainAll">
+    tools:context=".fragment.main.FragmentMainAllSale">
 
-
-
-    <com.google.android.material.tabs.TabLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:tabGravity="center"
-        app:tabMode="fixed"
-        android:id="@+id/tab_main_all"/>
-
-    <androidx.viewpager.widget.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_all_pager_content"/>
 <!--    <ImageView-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="30dp"-->
 <!--        android:src="@drawable/main_sale_info"/>-->
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/recyclerView_event"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content" />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 <!--    <ImageView-->
 <!--        android:layout_width="wrap_content"-->
@@ -39,7 +25,5 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
 <!--        android:id="@+id/recyclerView_product_info"/>-->
-
-
 
 </LinearLayout>

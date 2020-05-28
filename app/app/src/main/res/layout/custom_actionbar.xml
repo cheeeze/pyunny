@@ -3,12 +3,12 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:weightSum="8">
         <ImageButton
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:id="@+id/button_barcode"
             android:background="@drawable/redbarcode"
             android:layout_gravity="center_vertical|center_horizontal"
@@ -29,7 +29,7 @@
 <!--            android:layout_weight="4"/>-->
         <ImageButton
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:id="@+id/button_search"
             android:background="@drawable/search"

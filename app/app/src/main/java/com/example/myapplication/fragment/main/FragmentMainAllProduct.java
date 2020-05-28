@@ -1,4 +1,4 @@
-package com.example.myapplication.fragment;
+package com.example.myapplication.fragment.main;
 
 import android.os.Bundle;
 
@@ -9,12 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
-public class FragmentMainCU extends Fragment {
+
+public class FragmentMainAllProduct extends Fragment {
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_c_u, container, false);
+        return inflater.inflate(R.layout.fragment_main_all_product, container, false);
     }
 }
