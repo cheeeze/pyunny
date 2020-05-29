@@ -61,23 +61,23 @@ public class FragmentMain extends Fragment {
 
         mViewPager.setAdapter(mMainPagerAdapter);
 
-//        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                refresh();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+//        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                refresh();
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -96,10 +96,15 @@ public class FragmentMain extends Fragment {
         });
     }
 
+    private class MypageChangedListener extends TabLayout.TabLayoutOnPageChangeListener{
+
+        public MypageChangedListener(TabLayout tabLayout) {
+            super(tabLayout);
+        }
+    }
+
     private void refresh(){
-//        mMainPagerAdapter.notifyDataSetChanged();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.detach(this).attach(this).commit();
+        mMainPagerAdapter.notifyDataSetChanged();
     }
 
 
@@ -111,7 +116,7 @@ public class FragmentMain extends Fragment {
                 image_tab.setImageResource(R.drawable.all2);
                 break;
             case "GS25":
-                image_tab.setImageResource(R.drawable.gs);
+                image_tab.setImageResource(R.drawable.gs25);
                 break;
             case "CU":
                 image_tab.setImageResource(R.drawable.cu);
