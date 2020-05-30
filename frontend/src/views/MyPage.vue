@@ -6,12 +6,12 @@
         <div class="small-box red" rel="red" @click="filp('red')">
           <div>
             <a class="red-visible original">
-              <span>깊티콘관리</span>
+              <span>기프티콘 관리</span>
             </a>
 
             <a target="_blank" class="blue-visible">
-              <span>레시피관리1</span>
-              <img src="@/assets/images/bbongimg_circle_ver.jpg" />
+              <span>내가 쓴 레시피</span>
+              <img src="@/assets/images/write_img.jpg" />
             </a>
 
             <a target="_blank" class="yellow-visible">
@@ -19,10 +19,8 @@
             </a>
 
             <a target="_blank" class="darkgray-visible">
-              <span>설정1</span>
-              <img
-                src="http://www.savorypixel.com/678799/beaches/maldives.jpg"
-              />
+              <span>내 정보 수정</span>
+              <img src="@/assets/images/person_img.jpg" />
             </a>
           </div>
         </div>
@@ -35,7 +33,8 @@
             </a>
 
             <a target="_blank" class="red-visible">
-              <span>깊티 관리2</span>
+              <span>내가 가진 기프티콘</span>
+              <img src="@/assets/images/more_img.jpg" />
             </a>
 
             <a target="_blank" class="yellow-visible">
@@ -56,36 +55,37 @@
             </a>
 
             <a target="_blank" class="red-visible">
-              <span>깊티 관리1</span>
+              <span>기프티콘 등록</span>
+              <img src="@/assets/images/plus_img.jpg" />
             </a>
 
             <a target="_blank" class="blue-visible">
-              <span>레시피관리2</span>
+              <span>내가 쓴 댓글</span>
+              <img src="@/assets/images/comment_img.jpg" />
             </a>
 
             <a target="_blank" class="darkgray-visible">
-              <span>설정2</span>
+              <span>멤버십 관리</span>
+              <img src="@/assets/images/card_img.jpg" />
             </a>
           </div>
         </div>
 
         <!-- black-box -->
-        <div
-          class="small-box darkgray"
-          rel="darkgray"
-          @click="filp('darkgray')"
-        >
+        <div class="small-box darkgray" rel="darkgray" @click="filp('darkgray')">
           <div>
             <a class="darkgray-visible original">
               <span>설정</span>
             </a>
 
             <a target="_blank" class="red-visible">
-              <span>깊티 관리3</span>
+              <span>사용한 기프티콘</span>
+              <img src="@/assets/images/check_img.jpg" />
             </a>
 
             <a target="_blank" class="blue-visible">
-              <span>레시피관리3</span>
+              <span>좋아요 한 레시피</span>
+              <img src="@/assets/images/heart_img.jpg" />
             </a>
 
             <a target="_blank" class="yellow-visible">
@@ -96,35 +96,30 @@
 
         <!-- big-box -->
         <div class="big-box">
-          <div class="right">
-            <div v-if="type == 1" target="_blank" class="red-visible">
-              <span>기프티콘 관리 page</span>
+          <div>
+            <div target="_blank" class="red-visible right">
+              <h1>기프티콘 관리</h1>
             </div>
 
-            <div v-else-if="type == 2" target="_blank" class="yellow-visible">
-              <span>품목 관리 Page</span>
+            <div target="_blank" class="yellow-visible right">
+              <h1>관심물품 관리</h1>
             </div>
 
-            <div v-else-if="type == 3" target="_blank" class="blue-visible">
-              <span>레시피 관리 page</span>
+            <div target="_blank" class="blue-visible right">
+              <h1>레시피 관리</h1>
             </div>
 
-            <div v-else-if="type == 4" target="_blank" class="darkgray-visible">
-              <span>settings</span>
+            <div target="_blank" class="darkgray-visible right">
+              <h1>설정</h1>
+              <img src="http://www.savorypixel.com/678799/mountains/k2.jpg" />
             </div>
 
-            <div v-else class="original">
-              <img src="@/assets/images/bbongimg.jpg" />
+            <div class="original right">
+              <img src="@/assets/images/center_cloud.png" />
             </div>
           </div>
         </div>
       </div>
-      <!-- 
-      <div v-if="type == 1">red</div>
-      <div v-else-if="type == 2">yellow</div>
-      <div v-else-if="type == 3">blue</div>
-      <div v-else-if="type == 4">darkgray</div>
-      <div v-else>default</div> -->
     </section>
   </div>
 </template>
@@ -133,37 +128,19 @@
 export default {
   data() {
     return {
-      tempClass: "",
-      type: "",
+      tempClass: ""
     };
   },
   methods: {
     filp(value) {
       this.tempClass = "";
-
-      if (this.type != 0) {
-        this.type = "0";
-      } else {
-        if (value == "red") {
-          this.type = 1;
-        }
-        if (value == "yellow") {
-          this.type = 2;
-        }
-        if (value == "blue") {
-          this.type = 3;
-        }
-        if (value == "darkgray") {
-          this.type = 4;
-        }
-      }
       if ($("#boxes").attr("class") !== "") {
         $("#banner #boxes").attr("class", "");
       } else {
         this.tempClass = value + "-chosen";
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -175,7 +152,10 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-
+.big-box > div > .original > img {
+  width: 100%;
+  height: 100%;
+}
 body {
   font-family: "KyoboHand";
   min-width: 320px;
@@ -247,16 +227,15 @@ body {
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
 }
-.small-box div:hover:before,
-.big-box div:hover:before {
+.small-box div:hover:before {
   z-index: 98;
   background: rgba(0, 0, 0, 0.3);
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
 }
-.big-box .original:hover:before {
+/* .big-box .original:hover:before {
   background: rgba(0, 0, 0, 0);
-}
+} */
 
 .original {
   opacity: 0.9999;
@@ -272,7 +251,7 @@ body {
   cursor: default;
 }
 .small-box a span,
-.big-box .right span {
+.big-box > .right > span {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -288,8 +267,11 @@ body {
   box-sizing: border-box;
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.8);
 }
-.small-box .original img {
+/* .small-box .original img {
   display: none;
+} */
+.small-box > div > a > img {
+  width: 100%;
 }
 .small-box .original span {
   height: 100%;
@@ -324,22 +306,30 @@ body {
   display: block;
   position: absolute;
   height: 50px;
-  width: 65px;
+  width: 50px;
   left: 50%;
-  margin-left: -32px;
+  margin-left: -25px;
   top: 80px;
 }
 .small-box.red .original span:before {
-  background: url("https://upload.wikimedia.org/wikipedia/commons/5/5d/UPC-A-036000291452.png");
+  background: url("../assets/icons/gift_removebg.png");
+  background-size: cover;
+  background-position: center center;
 }
 .small-box.yellow .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_mountains.svg");
+  background: url("../assets/icons/star_removebg.png");
+  background-size: cover;
+  background-position: center center;
 }
 .small-box.blue .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_mountains.svg");
+  background: url("../assets/icons/list_removebg.png");
+  background-size: cover;
+  background-position: center center;
 }
 .small-box.darkgray .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_mountains.svg");
+  background: url("../assets/icons/settings_removebg.png");
+  background-size: cover;
+  background-position: center center;
 }
 /* spin forward all correct cards (small-box) */
 .red-chosen .small-box:not(.red) a.red-visible,
@@ -405,7 +395,7 @@ body {
   width: 100%;
   height: 100%;
 }
-.big-box > div > div {
+.big-box > div > .right {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   -webkit-box-sizing: border-box;
@@ -428,6 +418,7 @@ body {
 }
 .big-box > .right > div.original {
   background-color: #ddd;
+  background-size: 100%;
 }
 .big-box > .right > div:not(.original) {
   -webkit-transform: translate3d(0, 0, 0);
@@ -437,25 +428,25 @@ body {
   overflow: hidden;
 }
 /* spin forward correct card (big-box) */
-.red-chosen .big-box div.red-visible,
-.blue-chosen .big-box div.blue-visible,
-.yellow-chosen .big-box div.yellow-visible,
-.darkgray-chosen .big-box div.darkgray-visible {
+.red-chosen .big-box .right.red-visible,
+.blue-chosen .big-box .right.blue-visible,
+.yellow-chosen .big-box .right.yellow-visible,
+.darkgray-chosen .big-box .right.darkgray-visible {
   -webkit-transform: rotateX(360deg) translateZ(1px);
   transform: rotateX(360deg);
 }
 /* spin backward all correct cards (big-box) */
-.red-chosen .big-box div:not(.red-visible),
-.blue-chosen .big-box div:not(.blue-visible),
-.yellow-chosen .big-box div:not(.yellow-visible),
-.darkgray-chosen .big-box div:not(.darkgray-visible) {
+.red-chosen .big-box .right:not(.red-visible),
+.blue-chosen .big-box .right:not(.blue-visible),
+.yellow-chosen .big-box .right:not(.yellow-visible),
+.darkgray-chosen .big-box .right:not(.darkgray-visible) {
   -webkit-transform: rotateX(180deg) translateZ(-1px);
   transform: rotateX(180deg);
 }
-.red-chosen .big-box div,
-.blue-chosen .big-box div,
-.yellow-chosen .big-box div,
-.darkgray-chosen .big-box div {
+.red-chosen .big-box .right,
+.blue-chosen .big-box .right,
+.yellow-chosen .big-box .right,
+.darkgray-chosen .big-box .right {
   -webkit-transition-delay: 0.4s;
   transition-delay: 0.4s;
 }
