@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(User user) throws Exception {
-       return dao.login(user);
+        return dao.login(user);
     }
 
     @Override
@@ -32,4 +32,13 @@ public class UserServiceImpl implements UserService {
         dao.updateUser(user);
     }
 
+    @Override
+    public int duplicateNickname(String nickname) throws Exception {
+        return dao.duplicateNickname(nickname);
+    }
+
+    @Override
+    public User selectOne(int id) throws Exception {
+        return dao.selectOne(id);
+    }
 }
