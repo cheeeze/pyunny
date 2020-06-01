@@ -1,22 +1,27 @@
 export default [
   {
-    path: '/',
-    view: 'Home',
-    name: 'Home',
+    path: "/",
+    view: "Home",
+    name: "Home",
   },
   {
-    path: '/mypage',
-    view: 'MyPage',
-    name: 'MyPage',
+    path: "/test",
+    view: "test",
+    name: "test",
   },
   {
-    path: '/shy',
-    view: 'shytest',
-    name: 'shytest',
+    path: "/mypage",
+    view: "MyPage",
+    name: "MyPage",
   },
   {
-    path: '/test',
-    view: 'test',
-    name: 'test',
+    path: "/map",
+    view: "Map",
+    name: "Map",
   },
-]
+  {
+    path: "/shy",
+    view: "shytest",
+    name: "shytest",
+  },
+];

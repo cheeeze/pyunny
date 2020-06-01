@@ -1,91 +1,211 @@
 <template>
-  <div class="body_container">
+  <div class="section over-hide z-bigger">
+    <input class="checkbox" type="checkbox" name="general" id="general" />
+    <label class="for-checkbox" for="general"></label>
+    <div class="background-color"></div>
     <div class="section over-hide z-bigger">
-      <input class="checkbox" type="checkbox" name="general" id="general" />
-      <label class="for-checkbox" for="general"></label>
-      <div class="background-color"></div>
-      <div class="section over-hide z-bigger">
-        <div class="container pb-5">
-          <div class="row justify-content-center pb-5">
-            <div class="col-12 pt-1">
-              <p class="mb-4 pb-2">편의점 할인정보/상품정보</p>
-            </div>
-            <div class="col-12 pb-5">
-              <input
-                class="checkbox-booking"
-                type="checkbox"
-                name="booking"
-                id="booking-1"
-              />
-              <label class="for-checkbox-booking" for="booking-1">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/all.png"
-                  alt=""/></label
-              ><!--
+      <div class="container pb-5">
+        <div class="row justify-content-center pb-5">
+          <div class="col-12 pt-5">
+            <p class="mb-4 pb-2">Design Tools</p>
+          </div>
+          <div class="col-12 pb-5">
+            <input
+              class="checkbox-tools"
+              type="radio"
+              name="tools"
+              id="tool-1"
+              checked
+            />
+            <label class="for-checkbox-tools" for="tool-1">
+              <i class="uil uil-line-alt"></i>
+              line </label
+            ><!--
+						--><input class="checkbox-tools" type="radio" name="tools" id="tool-2" />
+            <label class="for-checkbox-tools" for="tool-2">
+              <i class="uil uil-vector-square"></i>
+              square </label
+            ><!--
+						--><input class="checkbox-tools" type="radio" name="tools" id="tool-3" />
+            <label class="for-checkbox-tools" for="tool-3">
+              <i class="uil uil-ruler"></i>
+              ruler </label
+            ><!--
+						--><input class="checkbox-tools" type="radio" name="tools" id="tool-4" />
+            <label class="for-checkbox-tools" for="tool-4">
+              <i class="uil uil-crop-alt"></i>
+              crop </label
+            ><!--
+						--><input class="checkbox-tools" type="radio" name="tools" id="tool-5" />
+            <label class="for-checkbox-tools" for="tool-5">
+              <i class="uil uil-brush-alt"></i>
+              brush </label
+            ><!--
+						--><input class="checkbox-tools" type="radio" name="tools" id="tool-6" />
+            <label class="for-checkbox-tools" for="tool-6">
+              <i class="uil uil-image-resize-landscape"></i>
+              resize
+            </label>
+          </div>
+          <div class="col-12 pt-1">
+            <p class="mb-4 pb-2">Client Budget</p>
+          </div>
+          <div class="col-xl-10 pb-5">
+            <input
+              class="checkbox-budget"
+              type="radio"
+              name="budget"
+              id="budget-1"
+              checked
+            />
+            <label class="for-checkbox-budget" for="budget-1">
+              <span data-hover="500$">500$</span> </label
+            ><!--
+						--><input class="checkbox-budget" type="radio" name="budget" id="budget-2" />
+            <label class="for-checkbox-budget" for="budget-2">
+              <span data-hover="1000$">1000$</span> </label
+            ><!--
+						--><input class="checkbox-budget" type="radio" name="budget" id="budget-3" />
+            <label class="for-checkbox-budget" for="budget-3">
+              <span data-hover="1500$">1500$</span> </label
+            ><!--
+						--><input class="checkbox-budget" type="radio" name="budget" id="budget-4" />
+            <label class="for-checkbox-budget" for="budget-4">
+              <span data-hover="2000$">2000$</span> </label
+            ><!--
+						--><input class="checkbox-budget" type="radio" name="budget" id="budget-5" />
+            <label class="for-checkbox-budget" for="budget-5">
+              <span data-hover="2500$">2500$</span> </label
+            ><!--
+						--><input class="checkbox-budget" type="radio" name="budget" id="budget-6" />
+            <label class="for-checkbox-budget" for="budget-6">
+              <span data-hover="5000$">5000$</span>
+            </label>
+          </div>
+          <div class="col-12 pt-1">
+            <p class="mb-4 pb-2">Booking Options</p>
+          </div>
+          <div class="col-12 pb-5">
+            <input
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-1"
+            />
+            <label class="for-checkbox-booking" for="booking-1">
+              <i class="uil uil-coffee mr-3"></i
+              ><span class="text">breakfast</span> </label
+            ><!--
 						--><input
-                class="checkbox-booking"
-                type="checkbox"
-                name="booking"
-                id="booking-2"
-              />
-              <label class="for-checkbox-booking" for="booking-2">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/gs25.png"
-                  alt=""/></label
-              ><!--
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-2"
+            />
+            <label class="for-checkbox-booking" for="booking-2">
+              <i class="uil uil-restaurant mr-3"></i
+              ><span class="text">dinner</span> </label
+            ><!--
 						--><input
-                class="checkbox-booking"
-                type="checkbox"
-                name="booking"
-                id="booking-3"
-              />
-              <label class="for-checkbox-booking" for="booking-3">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/cu.png"
-                  alt=""
-                /> </label
-              ><!--
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-3"
+            />
+            <label class="for-checkbox-booking" for="booking-3">
+              <i class="uil uil-car-sideview mr-3"></i
+              ><span class="text">pick up</span> </label
+            ><!--
 						--><input
-                class="checkbox-booking"
-                type="checkbox"
-                name="booking"
-                id="booking-4"
-              />
-              <label class="for-checkbox-booking" for="booking-4">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/emart.jpg"
-                  alt=""/></label
-              ><!--
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-4"
+            />
+            <label class="for-checkbox-booking" for="booking-4">
+              <i class="uil uil-flower mr-3"></i
+              ><span class="text">garden</span> </label
+            ><!--
 						--><input
-                class="checkbox-booking"
-                type="checkbox"
-                name="booking"
-                id="booking-5"
-              />
-              <label class="for-checkbox-booking" for="booking-5">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/seven.png"
-                  alt=""/></label
-              ><!--
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-5"
+            />
+            <label class="for-checkbox-booking" for="booking-5">
+              <i class="uil uil-wifi mr-3"></i
+              ><span class="text">internet</span> </label
+            ><!--
 						--><input
-                class="checkbox-booking"
-                type="checkbox"
-                name="booking"
-                id="booking-6"
-              />
-              <label class="for-checkbox-booking" for="booking-6">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/ministop.png"
-                  alt=""/></label
-              ><!--
-						-->
-            </div>
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-6"
+            />
+            <label class="for-checkbox-booking" for="booking-6">
+              <i class="uil uil-parking-square mr-3"></i
+              ><span class="text">parking</span> </label
+            ><!--
+						--><input
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-7"
+            />
+            <label class="for-checkbox-booking" for="booking-7">
+              <i class="uil uil-tv-retro mr-3"></i
+              ><span class="text">television</span> </label
+            ><!--
+						--><input
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-8"
+            />
+            <label class="for-checkbox-booking" for="booking-8">
+              <i class="uil uil-books mr-3"></i
+              ><span class="text">books</span> </label
+            ><!--
+						--><input
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-9"
+            />
+            <label class="for-checkbox-booking" for="booking-9">
+              <i class="uil uil-kayak mr-3"></i
+              ><span class="text">kayak</span> </label
+            ><!--
+						--><input
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-10"
+            />
+            <label class="for-checkbox-booking" for="booking-10">
+              <i class="uil uil-glass-martini-alt mr-3"></i
+              ><span class="text">drink</span> </label
+            ><!--
+						--><input
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-11"
+            />
+            <label class="for-checkbox-booking" for="booking-11">
+              <i class="uil uil-dumbbell mr-3"></i
+              ><span class="text">gym</span> </label
+            ><!--
+						--><input
+              class="checkbox-booking"
+              type="checkbox"
+              name="booking"
+              id="booking-12"
+            />
+            <label class="for-checkbox-booking" for="booking-12">
+              <i class="uil uil-sign-alt mr-3"></i
+              ><span class="text">walking tours</span>
+            </label>
           </div>
         </div>
       </div>
@@ -98,14 +218,6 @@ export default {};
 </script>
 
 <style>
-@font-face {
-  font-family: "Kyobo";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
 :root {
   --white: #ffffff;
   --light: #f0eff3;
@@ -120,18 +232,17 @@ export default {};
 /* #Primary
 ================================================== */
 
-.body_container {
+body {
   width: 100%;
   background: var(--dark-blue);
   overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
   font-size: 17px;
   line-height: 30px;
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
-  font-family: "Kyobo";
 }
 p {
-  /* font-family: "Poppins", sans-serif; */
   font-size: 17px;
   line-height: 30px;
   color: var(--white);
@@ -191,11 +302,6 @@ mark {
   height: 0;
   visibility: hidden;
 }
-
-.conv_icon {
-  height: 65px;
-}
-
 .checkbox:checked + label,
 .checkbox:not(:checked) + label {
   position: relative;
@@ -422,7 +528,7 @@ mark {
   -ms-flex-pack: center;
   text-align: center;
   padding: 0;
-  padding: 3px;
+  padding: 6px 25px;
   font-size: 14px;
   line-height: 30px;
   letter-spacing: 1px;
