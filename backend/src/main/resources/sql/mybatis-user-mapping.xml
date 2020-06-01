@@ -5,7 +5,7 @@
 
 <mapper namespace="UserMapper">
 
-	<resultMap type="com.ssafy.rest.vo.user" id="resultUser">
+	<resultMap type="com.ssafy.backend.vo.User" id="resultUser">
 		<id column="id" property="id"/>
         <result column="name" property="name"/>
 		<result column="password" property="password"/>
@@ -25,16 +25,16 @@
             kakao,
             profile_image
         FROM
-            user
+            User
     </sql>
 	
-	<insert id="insertUser"  parameterType="user" >
-		INSERT into user(id, name, password, nickname, email, kakao, profile_image)
-        VALUES(#{id}, #{name}, #{password}, #{nickname}, #{email}, #{kakao}, #{profileImage})
+	<insert id="insertUser"  parameterType="user" useGeneratedKeys="true" keyProperty="id">
+		INSERT into User(name, password, nickname, email, kakao, profile_image)
+        VALUES(#{name}, #{password}, #{nickname}, #{email}, #{kakao}, #{profileImage})
 	</insert>
 
     <update id="updateUser" parameterType="user">
-        UPDATE user
+        UPDATE User
         SET
             name=#{name},
             password=#{password},
@@ -46,12 +46,21 @@
     </update>
 
 	<delete id="deleteMember" parameterType="int">
-		delete from user where id=#{value}
+		delete from User where id=#{value}
 	</delete>
 	
 	<select id="login" parameterType="user" resultMap="resultUser" >
 		<include refid="select-all-users"/>
 		 WHERE id=#{id} AND password=#{password}
 	</select>
+
+    <select id="selectOne" parameterType="int" resultMap="resultUser">
+    	<include refid="select-all-users"/>
+		 WHERE id=#{value}
+    </select>
+
+    <select id="duplicateNickname" parameterType="String" resultType="int">
+        SELECT count(*) FROM User WHERE nickname=#{value}
+    </select>
 	
 </mapper>

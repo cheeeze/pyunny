@@ -12,5 +12,7 @@
 
 	<mappers>
 		<mapper resource="sql/mybatis-user-mapping.xml" />
+		<mapper resource="sql/mybatis-gifticon-mapping.xml" />
+		<mapper resource="sql/mybatis-membership-mapping.xml" />
 	</mappers>
 </configuration>
