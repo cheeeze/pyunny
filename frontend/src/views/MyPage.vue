@@ -1,24 +1,25 @@
 <template>
   <div id="full">
+    <navbar></navbar>
     <section id="banner" class="topbanner">
       <div id="boxes" :class="tempClass">
         <!-- red box -->
-        <div class="small-box red" rel="red" @click="filp('red')">
+        <div class="small-box red" @click="filp('red')">
           <div>
             <a class="red-visible original">
               <span>기프티콘 관리</span>
             </a>
 
-            <a target="_blank" class="blue-visible">
+            <a class="blue-visible">
               <span>내가 쓴 레시피</span>
               <img src="@/assets/images/write_img.jpg" />
             </a>
 
-            <a target="_blank" class="yellow-visible">
+            <a class="yellow-visible">
               <span>품목설정1</span>
             </a>
 
-            <a target="_blank" class="darkgray-visible">
+            <a class="darkgray-visible">
               <span>내 정보 수정</span>
               <img src="@/assets/images/person_img.jpg" />
             </a>
@@ -32,39 +33,39 @@
               <span>나만의 레시피 관리</span>
             </a>
 
-            <a target="_blank" class="red-visible">
+            <a class="red-visible">
               <span>내가 가진 기프티콘</span>
               <img src="@/assets/images/more_img.jpg" />
             </a>
 
-            <a target="_blank" class="yellow-visible">
+            <a class="yellow-visible">
               <span>품목설정2</span>
             </a>
 
-            <a target="_blank" class="darkgray-visible">
+            <a class="darkgray-visible">
               <span>설정3</span>
             </a>
           </div>
         </div>
 
         <!-- yellow-box -->
-        <div class="small-box yellow" rel="yellow" @click="filp('yellow')">
+        <div class="small-box yellow" @click="filp('yellow')">
           <div>
             <a class="yellow-visible original">
               <span>관심품목</span>
             </a>
 
-            <a target="_blank" class="red-visible">
+            <a class="red-visible" @click="selec('red1')">
               <span>기프티콘 등록</span>
               <img src="@/assets/images/plus_img.jpg" />
             </a>
 
-            <a target="_blank" class="blue-visible">
+            <a class="blue-visible">
               <span>내가 쓴 댓글</span>
               <img src="@/assets/images/comment_img.jpg" />
             </a>
 
-            <a target="_blank" class="darkgray-visible">
+            <a class="darkgray-visible">
               <span>멤버십 관리</span>
               <img src="@/assets/images/card_img.jpg" />
             </a>
@@ -72,23 +73,27 @@
         </div>
 
         <!-- black-box -->
-        <div class="small-box darkgray" rel="darkgray" @click="filp('darkgray')">
+        <div
+          class="small-box darkgray"
+          rel="darkgray"
+          @click="filp('darkgray')"
+        >
           <div>
             <a class="darkgray-visible original">
               <span>설정</span>
             </a>
 
-            <a target="_blank" class="red-visible">
+            <a class="red-visible">
               <span>사용한 기프티콘</span>
               <img src="@/assets/images/check_img.jpg" />
             </a>
 
-            <a target="_blank" class="blue-visible">
+            <a class="blue-visible">
               <span>좋아요 한 레시피</span>
               <img src="@/assets/images/heart_img.jpg" />
             </a>
 
-            <a target="_blank" class="yellow-visible">
+            <a class="yellow-visible">
               <span>품목설정3</span>
             </a>
           </div>
@@ -97,19 +102,23 @@
         <!-- big-box -->
         <div class="big-box">
           <div>
-            <div target="_blank" class="red-visible right">
-              <h1>기프티콘 관리</h1>
+            <div class="red-visible right">
+              <h3>깊티콘관리</h3>
             </div>
 
-            <div target="_blank" class="yellow-visible right">
-              <h1>관심물품 관리</h1>
+            <!-- <div class="red-visible right red1">
+              <h3>기프티콘 등록</h3>
+            </div> -->
+
+            <div class="yellow-visible right">
+              <h3>관심물품 관리</h3>
             </div>
 
-            <div target="_blank" class="blue-visible right">
+            <div class="blue-visible right">
               <h1>레시피 관리</h1>
             </div>
 
-            <div target="_blank" class="darkgray-visible right">
+            <div class="darkgray-visible right">
               <h1>설정</h1>
               <img src="http://www.savorypixel.com/678799/mountains/k2.jpg" />
             </div>
@@ -125,22 +134,35 @@
 </template>
 
 <script>
+import Navbar from "@/components/Navbar.vue";
+
 export default {
   data() {
     return {
-      tempClass: ""
+      tempClass: "",
     };
   },
+  components: {
+    Navbar,
+  },
   methods: {
+    selec(info) {
+      if (this.tempClass !== "") {
+        this.tempClass = this.tempClass + info;
+        console.log(tempClass);
+      }
+    },
     filp(value) {
       this.tempClass = "";
       if ($("#boxes").attr("class") !== "") {
+        console.log("if", this.tempClass);
         $("#banner #boxes").attr("class", "");
       } else {
         this.tempClass = value + "-chosen";
+        console.log(this.tempClass);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -157,7 +179,6 @@ export default {
   height: 100%;
 }
 body {
-  font-family: "KyoboHand";
   min-width: 320px;
   padding: 0;
 }
