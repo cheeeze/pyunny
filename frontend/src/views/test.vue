@@ -1,562 +1,570 @@
 <template>
-<div class="full">
-  <section id="banner" class="topbanner">
-    <div id="boxes" :class="tempClass">
-      <div class="small-box mountains" rel="mountains" @click="filp('mountains')">
-        <div>
-          <a href="http://en.wikipedia.org/wiki/Derwentwater" target="_blank" class="lakes-visible">
-            <span>Derwentwater</span>
-            <img src="http://www.savorypixel.com/678799/lakes/derwentwater.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Black_forest" target="_blank" class="forests-visible">
-            <span>Black Forest</span>
-            <img src="http://www.savorypixel.com/678799/forests/black-forest.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/The_Maldives" target="_blank" class="beaches-visible">
-            <span>The Maldives</span>
-            <img src="http://www.savorypixel.com/678799/beaches/maldives.jpg" />
-          </a>
-          <a class="mountains-visible original">
-            <span>Mountains</span>
-          </a>
-        </div>
-      </div>
-      <div class="small-box lakes" rel="lakes" @click="filp('lakes')">
-        <div>
-          <a href="http://en.wikipedia.org/wiki/Lhotse" target="_blank" class="mountains-visible">
-            <span>Lhotse</span>
-            <img src="http://www.savorypixel.com/678799/mountains/lhotse.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Sagano_Bamboo_Forest" target="_blank" class="forests-visible">
-            <span>Sagano Bamboo Forest</span>
-            <img src="http://www.savorypixel.com/678799/forests/sagano-bamboo-forest.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Lanikai_Beach" target="_blank" class="beaches-visible">
-            <span>Lanikai Beach</span>
-            <img src="http://www.savorypixel.com/678799/beaches/lanikai-beach.jpg" />
-          </a>
-          <a class="lakes-visible original">
-            <span>Lakes</span>
-          </a>
-        </div>
-      </div>
-      <div class="small-box forests" rel="forests" @click="filp('forests')">
-        <div>
-          <a href="http://en.wikipedia.org/wiki/Kanchenjunga" target="_blank" class="mountains-visible">
-            <span>Kanchenjunga</span>
-            <img src="http://www.savorypixel.com/678799/mountains/kanchenjunga.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Lake_tahoe" target="_blank" class="lakes-visible">
-            <span>Lake Tahoe</span>
-            <img src="http://www.savorypixel.com/678799/lakes/lake-tahoe.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Hampton_Beach" target="_blank" class="beaches-visible">
-            <span>Hampton Beach</span>
-            <img src="http://www.savorypixel.com/678799/beaches/hampton-beach.jpg" />
-          </a>
-          <a class="forests-visible original">
-            <span>Forests</span>
-          </a>
-        </div>
-      </div>
-      <div class="small-box beaches" rel="beaches" @click="filp('beaches')">
-        <div>
-          <a href="http://en.wikipedia.org/wiki/Mount_everest" target="_blank" class="mountains-visible">
-            <span>Mount Everest</span>
-            <img src="http://www.savorypixel.com/678799/mountains/everest.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Maligne_lake" target="_blank" class="lakes-visible">
-            <span>Maligne Lake</span>
-            <img src="http://www.savorypixel.com/678799/lakes/maligne-lake.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Sequoia_National_Forest" target="_blank" class="forests-visible">
-            <span>Sequoia National Forest</span>
-            <img src="http://www.savorypixel.com/678799/forests/sequoia-forest.jpg" />
-          </a>
-          <a class="beaches-visible original">
-            <span>Beaches</span>
-          </a>
-        </div>
-      </div>
-      <div class="big-box">
-        <div>
-          <a href="http://en.wikipedia.org/wiki/Bora_bora" target="_blank" class="beaches-visible">
-            <span>Bora Bora</span>
-            <img src="http://www.savorypixel.com/678799/beaches/bora-bora.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Amazon_rainforest" target="_blank" class="forests-visible">
-            <span>Amazon Rainforest</span>
-            <img src="http://www.savorypixel.com/678799/forests/amazon.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/Lake_Lucerne" target="_blank" class="lakes-visible">
-            <span>Lake Lucerne</span>
-            <img src="http://www.savorypixel.com/678799/lakes/lake-lucerne.jpg" />
-          </a>
-          <a href="http://en.wikipedia.org/wiki/K2" target="_blank" class="mountains-visible">
-            <span>K2</span>
-            <img src="http://www.savorypixel.com/678799/mountains/k2.jpg" />
-          </a>
-          <a class="original">
-            <img src="http://www.savorypixel.com/678799/beautiful-earth.jpg" />
-          </a>
+  <div class="body_container">
+    <div class="section over-hide z-bigger">
+      <input class="checkbox" type="checkbox" name="general" id="general" />
+      <label class="for-checkbox" for="general"></label>
+      <div class="background-color"></div>
+      <div class="section over-hide z-bigger">
+        <div class="container pb-5">
+          <div class="row justify-content-center pb-5">
+            <div class="col-12 pt-1">
+              <p class="mb-4 pb-2">편의점 할인정보/상품정보</p>
+            </div>
+            <div class="col-12 pb-5">
+              <input
+                class="checkbox-booking"
+                type="checkbox"
+                name="booking"
+                id="booking-1"
+              />
+              <label class="for-checkbox-booking" for="booking-1">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/all.png"
+                  alt=""/></label
+              ><!--
+						--><input
+                class="checkbox-booking"
+                type="checkbox"
+                name="booking"
+                id="booking-2"
+              />
+              <label class="for-checkbox-booking" for="booking-2">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/gs25.png"
+                  alt=""/></label
+              ><!--
+						--><input
+                class="checkbox-booking"
+                type="checkbox"
+                name="booking"
+                id="booking-3"
+              />
+              <label class="for-checkbox-booking" for="booking-3">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/cu.png"
+                  alt=""
+                /> </label
+              ><!--
+						--><input
+                class="checkbox-booking"
+                type="checkbox"
+                name="booking"
+                id="booking-4"
+              />
+              <label class="for-checkbox-booking" for="booking-4">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/emart.jpg"
+                  alt=""/></label
+              ><!--
+						--><input
+                class="checkbox-booking"
+                type="checkbox"
+                name="booking"
+                id="booking-5"
+              />
+              <label class="for-checkbox-booking" for="booking-5">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/seven.png"
+                  alt=""/></label
+              ><!--
+						--><input
+                class="checkbox-booking"
+                type="checkbox"
+                name="booking"
+                id="booking-6"
+              />
+              <label class="for-checkbox-booking" for="booking-6">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/ministop.png"
+                  alt=""/></label
+              ><!--
+						-->
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
-</div>
-
+  </div>
 </template>
+
 <script>
-export default {
-  data() {
-    return {
-      tempClass: "",
-    };
-  },
-  methods: {
-    filp(value) {
-      this.tempClass = "";
-      if ($("#boxes").attr("class") !== "") {
-        $("#banner #boxes").attr("class", "");
-      } else {
-        this.tempClass = value + "-chosen";
-      }
-    }
-  }
-};
+export default {};
 </script>
 
 <style>
-@import url(https://fonts.googleapis.com/css?family=Cabin);
-
-body {
-  font-family: "Cabin";
-  min-width: 320px;
-  padding: 0;
-}
-.full {
-  width: 100%;
-  background: #eee;
-}
-.topbanner {
-  width: 1170px;
-  margin: 20px auto;
-}
-#banner #boxes {
-  height: 500px;
-  position: relative;
-}
-#banner #boxes div {
-  position: absolute;
-}
-.small-box {
-  -webkit-perspective: 1000;
-  perspective: 1000;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  height: 249px;
-  width: 249px;
-}
-.small-box > div {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.small-box a {
-  -webkit-transition-duration: .4s;
-  transition-duration: .4s;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  -ms-perspective: 1000;
-  -moz-perspective: 1000;
-  perspective: 1000;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  overflow: hidden;
-}
-.small-box a:before,
-.big-box a:before {
-  content: "";
-  display: block;
-  background: rgba(0,0,0,0);
-  z-index: 98;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-transition: background .2s;
-  transition: background .2s;
-}
-.small-box a:hover:before,
-.big-box a:hover:before {
-  z-index: 98;
-  background: rgba(0,0,0,.3);
-  -webkit-transition: background .2s;
-  transition: background .2s;
-}
-.big-box .original:hover:before {
-  background: rgba(0,0,0,0);
-}
-
-.original {
-  opacity: .9999;
-}
-.small-box a:not(.original) {
-  -webkit-transform: rotateY(180deg);
-  transform: rotateY(180deg);
-}
-.small-box > div > a:not(.original):hover {
-  cursor: pointer;
-}
-.small-box > div > a.original:hover {
-  cursor: default;
-}
-.small-box a span,
-.big-box a span {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  font-size: 24px;
-  color: #fff;
-  letter-spacing: 1px;
-  z-index: 100;
-  background: rgba(0,0,0,.4);
-  width: 100%;
-  padding: 10px 20px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  text-shadow: 0 0 4px rgba(0,0,0,.8), 0 0 30px rgba(0,0,0,.8);
-}
-.small-box .original img {
-  display: none;
-}
-.small-box .original span {
-  height: 100%;
-  text-align: center;
-  /*line-height: 249px;*/
-  padding-top: 135px;
-  background: none;
-  text-shadow: none;
-}
-.big-box a span {
-  font-size: 24px;
+@font-face {
+  font-family: "Kyobo";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")
+    format("woff");
   font-weight: normal;
-}
-.small-box.mountains {
-  top: 0;
-  left: 0;
-}
-.small-box.lakes {
-  top: 251px;
-  left: 0;
-}
-.small-box.forests {
-  top: 0;
-  left: 251px;
-}
-.small-box.beaches {
-  top: 251px;
-  left: 251px;
-}
-.small-box .original span:before {
-  content: "";
-  display: block;
-  position: absolute;
-  height: 50px;
-  width: 65px;
-  left: 50%;
-  margin-left: -32px;
-  top: 80px;
-}
-.small-box.mountains .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_mountains.svg");
-}
-.small-box.lakes .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_lakes.svg");
-}
-.small-box.forests .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_forests.svg");
-}
-.small-box.beaches .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_beaches.svg");
+  font-style: normal;
 }
 
-/* spin forward all correct cards (small-box) */
-.mountains-chosen .small-box:not(.mountains) a.mountains-visible,
-.lakes-chosen .small-box:not(.lakes) a.lakes-visible,
-.forests-chosen .small-box:not(.forests) a.forests-visible,
-.beaches-chosen .small-box:not(.beaches) a.beaches-visible {
-  -webkit-transform: rotateY(360deg) translateZ(1px);
-  transform: rotateY(360deg);
+:root {
+  --white: #ffffff;
+  --light: #f0eff3;
+  --black: #000000;
+  --dark-blue: #1f2029;
+  --dark-light: #353746;
+  --red: #da2c4d;
+  --yellow: #f8ab37;
+  --grey: #ecedf3;
 }
 
-/* spin backward all non-correct cards (small-box)*/
-.mountains-chosen .small-box:not(.mountains) a:not(.mountains-visible),
-.lakes-chosen .small-box:not(.lakes) a:not(.lakes-visible),
-.forests-chosen .small-box:not(.forests) a:not(.forests-visible),
-.beaches-chosen .small-box:not(.beaches) a:not(.beaches-visible) {
-  -webkit-transform: rotateY(180deg) translateZ(-2px);
-  transform: rotateY(180deg);
-}
+/* #Primary
+================================================== */
 
-.mountains-chosen .small-box:not(.mountains) a.lakes-visible,
-.lakes-chosen .small-box:not(.lakes) a.mountains-visible,
-.forests-chosen .small-box:not(.forests) a.mountains-visible,
-.beaches-chosen .small-box:not(.beaches) a.mountains-visible,
-.mountains-chosen .small-box.lakes a.mountains-visible,
-.lakes-chosen .small-box.mountains a.lakes-visible,
-.forests-chosen .small-box.mountains a.forests-visible,
-.beaches-chosen .small-box.mountains a.beaches-visible {
-  -webkit-transition-delay: .1s;
-  transition-delay: .1s;
+.body_container {
+  width: 100%;
+  background: var(--dark-blue);
+  overflow-x: hidden;
+  font-size: 17px;
+  line-height: 30px;
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
+  font-family: "Kyobo";
 }
-.mountains-chosen .small-box:not(.mountains) a.forests-visible,
-.lakes-chosen .small-box:not(.lakes) a.forests-visible,
-.forests-chosen .small-box:not(.forests) a.lakes-visible,
-.beaches-chosen .small-box:not(.beaches) a.lakes-visible,
-.mountains-chosen .small-box.forests a.mountains-visible,
-.lakes-chosen .small-box.forests a.lakes-visible,
-.forests-chosen .small-box.lakes a.forests-visible,
-.beaches-chosen .small-box.lakes a.beaches-visible {
-  -webkit-transition-delay: .2s;
-  transition-delay: .2s;
+p {
+  /* font-family: "Poppins", sans-serif; */
+  font-size: 17px;
+  line-height: 30px;
+  color: var(--white);
+  letter-spacing: 1px;
+  font-weight: 500;
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
 }
-.mountains-chosen .small-box:not(.mountains) a.beaches-visible,
-.lakes-chosen .small-box:not(.lakes) a.beaches-visible,
-.forests-chosen .small-box:not(.forests) a.beaches-visible,
-.beaches-chosen .small-box:not(.beaches) a.forests-visible,
-.mountains-chosen .small-box.beaches a.mountains-visible,
-.lakes-chosen .small-box.beaches a.lakes-visible,
-.forests-chosen .small-box.beaches a.forests-visible,
-.beaches-chosen .small-box.forests a.beaches-visible {
-  -webkit-transition-delay: .3s;
-  transition-delay: .3s;
+::selection {
+  color: var(--white);
+  background-color: var(--black);
 }
-
-#boxes .big-box {
-  -webkit-perspective: 1000;
-  perspective: 1000;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  height: 500px;
-  width: 668px;
-  right: 0;
+::-moz-selection {
+  color: var(--white);
+  background-color: var(--black);
 }
-.big-box > div {
+mark {
+  color: var(--white);
+  background-color: var(--black);
+}
+.section {
   position: relative;
   width: 100%;
-  height: 100%;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
 }
-.big-box > div > a {
-  -webkit-transition-duration: .4s;
-  transition-duration: .4s;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  perspective: 1000;
-  position: absolute;
+.over-hide {
+  overflow: hidden;
+}
+.z-bigger {
+  z-index: 100 !important;
+}
+
+.background-color {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-repeat: no-repeat;
-  background-position: 0 0;
+  background-color: var(--dark-blue);
+  z-index: 1;
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
+}
+.checkbox:checked ~ .background-color {
+  background-color: var(--white);
+}
+
+[type="checkbox"]:checked,
+[type="checkbox"]:not(:checked),
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.conv_icon {
+  height: 65px;
+}
+
+.checkbox:checked + label,
+.checkbox:not(:checked) + label {
+  position: relative;
+  width: 70px;
+  display: inline-block;
+  padding: 0;
+  margin: 0 auto;
+  text-align: center;
+  margin: 17px 0;
+  margin-top: 100px;
+  height: 6px;
+  border-radius: 4px;
+  background-image: linear-gradient(298deg, var(--red), var(--yellow));
+  z-index: 100 !important;
+}
+.checkbox:checked + label:before,
+.checkbox:not(:checked) + label:before {
+  position: absolute;
+  font-family: "unicons";
+  cursor: pointer;
+  top: -17px;
+  z-index: 2;
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
+}
+.checkbox:not(:checked) + label:before {
+  content: "\eac1";
+  left: 0;
+  color: var(--grey);
+  background-color: var(--dark-light);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(26, 53, 71, 0.07);
+}
+.checkbox:checked + label:before {
+  content: "\eb8f";
+  left: 30px;
+  color: var(--yellow);
+  background-color: var(--dark-blue);
+  box-shadow: 0 4px 4px rgba(26, 53, 71, 0.25), 0 0 0 1px rgba(26, 53, 71, 0.07);
+}
+
+.checkbox:checked ~ .section .container .row .col-12 p {
+  color: var(--dark-blue);
+}
+
+.checkbox-tools:checked + label,
+.checkbox-tools:not(:checked) + label {
+  position: relative;
+  display: inline-block;
+  padding: 20px;
+  width: 110px;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  margin: 0 auto;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 4px;
   overflow: hidden;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: var(--white);
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
 }
-.big-box > div > a.original {
-  background-color: #ddd;
+.checkbox-tools:not(:checked) + label {
+  background-color: var(--dark-light);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
-.big-box > div > a:not(.original) {
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  -webkit-transform: rotateX(180deg);
-  transform: rotateX(180deg);
+.checkbox-tools:checked + label {
+  background-color: transparent;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.checkbox-tools:not(:checked) + label:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.checkbox-tools:checked + label::before,
+.checkbox-tools:not(:checked) + label::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  background-image: linear-gradient(298deg, var(--red), var(--yellow));
+  z-index: -1;
+}
+.checkbox-tools:checked + label .uil,
+.checkbox-tools:not(:checked) + label .uil {
+  font-size: 24px;
+  line-height: 24px;
+  display: block;
+  padding-bottom: 10px;
+}
+
+.checkbox:checked
+  ~ .section
+  .container
+  .row
+  .col-12
+  .checkbox-tools:not(:checked)
+  + label {
+  background-color: var(--light);
+  color: var(--dark-blue);
+  box-shadow: 0 1x 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.checkbox-budget:checked + label,
+.checkbox-budget:not(:checked) + label {
+  position: relative;
+  display: inline-block;
+  padding: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 260px;
+  font-size: 52px;
+  line-height: 52px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0 auto;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 4px;
   overflow: hidden;
+  cursor: pointer;
+  text-transform: uppercase;
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
+  -webkit-text-stroke: 1px var(--white);
+  text-stroke: 1px var(--white);
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  color: transparent;
+}
+.checkbox-budget:not(:checked) + label {
+  background-color: var(--dark-light);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+.checkbox-budget:checked + label {
+  background-color: transparent;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.checkbox-budget:not(:checked) + label:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.checkbox-budget:checked + label::before,
+.checkbox-budget:not(:checked) + label::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  background-image: linear-gradient(138deg, var(--red), var(--yellow));
+  z-index: -1;
+}
+.checkbox-budget:checked + label span,
+.checkbox-budget:not(:checked) + label span {
+  position: relative;
+  display: block;
+}
+.checkbox-budget:checked + label span::before,
+.checkbox-budget:not(:checked) + label span::before {
+  position: absolute;
+  content: attr(data-hover);
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  -webkit-text-stroke: transparent;
+  text-stroke: transparent;
+  -webkit-text-fill-color: var(--white);
+  text-fill-color: var(--white);
+  color: var(--white);
+  -webkit-transition: max-height 0.3s;
+  -moz-transition: max-height 0.3s;
+  transition: max-height 0.3s;
+}
+.checkbox-budget:not(:checked) + label span::before {
+  max-height: 0;
+}
+.checkbox-budget:checked + label span::before {
+  max-height: 100%;
 }
 
-/* spin forward correct card (big-box) */
-.mountains-chosen .big-box a.mountains-visible,
-.lakes-chosen .big-box a.lakes-visible,
-.forests-chosen .big-box a.forests-visible,
-.beaches-chosen .big-box a.beaches-visible {
-  -webkit-transform: rotateX(360deg) translateZ(1px);
-  transform: rotateX(360deg);
+.checkbox:checked
+  ~ .section
+  .container
+  .row
+  .col-xl-10
+  .checkbox-budget:not(:checked)
+  + label {
+  background-color: var(--light);
+  -webkit-text-stroke: 1px var(--dark-blue);
+  text-stroke: 1px var(--dark-blue);
+  box-shadow: 0 1x 4px 0 rgba(0, 0, 0, 0.05);
 }
 
-/* spin backward all correct cards (big-box) */
-.mountains-chosen .big-box a:not(.mountains-visible),
-.lakes-chosen .big-box a:not(.lakes-visible),
-.forests-chosen .big-box a:not(.forests-visible),
-.beaches-chosen .big-box a:not(.beaches-visible) {
-  -webkit-transform: rotateX(180deg) translateZ(-1px);
-  transform: rotateX(180deg);
+.checkbox-booking:checked + label,
+.checkbox-booking:not(:checked) + label {
+  position: relative;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+  text-align: center;
+  padding: 0;
+  padding: 3px;
+  font-size: 14px;
+  line-height: 30px;
+  letter-spacing: 1px;
+  margin: 0 auto;
+  margin-left: 6px;
+  margin-right: 6px;
+  margin-bottom: 16px;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--white);
+  text-transform: uppercase;
+  background-color: var(--dark-light);
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
+}
+.checkbox-booking:not(:checked) + label::before {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+.checkbox-booking:checked + label::before {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.checkbox-booking:not(:checked) + label:hover::before {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.checkbox-booking:checked + label::before,
+.checkbox-booking:not(:checked) + label::before {
+  position: absolute;
+  content: "";
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 4px;
+  z-index: -2;
+  background-image: linear-gradient(138deg, var(--red), var(--yellow));
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
+}
+.checkbox-booking:not(:checked) + label::before {
+  top: -1px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+}
+.checkbox-booking:checked + label::after,
+.checkbox-booking:not(:checked) + label::after {
+  position: absolute;
+  content: "";
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 4px;
+  z-index: -2;
+  background-color: var(--dark-light);
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
+}
+.checkbox-booking:checked + label::after {
+  opacity: 0;
+}
+.checkbox-booking:checked + label .uil,
+.checkbox-booking:not(:checked) + label .uil {
+  font-size: 20px;
+}
+.checkbox-booking:checked + label .text,
+.checkbox-booking:not(:checked) + label .text {
+  position: relative;
+  display: inline-block;
+  -webkit-transition: opacity 300ms linear;
+  transition: opacity 300ms linear;
+}
+.checkbox-booking:checked + label .text {
+  opacity: 0.6;
+}
+.checkbox-booking:checked + label .text::after,
+.checkbox-booking:not(:checked) + label .text::after {
+  position: absolute;
+  content: "";
+  width: 0;
+  left: 0;
+  top: 50%;
+  margin-top: -1px;
+  height: 2px;
+  background-image: linear-gradient(138deg, var(--red), var(--yellow));
+  z-index: 1;
+  -webkit-transition: all 300ms linear;
+  transition: all 300ms linear;
+}
+.checkbox-booking:not(:checked) + label .text::after {
+  width: 0;
+}
+.checkbox-booking:checked + label .text::after {
+  width: 100%;
 }
 
-.mountains-chosen .big-box a,
-.lakes-chosen .big-box a,
-.forests-chosen .big-box a,
-.beaches-chosen .big-box a {
-  -webkit-transition-delay: .4s;
-  transition-delay: .4s;
+.checkbox:checked
+  ~ .section
+  .container
+  .row
+  .col-12
+  .checkbox-booking:not(:checked)
+  + label,
+.checkbox:checked
+  ~ .section
+  .container
+  .row
+  .col-12
+  .checkbox-booking:checked
+  + label {
+  background-color: var(--light);
+  color: var(--dark-blue);
+}
+.checkbox:checked
+  ~ .section
+  .container
+  .row
+  .col-12
+  .checkbox-booking:checked
+  + label::after,
+.checkbox:checked
+  ~ .section
+  .container
+  .row
+  .col-12
+  .checkbox-booking:not(:checked)
+  + label::after {
+  background-color: var(--light);
 }
 
-.mountains .original {
-  background-color: #ee451a;
+.link-to-page {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 20000;
+  cursor: pointer;
+  width: 30px;
 }
-.lakes .original {
-  background-color: #019eeb;
+.link-to-page img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
-.forests .original {
-  background-color: #109d69;
-}
-.beaches .original {
-  background-color: #ffb200;
-}
-
-/* Responsive layout still needs a little work */
-/* @media (max-width:1199px) {
-  .topbanner {
-    width: 940px;
-  }
-  #banner #boxes {
-    height: 402px;
-  }
-  #banner #boxes .small-box {
-    height: 200px;
-    width: 200px;
-  }
-  #banner #boxes .small-box.mountains {
-    top: 0;
-    left: 0;
-  }
-  #banner #boxes .small-box.lakes {
-    top: 202px;
-    left: 0;
-  }
-  #banner #boxes .small-box.forests {
-    top: 0;
-    left: 202px;
-  }
-  #banner #boxes .small-box.beaches {
-    top: 202px;
-    left: 202px;
-  }
-  #banner #boxes .big-box {
-    height: 402px;
-    width: 536px;
-  }
-}
-@media (max-width:994px) {
-  .topbanner {
-    width: 720px;
-  }
-  #banner #boxes {
-    height: 400px;
-    overflow: hidden;
-  }
-  #banner #boxes .small-box {
-    height: 25%;
-    width: 25%;
-  }
-  #banner #boxes .small-box.mountains {
-    top: 0;
-    left: 0;
-  }
-  #banner #boxes .small-box.lakes {
-    top: 25%;
-    left: 0;
-  }
-  #banner #boxes .small-box.forests {
-    top: 50%;
-    left: 0;
-  }
-  #banner #boxes .small-box.beaches {
-    top: 75%;
-    left: 0;
-  }
-  #banner #boxes .small-box img {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
-  #banner #boxes .big-box {
-    height: 100%;
-    width: 75%;
-    overflow: hidden;
-  }
-  #banner #boxes .big-box img {
-    width: 100%;
-  }
-  .small-box a span {
-    background: transparent;
-    text-shadow: 0 0 10px rgba(0,0,0,.8), 0 0 4px rgba(0,0,0,.6);
-  }
-}
-@media (max-width:767px) {
-  .topbanner {
-    width: 100%;    
-  }
-  .small-box a span {
-    font-size: 16px;
-  }
-  #banner #boxes .big-box {
-    height: 75%;
-    width: 100%;
-  }
-  #banner #boxes .small-box {
-    bottom: 0;
-  }
-  #banner #boxes .small-box.mountains {
-    top: auto;
-    left: 0;
-  }
-  #banner #boxes .small-box.lakes {
-    top: auto;
-    left: 25%;
-  }
-  #banner #boxes .small-box.forests {
-    top: auto;
-    left: 50%;
-  }
-  #banner #boxes .small-box.beaches {
-    top: auto;
-    left: 75%;
-  }
-}
-@media (max-width:480px) {
-  #banner #boxes {
-    height: 300px;
-  }
-  .small-box a span {
-    display: none;
-  }
-}
-@media (max-width:994px) {
-  #banner {
-    background-color: #fff;
-    margin-top: 20px;
-  }
-}
-*/
-
 </style>

@@ -1,8 +1,12 @@
-export default [
+export default [{
+    path: "/",
+    view: "Home",
+    name: "Home",
+  },
   {
-    path: '/',
-    view: 'Home',
-    name: 'Home',
+    path: "/test",
+    view: "test",
+    name: "test",
   },
   {
     path: '/mypage',
@@ -14,9 +18,5 @@ export default [
     view: 'shytest',
     name: 'shytest',
   },
-  {
-    path: '/test',
-    view: 'test',
-    name: 'test',
-  },
+
 ]

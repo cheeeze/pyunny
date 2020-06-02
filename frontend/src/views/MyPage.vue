@@ -1,120 +1,129 @@
 <template>
   <div id="full">
+    <navbar></navbar>
     <section id="banner" class="topbanner">
       <div id="boxes" :class="tempClass">
         <!-- red box -->
-        <div class="small-box red" rel="red" @click="filp('red')">
+        <div class="small-box red" @click="filp('red')">
           <div>
-            <a class="red-visible original">
+            <div class="red-visible original left">
               <span>기프티콘 관리</span>
-            </a>
+            </div>
 
-            <a target="_blank" class="blue-visible">
+            <div class="blue-visible left">
               <span>내가 쓴 레시피</span>
               <img src="@/assets/images/write_img.jpg" />
-            </a>
+            </div>
 
-            <a target="_blank" class="yellow-visible">
+            <div class="yellow-visible left">
               <span>품목설정1</span>
-            </a>
+            </div>
 
-            <a target="_blank" class="darkgray-visible">
+            <div class="darkgray-visible left">
               <span>내 정보 수정</span>
               <img src="@/assets/images/person_img.jpg" />
-            </a>
+            </div>
           </div>
         </div>
 
         <!-- blue-box -->
-        <div class="small-box blue" rel="blue" @click="filp('blue')">
+        <div class="small-box blue" @click="filp('blue')">
           <div>
-            <a class="blue-visible original">
+            <div class="blue-visible original left">
               <span>나만의 레시피 관리</span>
-            </a>
+            </div>
 
-            <a target="_blank" class="red-visible">
+            <div class="red-visible left">
               <span>내가 가진 기프티콘</span>
               <img src="@/assets/images/more_img.jpg" />
-            </a>
+            </div>
 
-            <a target="_blank" class="yellow-visible">
+            <div class="yellow-visible left">
               <span>품목설정2</span>
-            </a>
+            </div>
 
-            <a target="_blank" class="darkgray-visible">
+            <div class="darkgray-visible left">
               <span>설정3</span>
-            </a>
+            </div>
           </div>
         </div>
 
         <!-- yellow-box -->
-        <div class="small-box yellow" rel="yellow" @click="filp('yellow')">
+        <div
+          class="small-box yellow"
+          @click="filp('yellow')"
+          @mouseover="test()"
+        >
           <div>
-            <a class="yellow-visible original">
+            <div class="yellow-visible original left">
               <span>관심품목</span>
-            </a>
+            </div>
 
-            <a target="_blank" class="red-visible">
-              <span>기프티콘 등록</span>
+            <div class="red-visible left">
+              <span>기프티콘 등록{{ this.tem_check }}</span>
               <img src="@/assets/images/plus_img.jpg" />
-            </a>
+            </div>
 
-            <a target="_blank" class="blue-visible">
+            <div class="blue-visible left">
               <span>내가 쓴 댓글</span>
               <img src="@/assets/images/comment_img.jpg" />
-            </a>
+            </div>
 
-            <a target="_blank" class="darkgray-visible">
+            <div class="darkgray-visible left">
               <span>멤버십 관리</span>
               <img src="@/assets/images/card_img.jpg" />
-            </a>
+            </div>
           </div>
         </div>
 
         <!-- black-box -->
-        <div class="small-box darkgray" rel="darkgray" @click="filp('darkgray')">
+        <div class="small-box darkgray" @click="filp('darkgray')">
           <div>
-            <a class="darkgray-visible original">
+            <div class="darkgray-visible original left">
               <span>설정</span>
-            </a>
+            </div>
 
-            <a target="_blank" class="red-visible">
+            <div class="red-visible left">
               <span>사용한 기프티콘</span>
               <img src="@/assets/images/check_img.jpg" />
-            </a>
+            </div>
 
-            <a target="_blank" class="blue-visible">
+            <div class="blue-visible left">
               <span>좋아요 한 레시피</span>
               <img src="@/assets/images/heart_img.jpg" />
-            </a>
+            </div>
 
-            <a target="_blank" class="yellow-visible">
+            <div class="yellow-visible left">
               <span>품목설정3</span>
-            </a>
+            </div>
           </div>
         </div>
 
         <!-- big-box -->
         <div class="big-box">
           <div>
-            <div target="_blank" class="red-visible right">
-              <h1>기프티콘 관리</h1>
+            <div class="red-visible right">
+              <h3>깊티콘관리</h3>
             </div>
 
-            <div target="_blank" class="yellow-visible right">
-              <h1>관심물품 관리</h1>
+            <div class="red-visible right red1">
+              <h3>기프티콘 등록</h3>
             </div>
 
-            <div target="_blank" class="blue-visible right">
+            <div class="yellow-visible right">
+              <h3>관심물품 관리</h3>
+            </div>
+
+            <div class="blue-visible right">
               <h1>레시피 관리</h1>
             </div>
 
-            <div target="_blank" class="darkgray-visible right">
+            <div class="darkgray-visible right">
               <h1>설정</h1>
               <img src="http://www.savorypixel.com/678799/mountains/k2.jpg" />
             </div>
 
-            <div class="original right">
+            <div v-if="tem_check" class="original right">
               <img src="@/assets/images/center_cloud.png" />
             </div>
           </div>
@@ -125,22 +134,40 @@
 </template>
 
 <script>
+import Navbar from "@/components/Navbar.vue";
+
 export default {
   data() {
     return {
-      tempClass: ""
+      tem_check: false,
+      tempClass: "",
     };
   },
+  components: {
+    Navbar,
+  },
   methods: {
+    test() {
+      if (this.tempClass == "red-chosen") {
+        console.log("관심목록 누름");
+      }
+
+      console.log("눌렀다.");
+      this.tem_check = !this.tem_check;
+      console.log(this.tem_check);
+    },
     filp(value) {
       this.tempClass = "";
+
       if ($("#boxes").attr("class") !== "") {
-        $("#banner #boxes").attr("class", "");
+        console.log("flip-if", this.tempClass);
+        $("#boxes").attr("class", "");
       } else {
         this.tempClass = value + "-chosen";
+        console.log("flip-else", this.tempClass);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -157,7 +184,6 @@ export default {
   height: 100%;
 }
 body {
-  font-family: "KyoboHand";
   min-width: 320px;
   padding: 0;
 }
@@ -190,7 +216,7 @@ body {
   width: 100%;
   height: 100%;
 }
-.small-box a {
+.small-box .left {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   -webkit-box-sizing: border-box;
@@ -240,17 +266,17 @@ body {
 .original {
   opacity: 0.9999;
 }
-.small-box a:not(.original) {
+.small-box .left:not(.original) {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
 }
-.small-box > div > a:not(.original):hover {
+.small-box > div > .left:not(.original):hover {
   cursor: pointer;
 }
-.small-box > div > a.original:hover {
+.small-box > div > .left.original:hover {
   cursor: default;
 }
-.small-box a span,
+.small-box .left span,
 .big-box > .right > span {
   position: absolute;
   bottom: 0;
@@ -270,7 +296,7 @@ body {
 /* .small-box .original img {
   display: none;
 } */
-.small-box > div > a > img {
+.small-box > div > .left > img {
   width: 100%;
 }
 .small-box .original span {
@@ -332,51 +358,51 @@ body {
   background-position: center center;
 }
 /* spin forward all correct cards (small-box) */
-.red-chosen .small-box:not(.red) a.red-visible,
-.blue-chosen .small-box:not(.blue) a.blue-visible,
-.yellow-chosen .small-box:not(.yellow) a.yellow-visible,
-.darkgray-chosen .small-box:not(.darkgray) a.darkgray-visible {
+.red-chosen .small-box:not(.red) .left.red-visible,
+.blue-chosen .small-box:not(.blue) .left.blue-visible,
+.yellow-chosen .small-box:not(.yellow) .left.yellow-visible,
+.darkgray-chosen .small-box:not(.darkgray) .left.darkgray-visible {
   -webkit-transform: rotateY(360deg) translateZ(1px);
   transform: rotateY(360deg);
 }
 /* spin backward all non-correct cards (small-box)*/
-.red-chosen .small-box:not(.red) a:not(.red-visible),
-.blue-chosen .small-box:not(.blue) a:not(.blue-visible),
-.yellow-chosen .small-box:not(.yellow) a:not(.yellow-visible),
-.darkgray-chosen .small-box:not(.darkgray) a:not(.darkgray-visible) {
+.red-chosen .small-box:not(.red) .left:not(.red-visible),
+.blue-chosen .small-box:not(.blue) .left:not(.blue-visible),
+.yellow-chosen .small-box:not(.yellow) .left:not(.yellow-visible),
+.darkgray-chosen .small-box:not(.darkgray) .left:not(.darkgray-visible) {
   -webkit-transform: rotateY(180deg) translateZ(-2px);
   transform: rotateY(180deg);
 }
-.red-chosen .small-box:not(.red) a.blue-visible,
-.blue-chosen .small-box:not(.blue) a.red-visible,
-.yellow-chosen .small-box:not(.yellow) a.red-visible,
-.darkgray-chosen .small-box:not(.darkgray) a.red-visible,
-.red-chosen .small-box.blue a.red-visible,
-.blue-chosen .small-box.red a.blue-visible,
-.yellow-chosen .small-box.red a.yellow-visible,
-.darkgray-chosen .small-box.red a.darkgray-visible {
+.red-chosen .small-box:not(.red) .left.blue-visible,
+.blue-chosen .small-box:not(.blue) .left.red-visible,
+.yellow-chosen .small-box:not(.yellow) .left.red-visible,
+.darkgray-chosen .small-box:not(.darkgray) .left.red-visible,
+.red-chosen .small-box.blue .left.red-visible,
+.blue-chosen .small-box.red .left.blue-visible,
+.yellow-chosen .small-box.red .left.yellow-visible,
+.darkgray-chosen .small-box.red .left.darkgray-visible {
   -webkit-transition-delay: 0.1s;
   transition-delay: 0.1s;
 }
-.red-chosen .small-box:not(.red) a.yellow-visible,
-.blue-chosen .small-box:not(.blue) a.yellow-visible,
-.yellow-chosen .small-box:not(.yellow) a.blue-visible,
-.darkgray-chosen .small-box:not(.darkgray) a.blue-visible,
-.red-chosen .small-box.yellow a.red-visible,
-.blue-chosen .small-box.yellow a.blue-visible,
-.yellow-chosen .small-box.blue a.yellow-visible,
-.darkgray-chosen .small-box.blue a.darkgray-visible {
+.red-chosen .small-box:not(.red) .left.yellow-visible,
+.blue-chosen .small-box:not(.blue) .left.yellow-visible,
+.yellow-chosen .small-box:not(.yellow) .left.blue-visible,
+.darkgray-chosen .small-box:not(.darkgray) .left.blue-visible,
+.red-chosen .small-box.yellow .left.red-visible,
+.blue-chosen .small-box.yellow .left.blue-visible,
+.yellow-chosen .small-box.blue .left.yellow-visible,
+.darkgray-chosen .small-box.blue .left.darkgray-visible {
   -webkit-transition-delay: 0.2s;
   transition-delay: 0.2s;
 }
-.red-chosen .small-box:not(.red) a.darkgray-visible,
-.blue-chosen .small-box:not(.blue) a.darkgray-visible,
-.yellow-chosen .small-box:not(.yellow) a.darkgray-visible,
-.darkgray-chosen .small-box:not(.darkgray) a.yellow-visible,
-.red-chosen .small-box.darkgray a.red-visible,
-.blue-chosen .small-box.darkgray a.blue-visible,
-.yellow-chosen .small-box.darkgray a.yellow-visible,
-.darkgray-chosen .small-box.yellow a.darkgray-visible {
+.red-chosen .small-box:not(.red) .left.darkgray-visible,
+.blue-chosen .small-box:not(.blue) .left.darkgray-visible,
+.yellow-chosen .small-box:not(.yellow) .left.darkgray-visible,
+.darkgray-chosen .small-box:not(.darkgray) .left.yellow-visible,
+.red-chosen .small-box.darkgray .left.red-visible,
+.blue-chosen .small-box.darkgray .left.blue-visible,
+.yellow-chosen .small-box.darkgray .left.yellow-visible,
+.darkgray-chosen .small-box.yellow .left.darkgray-visible {
   -webkit-transition-delay: 0.3s;
   transition-delay: 0.3s;
 }
