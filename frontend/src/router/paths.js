@@ -4,19 +4,28 @@ export default [{
     name: "Home",
   },
   {
+    path: "/",
+    view: "Home",
+    name: "Home",
+  },
+  {
     path: "/test",
     view: "test",
     name: "test",
   },
   {
-    path: '/mypage',
-    view: 'MyPage',
-    name: 'MyPage',
+    path: "/mypage",
+    view: "MyPage",
+    name: "MyPage",
   },
   {
-    path: '/shy',
-    view: 'shytest',
-    name: 'shytest',
+    path: "/map",
+    view: "Map",
+    name: "Map",
   },
-
-]
+  {
+    path: "/shy",
+    view: "shytest",
+    name: "shytest",
+  },
+];

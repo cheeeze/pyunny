@@ -71,12 +71,12 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Lato", "Arial", sans-serif;
+  
 }
 
 /* HEADINGS */
 
-h1,
+/* h1,
 p {
   color: #fff;
   text-align: center;
@@ -93,7 +93,7 @@ h2 {
   text-align: center;
   line-height: 1.4;
   margin-bottom: 10px;
-}
+} */
 
 /* BASIC SETUP */
 .login-btn {
@@ -134,6 +134,7 @@ h2 {
   align-items: center;
   height: 50px;
   overflow: hidden;
+  font-family: "Lato", "Arial", sans-serif;
 }
 
 .navbar .nav_logo {
@@ -339,7 +340,7 @@ input {
 
   /* MOBILE HEADINGS */
 
-  h1 {
+  /* h1 {
     font-size: 1.9rem;
   }
 
@@ -349,7 +350,7 @@ input {
 
   p {
     font-size: 0.8rem;
-  }
+  } */
 
   /* MOBILE NAVIGATION */
 
