@@ -110,6 +110,17 @@ const deleteRecipeComment = (data, success, error) => {
         })
 }
 
+const getComment = (data, success, error) => {
+    http
+        .get('/api/recipe_comment/' + data)
+        .then((res) => {
+            success(res)
+        })
+        .catch((err) => {
+            error(err)
+        })
+}
+
 
 const axiosFunction = {
     getRecipePopularOrdered: (data, success, error) => getRecipePopularOrdered(data, success, error),
