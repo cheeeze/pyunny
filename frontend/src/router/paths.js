@@ -8,4 +8,9 @@ export default [{
     view: "test",
     name: "test",
   },
+  {
+    path: "/recipe",
+    view: "Recipe",
+    name: "Recipe",
+  },
 ];
