@@ -43,8 +43,9 @@ public class StoreServiceImpl implements StoreService {
         } else {
             System.out.println("없는 key");
             List<Store> res = dao.getStoreNear(search);
+
             for (Store s : res) {
-                // System.out.println(s.toString());
+                System.out.println(s.toString());
                 vop.rightPush(key, s);
             }
             redisTemplate.expire(key, 10, TimeUnit.MINUTES);

@@ -30,8 +30,8 @@
         <include refid="select-storeproduct"/>
         <where>
             store_id in 
-            <foreach collection="store" item="item" open="(" close=")" separator=",">
-                #{item.value} 
+            <foreach collection="store" item="it" open="(" close=")" separator=",">
+                #{it.value} 
             </foreach>
             and 
             (name like '%${keyword}%' or description like '%${keyword}%')

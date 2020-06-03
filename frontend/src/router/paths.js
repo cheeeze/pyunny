@@ -4,6 +4,11 @@ export default [{
     name: "Home",
   },
   {
+    path: "/map",
+    view: "Map",
+    name: "Map",
+  },
+  {
     path: "/test",
     view: "test",
     name: "test",

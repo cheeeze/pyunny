@@ -1,5 +1,4 @@
 import http from '../http-common'
-import axios from 'axios'
 
 const getStoreNear = (data, success, error) => {
     http
@@ -20,9 +19,9 @@ const getStoreNear = (data, success, error) => {
         })
 }
 
-const getStoreProductById = (data, success, error) => {
+const getStoreProductBySearch = (data, success, error) => {
     http
-        .get('/api/store_proeuct', {
+        .get('/api/store_product', {
             params: {
                 latitude: data.latitude,
                 longitude: data.longitude,
@@ -41,7 +40,7 @@ const getStoreProductById = (data, success, error) => {
 
 const axiosFunction = {
     getStoreNear: (data, success, error) => getStoreNear(data, success, error),
-    getStoreProductById: (data, success, error) => getStoreProductById(data, success, error)
+    getStoreProductBySearch: (data, success, error) => getStoreProductBySearch(data, success, error)
 }
 
 export default axiosFunction
