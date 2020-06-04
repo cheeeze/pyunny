@@ -1,532 +1,316 @@
 <template>
-  <div class="full">
-    <section id="banner" class="topbanner">
-      <div id="boxes" :class="tempClass">
-        <div
-          class="small-box mountains"
-          rel="mountains"
-          @click="filp('mountains')"
-        >
-          <div>
-            <a
-              href="http://en.wikipedia.org/wiki/Derwentwater"
-              target="_blank"
-              class="lakes-visible"
-            >
-              <span>Derwentwater</span>
-              <img
-                src="http://www.savorypixel.com/678799/lakes/derwentwater.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Black_forest"
-              target="_blank"
-              class="forests-visible"
-            >
-              <span>Black Forest</span>
-              <img
-                src="http://www.savorypixel.com/678799/forests/black-forest.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/The_Maldives"
-              target="_blank"
-              class="beaches-visible"
-            >
-              <span>The Maldives</span>
-              <img
-                src="http://www.savorypixel.com/678799/beaches/maldives.jpg"
-              />
-            </a>
-            <a class="mountains-visible original">
-              <span>Mountains</span>
-            </a>
-          </div>
-        </div>
-        <div class="small-box lakes" rel="lakes" @click="filp('lakes')">
-          <div>
-            <a
-              href="http://en.wikipedia.org/wiki/Lhotse"
-              target="_blank"
-              class="mountains-visible"
-            >
-              <span>Lhotse</span>
-              <img
-                src="http://www.savorypixel.com/678799/mountains/lhotse.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Sagano_Bamboo_Forest"
-              target="_blank"
-              class="forests-visible"
-            >
-              <span>Sagano Bamboo Forest</span>
-              <img
-                src="http://www.savorypixel.com/678799/forests/sagano-bamboo-forest.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Lanikai_Beach"
-              target="_blank"
-              class="beaches-visible"
-            >
-              <span>Lanikai Beach</span>
-              <img
-                src="http://www.savorypixel.com/678799/beaches/lanikai-beach.jpg"
-              />
-            </a>
-            <a class="lakes-visible original">
-              <span>Lakes</span>
-            </a>
-          </div>
-        </div>
-        <div class="small-box forests" rel="forests" @click="filp('forests')">
-          <div>
-            <a
-              href="http://en.wikipedia.org/wiki/Kanchenjunga"
-              target="_blank"
-              class="mountains-visible"
-            >
-              <span>Kanchenjunga</span>
-              <img
-                src="http://www.savorypixel.com/678799/mountains/kanchenjunga.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Lake_tahoe"
-              target="_blank"
-              class="lakes-visible"
-            >
-              <span>Lake Tahoe</span>
-              <img
-                src="http://www.savorypixel.com/678799/lakes/lake-tahoe.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Hampton_Beach"
-              target="_blank"
-              class="beaches-visible"
-            >
-              <span>Hampton Beach</span>
-              <img
-                src="http://www.savorypixel.com/678799/beaches/hampton-beach.jpg"
-              />
-            </a>
-            <a class="forests-visible original">
-              <span>Forests</span>
-            </a>
-          </div>
-        </div>
-        <div class="small-box beaches" rel="beaches" @click="filp('beaches')">
-          <div>
-            <a
-              href="http://en.wikipedia.org/wiki/Mount_everest"
-              target="_blank"
-              class="mountains-visible"
-            >
-              <span>Mount Everest</span>
-              <img
-                src="http://www.savorypixel.com/678799/mountains/everest.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Maligne_lake"
-              target="_blank"
-              class="lakes-visible"
-            >
-              <span>Maligne Lake</span>
-              <img
-                src="http://www.savorypixel.com/678799/lakes/maligne-lake.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Sequoia_National_Forest"
-              target="_blank"
-              class="forests-visible"
-            >
-              <span>Sequoia National Forest</span>
-              <img
-                src="http://www.savorypixel.com/678799/forests/sequoia-forest.jpg"
-              />
-            </a>
-            <a class="beaches-visible original">
-              <span>Beaches</span>
-            </a>
-          </div>
-        </div>
-        <div class="big-box">
-          <div>
-            <a
-              href="http://en.wikipedia.org/wiki/Bora_bora"
-              target="_blank"
-              class="beaches-visible"
-            >
-              <span>Bora Bora</span>
-              <img
-                src="http://www.savorypixel.com/678799/beaches/bora-bora.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Amazon_rainforest"
-              target="_blank"
-              class="forests-visible"
-            >
-              <span>Amazon Rainforest</span>
-              <img src="http://www.savorypixel.com/678799/forests/amazon.jpg" />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/Lake_Lucerne"
-              target="_blank"
-              class="lakes-visible"
-            >
-              <span>Lake Lucerne</span>
-              <img
-                src="http://www.savorypixel.com/678799/lakes/lake-lucerne.jpg"
-              />
-            </a>
-            <a
-              href="http://en.wikipedia.org/wiki/K2"
-              target="_blank"
-              class="mountains-visible"
-            >
-              <span>K2</span>
-              <img src="http://www.savorypixel.com/678799/mountains/k2.jpg" />
-            </a>
-            <a class="original">
-              <img
-                src="http://www.savorypixel.com/678799/beautiful-earth.jpg"
-              />
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+  <form
+    method="post"
+    class="file-uploader"
+    action=""
+    enctype="multipart/form-data"
+    style="z-index: 100;"
+  >
+    <div class="file-uploader__message-area">
+      <p>Select a file to upload</p>
+    </div>
+    <div class="file-chooser">
+      <input
+        class="file-chooser__input"
+        ref="file"
+        type="file"
+        @change="handleFileUpload()"
+      />
+    </div>
+    <div>asdfsdff</div>
+    <input
+      style="z-index: 150;"
+      @click="test()"
+      class="file-uploader__submit-button"
+      type="submit"
+    />
+  </form>
 </template>
+
 <script>
 export default {
   data() {
     return {
-      tempClass: "",
+      file: "",
     };
   },
+  components: {},
   methods: {
-    filp(value) {
-      this.tempClass = "";
-      if ($("#boxes").attr("class") !== "") {
-        $("#banner #boxes").attr("class", "");
-      } else {
-        this.tempClass = value + "-chosen";
+    /*
+        Submits all of the files to the server
+      */
+    test() {
+      console.log("?!?!?!?!?!");
+    },
+    submitFiles() {
+      /*
+          Initialize the form data
+        */
+      let formData = new FormData();
+
+      /*
+          Iteate over any file sent over appending the files
+          to the form data.
+        */
+      for (var i = 0; i < this.files.length; i++) {
+        let file = this.files[i];
+
+        formData.append("files[" + i + "]", file);
       }
+
+      /*
+          Make the request to the POST /multiple-files URL
+        */
+      axios
+        .post("/multiple-files", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(function() {
+          console.log("SUCCESS!!");
+        })
+        .catch(function() {
+          console.log("FAILURE!!");
+        });
+    },
+
+    /*
+        Handles a change on the file upload
+      */
+    handleFilesUpload() {
+      this.files = this.$refs.files.files;
     },
   },
 };
+
+// //jQuery plugin
+// (function( $ ) {
+
+//    $.fn.uploader = function( options ) {
+//      var settings = $.extend({
+//        MessageAreaText: "No files selected.",
+//        MessageAreaTextWithFiles: "File List:",
+//        DefaultErrorMessage: "Unable to open this file.",
+//        BadTypeErrorMessage: "We cannot accept this file type at this time.",
+//        acceptedFileTypes: ['pdf', 'jpg', 'gif', 'jpeg', 'bmp', 'tif', 'tiff', 'png', 'xps', 'doc', 'docx',
+//         'fax', 'wmp', 'ico', 'txt', 'cs', 'rtf', 'xls', 'xlsx']
+//      }, options );
+
+//      var uploadId = 1;
+//      //update the messaging
+//       $('.file-uploader__message-area p').text(options.MessageAreaText || settings.MessageAreaText);
+
+//      //create and add the file list and the hidden input list
+//      var fileList = $('<ul class="file-list"></ul>');
+//      var hiddenInputs = $('<div class="hidden-inputs hidden"></div>');
+//      $('.file-uploader__message-area').after(fileList);
+//      $('.file-list').after(hiddenInputs);
+
+//     //when choosing a file, add the name to the list and copy the file input into the hidden inputs
+//      $('.file-chooser__input').on('change', function(){
+//         var file = $('.file-chooser__input').val();
+//         var fileName = (file.match(/([^\\\/]+)$/)[0]);
+
+//        //clear any error condition
+//        $('.file-chooser').removeClass('error');
+//        $('.error-message').remove();
+
+//        //validate the file
+//        var check = checkFile(fileName);
+//        if(check === "valid") {
+
+//          // move the 'real' one to hidden list
+//          $('.hidden-inputs').append($('.file-chooser__input'));
+
+//          //insert a clone after the hiddens (copy the event handlers too)
+//          $('.file-chooser').append($('.file-chooser__input').clone({ withDataAndEvents: true}));
+
+//          //add the name and a remove button to the file-list
+//          $('.file-list').append('<li style="display: none;"><span class="file-list__name">' + fileName + '</span><button class="removal-button" data-uploadid="'+ uploadId +'"></button></li>');
+//          $('.file-list').find("li:last").show(800);
+
+//          //removal button handler
+//          $('.removal-button').on('click', function(e){
+//            e.preventDefault();
+
+//            //remove the corresponding hidden input
+//            $('.hidden-inputs input[data-uploadid="'+ $(this).data('uploadid') +'"]').remove();
+
+//            //remove the name from file-list that corresponds to the button clicked
+//            $(this).parent().hide("puff").delay(10).queue(function(){$(this).remove();});
+
+//            //if the list is now empty, change the text back
+//            if($('.file-list li').length === 0) {
+//              $('.file-uploader__message-area').text(options.MessageAreaText || settings.MessageAreaText);
+//            }
+//          });
+
+//          //so the event handler works on the new "real" one
+//          $('.hidden-inputs .file-chooser__input').removeClass('file-chooser__input').attr('data-uploadId', uploadId);
+
+//          //update the message area
+//          $('.file-uploader__message-area').text(options.MessageAreaTextWithFiles || settings.MessageAreaTextWithFiles);
+
+//          uploadId++;
+
+//        } else {
+//          //indicate that the file is not ok
+//          $('.file-chooser').addClass("error");
+//          var errorText = options.DefaultErrorMessage || settings.DefaultErrorMessage;
+
+//          if(check === "badFileName") {
+//            errorText = options.BadTypeErrorMessage || settings.BadTypeErrorMessage;
+//          }
+
+//          $('.file-chooser__input').after('<p class="error-message">'+ errorText +'</p>');
+//        }
+//      });
+
+//      var checkFile = function(fileName) {
+//        var accepted          = "invalid",
+//            acceptedFileTypes = this.acceptedFileTypes || settings.acceptedFileTypes,
+//            regex;
+
+//        for ( var i = 0; i < acceptedFileTypes.length; i++ ) {
+//          regex = new RegExp("\\." + acceptedFileTypes[i] + "$", "i");
+
+//          if ( regex.test(fileName) ) {
+//            accepted = "valid";
+//            break;
+//          } else {
+//            accepted = "badFileName";
+//          }
+//        }
+
+//        return accepted;
+//     };
+//   };
+// }( jQuery ));
+
+// //init
+// $(document).ready(function(){
+//   $('.fileUploader').uploader({
+//     MessageAreaText: "No files selected. Please select a file."
+//   });
+// });
 </script>
 
 <style>
-@import url(https://fonts.googleapis.com/css?family=Cabin);
-
-body {
-  font-family: "Cabin";
-  min-width: 320px;
-  padding: 0;
+.file-uploader {
+  background-color: #dbefe9;
+  border-radius: 3px;
+  color: #242424;
 }
-.full {
-  width: 100%;
-  background: #eee;
+.file-uploader__message-area {
+  font-size: 18px;
+  padding: 1em;
+  text-align: center;
+  color: #377a65;
 }
-.topbanner {
-  width: 1170px;
-  margin: 20px auto;
+.file-list {
+  background-color: #fff;
+  font-size: 16px;
 }
-#banner #boxes {
-  height: 500px;
-  position: relative;
+.file-list__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-#banner #boxes div {
-  position: absolute;
-}
-.small-box {
-  -webkit-perspective: 1000;
-  perspective: 1000;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  height: 249px;
-  width: 249px;
-}
-.small-box > div {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.small-box a {
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  -ms-perspective: 1000;
-  -moz-perspective: 1000;
-  perspective: 1000;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: 0 0;
+.file-list li {
+  height: 50px;
+  line-height: 50px;
+  margin-left: 0.5em;
+  border: none;
   overflow: hidden;
 }
-.small-box a:before,
-.big-box a:before {
-  content: "";
+.removal-button {
+  width: 20%;
+  border: none;
+  background-color: #d65d38;
+  color: white;
+}
+.removal-button::before {
+  content: "X";
+}
+.removal-button:focus {
+  outline: 0;
+}
+.file-chooser {
+  padding: 1em;
+  transition: background-color 1s, height 1s;
+}
+.file-chooser p {
+  font-size: 18px;
+  padding-top: 1em;
+}
+.file-uploader {
+  max-width: 400px;
+  height: auto;
+  margin: 2em auto;
+}
+.file-uploader * {
   display: block;
-  background: rgba(0, 0, 0, 0);
-  z-index: 98;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+}
+.file-uploader input[type="submit"] {
+  margin-top: 2em;
+  float: right;
+}
+.file-list {
+  margin: 0 auto;
+  max-width: 90%;
+}
+.file-list__name {
+  max-width: 70%;
+  float: left;
+}
+.removal-button {
+  display: inline-block;
   height: 100%;
-  -webkit-transition: background 0.2s;
-  transition: background 0.2s;
+  float: right;
 }
-.small-box a:hover:before,
-.big-box a:hover:before {
-  z-index: 98;
-  background: rgba(0, 0, 0, 0.3);
-  -webkit-transition: background 0.2s;
-  transition: background 0.2s;
+.file-chooser {
+  width: 90%;
+  margin: 0.5em auto;
 }
-.big-box .original:hover:before {
-  background: rgba(0, 0, 0, 0);
+.file-chooser__input {
+  margin: 0 auto;
 }
-
-.original {
-  opacity: 0.9999;
-}
-.small-box a:not(.original) {
-  -webkit-transform: rotateY(180deg);
-  transform: rotateY(180deg);
-}
-.small-box > div > a:not(.original):hover {
-  cursor: pointer;
-}
-.small-box > div > a.original:hover {
-  cursor: default;
-}
-.small-box a span,
-.big-box a span {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  font-size: 24px;
-  color: #fff;
-  letter-spacing: 1px;
-  z-index: 100;
-  background: rgba(0, 0, 0, 0.4);
+.file-uploader__submit-button {
   width: 100%;
-  padding: 10px 20px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.8);
+  border: none;
+  font-size: 1.5em;
+  padding: 1em;
+  background-color: #72bfa7;
+  color: white;
 }
-.small-box .original img {
+.file-uploader__submit-button:hover {
+  background-color: #a7d7c8;
+}
+.file-list li:after,
+.file-uploader:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.hidden {
   display: none;
 }
-.small-box .original span {
-  height: 100%;
-  text-align: center;
-  /*line-height: 249px;*/
-  padding-top: 135px;
-  background: none;
-  text-shadow: none;
+.hidden input {
+  display: none;
 }
-.big-box a span {
-  font-size: 24px;
-  font-weight: normal;
+.error {
+  background-color: #d65d38;
+  color: white;
 }
-.small-box.mountains {
-  top: 0;
-  left: 0;
-}
-.small-box.lakes {
-  top: 251px;
-  left: 0;
-}
-.small-box.forests {
-  top: 0;
-  left: 251px;
-}
-.small-box.beaches {
-  top: 251px;
-  left: 251px;
-}
-.small-box .original span:before {
-  content: "";
-  display: block;
-  position: absolute;
-  height: 50px;
-  width: 65px;
-  left: 50%;
-  margin-left: -32px;
-  top: 80px;
-}
-.small-box.mountains .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_mountains.svg");
-}
-.small-box.lakes .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_lakes.svg");
-}
-.small-box.forests .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_forests.svg");
-}
-.small-box.beaches .original span:before {
-  background: url("http://www.savorypixel.com/678799/icon_beaches.svg");
-}
-
-/* spin forward all correct cards (small-box) */
-.mountains-chosen .small-box:not(.mountains) a.mountains-visible,
-.lakes-chosen .small-box:not(.lakes) a.lakes-visible,
-.forests-chosen .small-box:not(.forests) a.forests-visible,
-.beaches-chosen .small-box:not(.beaches) a.beaches-visible {
-  -webkit-transform: rotateY(360deg) translateZ(1px);
-  transform: rotateY(360deg);
-}
-
-/* spin backward all non-correct cards (small-box)*/
-.mountains-chosen .small-box:not(.mountains) a:not(.mountains-visible),
-.lakes-chosen .small-box:not(.lakes) a:not(.lakes-visible),
-.forests-chosen .small-box:not(.forests) a:not(.forests-visible),
-.beaches-chosen .small-box:not(.beaches) a:not(.beaches-visible) {
-  -webkit-transform: rotateY(180deg) translateZ(-2px);
-  transform: rotateY(180deg);
-}
-
-.mountains-chosen .small-box:not(.mountains) a.lakes-visible,
-.lakes-chosen .small-box:not(.lakes) a.mountains-visible,
-.forests-chosen .small-box:not(.forests) a.mountains-visible,
-.beaches-chosen .small-box:not(.beaches) a.mountains-visible,
-.mountains-chosen .small-box.lakes a.mountains-visible,
-.lakes-chosen .small-box.mountains a.lakes-visible,
-.forests-chosen .small-box.mountains a.forests-visible,
-.beaches-chosen .small-box.mountains a.beaches-visible {
-  -webkit-transition-delay: 0.1s;
-  transition-delay: 0.1s;
-}
-.mountains-chosen .small-box:not(.mountains) a.forests-visible,
-.lakes-chosen .small-box:not(.lakes) a.forests-visible,
-.forests-chosen .small-box:not(.forests) a.lakes-visible,
-.beaches-chosen .small-box:not(.beaches) a.lakes-visible,
-.mountains-chosen .small-box.forests a.mountains-visible,
-.lakes-chosen .small-box.forests a.lakes-visible,
-.forests-chosen .small-box.lakes a.forests-visible,
-.beaches-chosen .small-box.lakes a.beaches-visible {
-  -webkit-transition-delay: 0.2s;
-  transition-delay: 0.2s;
-}
-.mountains-chosen .small-box:not(.mountains) a.beaches-visible,
-.lakes-chosen .small-box:not(.lakes) a.beaches-visible,
-.forests-chosen .small-box:not(.forests) a.beaches-visible,
-.beaches-chosen .small-box:not(.beaches) a.forests-visible,
-.mountains-chosen .small-box.beaches a.mountains-visible,
-.lakes-chosen .small-box.beaches a.lakes-visible,
-.forests-chosen .small-box.beaches a.forests-visible,
-.beaches-chosen .small-box.forests a.beaches-visible {
-  -webkit-transition-delay: 0.3s;
-  transition-delay: 0.3s;
-}
-
-#boxes .big-box {
-  -webkit-perspective: 1000;
-  perspective: 1000;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  height: 500px;
-  width: 668px;
-  right: 0;
 }
-.big-box > div {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.big-box > div > a {
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  perspective: 1000;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  overflow: hidden;
-}
-.big-box > div > a.original {
-  background-color: #ddd;
-}
-.big-box > div > a:not(.original) {
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  -webkit-transform: rotateX(180deg);
-  transform: rotateX(180deg);
-  overflow: hidden;
-}
-
-/* spin forward correct card (big-box) */
-.mountains-chosen .big-box a.mountains-visible,
-.lakes-chosen .big-box a.lakes-visible,
-.forests-chosen .big-box a.forests-visible,
-.beaches-chosen .big-box a.beaches-visible {
-  -webkit-transform: rotateX(360deg) translateZ(1px);
-  transform: rotateX(360deg);
-}
-
-/* spin backward all correct cards (big-box) */
-.mountains-chosen .big-box a:not(.mountains-visible),
-.lakes-chosen .big-box a:not(.lakes-visible),
-.forests-chosen .big-box a:not(.forests-visible),
-.beaches-chosen .big-box a:not(.beaches-visible) {
-  -webkit-transform: rotateX(180deg) translateZ(-1px);
-  transform: rotateX(180deg);
-}
-
-.mountains-chosen .big-box a,
-.lakes-chosen .big-box a,
-.forests-chosen .big-box a,
-.beaches-chosen .big-box a {
-  -webkit-transition-delay: 0.4s;
-  transition-delay: 0.4s;
-}
-
-.mountains .original {
-  background-color: #ee451a;
-}
-.lakes .original {
-  background-color: #019eeb;
-}
-.forests .original {
-  background-color: #109d69;
-}
-.beaches .original {
-  background-color: #ffb200;
+ul,
+li {
+  margin: 0;
+  padding: 0;
 }
 </style>

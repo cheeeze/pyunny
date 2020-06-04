@@ -4,11 +4,6 @@ export default [{
     name: "Home",
   },
   {
-    path: "/",
-    view: "Home",
-    name: "Home",
-  },
-  {
     path: "/test",
     view: "test",
     name: "test",
@@ -27,5 +22,10 @@ export default [{
     path: "/shy",
     view: "shytest",
     name: "shytest",
+  },
+  {
+    path: "/shy2",
+    view: "shytest2",
+    name: "shytest2",
   },
 ];

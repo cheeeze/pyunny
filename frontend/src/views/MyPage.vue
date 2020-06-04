@@ -10,18 +10,66 @@
               <span>기프티콘 관리</span>
             </div>
 
-            <div class="blue-visible left">
+            <div
+              class="blue-visible left"
+              style="z-index:100;"
+              @click="selec('blue1')"
+            >
               <span>내가 쓴 레시피</span>
               <img src="@/assets/images/write_img.jpg" />
             </div>
 
-            <div class="yellow-visible left">
+            <div
+              class="yellow-visible left"
+              style="z-index:100;"
+              @click="selec('yellow1')"
+            >
               <span>품목설정1</span>
             </div>
 
-            <div class="darkgray-visible left">
+            <div
+              class="darkgray-visible left"
+              style="z-index:100;"
+              @click="selec('darkgray1')"
+            >
               <span>내 정보 수정</span>
               <img src="@/assets/images/person_img.jpg" />
+            </div>
+          </div>
+        </div>
+
+        <!-- yellow-box -->
+        <div class="small-box yellow" @click="filp('yellow')">
+          <div>
+            <div class="yellow-visible original left">
+              <span>관심품목</span>
+            </div>
+
+            <div
+              class="red-visible left"
+              style="z-index:100;"
+              @click="selec('red1')"
+            >
+              <span>기프티콘 등록</span>
+              <img src="@/assets/images/plus_img.jpg" />
+            </div>
+
+            <div
+              class="blue-visible left"
+              style="z-index:100;"
+              @click="selec('blue2')"
+            >
+              <span>내가 쓴 댓글</span>
+              <img src="@/assets/images/comment_img.jpg" />
+            </div>
+
+            <div
+              class="darkgray-visible left"
+              style="z-index:100;"
+              @click="selec('darkgray2')"
+            >
+              <span>멤버십 관리</span>
+              <img src="@/assets/images/card_img.jpg" />
             </div>
           </div>
         </div>
@@ -33,45 +81,29 @@
               <span>나만의 레시피 관리</span>
             </div>
 
-            <div class="red-visible left">
+            <div
+              class="red-visible left"
+              style="z-index:100;"
+              @click="selec('red2')"
+            >
               <span>내가 가진 기프티콘</span>
               <img src="@/assets/images/more_img.jpg" />
             </div>
 
-            <div class="yellow-visible left">
+            <div
+              class="yellow-visible left"
+              style="z-index:100;"
+              @click="selec('yellow2')"
+            >
               <span>품목설정2</span>
             </div>
 
-            <div class="darkgray-visible left">
+            <div
+              class="darkgray-visible left"
+              style="z-index:100;"
+              @click="selec('darkgray3')"
+            >
               <span>설정3</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- yellow-box -->
-        <div
-          class="small-box yellow"
-          @click="filp('yellow')"
-          @mouseover="test()"
-        >
-          <div>
-            <div class="yellow-visible original left">
-              <span>관심품목</span>
-            </div>
-
-            <div class="red-visible left">
-              <span>기프티콘 등록{{ this.tem_check }}</span>
-              <img src="@/assets/images/plus_img.jpg" />
-            </div>
-
-            <div class="blue-visible left">
-              <span>내가 쓴 댓글</span>
-              <img src="@/assets/images/comment_img.jpg" />
-            </div>
-
-            <div class="darkgray-visible left">
-              <span>멤버십 관리</span>
-              <img src="@/assets/images/card_img.jpg" />
             </div>
           </div>
         </div>
@@ -83,17 +115,29 @@
               <span>설정</span>
             </div>
 
-            <div class="red-visible left">
+            <div
+              class="red-visible left"
+              style="z-index:100;"
+              @click="selec('red3')"
+            >
               <span>사용한 기프티콘</span>
               <img src="@/assets/images/check_img.jpg" />
             </div>
 
-            <div class="blue-visible left">
+            <div
+              class="blue-visible left"
+              style="z-index:100;"
+              @click="selec('blue3')"
+            >
               <span>좋아요 한 레시피</span>
               <img src="@/assets/images/heart_img.jpg" />
             </div>
 
-            <div class="yellow-visible left">
+            <div
+              class="yellow-visible left"
+              style="z-index:100;"
+              @click="selec('yellow3')"
+            >
               <span>품목설정3</span>
             </div>
           </div>
@@ -103,27 +147,59 @@
         <div class="big-box">
           <div>
             <div class="red-visible right">
-              <h3>깊티콘관리</h3>
-            </div>
-
-            <div class="red-visible right red1">
-              <h3>기프티콘 등록</h3>
+              <h1>기프티콘 관리</h1>
+              <diV v-if="this.select_menu == 'red1'">
+                <h3>red1</h3>
+                <shytest></shytest>
+              </diV>
+              <diV v-if="this.select_menu == 'red2'">
+                <h3>red2</h3>
+              </diV>
+              <diV v-if="this.select_menu == 'red3'">
+                <h3>red3</h3>
+              </diV>
             </div>
 
             <div class="yellow-visible right">
-              <h3>관심물품 관리</h3>
+              <h1>관심품목</h1>
+              <diV v-if="this.select_menu == 'yellow1'">
+                <h3>yellow1</h3>
+              </diV>
+              <diV v-if="this.select_menu == 'yellow2'">
+                <h3>yellow2</h3>
+              </diV>
+              <diV v-if="this.select_menu == 'yellow3'">
+                <h3>yellow3</h3>
+              </diV>
             </div>
 
             <div class="blue-visible right">
               <h1>레시피 관리</h1>
+              <diV v-if="this.select_menu == 'blue1'">
+                <h3>blue1</h3>
+              </diV>
+              <diV v-if="this.select_menu == 'blue2'">
+                <h3>blue2</h3>
+              </diV>
+              <diV v-if="this.select_menu == 'blue3'">
+                <h3>blue3</h3>
+              </diV>
             </div>
 
             <div class="darkgray-visible right">
               <h1>설정</h1>
-              <img src="http://www.savorypixel.com/678799/mountains/k2.jpg" />
+              <diV v-if="this.select_menu == 'darkgray1'">
+                <h3>darkgray1</h3>
+              </diV>
+              <diV v-if="this.select_menu == 'darkgray2'">
+                <h3>darkgray2</h3>
+              </diV>
+              <diV v-if="this.select_menu == 'darkgray3'">
+                <h3>darkgray3</h3>
+              </diV>
             </div>
 
-            <div v-if="tem_check" class="original right">
+            <div class="original right">
               <img src="@/assets/images/center_cloud.png" />
             </div>
           </div>
@@ -135,43 +211,54 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import shytest from "@/views/shytest.vue";
 
 export default {
   data() {
     return {
-      tem_check: false,
       tempClass: "",
+      color: "",
+      select_menu: "",
     };
   },
   components: {
     Navbar,
+    shytest,
   },
   methods: {
-    test() {
-      if (this.tempClass == "red-chosen") {
-        console.log("관심목록 누름");
+    selec(menu) {
+      if (this.color != "") {
+        console.log("컬러가 있다.", menu);
+        this.tempClass = this.color + "-chosen";
+        this.select_menu = menu;
       }
-
-      console.log("눌렀다.");
-      this.tem_check = !this.tem_check;
-      console.log(this.tem_check);
     },
     filp(value) {
-      this.tempClass = "";
-
-      if ($("#boxes").attr("class") !== "") {
-        console.log("flip-if", this.tempClass);
-        $("#boxes").attr("class", "");
+      if (this.tempClass == "") {
+        console.log("start flip", this.tempClass);
+        if ($("#boxes").attr("class") !== "") {
+          $("#boxes").attr("class", "");
+        } else {
+          this.tempClass = value + "-chosen";
+          this.color = value;
+          console.log("flip-else", this.tempClass, this.color);
+        }
       } else {
-        this.tempClass = value + "-chosen";
-        console.log("flip-else", this.tempClass);
+        if (this.tempClass != "" && this.color != "") {
+          if (this.color == value) {
+            $("#boxes").attr("class", "");
+            this.tempClass = "";
+            this.color = "";
+            this.select_menu = "";
+          }
+        }
       }
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 @font-face {
   font-family: "KyoboHand";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")
