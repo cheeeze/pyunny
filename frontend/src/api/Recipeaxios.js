@@ -121,6 +121,17 @@ const getComment = (data, success, error) => {
         })
 }
 
+const uploadFiles = (data, success, error) => {
+    http
+        .post('/api/uploadFiles', data)
+        .then((res) => {
+            success(res)
+        })
+        .catch((err) => {
+            error(err)
+        })
+}
+
 
 const axiosFunction = {
     getRecipePopularOrdered: (data, success, error) => getRecipePopularOrdered(data, success, error),
@@ -134,6 +145,7 @@ const axiosFunction = {
     insertRecipeComment: (data, success, error) => insertRecipeComment(data, success, error),
     deleteRecipeComment: (data, success, error) => deleteRecipeComment(data, success, error),
     getComment: (data, success, error) => getComment(data, success, error),
+    uploadFiles: (data, success, error) => uploadFiles(data, success, error)
 }
 
 export default axiosFunction

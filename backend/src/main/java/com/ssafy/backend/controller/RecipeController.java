@@ -8,6 +8,7 @@ import com.ssafy.backend.service.RecipeService;
 import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.Recipe;
 import com.ssafy.backend.vo.RecipeComment;
+import com.ssafy.backend.vo.TempKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,7 @@ public class RecipeController {
 
     @PostMapping("/recipe")
     public ResponseEntity insertRecipe(@RequestBody Recipe r) throws Exception {
+        System.out.println(r.toString());
         service.insertRecipe(r);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -109,7 +111,7 @@ public class RecipeController {
             // 2. 업로드된 파일이 있다면 파일의 사이즈, 이름을 출력
             if (!mfile.isEmpty()) { // 업로드된 파일이 있다면
                 System.out.println("파일의 사이즈:" + mfile.getSize());
-                System.out.println("파일의 이름:" + mfile.getOriginalFilename());
+                // System.out.println("파일의 이름:" + mfile.getOriginalFilename());
             }
 
             String name = mfile.getOriginalFilename();
@@ -125,11 +127,12 @@ public class RecipeController {
 
             // 3. 업로드된 파일을 별도의 경로로 이동
 
-            // String fileName = new TempKey`().getKey(20, false) + ".jpg";
-            File copyFile = new File(path + name);
+            String fileName = new TempKey().getKey(20, false) + ".jpg";
+            System.out.println("fileName:" + fileName);
+            File copyFile = new File(path + fileName);
             mfile.transferTo(copyFile);
             System.out.println("path:" + path);
-            res.add(name);
+            res.add(fileName);
         }
 
         return new ResponseEntity<>(res, HttpStatus.OK);

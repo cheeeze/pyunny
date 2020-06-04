@@ -41,6 +41,17 @@
         (#{userId}, #{ingredient}, convert_tz(now(),'+00:00','+09:00'), #{title}, #{content})
     </insert>
 
+    <insert id="insertIngredient" parameterType="recipe">
+        insert into Product_recipe
+        (recipe_id, product_id)
+        values
+        <if test="ingredientProduct != null">
+            <foreach collection="ingredientProduct" item="item" separator=",">
+            (#{id}, #{item.value})
+            </foreach>
+        </if>
+    </insert>
+
     <update id="updateRecipe" parameterType="recipe">
         update Recipe
         set

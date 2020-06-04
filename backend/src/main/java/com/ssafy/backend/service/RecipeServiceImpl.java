@@ -38,6 +38,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void insertRecipe(Recipe r) throws Exception {
         dao.insertRecipe(r);
+        dao.insertIngredient(r);
 
     }
 

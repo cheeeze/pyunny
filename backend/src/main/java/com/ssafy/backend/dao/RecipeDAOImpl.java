@@ -78,4 +78,10 @@ public class RecipeDAOImpl implements RecipeDAO {
 
     }
 
+    @Override
+    public void insertIngredient(Recipe r) throws Exception {
+        session.insert(ns + "insertIngredient", r);
+
+    }
+
 }

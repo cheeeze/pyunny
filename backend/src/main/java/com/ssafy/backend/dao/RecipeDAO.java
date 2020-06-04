@@ -17,6 +17,8 @@ public interface RecipeDAO {
 
     void insertRecipe(Recipe r) throws Exception;
 
+    void insertIngredient(Recipe r) throws Exception;
+
     void updateRecipe(Recipe r) throws Exception;
 
     void deleteRecipe(int id) throws Exception;

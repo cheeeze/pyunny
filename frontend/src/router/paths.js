@@ -9,6 +9,11 @@ export default [{
     name: "test",
   },
   {
+    path: "/recipecreate",
+    view: "RecipeCreate",
+    name: "RecipeCreate",
+  },
+  {
     path: "/recipe",
     view: "Recipe",
     name: "Recipe",
