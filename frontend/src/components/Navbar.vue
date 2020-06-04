@@ -2,25 +2,30 @@
   <div class="nav-wrapper">
     <div class="grad-bar"></div>
     <nav class="navbar">
-      <a href="#"
-        ><img
-          class="nav_logo"
-          src="@/assets/images/mainlogo_removebg.png"
-          alt="Logo"
-      /></a>
+      <a href="#">
+        <img class="nav_logo" src="@/assets/images/mainlogo_removebg.png" alt="Logo" />
+      </a>
       <div class="menu-toggle" id="mobile-menu">
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
       </div>
       <ul class="nav no-search">
-        <li class="nav-item"><a href="#">Home</a></li>
-        <li class="nav-item"><a href="#">Map</a></li>
-        <li class="nav-item"><a href="#">Recipe</a></li>
-        <li class="nav-item"><a href="#">My Page</a></li>
+        <li class="nav-item">
+          <a href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="#">Map</a>
+        </li>
+        <li class="nav-item">
+          <a href="#">Recipe</a>
+        </li>
+        <li class="nav-item">
+          <a href="#">My Page</a>
+        </li>
         <li class="nav-item">
           <button class="login-btn" @click="handleClickButton">
-            <img src="@/assets/icons/logout.png" alt="" width="22px" />
+            <img src="@/assets/icons/logout.png" alt width="22px" />
           </button>
         </li>
 
@@ -51,18 +56,18 @@ $(document).ready(function() {
 export default {
   data() {
     return {
-      visible: false,
+      visible: false
     };
   },
   components: {
-    userSignModal,
+    userSignModal
   },
   methods: {
     handleClickButton() {
       this.visible = !this.visible;
       console.log("hello");
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -71,14 +76,15 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+.nav-wrapper {
   font-family: "Lato", "Arial", sans-serif;
 }
-
 /* HEADINGS */
 
 h1,
 p {
-  color: #fff;
+  /* color: #fff; */
   text-align: center;
   line-height: 1.4;
 }

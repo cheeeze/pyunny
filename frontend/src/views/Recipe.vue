@@ -1,16 +1,16 @@
 <template>
   <div>
-    <div class="text-area">
+    <navbar></navbar>
+
+    <div class="text-area" style="margin-top:30px">
       <input
         type="search"
         id="innerQuery"
         class="tf-keyword"
-        v-model="keyword"
-        v-on:keyup.enter="search"
         title="제목 입력"
         placeholder="레시피 이름!"
         maxlength="100"
-        style="font-size: 15px;width:95%; background-color: #f2f3f5; border: none;"
+        style="width:95%; background-color: #f2f3f5; border: none;"
       />
     </div>
 
@@ -19,10 +19,8 @@
         type="search"
         id="innerQuery"
         class="tf-keyword"
-        v-model="keyword"
-        v-on:keyup.enter="search"
         title="재료 입력"
-        placeholder="사용 재료!"
+        placeholder="필요한 재료!"
         maxlength="100"
         style="width:95%; background-color: #f2f3f5; border: none;"
       />
@@ -31,7 +29,7 @@
     <v-container fluid>
       <v-row>
         <v-col cols="12">
-          <v-combobox v-model="select" :items="items" label="Combobox" multiple outlined dense></v-combobox>
+          <v-combobox v-model="select" :items="items" label="편의점 상품" multiple outlined dense></v-combobox>
         </v-col>
       </v-row>
     </v-container>
@@ -169,6 +167,10 @@
       <div style="margin-top:30px;">
         <editor-content id="tiptaparea" class="editor__content" :editor="editor" />
       </div>
+
+      <div style="margin-top:30px;">
+        <v-btn text color="primary" @click="submit">등록!</v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -179,9 +181,12 @@ import "@/assets/styles/editor/main.scss";
 import "@/assets/styles/editor/menubar.scss";
 import "@/assets/styles/editor/menububble.scss";
 import "@/assets/styles/editor/variables.scss";
+import productAxios from "@/api/Productaxios";
+import recipeAxios from "@/api/Recipeaxios";
 
 import Icon from "@/components/Icon.vue";
-//import Axios from "@/api/Recipeaxios";
+
+import Navbar from "@/components/Navbar.vue";
 
 import { Editor, EditorContent, EditorMenuBar } from "tiptap";
 import {
@@ -202,19 +207,23 @@ import {
   Strike,
   Underline,
   History,
-  Image
+  Image,
+  Placeholder
 } from "tiptap-extensions";
 
 export default {
   components: {
     EditorContent,
     EditorMenuBar,
-    Icon
+    Icon,
+    Navbar
   },
   data() {
     return {
-      select: ["Vuetify", "Programming"],
-      items: ["Programming", "Design", "Vue", "Vuetify"],
+      select: [],
+      items: [],
+      imageFiles: [],
+      recipe: {},
 
       editor: new Editor({
         extensions: [
@@ -236,35 +245,39 @@ export default {
           new Underline(),
           new History(),
           new Image()
+          /* new Placeholder({
+            emptyNodeClass: "is-empty",
+            emptyNodeText: "여기에 글을 적어주세요..",
+            showOnlyWhenEditable: true
+          }) */
         ],
-        content: `
-          <h2>
+        content: `<h2>
             책쟁이의 책리뷰!
           </h2>
           <p>
             <b>왜 이 책을 보았는가?</b>
-          </p>
-          <p>직장인분들이라면 공감할 소재도 많은 듯 하다.</s></p>
-          <p>
-              <code>존맛탱탱탱</code>
-          </p>
-          <ul >
-            <li >
-              독서 포인트!
-            </li>
-            <li >
-              하루는 작지만 일년이 지나면 커지고 한 해가 거듭될수록 거대해진다
-            </li>
-          </ul>
-          <blockquote>
-          "행동의 씨앗을 뿌리면 습관의 열매가 맺히고,<br />
-          습관의 씨앗을 뿌리면 성격의 열매가 맺히고,<br />
-          성격의 씨앗을 뿌리면 운명의 열매가 맺힌다."<br />
-          - 나폴레옹 -
-          </blockquote>
-        `
+          </p>`
       })
     };
+  },
+  mounted() {
+    productAxios.getProduct(
+      res => {
+        console.log(res.data);
+
+        console.log(res);
+
+        this.items = [];
+        res.data.forEach(element => {
+          this.items.push({ text: element.name, key: element.id });
+        });
+
+        //this.items = res.data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
   },
   methods: {
     showImagePrompt(command) {
@@ -285,6 +298,114 @@ export default {
         };
         reader.readAsDataURL(fileList[0]);
       }
+    },
+    dataURItoBlob(dataURI) {
+      var binary = atob(dataURI.split(",")[1]);
+      var array = [];
+      for (var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+      }
+      return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
+    },
+    preprocessing() {
+      //본문 파일 변환
+      var tmptext = document.getElementById("tiptaparea").innerHTML;
+      var len = tmptext.length;
+      tmptext = tmptext.slice(61, len - 6);
+      len = tmptext.length;
+
+      let start = 0;
+      let last = 0;
+      while (start >= 0) {
+        start = tmptext.indexOf("data:image", start + 1);
+        if (start < 0) break;
+
+        last = tmptext.indexOf('"', start);
+        console.log("start:" + start + " last:" + last);
+
+        let tmp = this.dataURItoBlob(tmptext.substring(start, last));
+        console.log(tmp);
+
+        //let file = new FormData();
+        //file.append("file", tmp);
+        this.imageFiles.push(new File([tmp], "name"));
+      }
+      this.$set(this.review, "content", tmptext);
+
+      this.filesave();
+    },
+    filesave() {
+      let data = new FormData();
+      for (var i = 0; i < this.imageFiles.length; i++)
+        data.append("files", this.imageFiles[i]);
+
+      recipeAxios.uploadFiles(
+        data,
+        res => {
+          for (var i = 0; i < res.data.length; i++) {
+            this.imageNames.push(res.data[i]);
+          }
+          var index = 0;
+
+          let start = 0;
+          let last = 0;
+          let tmptext = this.review.content;
+          while (start >= 0) {
+            start = tmptext.indexOf("data:image", start + 1);
+            if (start < 0) break;
+
+            console.log("본분 파일 index:" + index);
+
+            last = tmptext.indexOf('"', start);
+            console.log("start:" + start + " last:" + last);
+
+            var url = tmptext.substring(start, last);
+            console.log(url);
+            tmptext = tmptext.replace(
+              url,
+              `http://127.0.0.1:8080/upload/${this.imageNames[index]}`
+            );
+            index++;
+          }
+
+          this.$set(this.recipe, "content", tmptext);
+
+          this.submit();
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    },
+
+    submit() {
+      let data = {
+        userId: 1,
+        bookIsbnFk: this.review.bookIsbn,
+        title: this.review.title,
+        content: this.review.content,
+        date: this.review.date,
+        rating: this.review.rating,
+        isreply: this.review.isreply,
+        backgroundImg: this.review.backgroundImg,
+        font: this.review.font,
+        fontSize: this.review.fontSize,
+        fontColor: this.review.fontColor,
+        titleText: this.review.titleText
+      };
+
+      recipeAxios.insertRecipe(
+        data,
+        res => {
+          console.log(res);
+          //alert("서버통신됨");
+          alert("작성 완료 되었습니다!");
+          //this.$router.push("/reviewdetail/" + res.data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }
   },
   beforeDestroy() {
@@ -318,7 +439,7 @@ export default {
 .ingredient-area {
   overflow: hidden;
   position: relative;
-  height: 100px;
+  height: 40px;
   margin-top: 10px;
   margin: 2px 8px 0;
   padding: 6px 10px 1px;
