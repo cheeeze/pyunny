@@ -4,8 +4,8 @@ export default [{
     name: "Home",
   },
   {
-    path: "/test",
-    view: "test",
-    name: "test",
+    path: "/detail",
+    view: "Detail",
+    name: "Detail",
   },
 ];

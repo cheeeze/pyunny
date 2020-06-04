@@ -1,211 +1,99 @@
 <template>
-  <div class="section over-hide z-bigger">
-    <input class="checkbox" type="checkbox" name="general" id="general" />
-    <label class="for-checkbox" for="general"></label>
-    <div class="background-color"></div>
+  <div class="body-container">
     <div class="section over-hide z-bigger">
-      <div class="container pb-5">
-        <div class="row justify-content-center pb-5">
-          <div class="col-12 pt-5">
-            <p class="mb-4 pb-2">Design Tools</p>
-          </div>
-          <div class="col-12 pb-5">
-            <input
-              class="checkbox-tools"
-              type="radio"
-              name="tools"
-              id="tool-1"
-              checked
-            />
-            <label class="for-checkbox-tools" for="tool-1">
-              <i class="uil uil-line-alt"></i>
-              line </label
-            ><!--
-						--><input class="checkbox-tools" type="radio" name="tools" id="tool-2" />
-            <label class="for-checkbox-tools" for="tool-2">
-              <i class="uil uil-vector-square"></i>
-              square </label
-            ><!--
-						--><input class="checkbox-tools" type="radio" name="tools" id="tool-3" />
-            <label class="for-checkbox-tools" for="tool-3">
-              <i class="uil uil-ruler"></i>
-              ruler </label
-            ><!--
-						--><input class="checkbox-tools" type="radio" name="tools" id="tool-4" />
-            <label class="for-checkbox-tools" for="tool-4">
-              <i class="uil uil-crop-alt"></i>
-              crop </label
-            ><!--
-						--><input class="checkbox-tools" type="radio" name="tools" id="tool-5" />
-            <label class="for-checkbox-tools" for="tool-5">
-              <i class="uil uil-brush-alt"></i>
-              brush </label
-            ><!--
-						--><input class="checkbox-tools" type="radio" name="tools" id="tool-6" />
-            <label class="for-checkbox-tools" for="tool-6">
-              <i class="uil uil-image-resize-landscape"></i>
-              resize
-            </label>
-          </div>
-          <div class="col-12 pt-1">
-            <p class="mb-4 pb-2">Client Budget</p>
-          </div>
-          <div class="col-xl-10 pb-5">
-            <input
-              class="checkbox-budget"
-              type="radio"
-              name="budget"
-              id="budget-1"
-              checked
-            />
-            <label class="for-checkbox-budget" for="budget-1">
-              <span data-hover="500$">500$</span> </label
-            ><!--
-						--><input class="checkbox-budget" type="radio" name="budget" id="budget-2" />
-            <label class="for-checkbox-budget" for="budget-2">
-              <span data-hover="1000$">1000$</span> </label
-            ><!--
-						--><input class="checkbox-budget" type="radio" name="budget" id="budget-3" />
-            <label class="for-checkbox-budget" for="budget-3">
-              <span data-hover="1500$">1500$</span> </label
-            ><!--
-						--><input class="checkbox-budget" type="radio" name="budget" id="budget-4" />
-            <label class="for-checkbox-budget" for="budget-4">
-              <span data-hover="2000$">2000$</span> </label
-            ><!--
-						--><input class="checkbox-budget" type="radio" name="budget" id="budget-5" />
-            <label class="for-checkbox-budget" for="budget-5">
-              <span data-hover="2500$">2500$</span> </label
-            ><!--
-						--><input class="checkbox-budget" type="radio" name="budget" id="budget-6" />
-            <label class="for-checkbox-budget" for="budget-6">
-              <span data-hover="5000$">5000$</span>
-            </label>
-          </div>
-          <div class="col-12 pt-1">
-            <p class="mb-4 pb-2">Booking Options</p>
-          </div>
-          <div class="col-12 pb-5">
-            <input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-1"
-            />
-            <label class="for-checkbox-booking" for="booking-1">
-              <i class="uil uil-coffee mr-3"></i
-              ><span class="text">breakfast</span> </label
-            ><!--
+      <div class="section over-hide z-bigger">
+        <div class="checkbox-container">
+          <div class="row justify-content-center">
+            <div class="conv-tab" style="margin-top: 15px;">
+              <input
+                class="checkbox-convenience"
+                type="checkbox"
+                name="convenience"
+                id="convenience-1"
+              />
+              <label class="for-checkbox-convenience" for="convenience-1">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/all.png"
+                  alt=""/></label
+              ><!--
 						--><input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-2"
-            />
-            <label class="for-checkbox-booking" for="booking-2">
-              <i class="uil uil-restaurant mr-3"></i
-              ><span class="text">dinner</span> </label
-            ><!--
+                class="checkbox-convenience"
+                type="checkbox"
+                name="convenience"
+                id="convenience-2"
+              />
+              <label class="for-checkbox-convenience" for="convenience-2">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/gs25.png"
+                  alt=""/></label
+              ><!--
 						--><input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-3"
-            />
-            <label class="for-checkbox-booking" for="booking-3">
-              <i class="uil uil-car-sideview mr-3"></i
-              ><span class="text">pick up</span> </label
-            ><!--
+                class="checkbox-convenience"
+                type="checkbox"
+                name="convenience"
+                id="convenience-3"
+              />
+              <label class="for-checkbox-convenience" for="convenience-3">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/cu.png"
+                  alt=""
+                /> </label
+              ><!--
 						--><input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-4"
-            />
-            <label class="for-checkbox-booking" for="booking-4">
-              <i class="uil uil-flower mr-3"></i
-              ><span class="text">garden</span> </label
-            ><!--
+                class="checkbox-convenience"
+                type="checkbox"
+                name="convenience"
+                id="convenience-4"
+              />
+              <label class="for-checkbox-convenience" for="convenience-4">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/emart.jpg"
+                  alt=""/></label
+              ><!--
 						--><input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-5"
-            />
-            <label class="for-checkbox-booking" for="booking-5">
-              <i class="uil uil-wifi mr-3"></i
-              ><span class="text">internet</span> </label
-            ><!--
+                class="checkbox-convenience"
+                type="checkbox"
+                name="convenience"
+                id="convenience-5"
+              />
+              <label class="for-checkbox-convenience" for="convenience-5">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/seven.png"
+                  alt=""/></label
+              ><!--
 						--><input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-6"
-            />
-            <label class="for-checkbox-booking" for="booking-6">
-              <i class="uil uil-parking-square mr-3"></i
-              ><span class="text">parking</span> </label
-            ><!--
-						--><input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-7"
-            />
-            <label class="for-checkbox-booking" for="booking-7">
-              <i class="uil uil-tv-retro mr-3"></i
-              ><span class="text">television</span> </label
-            ><!--
-						--><input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-8"
-            />
-            <label class="for-checkbox-booking" for="booking-8">
-              <i class="uil uil-books mr-3"></i
-              ><span class="text">books</span> </label
-            ><!--
-						--><input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-9"
-            />
-            <label class="for-checkbox-booking" for="booking-9">
-              <i class="uil uil-kayak mr-3"></i
-              ><span class="text">kayak</span> </label
-            ><!--
-						--><input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-10"
-            />
-            <label class="for-checkbox-booking" for="booking-10">
-              <i class="uil uil-glass-martini-alt mr-3"></i
-              ><span class="text">drink</span> </label
-            ><!--
-						--><input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-11"
-            />
-            <label class="for-checkbox-booking" for="booking-11">
-              <i class="uil uil-dumbbell mr-3"></i
-              ><span class="text">gym</span> </label
-            ><!--
-						--><input
-              class="checkbox-booking"
-              type="checkbox"
-              name="booking"
-              id="booking-12"
-            />
-            <label class="for-checkbox-booking" for="booking-12">
-              <i class="uil uil-sign-alt mr-3"></i
-              ><span class="text">walking tours</span>
-            </label>
+                class="checkbox-convenience"
+                type="checkbox"
+                name="convenience"
+                id="convenience-6"
+              />
+              <label class="for-checkbox-convenience" for="convenience-6">
+                <img
+                  class="conv_icon"
+                  src="@/assets/icons/ministop.png"
+                  alt=""/></label
+              ><!--
+						-->
+            </div>
+            <!-- 슬라이드 들어가는 부분 -->
+            <div class="main-slide">
+              <b-tabs
+                active-nav-item-class="font-weight-bold text-uppercase text-danger"
+                content-class="mt-3"
+                justified
+              >
+                <!-- 할인 정보 -->
+                <b-tab title="할인 정보" active><sale-card></sale-card></b-tab>
+                <!-- 상품 정보 -->
+                <b-tab title="상품 정보"><item-card></item-card></b-tab>
+              </b-tabs>
+            </div>
+            <!---->
           </div>
         </div>
       </div>
@@ -214,10 +102,26 @@
 </template>
 
 <script>
-export default {};
+import SaleCard from "@/components/SaleCard.vue";
+import ItemCard from "@/components/ItemCard.vue";
+
+export default {
+  components: {
+    SaleCard,
+    ItemCard,
+  },
+};
 </script>
 
 <style>
+@font-face {
+  font-family: "Kyobo";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --white: #ffffff;
   --light: #f0eff3;
@@ -232,36 +136,39 @@ export default {};
 /* #Primary
 ================================================== */
 
-body {
+.body-container {
   width: 100%;
-  background: var(--dark-blue);
+  height: 100%;
+  background-color: var(--white);
   overflow-x: hidden;
-  font-family: "Poppins", sans-serif;
+  overflow-y: hidden;
   font-size: 17px;
   line-height: 30px;
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
+  font-family: "Kyobo";
 }
 p {
+  /* font-family: "Poppins", sans-serif; */
   font-size: 17px;
   line-height: 30px;
-  color: var(--white);
+  color: var(--black);
   letter-spacing: 1px;
   font-weight: 500;
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
 }
 ::selection {
-  color: var(--white);
-  background-color: var(--black);
+  color: var(--black);
+  background-color: var(--white);
 }
 ::-moz-selection {
-  color: var(--white);
-  background-color: var(--black);
+  color: var(--black);
+  background-color: var(--white);
 }
 mark {
-  color: var(--white);
-  background-color: var(--black);
+  color: var(--black);
+  background-color: var(--white);
 }
 .section {
   position: relative;
@@ -278,30 +185,36 @@ mark {
 }
 
 .background-color {
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--dark-blue);
+  background-color: var(--white);
   z-index: 1;
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
 }
 .checkbox:checked ~ .background-color {
-  background-color: var(--white);
+  background-color: var(--dark-blue);
 }
 
 [type="checkbox"]:checked,
-[type="checkbox"]:not(:checked),
-[type="radio"]:checked,
-[type="radio"]:not(:checked) {
+[type="checkbox"]:not(:checked) {
   position: absolute;
   left: -9999px;
   width: 0;
   height: 0;
   visibility: hidden;
 }
+
+.conv_icon {
+  /* height: 60px; */
+  width: 8vw;
+  max-width: 65px;
+  min-width: 32px;
+}
+
 .checkbox:checked + label,
 .checkbox:not(:checked) + label {
   position: relative;
@@ -310,12 +223,11 @@ mark {
   padding: 0;
   margin: 0 auto;
   text-align: center;
-  margin: 17px 0;
-  margin-top: 100px;
+  margin: 100px 0 30px 55%;
   height: 6px;
   border-radius: 4px;
   background-image: linear-gradient(298deg, var(--red), var(--yellow));
-  z-index: 100 !important;
+  z-index: 1 !important;
 }
 .checkbox:checked + label:before,
 .checkbox:not(:checked) + label:before {
@@ -336,183 +248,24 @@ mark {
 .checkbox:not(:checked) + label:before {
   content: "\eac1";
   left: 0;
-  color: var(--grey);
-  background-color: var(--dark-light);
+  color: var(--yellow);
+  background-color: var(--dark-blue);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(26, 53, 71, 0.07);
 }
 .checkbox:checked + label:before {
   content: "\eb8f";
   left: 30px;
-  color: var(--yellow);
-  background-color: var(--dark-blue);
+  color: var(--grey);
+  background-color: var(--white);
   box-shadow: 0 4px 4px rgba(26, 53, 71, 0.25), 0 0 0 1px rgba(26, 53, 71, 0.07);
 }
 
-.checkbox:checked ~ .section .container .row .col-12 p {
-  color: var(--dark-blue);
-}
-
-.checkbox-tools:checked + label,
-.checkbox-tools:not(:checked) + label {
-  position: relative;
-  display: inline-block;
-  padding: 20px;
-  width: 110px;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 1px;
-  margin: 0 auto;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-  text-align: center;
-  border-radius: 4px;
-  overflow: hidden;
-  cursor: pointer;
-  text-transform: uppercase;
+.checkbox:checked ~ .section .checkbox-container .row .conv-tab p {
   color: var(--white);
-  -webkit-transition: all 300ms linear;
-  transition: all 300ms linear;
-}
-.checkbox-tools:not(:checked) + label {
-  background-color: var(--dark-light);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-}
-.checkbox-tools:checked + label {
-  background-color: transparent;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-.checkbox-tools:not(:checked) + label:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-.checkbox-tools:checked + label::before,
-.checkbox-tools:not(:checked) + label::before {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  background-image: linear-gradient(298deg, var(--red), var(--yellow));
-  z-index: -1;
-}
-.checkbox-tools:checked + label .uil,
-.checkbox-tools:not(:checked) + label .uil {
-  font-size: 24px;
-  line-height: 24px;
-  display: block;
-  padding-bottom: 10px;
 }
 
-.checkbox:checked
-  ~ .section
-  .container
-  .row
-  .col-12
-  .checkbox-tools:not(:checked)
-  + label {
-  background-color: var(--light);
-  color: var(--dark-blue);
-  box-shadow: 0 1x 4px 0 rgba(0, 0, 0, 0.05);
-}
-
-.checkbox-budget:checked + label,
-.checkbox-budget:not(:checked) + label {
-  position: relative;
-  display: inline-block;
-  padding: 0;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  width: 260px;
-  font-size: 52px;
-  line-height: 52px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin: 0 auto;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-  text-align: center;
-  border-radius: 4px;
-  overflow: hidden;
-  cursor: pointer;
-  text-transform: uppercase;
-  -webkit-transition: all 300ms linear;
-  transition: all 300ms linear;
-  -webkit-text-stroke: 1px var(--white);
-  text-stroke: 1px var(--white);
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
-  color: transparent;
-}
-.checkbox-budget:not(:checked) + label {
-  background-color: var(--dark-light);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-}
-.checkbox-budget:checked + label {
-  background-color: transparent;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-.checkbox-budget:not(:checked) + label:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-.checkbox-budget:checked + label::before,
-.checkbox-budget:not(:checked) + label::before {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  background-image: linear-gradient(138deg, var(--red), var(--yellow));
-  z-index: -1;
-}
-.checkbox-budget:checked + label span,
-.checkbox-budget:not(:checked) + label span {
-  position: relative;
-  display: block;
-}
-.checkbox-budget:checked + label span::before,
-.checkbox-budget:not(:checked) + label span::before {
-  position: absolute;
-  content: attr(data-hover);
-  top: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  -webkit-text-stroke: transparent;
-  text-stroke: transparent;
-  -webkit-text-fill-color: var(--white);
-  text-fill-color: var(--white);
-  color: var(--white);
-  -webkit-transition: max-height 0.3s;
-  -moz-transition: max-height 0.3s;
-  transition: max-height 0.3s;
-}
-.checkbox-budget:not(:checked) + label span::before {
-  max-height: 0;
-}
-.checkbox-budget:checked + label span::before {
-  max-height: 100%;
-}
-
-.checkbox:checked
-  ~ .section
-  .container
-  .row
-  .col-xl-10
-  .checkbox-budget:not(:checked)
-  + label {
-  background-color: var(--light);
-  -webkit-text-stroke: 1px var(--dark-blue);
-  text-stroke: 1px var(--dark-blue);
-  box-shadow: 0 1x 4px 0 rgba(0, 0, 0, 0.05);
-}
-
-.checkbox-booking:checked + label,
-.checkbox-booking:not(:checked) + label {
+.checkbox-convenience:checked + label,
+.checkbox-convenience:not(:checked) + label {
   position: relative;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -528,34 +281,34 @@ mark {
   -ms-flex-pack: center;
   text-align: center;
   padding: 0;
-  padding: 6px 25px;
+  padding: 3px;
   font-size: 14px;
   line-height: 30px;
   letter-spacing: 1px;
-  margin: 0 auto;
-  margin-left: 6px;
+  margin: 0 1.3vw 16px;
+  /* margin-left: 6px;
   margin-right: 6px;
-  margin-bottom: 16px;
+  margin-bottom: 16px; */
   text-align: center;
   border-radius: 4px;
   cursor: pointer;
   color: var(--white);
   text-transform: uppercase;
-  background-color: var(--dark-light);
+  background-color: var(--light);
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
 }
-.checkbox-booking:not(:checked) + label::before {
+.checkbox-convenience:not(:checked) + label::before {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
-.checkbox-booking:checked + label::before {
+.checkbox-convenience:checked + label::before {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
-.checkbox-booking:not(:checked) + label:hover::before {
+.checkbox-convenience:not(:checked) + label:hover::before {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
-.checkbox-booking:checked + label::before,
-.checkbox-booking:not(:checked) + label::before {
+.checkbox-convenience:checked + label::before,
+.checkbox-convenience:not(:checked) + label::before {
   position: absolute;
   content: "";
   top: -2px;
@@ -568,14 +321,14 @@ mark {
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
 }
-.checkbox-booking:not(:checked) + label::before {
+.checkbox-convenience:not(:checked) + label::before {
   top: -1px;
   left: -1px;
   width: calc(100% + 2px);
   height: calc(100% + 2px);
 }
-.checkbox-booking:checked + label::after,
-.checkbox-booking:not(:checked) + label::after {
+.checkbox-convenience:checked + label::after,
+.checkbox-convenience:not(:checked) + label::after {
   position: absolute;
   content: "";
   top: -2px;
@@ -584,29 +337,29 @@ mark {
   height: calc(100% + 4px);
   border-radius: 4px;
   z-index: -2;
-  background-color: var(--dark-light);
+  background-color: var(--light);
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
 }
-.checkbox-booking:checked + label::after {
+.checkbox-convenience:checked + label::after {
   opacity: 0;
 }
-.checkbox-booking:checked + label .uil,
-.checkbox-booking:not(:checked) + label .uil {
+.checkbox-convenience:checked + label .uil,
+.checkbox-convenience:not(:checked) + label .uil {
   font-size: 20px;
 }
-.checkbox-booking:checked + label .text,
-.checkbox-booking:not(:checked) + label .text {
+.checkbox-convenience:checked + label .text,
+.checkbox-convenience:not(:checked) + label .text {
   position: relative;
   display: inline-block;
   -webkit-transition: opacity 300ms linear;
   transition: opacity 300ms linear;
 }
-.checkbox-booking:checked + label .text {
+.checkbox-convenience:checked + label .text {
   opacity: 0.6;
 }
-.checkbox-booking:checked + label .text::after,
-.checkbox-booking:not(:checked) + label .text::after {
+.checkbox-convenience:checked + label .text::after,
+.checkbox-convenience:not(:checked) + label .text::after {
   position: absolute;
   content: "";
   width: 0;
@@ -619,45 +372,45 @@ mark {
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
 }
-.checkbox-booking:not(:checked) + label .text::after {
+.checkbox-convenience:not(:checked) + label .text::after {
   width: 0;
 }
-.checkbox-booking:checked + label .text::after {
+.checkbox-convenience:checked + label .text::after {
   width: 100%;
 }
 
 .checkbox:checked
   ~ .section
-  .container
+  .checkbox-container
   .row
-  .col-12
-  .checkbox-booking:not(:checked)
+  .conv-tab
+  .checkbox-convenience:not(:checked)
   + label,
 .checkbox:checked
   ~ .section
-  .container
+  .checkbox-container
   .row
-  .col-12
-  .checkbox-booking:checked
+  .conv-tab
+  .checkbox-convenience:checked
   + label {
-  background-color: var(--light);
-  color: var(--dark-blue);
+  background-color: var(--dark-light);
+  color: var(--light);
 }
 .checkbox:checked
   ~ .section
-  .container
+  .checkbox-container
   .row
-  .col-12
-  .checkbox-booking:checked
+  .conv-tab
+  .checkbox-convenience:checked
   + label::after,
 .checkbox:checked
   ~ .section
-  .container
+  .checkbox-container
   .row
-  .col-12
-  .checkbox-booking:not(:checked)
+  .conv-tab
+  .checkbox-convenience:not(:checked)
   + label::after {
-  background-color: var(--light);
+  background-color: var(--dark-light);
 }
 
 .link-to-page {
@@ -672,5 +425,9 @@ mark {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.main-slide {
+  width: 100%;
 }
 </style>
