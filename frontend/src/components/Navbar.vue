@@ -3,11 +3,7 @@
     <div class="grad-bar"></div>
     <nav class="navbar">
       <a href="#">
-        <img
-          class="nav_logo"
-          src="@/assets/images/mainlogo_removebg.png"
-          alt="Logo"
-        />
+        <img class="nav_logo" src="@/assets/images/mainlogo_removebg.png" alt="Logo" />
       </a>
       <div class="menu-toggle" id="mobile-menu">
         <span class="bar"></span>
@@ -37,10 +33,7 @@
         <input class="search-input" type="text" placeholder="Search.." />
       </ul>
     </nav>
-    <user-sign-modal
-      :visible.sync="visible"
-      style="z-index: 80;"
-    ></user-sign-modal>
+    <user-sign-modal :visible.sync="visible" style="z-index: 80;"></user-sign-modal>
   </div>
 </template>
 <script>
@@ -63,18 +56,18 @@ $(document).ready(function() {
 export default {
   data() {
     return {
-      visible: false,
+      visible: false
     };
   },
   components: {
-    userSignModal,
+    userSignModal
   },
   methods: {
     handleClickButton() {
       this.visible = !this.visible;
       console.log("hello");
-    },
-  },
+    }
+  }
 };
 </script>
 
