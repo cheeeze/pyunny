@@ -28,4 +28,9 @@ export default [{
     view: "shytest2",
     name: "shytest2",
   },
+  {
+    path: "/shy3",
+    view: "shytest3",
+    name: "shytest3",
+  },
 ];

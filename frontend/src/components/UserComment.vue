@@ -1,21 +1,24 @@
 <template>
   <div class="overflow-auto">
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table"
-    ></b-pagination>
-
-    <p class="mt-3">Current Page: {{ currentPage }}</p>
-
     <b-table
       id="my-table"
       :items="items"
       :per-page="perPage"
       :current-page="currentPage"
       small
+            :hover="hover"
+      @row-clicked="myRowClickHandler"
     ></b-table>
+
+    <div class="number" >
+        <b-pagination
+            style="margin-left: 33%"
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="my-table"
+        ></b-pagination>
+    </div>
   </div>
 </template>
 
@@ -23,18 +26,24 @@
   export default {
     data() {
       return {
-        perPage: 3,
+        hover: true,
+        perPage: 10,
         currentPage: 1,
         items: [
-          { id: 1, first_name: 'Fred', last_name: 'Flintstone' },
-          { id: 2, first_name: 'Wilma', last_name: 'Flintstone' },
-          { id: 3, first_name: 'Barney', last_name: 'Rubble' },
-          { id: 4, first_name: 'Betty', last_name: 'Rubble' },
-          { id: 5, first_name: 'Pebbles', last_name: 'Flintstone' },
-          { id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble' },
-          { id: 7, first_name: 'The Great', last_name: 'Gazzoo' },
-          { id: 8, first_name: 'Rockhead', last_name: 'Slate' },
-          { id: 9, first_name: 'Pearl', last_name: 'Slaghoople' }
+          { id: 1, 글제목: '제 인생 레시피입니다.', 댓글: '솰라솰라솨라ㅁㄴㅇㄻㅎㅎㅎㅎㅎ라' },
+          { id: 2, 글제목: '불닭볶음면 이렇게 먹으면 짱맛!!', 댓글: '펴니뽕 짱' },
+          { id: 3, 글제목: '맛없으면 삼김4dream', 댓글: '백설공주 짱'},
+          { id: 4, 글제목: '요즘은 레스토랑이 필요없는듯..', 댓글: '인어왕자 짱' },
+          { id: 5, 글제목: '쏘세지 레시피 공유해여', 댓글: '아무말 대잔치'},
+          { id: 6, 글제목: '순대볶음 해드실?', 댓글: '둥기둥기둥가둥~' },
+          { id: 7, 글제목: '씨원한 칵테일 공유드림니다', 댓글: 'Gazzoo' },
+          { id: 8, 글제목: '간편하고 맛있는거!!!', 댓글: 'Slate' },
+          { id: 9, 글제목: '귀차니즘 이리오셈', 댓글: 'Slaghoople'},
+          { id: 10, 글제목: '워우워우워', 댓글: '이 노랜 뭐지? 터보~ 아재' },
+          { id: 11, 글제목: '씨원한 칵테일 공유드림니다', 댓글: 'Gazzoo' },
+          { id: 12, 글제목: '간편하고 맛있는거!!!', 댓글: 'Slate' },
+          { id: 13, 글제목: '귀차니즘 이리오셈', 댓글: 'Slaghoople' },
+          { id: 14, 글제목: '워우워우워', 댓글: '이 노랜 뭐지? 터보~ 아재'},
         ]
       }
     },
@@ -42,6 +51,24 @@
       rows() {
         return this.items.length
       }
-    }
+    },
+    methods: {
+    myRowClickHandler(index) {
+      console.log(index.id, "선택");
+    },
+  },
   }
 </script>
+
+<style scoped>
+.number {
+    justify-content: center;
+    width: 100%;
+}
+.overflow-auto {
+  overflow: auto !important;
+  padding: 0.5rem;
+}
+</style>
+
+

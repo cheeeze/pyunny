@@ -4,6 +4,7 @@
     <section id="banner" class="topbanner">
       <div id="boxes" :class="tempClass">
         <!-- red box -->
+
         <div class="small-box red" @click="filp('red')">
           <div>
             <div class="red-visible original left">
@@ -19,12 +20,9 @@
               <img src="@/assets/images/write_img.jpg" />
             </div>
 
-            <div
-              class="yellow-visible left"
-              style="z-index:100;"
-              @click="selec('yellow1')"
-            >
-              <span>품목설정1</span>
+            <div class="yellow-visible left" @click="selec('yellow1')">
+              <span>서비스 준비중</span>
+              <img src="@/assets/images/red_img.jpg" />
             </div>
 
             <div
@@ -68,7 +66,7 @@
               style="z-index:100;"
               @click="selec('darkgray2')"
             >
-              <span>멤버십 관리</span>
+              <span>통신사 멤버십 관리</span>
               <img src="@/assets/images/card_img.jpg" />
             </div>
           </div>
@@ -90,12 +88,9 @@
               <img src="@/assets/images/more_img.jpg" />
             </div>
 
-            <div
-              class="yellow-visible left"
-              style="z-index:100;"
-              @click="selec('yellow2')"
-            >
-              <span>품목설정2</span>
+            <div class="yellow-visible left" @click="selec('yellow2')">
+              <span>서비스 준비중</span>
+              <img src="@/assets/images/blue_img.jpg" />
             </div>
 
             <div
@@ -103,7 +98,8 @@
               style="z-index:100;"
               @click="selec('darkgray3')"
             >
-              <span>설정3</span>
+              <span>편의점 적립 관리</span>
+              <img src="@/assets/images/save_img.jpg" />
             </div>
           </div>
         </div>
@@ -133,73 +129,67 @@
               <img src="@/assets/images/heart_img.jpg" />
             </div>
 
-            <div
-              class="yellow-visible left"
-              style="z-index:100;"
-              @click="selec('yellow3')"
-            >
-              <span>품목설정3</span>
+            <div class="yellow-visible left" @click="selec('yellow3')">
+              <span>서비스 준비중</span>
+              <img src="@/assets/images/darkgray_img.jpg" />
             </div>
           </div>
         </div>
 
         <!-- big-box -->
         <div class="big-box">
-          <div>
+          <div class="whatis">
             <div class="red-visible right">
-              <h1>기프티콘 관리</h1>
               <diV v-if="this.select_menu == 'red1'">
-                <h3>red1</h3>
-                <shytest></shytest>
+                <h3>기프티콘 등록하기</h3>
+                <FileUpload></FileUpload>
               </diV>
               <diV v-if="this.select_menu == 'red2'">
-                <h3>red2</h3>
+                <h3>사용전 기프티콘</h3>
+                <ShowUserGift></ShowUserGift>
               </diV>
               <diV v-if="this.select_menu == 'red3'">
-                <h3>red3</h3>
+                <h3>사용한 기프티콘</h3>
+                <ShowUsedGift></ShowUsedGift>
               </diV>
             </div>
-
             <div class="yellow-visible right">
-              <h1>관심품목</h1>
-              <diV v-if="this.select_menu == 'yellow1'">
-                <h3>yellow1</h3>
-              </diV>
-              <diV v-if="this.select_menu == 'yellow2'">
-                <h3>yellow2</h3>
-              </diV>
-              <diV v-if="this.select_menu == 'yellow3'">
-                <h3>yellow3</h3>
-              </diV>
+              <h3>관심품목을 추가해보세요!</h3>
+              <MyFavorite></MyFavorite>
             </div>
 
             <div class="blue-visible right">
-              <h1>레시피 관리</h1>
               <diV v-if="this.select_menu == 'blue1'">
-                <h3>blue1</h3>
+                <h3>내가 쓴 레시피</h3>
+                <UserPost></UserPost>
               </diV>
               <diV v-if="this.select_menu == 'blue2'">
-                <h3>blue2</h3>
+                <h3>내가 쓴 댓글</h3>
+                <UserComment></UserComment>
               </diV>
               <diV v-if="this.select_menu == 'blue3'">
-                <h3>blue3</h3>
+                <h3>좋아요 레시피</h3>
+                <UserLikePost></UserLikePost>
               </diV>
             </div>
 
             <div class="darkgray-visible right">
-              <h1>설정</h1>
               <diV v-if="this.select_menu == 'darkgray1'">
-                <h3>darkgray1</h3>
+                <h3>닉네임 변경하기</h3>
+                <ChangeUserInfo></ChangeUserInfo>
               </diV>
               <diV v-if="this.select_menu == 'darkgray2'">
-                <h3>darkgray2</h3>
+                <h3>통신사 멤버십 등록하기</h3>
+                <RegisterMembership></RegisterMembership>
               </diV>
               <diV v-if="this.select_menu == 'darkgray3'">
-                <h3>darkgray3</h3>
+                <h3>편의점 적립 등록하기</h3>
+                <RegisterAccPoint></RegisterAccPoint>
               </diV>
             </div>
 
             <div class="original right">
+              <!-- <UserComment></UserComment> -->
               <img src="@/assets/images/center_cloud.png" />
             </div>
           </div>
@@ -211,6 +201,17 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import FileUpload from "@/components/FileUpload.vue";
+import ShowUserGift from "@/components/ShowUserGift.vue";
+import ShowUsedGift from "@/components/ShowUsedGift.vue";
+import MyFavorite from "@/components/MyFavorite.vue";
+import UserPost from "@/components/UserPost.vue";
+import UserComment from "@/components/UserComment.vue";
+import UserLikePost from "@/components/UserLikePost.vue";
+import ChangeUserInfo from "@/components/ChangeUserInfo.vue";
+import RegisterMembership from "@/components/RegisterMembership.vue";
+import RegisterAccPoint from "@/components/RegisterAccPoint.vue";
+
 import shytest from "@/views/shytest.vue";
 
 export default {
@@ -224,6 +225,16 @@ export default {
   components: {
     Navbar,
     shytest,
+    FileUpload,
+    ShowUserGift,
+    ShowUsedGift,
+    MyFavorite,
+    UserPost,
+    UserComment,
+    UserLikePost,
+    ChangeUserInfo,
+    RegisterAccPoint,
+    RegisterMembership,
   },
   methods: {
     selec(menu) {
@@ -232,6 +243,9 @@ export default {
         this.tempClass = this.color + "-chosen";
         this.select_menu = menu;
       }
+    },
+    test() {
+      console.log("test");
     },
     filp(value) {
       if (this.tempClass == "") {
@@ -281,12 +295,14 @@ body {
 .topbanner {
   width: 1170px;
   margin: 20px auto;
+  margin-top: 8rem;
 }
 #banner #boxes {
   height: 500px;
   position: relative;
+  z-index: 1;
 }
-#banner #boxes div {
+#banner > #boxes > div {
   position: absolute;
 }
 .small-box {
@@ -326,12 +342,10 @@ body {
   background-position: 0 0;
   overflow: hidden;
 }
-.small-box div:before,
-.big-box div:before {
+.small-box div:before {
   content: "";
   display: block;
   background: rgba(0, 0, 0, 0);
-  z-index: 98;
   position: absolute;
   top: 0;
   left: 0;
@@ -339,6 +353,8 @@ body {
   height: 100%;
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
+}
+.big-box div:before {
 }
 .small-box div:hover:before {
   z-index: 98;
@@ -364,14 +380,13 @@ body {
   cursor: default;
 }
 .small-box .left span,
-.big-box > .right > span {
+.big-box .right span {
   position: absolute;
   bottom: 0;
   left: 0;
   font-size: 24px;
   color: #fff;
   letter-spacing: 1px;
-  z-index: 100;
   background: rgba(0, 0, 0, 0.4);
   width: 100%;
   padding: 10px 20px;
@@ -418,8 +433,8 @@ body {
   content: "";
   display: block;
   position: absolute;
-  height: 50px;
-  width: 50px;
+  height: 55px;
+  width: 55px;
   left: 50%;
   margin-left: -25px;
   top: 80px;
@@ -503,8 +518,8 @@ body {
   width: 668px;
   right: 0;
 }
-.big-box > div {
-  position: relative;
+.big-box > .whatis {
+  /* position: relative; */
   width: 100%;
   height: 100%;
 }
@@ -562,6 +577,7 @@ body {
 .darkgray-chosen .big-box .right {
   -webkit-transition-delay: 0.4s;
   transition-delay: 0.4s;
+  z-index: 100;
 }
 /* #ff7473 / #ffc952 / #47b8e0 / #34314c */
 .red .original {
