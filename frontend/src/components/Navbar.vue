@@ -24,20 +24,24 @@
           <a href="#">My Page</a>
         </li>
         <li class="nav-item">
-          <button class="login-btn" @click="handleClickButton">
+          <button id="login-btn" @click="handleClickButton">
             <img src="@/assets/icons/logout.png" alt width="22px" />
           </button>
         </li>
-
-        <i class="fas fa-search" id="search-icon"></i>
-        <input class="search-input" type="text" placeholder="Search.." />
+        <li class="nav-item">
+          <button id="barcode-btn" @click="handleClickBarcode">
+            <img src="@/assets/icons/redbarcode.png" alt width="30px" />
+          </button>
+        </li>
       </ul>
     </nav>
     <user-sign-modal :visible.sync="visible" style="z-index: 80;"></user-sign-modal>
+    <barcode-modal :barcode.sync="barcode"></barcode-modal>
   </div>
 </template>
 <script>
-import userSignModal from "@/components/LoginModal";
+import UserSignModal from "@/components/LoginModal.vue";
+import BarcodeModal from "@/components/BarcodeModal.vue";
 import $ from "jquery";
 
 $(document).ready(function() {
@@ -56,15 +60,21 @@ $(document).ready(function() {
 export default {
   data() {
     return {
-      visible: false
+      visible: false,
+      barcode: false
     };
   },
   components: {
-    userSignModal
+    UserSignModal,
+    BarcodeModal
   },
   methods: {
     handleClickButton() {
       this.visible = !this.visible;
+      console.log("hello");
+    },
+    handleClickBarcode() {
+      this.barcode = !this.barcode;
       console.log("hello");
     }
   }
@@ -79,10 +89,17 @@ export default {
 }
 
 /* BASIC SETUP */
-.login-btn {
+#login-btn {
   border: 0;
-  outline: 0;
-  background-color: rgba(255, 255, 255, 0);
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#barcode-btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
   cursor: pointer;
 }
 
@@ -93,6 +110,7 @@ export default {
   top: 0;
   background-color: #fff;
   box-shadow: 5px 0px 5px gray;
+  z-index: 30;
 }
 
 .grad-bar {
@@ -179,54 +197,6 @@ export default {
 .feature-container img {
   width: 100%;
   margin-bottom: 15px;
-}
-
-/* SEARCH FUNCTION */
-
-#search-icon {
-  font-size: 0.9rem;
-  margin-top: 3px;
-  margin-left: 15px;
-  transition: color 0.3s ease-out;
-}
-
-#search-icon:hover {
-  color: #3498db;
-  cursor: pointer;
-}
-
-.search {
-  transform: translate(-35%);
-  -webkit-transform: translate(-35%);
-  transition: transform 0.7s ease-in-out;
-  color: #3498db;
-}
-
-.no-search {
-  transform: translate(0);
-  transition: transform 0.7s ease-in-out;
-}
-
-.search-input {
-  position: absolute;
-  top: -4px;
-  right: -125px;
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 0.6s ease;
-}
-
-.search-active {
-  opacity: 1;
-  z-index: 0;
-}
-
-input {
-  border: 0;
-  border-left: 1px solid #ccc;
-  border-radius: 0; /* FOR SAFARI */
-  outline: 0;
-  padding: 5px;
 }
 
 /* MOBILE MENU & ANIMATION */
@@ -317,20 +287,6 @@ input {
     padding: 50px;
   }
 
-  /* MOBILE HEADINGS */
-
-  /* h1 {
-    font-size: 1.9rem;
-  }
-
-  h2 {
-    font-size: 1rem;
-  }
-
-  p {
-    font-size: 0.8rem;
-  } */
-
   /* MOBILE NAVIGATION */
 
   .navbar ul {
@@ -385,16 +341,6 @@ input {
 
   .feature-container:nth-child(2) {
     order: -1;
-  }
-
-  /* SEARCH DISABLED ON MOBILE */
-
-  #search-icon {
-    display: none;
-  }
-
-  .search-input {
-    display: none;
   }
 }
 </style>
