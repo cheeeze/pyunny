@@ -1,76 +1,78 @@
 <template>
   <div>
     <navbar></navbar>
-    <div id="search" class="box_search" style="margin-top:100px;">
-      <img
-        src="@/assets/icons/x.png/"
-        v-show="recommShow"
-        @click="recomm"
-        style="float: left; width:1.5em; z-index:10;"
-      />
-      <input
-        type="search"
-        id="innerQuery"
-        class="tf-keyword"
-        v-model="keyword"
-        v-on:keyup.enter="search"
-        @click="recomm"
-        title="검색어 입력"
-        placeholder="상품 검색"
-        maxlength="100"
-        style="background-color: #f2f3f5;"
-        v-bind:style="{ width: recommShow==false?'95%':'85%'}"
-      />
-    </div>
+    <div style="padding:0.7em;">
+      <div id="search" class="box_search" style="margin-top:100px;">
+        <img
+          src="@/assets/icons/x.png/"
+          v-show="recommShow"
+          @click="recomm"
+          style="float: left; width:1.5em; z-index:10;"
+        />
+        <input
+          type="search"
+          id="innerQuery"
+          class="tf-keyword"
+          v-model="keyword"
+          v-on:keyup.enter="search"
+          @click="recomm"
+          title="검색어 입력"
+          placeholder="상품 검색"
+          maxlength="100"
+          style="background-color: #f2f3f5;"
+          v-bind:style="{ width: recommShow==false?'95%':'85%'}"
+        />
+      </div>
 
-    <div>
-      <select v-model="selected" style="margin-bottom:20px;" @onchange="orderChange">
-        <option>인기순</option>
-        <option>최신순</option>
-      </select>
-    </div>
+      <div>
+        <select v-model="selected" style="margin-bottom:20px;" @onchange="orderChange">
+          <option>인기순</option>
+          <option>최신순</option>
+        </select>
+      </div>
 
-    <div class="recipe-list-area">
-      <v-card class="mx-auto" max-width="500">
-        <v-container fluid>
-          <v-row dense>
-            <v-col
-              v-for="card in cards"
-              :key="card.title"
-              :cols="card.flex"
-              @click="gotoDetail(card.id)"
-            >
-              <v-card>
-                <v-img
-                  :src="card.src"
-                  class="white--text align-end"
-                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                  height="200px"
-                >
-                  <v-card-title v-text="card.title"></v-card-title>
-                </v-img>
+      <div class="recipe-list-area">
+        <v-card class="mx-auto" max-width="500">
+          <v-container fluid>
+            <v-row dense>
+              <v-col
+                v-for="card in cards"
+                :key="card.title"
+                :cols="card.flex"
+                @click="gotoDetail(card.id)"
+              >
+                <v-card>
+                  <v-img
+                    :src="card.src"
+                    class="white--text align-end"
+                    gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                    height="200px"
+                  >
+                    <v-card-title v-text="card.title"></v-card-title>
+                  </v-img>
 
-                <v-card-actions>
-                  <v-spacer></v-spacer>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
 
-                  <!-- <v-list-item-avatar color="grey darken-3">
+                    <!-- <v-list-item-avatar color="grey darken-3">
                     <v-img
                       class="elevation-6"
                       src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
                     ></v-img>
-                  </v-list-item-avatar>-->
-                  <v-list-item-content>
-                    <v-list-item-title>{{card.date}}</v-list-item-title>
-                  </v-list-item-content>
-                  <v-btn icon>
-                    <v-icon>mdi-heart</v-icon>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card>
+                    </v-list-item-avatar>-->
+                    <v-list-item-content>
+                      <v-list-item-title>{{card.date}}</v-list-item-title>
+                    </v-list-item-content>
+                    <v-btn icon>
+                      <v-icon>mdi-heart</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
+      </div>
     </div>
   </div>
 </template>

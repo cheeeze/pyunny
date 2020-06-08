@@ -1,97 +1,103 @@
 <template>
   <div>
     <navbar></navbar>
-    <div style="margin-top:100px;">
-      <div>
-        <!-- <div class="avatar-preview">
+    <div style="padding:0.7em;">
+      <div style="margin-top:100px;">
+        <div>
+          <!-- <div class="avatar-preview">
           <div
             class="c2"
             id="imagePreview"
             v-bind:style="{'background-image': 'url('+ review.profileImg +')'}"
             style="float:left;"
           ></div>
-        </div>-->
-        <h1>{{recipe.title}}</h1>
-        <h2>필요재료: {{recipe.ingredient}}</h2>
+          </div>-->
+          <h1>{{recipe.title}}</h1>
+          <h2>필요재료: {{recipe.ingredient}}</h2>
 
-        <div style="float:right;">
-          <p>작성자: {{user.nickname}}</p>
-          <p>{{recipe.date.substring(0,10)}}</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="text-center" style="clear:both;">
-      <p>
-        <small>사용한 편의점 상품</small>
-      </p>
-      <v-chip
-        class="ma-2"
-        color="orange"
-        text-color="white"
-        v-for="product in products"
-        :key="product.key"
-        @click="gotoProductDetail(product.key)"
-      >{{product.text}}</v-chip>
-    </div>
-
-    <div style="margin-top:50px;">
-      <editor-content id="tiptaparea" class="editor__content" v-html="recipe.content" />
-    </div>
-
-    <!-- 한줄평 부분 || 채은이를 위한 선물 -->
-    <div>
-      <div class="item-comment" style="margin-top:50px;">
-        <h2 class="subtitle">댓글</h2>
-        <input id="item-comment" type="text" placeholder="댓글을 적어보세요." v-model="text" />
-        <button id="comment-btn" @click="addComment(0,0)">입력</button>
-        <!-- 한줄평 모음 -->
-        <div class="comments">
-          <div class="comment" v-for="(reply, index) in replys" :key="index">
-            <h4 id="nickname">{{reply.nickname}}</h4>
-            <div id="comment-box" @click="reply.isreply = !reply.isreply">
-              <p id="comment-text">{{reply.content}}</p>
-            </div>
-            <div class="before-reply" v-if="!reply.isreply">
-              <button id="reply-btn" @click="reply.isreply = !reply.isreply">답글 달기</button>
-            </div>
-            <div class="after-reply" v-if="reply.isreply">
-              <img src="@/assets/icons/rereply.png" alt height="26px" width="28px" />
-              <input
-                type="text"
-                placeholder="답글을 작성해볼까요?"
-                v-model="childtext"
-                style="height:30px; width: 80%"
-              />
-              <button id="reply-btn" style="color: #47b8e0" @click="addComment(index, reply.id)">게시</button>
-              <button
-                id="reply-btn"
-                style="color: #ff7473; margin-left: 2%;"
-                @click="reply.isreply = !reply.isreply;"
-              >취소</button>
-            </div>
-            <!-- 대댓 모음 -->
-            <div class="rereply" v-for="(childreply, index) in reply.childComment" :key="index">
-              <!-- <p>
-              <small>{{childreply.nickname}}</small>
-              </p>-->
-              <p>
-                <img
-                  src="@/assets/icons/rereply.png"
-                  alt
-                  height="26px"
-                  width="28px"
-                  style="margin-right: 2px;"
-                />
-                {{childreply.content}}
-              </p>
-            </div>
-            <!---->
+          <div style="float:right;">
+            <p>작성자: {{user.nickname}}</p>
+            <p>{{recipe.date.substring(0,10)}}</p>
           </div>
         </div>
       </div>
+
+      <div class="text-center" style="clear:both;">
+        <p>
+          <small>사용한 편의점 상품</small>
+        </p>
+        <v-chip
+          class="ma-2"
+          color="orange"
+          text-color="white"
+          v-for="product in products"
+          :key="product.key"
+          @click="gotoProductDetail(product.key)"
+        >{{product.text}}</v-chip>
+      </div>
+
+      <div style="margin-top:50px;">
+        <editor-content id="tiptaparea" class="editor__content" v-html="recipe.content" />
+      </div>
+
+      <!-- 한줄평 부분 || 채은이를 위한 선물 -->
+      <div>
+        <div class="item-comment" style="margin-top:50px;">
+          <h2 class="subtitle">댓글</h2>
+          <input id="item-comment" type="text" placeholder="댓글을 적어보세요." v-model="text" />
+          <button id="comment-btn" @click="addComment(0,0)">입력</button>
+          <!-- 한줄평 모음 -->
+          <div class="comments">
+            <div class="comment" v-for="(reply, index) in replys" :key="index">
+              <h4 id="nickname">{{reply.nickname}}</h4>
+              <div id="comment-box" @click="reply.isreply = !reply.isreply">
+                <p id="comment-text">{{reply.content}}</p>
+              </div>
+              <div class="before-reply" v-if="!reply.isreply">
+                <button id="reply-btn" @click="reply.isreply = !reply.isreply">답글 달기</button>
+              </div>
+              <div class="after-reply" v-if="reply.isreply">
+                <img src="@/assets/icons/rereply.png" alt height="26px" width="28px" />
+                <input
+                  type="text"
+                  placeholder="답글을 작성해볼까요?"
+                  v-model="childtext"
+                  style="height:30px; width: 80%"
+                />
+                <button
+                  id="reply-btn"
+                  style="color: #47b8e0"
+                  @click="addComment(index, reply.id)"
+                >게시</button>
+                <button
+                  id="reply-btn"
+                  style="color: #ff7473; margin-left: 2%;"
+                  @click="reply.isreply = !reply.isreply;"
+                >취소</button>
+              </div>
+              <!-- 대댓 모음 -->
+              <div class="rereply" v-for="(childreply, index) in reply.childComment" :key="index">
+                <!-- <p>
+              <small>{{childreply.nickname}}</small>
+                </p>-->
+                <p>
+                  <img
+                    src="@/assets/icons/rereply.png"
+                    alt
+                    height="26px"
+                    width="28px"
+                    style="margin-right: 2px;"
+                  />
+                  {{childreply.content}}
+                </p>
+              </div>
+              <!---->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--한줄평 끝-->
     </div>
-    <!--한줄평 끝-->
   </div>
 </template>
 <script>
