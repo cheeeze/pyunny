@@ -1,20 +1,19 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-
+import Vue from "vue";
+import Router from "vue-router";
+// import axios from '../api/axiosScript.js'
 // Routes
-import paths from './paths'
-//import axios from '../api/Productaxios'
-
+import paths from "./paths";
 
 function route(path, view, name) {
     return {
         name: name || view,
         path,
         component: (resolve) => import(`@/views/${view}.vue`).then(resolve),
+        props: true
     }
 }
 
-Vue.use(Router)
+Vue.use(Router);
 
 // Create a new router
 const router = new Router({
@@ -58,5 +57,5 @@ const router = new Router({
         )
     }
     next()
-}) */
+})*/
 export default router
