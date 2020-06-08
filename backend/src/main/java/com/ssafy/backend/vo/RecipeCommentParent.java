@@ -9,6 +9,7 @@ import java.util.List;
 public class RecipeCommentParent {
     private int id;
     private int userId;
+    private String nickname;
     private int recipeId;
     private String date;
     private String content;
@@ -22,6 +23,17 @@ public class RecipeCommentParent {
             List<RecipeComment> childComment) {
         this.id = id;
         this.userId = userId;
+        this.recipeId = recipeId;
+        this.date = date;
+        this.content = content;
+        this.childComment = childComment;
+    }
+
+    public RecipeCommentParent(int id, int userId, String nickname, int recipeId, String date, String content,
+            List<RecipeComment> childComment) {
+        this.id = id;
+        this.userId = userId;
+        this.nickname = nickname;
         this.recipeId = recipeId;
         this.date = date;
         this.content = content;
@@ -76,10 +88,18 @@ public class RecipeCommentParent {
         this.childComment = childComment;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     @Override
     public String toString() {
         return "RecipeCommentParent [childComment=" + childComment + ", content=" + content + ", date=" + date + ", id="
-                + id + ", recipeId=" + recipeId + ", userId=" + userId + "]";
+                + id + ", nickname=" + nickname + ", recipeId=" + recipeId + ", userId=" + userId + "]";
     }
 
 }

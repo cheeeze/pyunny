@@ -1,5 +1,4 @@
 import http from '../http-common'
-import axios from 'axios'
 
 
 /* 상품 추가 */
