@@ -10,7 +10,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/button_barcode"
-            android:background="@drawable/redbarcode"
+            android:src="@drawable/redbarcode"
+            android:scaleType="centerInside"
+            android:background="#00000000"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_weight="1"/>
         <ImageView
@@ -18,21 +20,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/mainlogo"
+            android:scaleType="centerInside"
+            android:background="#00000000"
             android:layout_weight="6"/>
 
-<!--        <TextView-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_gravity="center_horizontal|center_vertical"-->
-<!--            android:textAlignment="center"-->
-<!--            android:text="편의뽕"-->
-<!--            android:layout_weight="4"/>-->
         <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:id="@+id/button_search"
-            android:background="@drawable/search"
+            android:src="@drawable/search"
+            android:scaleType="centerInside"
+            android:background="#00000000"
             android:layout_weight="1"/>
 
 

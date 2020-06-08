@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity  {
 
     private ImageButton img_btn_login_kakao, img_btn_login_google, img_btn_login_naver;
     private ImageButton btn_login, btn_signup;
