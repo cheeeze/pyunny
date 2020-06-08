@@ -54,8 +54,23 @@
     </select>
 
     <!-- 할인 다 가져오기 -->
-    <select id="getSale" resultType="sale">
-        <include refid="select-product"/>
+    <select id="getSale" resultMap="saleSearchResult">
+        <!-- <include refid="select-product"/> -->
+        SELECT 
+        s.id AS id , 
+        s.name AS sale_name, 
+        s.franchise_id AS franchise_id,
+        s.product_id as product_id,
+        s.type AS type, 
+        s.dum_image AS dum_image, 
+        s.dum_name AS dum_name, 
+        s.dum_price AS dum_price,
+        p.id AS id,
+        p.name AS NAME, p.price AS price, 
+        p.category AS category, 
+        p.image AS image 
+        FROM Sale s LEFT OUTER JOIN Product p 
+        ON s.product_id = p.id   
     </select>
 
     <!-- 상품 ID로 가져오기 -->
