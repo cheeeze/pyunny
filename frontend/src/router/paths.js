@@ -10,12 +10,18 @@ export default [{
   },
   {
     path: "/recipecreate",
-    view: "RecipeCreate",
-    name: "RecipeCreate",
+    view: "Recipecreate",
+    name: "Recipecreate",
   },
   {
     path: "/recipe",
     view: "Recipe",
     name: "Recipe",
+  },
+  {
+    path: "/recipedetail/:id",
+    view: "Recipedetail",
+    name: "Recipedetail",
+    props: true,
   },
 ];

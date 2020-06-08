@@ -1,431 +1,228 @@
 <template>
   <div>
     <navbar></navbar>
-
-    <div class="text-area" style="margin-top:30px">
+    <div id="search" class="box_search" style="margin-top:30px;">
+      <img
+        src="@/assets/icons/x.png/"
+        v-show="recommShow"
+        @click="recomm"
+        style="float: left; width:1.5em; z-index:10;"
+      />
       <input
         type="search"
         id="innerQuery"
         class="tf-keyword"
-        title="제목 입력"
-        placeholder="레시피 이름!"
+        v-model="keyword"
+        v-on:keyup.enter="search"
+        @click="recomm"
+        title="검색어 입력"
+        placeholder="상품 검색"
         maxlength="100"
-        style="width:95%; background-color: #f2f3f5; border: none;"
+        style="background-color: #f2f3f5;"
+        v-bind:style="{ width: recommShow==false?'95%':'85%'}"
       />
     </div>
 
-    <div class="ingredient-area">
-      <input
-        type="search"
-        id="innerQuery"
-        class="tf-keyword"
-        title="재료 입력"
-        placeholder="필요한 재료!"
-        maxlength="100"
-        style="width:95%; background-color: #f2f3f5; border: none;"
-      />
+    <div>
+      <select v-model="selected" style="margin-bottom:20px;" @onchange="orderChange">
+        <option>인기순</option>
+        <option>최신순</option>
+      </select>
     </div>
 
-    <v-container fluid>
-      <v-row>
-        <v-col cols="12">
-          <v-combobox v-model="select" :items="items" label="편의점 상품" multiple outlined dense></v-combobox>
-        </v-col>
-      </v-row>
-    </v-container>
+    <div class="recipe-list-area">
+      <v-card class="mx-auto" max-width="500">
+        <v-container fluid>
+          <v-row dense>
+            <v-col
+              v-for="card in cards"
+              :key="card.title"
+              :cols="card.flex"
+              @click="gotoDetail(card.id)"
+            >
+              <v-card>
+                <v-img
+                  :src="card.src"
+                  class="white--text align-end"
+                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                  height="200px"
+                >
+                  <v-card-title v-text="card.title"></v-card-title>
+                </v-img>
 
-    <div class="editor c4" style="width:100%;">
-      <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-        <div class="menubar">
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.bold() }"
-            @click="commands.bold"
-          >
-            <icon name="bold" id="bold" />
-          </button>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
 
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.italic() }"
-            @click="commands.italic"
-          >
-            <icon name="italic" />
-          </button>
-
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.strike() }"
-            @click="commands.strike"
-          >
-            <icon name="strike" />
-          </button>
-
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.underline() }"
-            @click="commands.underline"
-          >
-            <icon name="underline" />
-          </button>
-
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.code() }"
-            @click="commands.code"
-          >
-            <icon name="code" />
-          </button>
-
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.paragraph() }"
-            @click="commands.paragraph"
-          >
-            <icon name="paragraph" />
-          </button>
-
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-            @click="commands.heading({ level: 1 })"
-          >H1</button>
-
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-            @click="commands.heading({ level: 2 })"
-          >H2</button>
-
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-            @click="commands.heading({ level: 3 })"
-          >H3</button>
-
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.bullet_list() }"
-            @click="commands.bullet_list"
-          >
-            <icon name="ul" />
-          </button>
-
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.ordered_list() }"
-            @click="commands.ordered_list"
-          >
-            <icon name="ol" />
-          </button>
-
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.blockquote() }"
-            @click="commands.blockquote"
-          >
-            <icon name="quote" />
-          </button>
-
-          <button
-            class="menubar__button"
-            :class="{ 'is-active': isActive.code_block() }"
-            @click="commands.code_block"
-          >
-            <icon name="code" />
-          </button>
-
-          <button class="menubar__button" @click="commands.horizontal_rule">
-            <icon name="hr" />
-          </button>
-
-          <button class="menubar__button" @click="commands.undo">
-            <icon name="undo" />
-          </button>
-
-          <button class="menubar__button" @click="commands.redo">
-            <icon name="redo" />
-          </button>
-
-          <button class="menubar__button" @click="showImagePrompt(commands.image)">
-            <icon name="image" />
-          </button>
-
-          <div>
-            <input
-              ref="image"
-              class="file-upload-input"
-              type="file"
-              style="display:none;"
-              @change="readURL"
-              accept="image/*"
-            />
-          </div>
-        </div>
-      </editor-menu-bar>
-
-      <div style="margin-top:30px;">
-        <editor-content id="tiptaparea" class="editor__content" :editor="editor" />
-      </div>
-
-      <div style="margin-top:30px;">
-        <v-btn text color="primary" @click="submit">등록!</v-btn>
-      </div>
+                  <!-- <v-list-item-avatar color="grey darken-3">
+                    <v-img
+                      class="elevation-6"
+                      src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                    ></v-img>
+                  </v-list-item-avatar>-->
+                  <v-list-item-content>
+                    <v-list-item-title>{{card.date}}</v-list-item-title>
+                  </v-list-item-content>
+                  <v-btn icon>
+                    <v-icon>mdi-heart</v-icon>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
     </div>
   </div>
 </template>
 
 <script>
-import "@/assets/styles/editor/editor.scss";
-import "@/assets/styles/editor/main.scss";
-import "@/assets/styles/editor/menubar.scss";
-import "@/assets/styles/editor/menububble.scss";
-import "@/assets/styles/editor/variables.scss";
-import productAxios from "@/api/Productaxios";
-import recipeAxios from "@/api/Recipeaxios";
-
-import Icon from "@/components/Icon.vue";
-
 import Navbar from "@/components/Navbar.vue";
-
-import { Editor, EditorContent, EditorMenuBar } from "tiptap";
-import {
-  Blockquote,
-  CodeBlock,
-  HardBreak,
-  Heading,
-  HorizontalRule,
-  OrderedList,
-  BulletList,
-  ListItem,
-  TodoItem,
-  TodoList,
-  Bold,
-  Code,
-  Italic,
-  Link,
-  Strike,
-  Underline,
-  History,
-  Image,
-  Placeholder
-} from "tiptap-extensions";
-
+import Axios from "@/api/Recipeaxios";
 export default {
   components: {
-    EditorContent,
-    EditorMenuBar,
-    Icon,
     Navbar
   },
   data() {
     return {
-      select: [],
-      items: [],
-      imageFiles: [],
-      recipe: {},
+      recommShow: false,
+      keyword: "",
+      selected: "최신순",
 
-      editor: new Editor({
-        extensions: [
-          new Blockquote(),
-          new BulletList(),
-          new CodeBlock(),
-          new HardBreak(),
-          new Heading({ levels: [1, 2, 3] }),
-          new HorizontalRule(),
-          new ListItem(),
-          new OrderedList(),
-          new TodoItem(),
-          new TodoList(),
-          new Link(),
-          new Bold(),
-          new Code(),
-          new Italic(),
-          new Strike(),
-          new Underline(),
-          new History(),
-          new Image()
-          /* new Placeholder({
-            emptyNodeClass: "is-empty",
-            emptyNodeText: "여기에 글을 적어주세요..",
-            showOnlyWhenEditable: true
-          }) */
-        ],
-        content: `<h2>
-            책쟁이의 책리뷰!
-          </h2>
-          <p>
-            <b>왜 이 책을 보았는가?</b>
-          </p>`
-      })
+      cards: [
+        /* {
+          title: "Pre-fab homes",
+          src: "https://cdn.vuetifyjs.com/images/cards/house.jpg",
+          flex: 6
+        },
+        {
+          title: "Favorite road trips",
+          src: "https://cdn.vuetifyjs.com/images/cards/road.jpg",
+          flex: 6
+        },
+        {
+          title: "Best airlines",
+          src: "https://cdn.vuetifyjs.com/images/cards/plane.jpg",
+          flex: 6
+        } */
+      ]
     };
   },
+  watch: {
+    selected: function(v) {
+      if (v == "인기순") this.popularityOrder();
+      else if (v == "최신순") this.recentOrder();
+    }
+  },
   mounted() {
-    productAxios.getProduct(
-      res => {
-        console.log(res.data);
-
-        console.log(res);
-
-        this.items = [];
-        res.data.forEach(element => {
-          this.items.push({ text: element.name, key: element.id });
-        });
-
-        //this.items = res.data;
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.recentOrder();
   },
   methods: {
-    showImagePrompt(command) {
-      this.comm = command;
-      console.log(this.comm);
-      this.$refs.image.click();
-    },
-    readURL(input) {
-      var fileList = input.target.files;
-
-      if (input.target.files && input.target.files[0]) {
-        var reader = new FileReader();
-        reader.onload = e => {
-          console.log(e.target);
-          const src = e.target.result;
-          this.comm({ src });
-          //this.comm = "";
-        };
-        reader.readAsDataURL(fileList[0]);
+    recomm() {
+      if (!this.recommShow) this.recommShow = !this.recommShow;
+      else {
+        this.recommShow = !this.recommShow;
+        this.keyword = "";
       }
     },
-    dataURItoBlob(dataURI) {
-      var binary = atob(dataURI.split(",")[1]);
-      var array = [];
-      for (var i = 0; i < binary.length; i++) {
-        array.push(binary.charCodeAt(i));
-      }
-      return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
-    },
-    preprocessing() {
-      //본문 파일 변환
-      var tmptext = document.getElementById("tiptaparea").innerHTML;
-      var len = tmptext.length;
-      tmptext = tmptext.slice(61, len - 6);
-      len = tmptext.length;
-
-      let start = 0;
-      let last = 0;
-      while (start >= 0) {
-        start = tmptext.indexOf("data:image", start + 1);
-        if (start < 0) break;
-
-        last = tmptext.indexOf('"', start);
-        console.log("start:" + start + " last:" + last);
-
-        let tmp = this.dataURItoBlob(tmptext.substring(start, last));
-        console.log(tmp);
-
-        //let file = new FormData();
-        //file.append("file", tmp);
-        this.imageFiles.push(new File([tmp], "name"));
-      }
-      this.$set(this.review, "content", tmptext);
-
-      this.filesave();
-    },
-    filesave() {
-      let data = new FormData();
-      for (var i = 0; i < this.imageFiles.length; i++)
-        data.append("files", this.imageFiles[i]);
-
-      recipeAxios.uploadFiles(
-        data,
+    orderChange() {},
+    popularityOrder() {
+      Axios.getRecipePopularOrdered(
         res => {
-          for (var i = 0; i < res.data.length; i++) {
-            this.imageNames.push(res.data[i]);
-          }
-          var index = 0;
+          this.cards = [];
+          //console.log(res.data);
+          res.data.forEach(element => {
+            let src = require("@/assets/icons/defaultrecipe.png");
+            let start = element.content.indexOf("http://", 1);
+            if (start > 0) {
+              let last = element.content.indexOf('"', start);
+              src = element.content.substring(start, last);
+            }
+            //console.log(src);
 
-          let start = 0;
-          let last = 0;
-          let tmptext = this.review.content;
-          while (start >= 0) {
-            start = tmptext.indexOf("data:image", start + 1);
-            if (start < 0) break;
-
-            console.log("본분 파일 index:" + index);
-
-            last = tmptext.indexOf('"', start);
-            console.log("start:" + start + " last:" + last);
-
-            var url = tmptext.substring(start, last);
-            console.log(url);
-            tmptext = tmptext.replace(
-              url,
-              `http://127.0.0.1:8080/upload/${this.imageNames[index]}`
-            );
-            index++;
-          }
-
-          this.$set(this.recipe, "content", tmptext);
-
-          this.submit();
+            this.cards.push({
+              id: element.id,
+              userId: element.userId,
+              date: element.date,
+              title: element.title,
+              src: src,
+              flex: 6
+            });
+          });
         },
         err => {
           console.log(err);
         }
       );
     },
-
-    submit() {
-      let data = {
-        userId: 1,
-        bookIsbnFk: this.review.bookIsbn,
-        title: this.review.title,
-        content: this.review.content,
-        date: this.review.date,
-        rating: this.review.rating,
-        isreply: this.review.isreply,
-        backgroundImg: this.review.backgroundImg,
-        font: this.review.font,
-        fontSize: this.review.fontSize,
-        fontColor: this.review.fontColor,
-        titleText: this.review.titleText
-      };
-
-      recipeAxios.insertRecipe(
-        data,
+    recentOrder() {
+      Axios.getRecipeRecentOrdered(
         res => {
-          console.log(res);
-          //alert("서버통신됨");
-          alert("작성 완료 되었습니다!");
-          //this.$router.push("/reviewdetail/" + res.data);
+          this.cards = [];
+          //console.log(res.data);
+          res.data.forEach(element => {
+            let src = require("@/assets/icons/defaultrecipe.png");
+            let start = element.content.indexOf("http://", 1);
+            if (start > 0) {
+              let last = element.content.indexOf('"', start);
+              src = element.content.substring(start, last);
+            }
+            //console.log(src);
+
+            this.cards.push({
+              id: element.id,
+              userId: element.userId,
+              date: element.date,
+              title: element.title,
+              src: src,
+              flex: 6
+            });
+          });
         },
-        error => {
-          console.log(error);
+        err => {
+          console.log(err);
+        }
+      );
+    },
+    gotoDetail(id) {
+      this.$router.push("/recipedetail/" + id);
+    },
+    search() {
+      Axios.getRecipeBySearch(
+        this.keyword,
+        res => {
+          this.cards = [];
+          //console.log(res.data);
+          res.data.forEach(element => {
+            let src = require("@/assets/icons/defaultrecipe.png");
+            let start = element.content.indexOf("http://", 1);
+            if (start > 0) {
+              let last = element.content.indexOf('"', start);
+              src = element.content.substring(start, last);
+            }
+            //console.log(src);
+
+            this.cards.push({
+              id: element.id,
+              userId: element.userId,
+              date: element.date,
+              title: element.title,
+              src: src,
+              flex: 6
+            });
+          });
+          this.keyword = "";
+        },
+        err => {
+          console.log(err);
         }
       );
     }
-  },
-  beforeDestroy() {
-    this.editor.destroy();
   }
 };
 </script>
 
 <style scoped>
-.editor__content ul {
-  display: block;
-  list-style-type: disc;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
-}
-
-.text-area {
+.box_search {
   overflow: hidden;
   position: relative;
   height: 40px;
@@ -436,15 +233,7 @@ export default {
   margin-bottom: 10px;
 }
 
-.ingredient-area {
-  overflow: hidden;
-  position: relative;
-  height: 40px;
-  margin-top: 10px;
-  margin: 2px 8px 0;
-  padding: 6px 10px 1px;
-  border-radius: 5px;
-  background-color: #f2f3f5;
-  margin-bottom: 10px;
+select {
+  -webkit-appearance: auto;
 }
 </style>

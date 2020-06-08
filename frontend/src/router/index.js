@@ -10,6 +10,7 @@ function route(path, view, name) {
         name: name || view,
         path,
         component: (resolve) => import(`@/views/${view}.vue`).then(resolve),
+        props: true
     }
 }
 

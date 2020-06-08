@@ -39,6 +39,7 @@ public class RecipeController {
 
     @GetMapping("/recipe_recent")
     public ResponseEntity<List<Recipe>> getRecipeRecentOrdered() throws Exception {
+        System.out.println("recent order");
         List<Recipe> res = service.getRecipeRecentOrdered();
         return new ResponseEntity(res, HttpStatus.OK);
     }

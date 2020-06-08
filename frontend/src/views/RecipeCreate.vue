@@ -373,7 +373,7 @@ export default {
             //console.log(url);
             tmptext = tmptext.replace(
               url,
-              `http://127.0.0.1:8080/upload/${this.imageNames[index]}`
+              `http://127.0.0.1:8080/api/upload/${this.imageNames[index]}`
             );
             index++;
           }
@@ -411,6 +411,7 @@ export default {
           console.log(res);
           alert("작성 완료 되었습니다!");
           //this.$router.push("/reviewdetail/" + res.data);
+          this.$router.push("/recipe/");
         },
         error => {
           console.log(error);
