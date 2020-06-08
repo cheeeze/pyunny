@@ -6,6 +6,7 @@ import com.ssafy.backend.dao.RecipeDAO;
 import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.Recipe;
 import com.ssafy.backend.vo.RecipeComment;
+import com.ssafy.backend.vo.RecipeCommentParent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,7 +67,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<RecipeComment> getComment(int recipeId) throws Exception {
+    public List<RecipeCommentParent> getComment(int recipeId) throws Exception {
         System.out.println("recipeId:" + recipeId);
         return dao.getComment(recipeId);
     }

@@ -8,6 +8,7 @@ import com.ssafy.backend.service.RecipeService;
 import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.Recipe;
 import com.ssafy.backend.vo.RecipeComment;
+import com.ssafy.backend.vo.RecipeCommentParent;
 import com.ssafy.backend.vo.TempKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +91,7 @@ public class RecipeController {
     @PostMapping("/recipe_comment")
     public ResponseEntity insertComment(@RequestBody RecipeComment rc) throws Exception {
         service.insertComment(rc);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(rc, HttpStatus.OK);
     }
 
     @DeleteMapping("/recipe_comment/{id}")
@@ -100,8 +101,8 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe_comment/{recipeId}")
-    public ResponseEntity<List<Product>> getComment(@PathVariable int recipeId) throws Exception {
-        List<RecipeComment> res = service.getComment(recipeId);
+    public ResponseEntity<List<RecipeCommentParent>> getComment(@PathVariable int recipeId) throws Exception {
+        List<RecipeCommentParent> res = service.getComment(recipeId);
         return new ResponseEntity(res, HttpStatus.OK);
     }
 

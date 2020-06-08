@@ -5,6 +5,7 @@ import java.util.List;
 import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.Recipe;
 import com.ssafy.backend.vo.RecipeComment;
+import com.ssafy.backend.vo.RecipeCommentParent;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class RecipeDAOImpl implements RecipeDAO {
     }
 
     @Override
-    public List<RecipeComment> getComment(int recipeId) throws Exception {
+    public List<RecipeCommentParent> getComment(int recipeId) throws Exception {
         System.out.println("recipeId:" + recipeId);
         return session.selectList(ns + "getComment", recipeId);
     }
