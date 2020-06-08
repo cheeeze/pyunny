@@ -49,8 +49,6 @@ public class FragmentMainAllSale extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_all_sale, container, false);
         init(view);
-        Log.d("TEST", "in fragmemnta create");
-        Log.d("TEST", "finish getSaleList");
         return view;
     }
 
@@ -61,7 +59,7 @@ public class FragmentMainAllSale extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView_event);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext,2);
         recyclerView.setLayoutManager(mLayoutManager);
-        getSaleList();
+        //getSaleList();
         mainSaleAdapter = new MainSaleAdapter(mContext,getList());
         //mainSaleAdapter = new MainSaleAdapter(mContext,saleList);
 
