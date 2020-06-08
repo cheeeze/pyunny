@@ -84,4 +84,9 @@ public class RecipeDAOImpl implements RecipeDAO {
 
     }
 
+    @Override
+    public List<Product> getIngredientProduct(int id) throws Exception {
+        return session.selectList(ns + "getIngredientProduct", id);
+    }
+
 }

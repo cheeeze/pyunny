@@ -70,6 +70,12 @@
         where name like '%${value}%'
     </select>
 
+    <select id="getIngredientProduct" parameterType="int" resultType="product">
+        SELECT p.id id, p.name name, p.franchise_id franchise_id, p.price price, p.category category, p.image image, p.description description FROM Product p INNER JOIN Product_recipe r
+            ON p.id = r.product_id 
+        WHERE r.recipe_id = #{value};
+    </select>
+
 
     <resultMap id="recipeCommentResult" type="recipeCommentParent">
         <collection property="childComment" javaType="arrayList" column="id" ofType="recipeComment" select="getChildComment"/>

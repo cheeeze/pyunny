@@ -75,6 +75,12 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/product_recipe/{id}")
+    public ResponseEntity<List<Product>> getIngredientProduct(@PathVariable int id) throws Exception {
+        List<Product> res = service.getIngredientProduct(id);
+        return new ResponseEntity(res, HttpStatus.OK);
+    }
+
     @GetMapping("/autocomplete")
     public ResponseEntity<List<Product>> getProductAutoComplete(@RequestParam String keyword) throws Exception {
         List<Product> res = service.getProductAutoComplete(keyword);

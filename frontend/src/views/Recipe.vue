@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar></navbar>
-    <div id="search" class="box_search" style="margin-top:30px;">
+    <div id="search" class="box_search" style="margin-top:100px;">
       <img
         src="@/assets/icons/x.png/"
         v-show="recommShow"

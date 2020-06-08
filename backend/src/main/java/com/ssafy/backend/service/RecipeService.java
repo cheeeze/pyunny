@@ -23,6 +23,8 @@ public interface RecipeService {
 
     List<Product> getProductAutoComplete(String keyword) throws Exception;
 
+    List<Product> getIngredientProduct(int id) throws Exception;
+
     void insertComment(RecipeComment rc) throws Exception;
 
     List<RecipeComment> getComment(int recipeId) throws Exception;

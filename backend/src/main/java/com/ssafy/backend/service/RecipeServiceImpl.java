@@ -77,4 +77,9 @@ public class RecipeServiceImpl implements RecipeService {
 
     }
 
+    @Override
+    public List<Product> getIngredientProduct(int id) throws Exception {
+        return dao.getIngredientProduct(id);
+    }
+
 }

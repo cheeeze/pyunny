@@ -4,9 +4,10 @@ export default [{
     name: "Home",
   },
   {
-    path: "/detail",
+    path: "/detail/:id",
     view: "Detail",
     name: "Detail",
+
   },
   {
     path: "/recipecreate",
@@ -22,6 +23,6 @@ export default [{
     path: "/recipedetail/:id",
     view: "Recipedetail",
     name: "Recipedetail",
-    props: true,
+
   },
 ];

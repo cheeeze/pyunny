@@ -2,7 +2,7 @@
   <div>
     <navbar></navbar>
 
-    <div class="text-area" style="margin-top:30px">
+    <div class="text-area" style="margin-top:100px">
       <input
         type="search"
         id="innerQuery"
