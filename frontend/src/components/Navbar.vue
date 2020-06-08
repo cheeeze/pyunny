@@ -33,7 +33,7 @@
         <input class="search-input" type="text" placeholder="Search.." />
       </ul>
     </nav>
-    <user-sign-modal :visible.sync="visible"></user-sign-modal>
+    <user-sign-modal :visible.sync="visible" style="z-index: 80;"></user-sign-modal>
   </div>
 </template>
 <script>
@@ -77,29 +77,6 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-.nav-wrapper {
-  font-family: "Lato", "Arial", sans-serif;
-}
-/* HEADINGS */
-
-h1,
-p {
-  /* color: #fff; */
-  text-align: center;
-  line-height: 1.4;
-}
-
-h1 {
-  font-size: 2.2rem;
-}
-
-h2 {
-  color: #000;
-  font-size: 1.3rem;
-  text-align: center;
-  line-height: 1.4;
-  margin-bottom: 10px;
-}
 
 /* BASIC SETUP */
 .login-btn {
@@ -109,17 +86,13 @@ h2 {
   cursor: pointer;
 }
 
-.page-wrapper {
-  width: 100%;
-  height: auto;
-}
-
 .nav-wrapper {
   width: 100%;
   position: -webkit-sticky; /* Safari */
-  position: sticky;
+  position: fixed;
   top: 0;
   background-color: #fff;
+  box-shadow: 5px 0px 5px gray;
 }
 
 .grad-bar {
@@ -140,10 +113,11 @@ h2 {
   align-items: center;
   height: 50px;
   overflow: hidden;
+  font-family: "Lato", "Arial", sans-serif;
 }
 
 .navbar .nav_logo {
-  height: 45px;
+  height: 40px;
   width: auto;
   justify-self: start;
 }
@@ -345,7 +319,7 @@ input {
 
   /* MOBILE HEADINGS */
 
-  h1 {
+  /* h1 {
     font-size: 1.9rem;
   }
 
@@ -355,7 +329,7 @@ input {
 
   p {
     font-size: 0.8rem;
-  }
+  } */
 
   /* MOBILE NAVIGATION */
 
