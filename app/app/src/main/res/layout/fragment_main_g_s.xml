@@ -25,8 +25,6 @@
             android:text="상품 정보">
 
         </Button>
-
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
