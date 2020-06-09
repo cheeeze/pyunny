@@ -41,6 +41,17 @@
         (#{userId}, #{ingredient}, convert_tz(now(),'+00:00','+09:00'), #{title}, #{content})
     </insert>
 
+    <insert id="insertIngredient" parameterType="recipe">
+        insert into Product_recipe
+        (recipe_id, product_id)
+        values
+        <if test="ingredientProduct != null">
+            <foreach collection="ingredientProduct" item="item" separator=",">
+            (#{id}, #{item.value})
+            </foreach>
+        </if>
+    </insert>
+
     <update id="updateRecipe" parameterType="recipe">
         update Recipe
         set
@@ -59,8 +70,15 @@
         where name like '%${value}%'
     </select>
 
+    <select id="getIngredientProduct" parameterType="int" resultType="product">
+        SELECT p.id id, p.name name, p.franchise_id franchise_id, p.price price, p.category category, p.image image, p.description description FROM Product p INNER JOIN Product_recipe r
+            ON p.id = r.product_id 
+        WHERE r.recipe_id = #{value};
+    </select>
+
 
     <resultMap id="recipeCommentResult" type="recipeCommentParent">
+        <id property="id" column="id"/>
         <collection property="childComment" javaType="arrayList" column="id" ofType="recipeComment" select="getChildComment"/>
     </resultMap>
 
@@ -74,11 +92,17 @@
 
     <!-- 댓글 가져오기 (대댓글 포함) -->
     <select id="getComment" parameterType="int" resultMap="recipeCommentResult">
-        select * from Recipe_comment where recipe_id = #{value} and parent_id = 0
+        SELECT p.id id, p.user_id user_id, p.recipe_id recipe_id, p.parent_id , p.content content, p.date date, u.nickname nickname
+        FROM Recipe_comment p INNER JOIN User u
+        ON p.user_id = u.id
+        where p.recipe_id = #{value} and p.parent_id = 0
     </select>
 
-    <select id="getChildComment" parameterType="recipeComment" resultType="recipeComment">
-        select * from Recipe_comment where parent_id = #{id} 
+    <select id="getChildComment" resultType="recipeComment">
+        select  pp.id id, pp.user_id user_id, pp.recipe_id recipe_id, pp.parent_id parent_id, pp.content content, pp.date date, u.nickname nickname
+        FROM Recipe_comment pp INNER JOIN User u
+        ON pp.user_id = u.id
+        WHERE pp.parent_id = #{id} 
     </select>
 
     <select id="test" parameterType="int" resultType="recipeComment">
