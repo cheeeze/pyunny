@@ -2,86 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3efd0367-f43c-4ae5-a2c8-8bb894197957" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.buckconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.eslintrc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.flowconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.prettierrc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.watchmanconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../__tests__/App-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/BUCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build_defs.bzl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/debug.keystore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/debug/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/debug/java/com/sampleapp/ReactNativeFlipper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sampleapp/MainActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sampleapp/MainApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../babel.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Podfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp-tvOS/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp-tvOSTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp.xcodeproj/project.pbxproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp.xcodeproj/xcshareddata/xcschemes/SampleApp-tvOS.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp.xcodeproj/xcshareddata/xcschemes/SampleApp.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp/AppDelegate.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp/AppDelegate.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp/Base.lproj/LaunchScreen.xib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp/Images.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp/Images.xcassets/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleApp/main.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleAppTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/SampleAppTests/SampleAppTests.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../metro.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/api/api.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/fonts/NotoSansKR-Bold.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/fonts/NotoSansKR-Regular.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/fonts/NotoSerifKR-Bold.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/fonts/NotoSerifKR-Regular.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/fonts/Sweet_Sensations_Persona_Use.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/images/icons/barcode.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/images/icons/check.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/images/icons/close.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/images/icons/home.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/images/icons/map.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/images/icons/pinkupload.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/images/icons/purpleupload.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/images/icons/redbarcode.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/images/icons/search.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/images/icons/upload.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/assets/images/icons/user.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/components/ItemCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/styles/Colors.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/styles/Layout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/views/MainPage.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/views/MyPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/views/MyPage.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,7 +10,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="ce071717e59baf3b05" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
