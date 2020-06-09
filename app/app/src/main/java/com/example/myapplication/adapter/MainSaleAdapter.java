@@ -43,9 +43,11 @@ public class MainSaleAdapter extends RecyclerView.Adapter<MainSaleAdapter.ViewHo
         Glide.with(mContext).load(sale.getProduct_image()).into(holder.sale_product_image);
         switch (sale.getFranchise_id()){
             case 0:
+            case 646:
                 holder.sale_franchise_image.setImageResource(R.drawable.gs25);
                 break;
             case 1:
+            case 682:
                 holder.sale_franchise_image.setImageResource(R.drawable.cu);
                 break;
             case 2:

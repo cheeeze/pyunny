@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.myapplication.fragment.main.FragmentMainAll;
+import com.example.myapplication.fragment.main.FragmentMainAllSale;
 import com.example.myapplication.fragment.main.FragmentMainCU;
 import com.example.myapplication.fragment.main.FragmentMainEmart;
 import com.example.myapplication.fragment.main.FragmentMainGS;
@@ -25,8 +26,8 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                FragmentMainAll fragmentMainAll = new FragmentMainAll();
-                return fragmentMainAll;
+                FragmentMainAllSale fragmentMainAllSale = new FragmentMainAllSale();
+                return fragmentMainAllSale;
             case 1:
                 FragmentMainGS fragmentMainGS = new FragmentMainGS();
                 return fragmentMainGS;
