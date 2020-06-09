@@ -2,6 +2,11 @@
   <div>
     <navbar></navbar>
     <div style="padding:0.7em;">
+      <div style="margin-top:40px;">
+        <button class="back" @click="niceback">
+          <img src="@/assets/icons/back.png" width="50px;" />
+        </button>
+      </div>
       <div id="search" class="box_search" style="margin-top:100px;">
         <img
           src="@/assets/icons/x.png/"
@@ -218,6 +223,17 @@ export default {
           console.log(err);
         }
       );
+    },
+    niceback: function() {
+      var numberOfEntries = window.history.length;
+      if (numberOfEntries > 2) {
+        this.$router.go(-1);
+      } else {
+        var fpath = this.PageData.backCrumb.url;
+        this.$router.push({
+          path: fpath
+        });
+      }
     }
   }
 };

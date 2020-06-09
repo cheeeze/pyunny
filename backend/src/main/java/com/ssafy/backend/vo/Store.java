@@ -29,6 +29,18 @@ public class Store implements Serializable {
     }
 
     public Store(int id, int franchiseId, String franchiseName, String storeName, float latitude, float longitude,
+            String address, String tel) {
+        this.id = id;
+        this.franchiseId = franchiseId;
+        this.franchiseName = franchiseName;
+        this.storeName = storeName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.address = address;
+        this.tel = tel;
+    }
+
+    public Store(int id, int franchiseId, String franchiseName, String storeName, float latitude, float longitude,
             String address, String city, String tel, int isatm, int islottery, int isdelivery, int ismedicine,
             int isfulltime, String logoUrl, String deliveryBegin, String deliveryEnd) {
         this.id = id;

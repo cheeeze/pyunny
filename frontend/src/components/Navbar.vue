@@ -12,16 +12,16 @@
       </div>
       <ul class="nav no-search">
         <li class="nav-item">
-          <a href="#">Home</a>
+          <router-link to="/home">Home</router-link>
         </li>
         <li class="nav-item">
-          <a href="#">Map</a>
+          <router-link to="/map">Map</router-link>
         </li>
         <li class="nav-item">
-          <a href="#">Recipe</a>
+          <router-link to="/recipe">Recipe</router-link>
         </li>
         <li class="nav-item">
-          <a href="#">My Page</a>
+          <router-link to="/mypage/">My Page</router-link>
         </li>
         <li class="nav-item">
           <button class="login-btn" @click="handleClickButton">

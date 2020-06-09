@@ -25,17 +25,110 @@
 	        -radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude)))) &lt;= #{distance}
     </select>
 
+
+    <resultMap id="StoreProductSearchResult" type="mapSearchResult">
+        <id property="id" column="id"/>
+        <id property="storeId" column="store_id"/>
+        <id property="productId" column="product_id"/>
+        <id property="name" column="name"/>
+        <id property="stockAmount" column="stock_amount"/>
+        <id property="price" column="price"/>
+        <id property="image" column="image"/>
+        <association property="store" column="store_id" javaType="store" resultMap="storeResult"/>
+    </resultMap>
+
+    <resultMap id="storeResult" type="store">
+        <id property="id" column="store_id"/>
+        <result property="franchiseId" column="franchise_id"/>
+        <result property="franchiseName" column="franchise_name"/>
+        <result property="storeName" column="store_name"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="address" column="address"/>
+        <result property="tel" column="tel"/>
+    </resultMap>
     <!-- 재고 검색 -->
-    <select id="getStoreProductById" parameterType="mapSearch" resultType="storeProduct">
-        <include refid="select-storeproduct"/>
+    <select id="getStoreProductBySearch" parameterType="mapSearch" resultMap="StoreProductSearchResult">
+        select 
+        sp.id id, 
+        sp.store_id store_id,
+        sp.product_id product_id,
+        sp.name name,
+        sp.stock_amount stock_amount,
+        sp.price price,
+        p.image image,
+        s.id store_id, 
+        s.franchise_id franchise_id, 
+        s.franchise_name franchise_name, 
+        s.store_name store_name, 
+        s.latitude latitude, 
+        s.longitude longitude, 
+        s.address address,
+        s.tel tel
+        from Store_Product sp 
+        inner join Product p 
+        on sp.product_id = p.id 
+        inner join Store s 
+        on sp.store_id = s.id
         <where>
-            store_id in 
+            sp.store_id in 
             <foreach collection="store" item="it" open="(" close=")" separator=",">
                 #{it.value} 
             </foreach>
             and 
-            (name like '%${keyword}%' or description like '%${keyword}%')
+            (sp.name like '%${keyword}%')
+            and
+            (sp.stock_amount > 0)
+            
         </where>
+    </select>
+
+    <select id="getStoreProductById" parameterType="int" resultType="storeProduct">
+        select sp.id id, sp.store_id store_id, sp.product_id product_id, sp.name name, sp.description description, sp.price price, sp.stock_amount stock_amount, p.image image
+        from Store_Product sp inner join Product p
+        on sp.product_id = p.id
+        where store_id = #{value} and stock_amount > 0
+    </select>
+
+
+    <!-- 주변 fulltime 편의점 검색 -->
+    <select id="get24hourStoreNear" parameterType="mapSearch" resultType="store">
+        <include refid="select-store"/>
+        
+        where 
+            (6371*acos(cos(radians(#{latitude}))*cos(radians(latitude))*cos(radians(longitude)
+	        -radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude)))) &lt;= #{distance}
+            and isfulltime = 1
+    </select>
+
+    <!-- 주변 ATM 되는 편의점 검색 -->
+    <select id="getAtmStoreNear" parameterType="mapSearch" resultType="store">
+        <include refid="select-store"/>
+        
+        where 
+            (6371*acos(cos(radians(#{latitude}))*cos(radians(latitude))*cos(radians(longitude)
+	        -radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude)))) &lt;= #{distance}
+            and isatm = 1
+    </select>
+
+    <!-- 주변 Medicine 편의점 검색 -->
+    <select id="getMedicineStoreNear" parameterType="mapSearch" resultType="store">
+        <include refid="select-store"/>
+        
+        where 
+            (6371*acos(cos(radians(#{latitude}))*cos(radians(latitude))*cos(radians(longitude)
+	        -radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude)))) &lt;= #{distance}
+            and ismedicine = 1
+    </select>
+
+    <!-- 주변 Delivery 편의점 검색 -->
+    <select id="getDeliveryStoreNear" parameterType="mapSearch" resultType="store">
+        <include refid="select-store"/>
+        
+        where 
+            (6371*acos(cos(radians(#{latitude}))*cos(radians(latitude))*cos(radians(longitude)
+	        -radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude)))) &lt;= #{distance}
+            and isdelivery = 1
     </select>
 
 </mapper>

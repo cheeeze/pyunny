@@ -1,79 +1,112 @@
+/* eslint-disable no-undef */
 <template>
   <div>
     <navbar></navbar>
-    <div id="search" class="box_search">
-      <img
-        src="@/assets/icons/x.png/"
-        v-show="recommShow"
-        @click="recommShow=!recommShow"
-        style="float: left; width:1.5em; z-index:10;"
-      />
-      <input
-        type="search"
-        id="innerQuery"
-        class="tf-keyword"
-        v-model="keyword"
-        v-on:keyup.enter="search"
-        @click="recomm"
-        title="검색어 입력"
-        placeholder="상품 검색"
-        maxlength="100"
-        style="background-color: #f2f3f5;"
-        v-bind:style="{ width: recommShow==false?'95%':'85%'}"
-      />
-    </div>
-
-    <div v-if="recommShow">
-      <div class="inner_recom">
-        <ul class="list_recom">
-          <li>
-            <span @click="getNearStore">
-              주변
-              <br />편의점
-            </span>
-          </li>
-          <li>
-            <span @click="search">ATM</span>
-          </li>
-          <li>
-            <span @click="search">상비약</span>
-          </li>
-          <li>
-            <span @click="search">배달</span>
-          </li>
-          <li>
-            <span @click="search">24시간</span>
-          </li>
-        </ul>
+    <div>
+      <div id="search" class="box_search" style="margin-top:80px;" v-show="!itemshow">
+        <img
+          src="@/assets/icons/x.png/"
+          v-show="recommShow"
+          @click="cansle"
+          style="float: left; width:1.5em; z-index:10;"
+        />
+        <input
+          type="search"
+          id="innerQuery"
+          class="tf-keyword"
+          v-model="keyword"
+          v-on:keyup.enter="search"
+          @click="recomm"
+          title="검색어 입력"
+          placeholder="상품 검색"
+          maxlength="100"
+          style="background-color: #f2f3f5;"
+          v-bind:style="{ width: recommShow==false?'95%':'85%'}"
+        />
       </div>
-    </div>
 
-    <div id="gps-button" class="radius-button" v-show="!recommShow">
-      <img src="@/assets/icons/gps.png" @click="gpsFocus" style="width: 1.3em;" />
-    </div>
+      <div v-if="recommShow">
+        <div class="inner_recom">
+          <ul class="list_recom" style="padding-left: 0px;">
+            <li>
+              <span @click="getNearStore('none')">
+                주변
+                <br />편의점
+              </span>
+            </li>
+            <li>
+              <span @click="getNearStore('atm')">ATM</span>
+            </li>
+            <li>
+              <span @click="getNearStore('medicine')">상비약</span>
+            </li>
+            <li>
+              <span @click="getNearStore('delivery')">배달</span>
+            </li>
+            <li>
+              <span @click="getNearStore('hour')">24시간</span>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-    <div class="set_map control_map" v-show="!recommShow">
-      <button type="button" class="btn_control btn-zoomin">
-        <img src="@/assets/icons/plus.png" @click="zoomIn" style="width: 1.3em;" />
-      </button>
-      <button type="button" class="btn_control btn-zoomout">
-        <img src="@/assets/icons/minus.png" @click="zoomOut" style="width: 1.3em;" />
-      </button>
-    </div>
+      <div id="gps-button" class="radius-button" v-show="!itemshow&&!searchshow">
+        <img src="@/assets/icons/gps.png" @click="gpsFocus" style="width: 1.3em;" />
+      </div>
 
-    <div class="search_result_product body">
-      <ul id="productList" class="list_result">
-        <li class="search_item base">
+      <div class="set_map control_map" v-show="!itemshow&&!searchshow">
+        <button type="button" class="btn_control btn-zoomin">
+          <img src="@/assets/icons/plus.png" @click="zoomIn" style="width: 1.3em;" />
+        </button>
+        <button type="button" class="btn_control btn-zoomout">
+          <img src="@/assets/icons/minus.png" @click="zoomOut" style="width: 1.3em;" />
+        </button>
+      </div>
+
+      <v-list rounded v-show="itemshow||searchshow" style="margin-top:30px;">
+        <v-container>
+          <v-row>
+            <v-col flex="6">
+              <v-subheader>편의점 상품</v-subheader>
+            </v-col>
+            <v-col flex="6">
+              <div class="my-2">
+                <v-btn small color="primary" v-show="itemshow" @click="itemshow=!itemshow">닫기</v-btn>
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
+
+        <v-list-item v-for="(item, i) in items" :key="i">
           <v-container>
-            <v-row no-gutters>
-              <v-col v-for="n in 2" :key="n" :cols="n===1?9:3">{{n}}</v-col>
+            <v-row>
+              <v-list-item-title @click="goToProductDetail(item.id)">{{item.name}}</v-list-item-title>
+              <v-col flex="8">
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>가격: {{item.price}}원</v-list-item-subtitle>
+                    <v-list-item-subtitle style="color:red;">재고: {{item.stockAmount}}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-btn small color="yellow" v-show="searchshow" @click="searchMarker(item)">지도보기</v-btn>
+              </v-col>
+              <v-col flex="4">
+                <v-list-item-icon>
+                  <img :src="item.image" width="100px;" />
+                </v-list-item-icon>
+              </v-col>
             </v-row>
           </v-container>
-        </li>
-      </ul>
+        </v-list-item>
+      </v-list>
     </div>
-
-    <div id="map"></div>
+    <v-btn
+      small
+      color="yellow"
+      v-show="isSearching&&!searchshow"
+      @click="searchshow=!searchshow"
+    >목록보기</v-btn>
+    <div id="map" v-show="!itemshow&&!searchshow"></div>
   </div>
 </template>
 
@@ -90,7 +123,12 @@ export default {
       keyword: "",
       Searchresult: [],
       nearStore: [],
-      recommShow: false
+      recommShow: false,
+      markers: [],
+      items: [],
+      itemshow: false,
+      searchshow: false,
+      isSearching: false
     };
   },
   components: {
@@ -112,8 +150,8 @@ export default {
     initMap() {
       var container = document.getElementById("map");
       var options = {
-        //center: new kakao.maps.LatLng(33.450701, 126.570667),
-        center: new kakao.maps.LatLng(35.894325256347656, 128.61961364746094),
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        //center: new kakao.maps.LatLng(35.894325256347656, 128.61961364746094),
         level: 3
       };
 
@@ -127,7 +165,7 @@ export default {
       );
       //map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
 
-      //this.gpsFocus();
+      this.gpsFocus();
     },
 
     gpsFocus() {
@@ -177,16 +215,22 @@ export default {
     search() {
       //data
       let data = {
-        latitude: 35.894325, //this.latitude,
-        longitude: 128.619613, //this.longitude,
-        distance: 0.5,
+        latitude: this.latitude, //37.5047842142675, //this.latitude,
+        longitude: this.longitude, //127.04699119571, //this.longitude,
+        distance: 0.3,
         keyword: this.keyword,
         store: []
       };
       Axios.getStoreProductBySearch(
         data,
         res => {
-          console.log(res.data);
+          this.searchshow = true;
+          this.isSearching = true;
+          this.items = [];
+          res.data.forEach(element => {
+            this.items.push(element);
+          });
+          this.recommShow = false;
         },
         err => {
           console.log(err);
@@ -207,34 +251,114 @@ export default {
       console.log("dd");
       if (!this.recommShow) this.recommShow = !this.recommShow;
     },
-    getNearStore() {
-      console.log("주변편의점 검색");
+    getNearStore(type) {
+      console.log("주변 편의점 검색 type:" + type);
       let data = {
-        latitude: 35.894325256347656,
-        longitude: 128.61961364746094,
-        distance: 0.5,
+        latitude: this.latitude, //37.6079188467982
+        longitude: this.longitude, //127.076352365393
+        distance: 0.3,
         keyword: "",
         store: []
       };
+      console.log(data);
+      if (type === "none") {
+        Axios.getStoreNear(
+          data,
+          res => {
+            console.log(res.data);
+            console.log("none result");
+            this.nearStore = [];
 
-      Axios.getStoreNear(
-        data,
-        res => {
-          console.log(res.data);
+            this.nearStore = res.data;
 
-          this.nearStore = res.data;
+            this.addMark();
 
-          this.addMark();
-          this.recommShow = false;
-        },
-        err => {
-          console.log(err);
-        }
-      );
+            this.recommShow = false;
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      } else if (type === "atm") {
+        Axios.getAtmStoreNear(
+          data,
+          res => {
+            console.log(res.data);
+
+            this.nearStore = [];
+            //if (res.data.length > 0) {
+            this.nearStore = res.data;
+
+            this.addMark();
+            this.recommShow = false;
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      } else if (type === "delivery") {
+        Axios.getDeliveryStoreNear(
+          data,
+          res => {
+            console.log(res.data);
+            this.nearStore = [];
+
+            this.nearStore = res.data;
+
+            this.addMark();
+
+            this.recommShow = false;
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      } else if (type === "hour") {
+        Axios.get24hourStoreNear(
+          data,
+          res => {
+            console.log(res.data);
+            this.nearStore = [];
+
+            this.nearStore = res.data;
+
+            this.addMark();
+
+            this.recommShow = false;
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      } else if (type === "medicine") {
+        Axios.getMedicineStoreNear(
+          data,
+          res => {
+            console.log(res.data);
+            this.nearStore = [];
+
+            this.nearStore = res.data;
+
+            this.addMark();
+
+            this.recommShow = false;
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      }
     },
     addMark() {
+      console.log("호출된겨?");
       var bounds = new kakao.maps.LatLngBounds();
 
+      for (var i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null);
+      }
+
+      this.markers = [];
+      console.log(this.nearStore.length);
       for (var i = 0; i < this.nearStore.length; i++) {
         /*  franchise_id 
             gs25: 646
@@ -277,12 +401,96 @@ export default {
           //map: this.map, // 마커를 표시할 지도
           //position: this.nearStore[i].latlng, // 마커를 표시할 위치
           position: markerPosition,
-          image: markerImage
+          image: markerImage,
+          title: this.nearStore[i].id,
+          clickable: true
         });
 
         marker.setMap(this.map);
+
+        this.markers.push(marker);
+
+        // 마커에 클릭이벤트를 등록합니다
+        kakao.maps.event.addListener(
+          marker,
+          "click",
+          this.getStockByStoreId(i, marker.mc)
+        );
+
+        this.map.setBounds(bounds);
       }
-      this.map.setBounds(bounds);
+    },
+    getStockByStoreId(index, storeId) {
+      return () => {
+        console.log("index:" + index + " storeId:" + storeId);
+
+        Axios.getStockByStoreId(
+          storeId,
+          res => {
+            this.itemshow = true;
+            this.items = [];
+            res.data.forEach(element => {
+              this.items.push(element);
+            });
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      };
+    },
+    goToProductDetail(id) {
+      this.$router.push("/detail/" + id);
+    },
+    searchMarker(item) {
+      //this.nearStore = [];
+      //this.nearStore.push(item);
+      console.log(item);
+      this.searchshow = false;
+      //this.addMark();
+      for (var i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null);
+      }
+      this.markers = [];
+
+      // 마커가 표시될 위치입니다
+      var markerPosition = new kakao.maps.LatLng(
+        item.store.latitude,
+        item.store.longitude
+      );
+
+      // 마커를 생성합니다
+      var marker = new kakao.maps.Marker({
+        position: markerPosition
+      });
+      this.markers.push(marker);
+      marker.setMap(this.map);
+      this.map.setCenter(markerPosition);
+
+      var iwContent = "<div>" + item.store.storeName + "</div>",
+        iwRemoveable = true; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+
+      // 인포윈도우를 생성합니다
+      var infowindow = new kakao.maps.InfoWindow({
+        position: markerPosition,
+        content: iwContent,
+        removable: iwRemoveable
+      });
+
+      // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+      infowindow.open(this.map, marker);
+      // 마커에 클릭이벤트를 등록합니다
+      kakao.maps.event.addListener(marker, "click", function() {
+        // 마커 위에 인포윈도우를 표시합니다
+        infowindow.open(this.map, marker);
+      });
+    },
+    cansle() {
+      this.recommShow = !this.recommShow;
+      this.isSearching = false;
+      this.searchshow = false;
+      this.itemshow = false;
+      this.keyword = "";
     }
   }
 };
