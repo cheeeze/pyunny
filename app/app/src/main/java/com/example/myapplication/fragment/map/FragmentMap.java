@@ -138,10 +138,10 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
             BitmapDrawable bitmapDrawable = null;
             switch (s.getFranchise_id()){
                 case 0:
-                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.gs25);
+                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.gsmarker2);
                     break;
                 case 1:
-                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.cu);
+                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.cumarker);
                     break;
                 case 2:
                     bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.seven);
@@ -156,7 +156,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
 
 
             Bitmap b = bitmapDrawable.getBitmap();
-            Bitmap smallMarker = Bitmap.createScaledBitmap(b,100,100,false);
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b,160,160,false);
             markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
             mGoogleMap.addMarker(markerOptions);
         }
