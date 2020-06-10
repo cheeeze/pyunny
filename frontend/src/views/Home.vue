@@ -1,6 +1,6 @@
 <template>
   <div style="margin-top: 55px;">
-    <navbar style="z-index:50;"></navbar>
+    <navbar></navbar>
     <div class="wrapper">
       <!--왼쪽 화면 부분-->
       <div class="main-container part1">
@@ -19,8 +19,8 @@
       </div>
       <!---->
       <!--오른쪽 화면 부분-->
-      <div class="main-container part2" style="z-index: 10;">
-        <main-info style="z-index: 15;"></main-info>
+      <div class="main-container part2" style="z-index: 5;">
+        <main-info style="z-index: 7;"></main-info>
       </div>
       <!---->
     </div>
@@ -103,7 +103,7 @@ a {
   }
 }
 .wrapper {
-  max-width: 1920px;
+  // max-width: 1920px;
   margin: 0 auto;
 }
 .main-container {
@@ -116,7 +116,7 @@ a {
   background-size: cover;
   background-position: center center;
   display: flex;
-  flex-flow: column;
+  // flex-flow: column;
 }
 .cover-holder {
   margin: 0 auto;
