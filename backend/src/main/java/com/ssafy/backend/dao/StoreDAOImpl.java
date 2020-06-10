@@ -3,6 +3,7 @@ package com.ssafy.backend.dao;
 import java.util.List;
 
 import com.ssafy.backend.vo.MapSearch;
+import com.ssafy.backend.vo.MapSearchResult;
 import com.ssafy.backend.vo.Store;
 import com.ssafy.backend.vo.StoreProduct;
 
@@ -24,8 +25,33 @@ public class StoreDAOImpl implements StoreDAO {
     }
 
     @Override
-    public List<StoreProduct> getStoreProductById(MapSearch search) throws Exception {
-        return session.selectList(ns + "getStoreProductById", search);
+    public List<Store> getAtmStoreNear(MapSearch search) throws Exception {
+        return session.selectList(ns + "getAtmStoreNear", search);
+    }
+
+    @Override
+    public List<Store> getMedicineStoreNear(MapSearch search) throws Exception {
+        return session.selectList(ns + "getMedicineStoreNear", search);
+    }
+
+    @Override
+    public List<Store> getDeliveryStoreNear(MapSearch search) throws Exception {
+        return session.selectList(ns + "getDeliveryStoreNear", search);
+    }
+
+    @Override
+    public List<Store> get24hourStoreNear(MapSearch search) throws Exception {
+        return session.selectList(ns + "get24hourStoreNear", search);
+    }
+
+    @Override
+    public List<MapSearchResult> getStoreProductBySearch(MapSearch search) throws Exception {
+        return session.selectList(ns + "getStoreProductBySearch", search);
+    }
+
+    @Override
+    public List<StoreProduct> getStoreProductById(int storeId) throws Exception {
+        return session.selectList(ns + "getStoreProductById", storeId);
     }
 
 }

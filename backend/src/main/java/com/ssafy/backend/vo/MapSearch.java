@@ -68,7 +68,8 @@ public class MapSearch {
 
     @Override
     public String toString() {
-        return "MapSearch [distance=" + distance + ", latitude=" + latitude + ", longitude=" + longitude + "]";
+        return "MapSearch [distance=" + distance + ", keyword=" + keyword + ", latitude=" + latitude + ", longitude="
+                + longitude + ", store=" + store + "]";
     }
 
 }
