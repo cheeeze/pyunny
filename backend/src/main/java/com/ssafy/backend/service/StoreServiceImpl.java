@@ -46,7 +46,7 @@ public class StoreServiceImpl implements StoreService {
             List<Store> res = dao.getStoreNear(search);
 
             for (Store s : res) {
-                System.out.println(s.toString());
+                // System.out.println(s.toString());
                 vop.rightPush(key, s);
             }
             redisTemplate.expire(key, 10, TimeUnit.MINUTES);
@@ -58,6 +58,9 @@ public class StoreServiceImpl implements StoreService {
     public List<MapSearchResult> getStoreProductBySearch(MapSearch search) throws Exception {
         // near Store
         List<Store> storeList = getStoreNear(search);
+        if (storeList.size() == 0) {
+            return new ArrayList<MapSearchResult>();
+        }
         List<Integer> idList = new ArrayList<>();
         for (int i = 0; i < storeList.size(); i++) {
             idList.add(storeList.get(i).getId());

@@ -6,7 +6,7 @@
       <div id="search" class="box_search" style="margin-top:80px;" v-show="!itemshow">
         <img
           src="@/assets/icons/x.png/"
-          v-show="recommShow"
+          v-show="recommshow||searchshow"
           @click="cansle"
           style="float: left; width:1.5em; z-index:10;"
         />
@@ -21,11 +21,11 @@
           placeholder="상품 검색"
           maxlength="100"
           style="background-color: #f2f3f5;"
-          v-bind:style="{ width: recommShow==false?'95%':'85%'}"
+          v-bind:style="{ width: recommshow||searchshow?'85%':'95%'}"
         />
       </div>
 
-      <div v-if="recommShow">
+      <div v-if="recommshow">
         <div class="inner_recom">
           <ul class="list_recom" style="padding-left: 0px;">
             <li>
@@ -63,7 +63,11 @@
         </button>
       </div>
 
-      <v-list rounded v-show="itemshow||searchshow" style="margin-top:30px;">
+      <v-list
+        rounded
+        v-show="itemshow||searchshow"
+        v-bind:style="{ marginTop: itemshow? '30px':'0px'}"
+      >
         <v-container>
           <v-row>
             <v-col flex="6">
@@ -80,15 +84,26 @@
         <v-list-item v-for="(item, i) in items" :key="i">
           <v-container>
             <v-row>
-              <v-list-item-title @click="goToProductDetail(item.id)">{{item.name}}</v-list-item-title>
+              <v-list-item-title @click="goToProductDetail(item)">{{item.name}}</v-list-item-title>
               <v-col flex="8">
-                <v-list-item two-line>
+                <v-list-item three-line>
                   <v-list-item-content>
+                    <br />
+                    <br />
                     <v-list-item-subtitle>가격: {{item.price}}원</v-list-item-subtitle>
                     <v-list-item-subtitle style="color:red;">재고: {{item.stockAmount}}</v-list-item-subtitle>
+                    <v-list-item-subtitle>
+                      <router-link v-bind:to="'/detail/'+item.productId" props="item">상품 보러가기</router-link>
+                    </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
-                <v-btn small color="yellow" v-show="searchshow" @click="searchMarker(item)">지도보기</v-btn>
+                <v-btn
+                  small
+                  rounded
+                  color="secondary"
+                  v-show="searchshow"
+                  @click="focusSearch(item)"
+                >위치 보기</v-btn>
               </v-col>
               <v-col flex="4">
                 <v-list-item-icon>
@@ -101,17 +116,29 @@
       </v-list>
     </div>
     <v-btn
-      small
-      color="yellow"
+      md
+      rounded
+      color="secondary"
       v-show="isSearching&&!searchshow"
       @click="searchshow=!searchshow"
-    >목록보기</v-btn>
+      style="position: absolute;
+    top: 560px;
+    right:20px;
+    z-index: 2;"
+    >
+      목록으로 보기
+      <v-icon dark>mdi-format-list-bulleted-square</v-icon>
+    </v-btn>
+    <div id="scrollup" class="fade" v-show="itemshow||searchshow" @click="scrollUp">
+      <img src="@/assets/icons/up.png" style="width: 3.3em;" />
+    </div>
     <div id="map" v-show="!itemshow&&!searchshow"></div>
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+//import Productlist from "@/components/Map/ProductList.vue";
 import Axios from "@/api/Mapaxios";
 
 export default {
@@ -123,16 +150,19 @@ export default {
       keyword: "",
       Searchresult: [],
       nearStore: [],
-      recommShow: false,
+      recommshow: false,
       markers: [],
+      infowindows: [],
       items: [],
       itemshow: false,
       searchshow: false,
-      isSearching: false
+      isSearching: false,
+      myPosition: {}
     };
   },
   components: {
     Navbar
+    //Productlist
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
@@ -142,10 +172,19 @@ export default {
       //global kakao
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=b6984aaf3f2299bd8bbb050ffba843ca"; //95da482ec8ffa4a5c02bf9232f283dae
+        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a7836946274336d8bb7af7daa2a38720"; //95da482ec8ffa4a5c02bf9232f283dae
+      script.type = "text/javascript";
       document.head.appendChild(script);
     }
   },
+
+  created: function() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  beforeDestroy: function() {
+    window.removeEventListener("scroll", this.handleScroll);
+  },
+
   methods: {
     initMap() {
       var container = document.getElementById("map");
@@ -197,8 +236,18 @@ export default {
             image: markerImage // 마커이미지 설정
           });
 
-          // 마커가 지도 위에 표시되도록 설정합니다
-          marker.setMap(this.map);
+          /* if (
+            Object.keys(this.myPosition).length > 0 &&
+            this.myPosition.constructor === Object
+          ) {
+            this.myPosition.setMap(null);
+          } */
+          if (this.myPosition.Eb == true) {
+            this.myPosition.setMap(null);
+          }
+          this.myPosition = marker;
+          this.myPosition.setMap(this.map);
+
           this.map.setCenter(markerPosition);
         });
       }
@@ -226,11 +275,27 @@ export default {
         res => {
           this.searchshow = true;
           this.isSearching = true;
+          this.recommshow = false;
           this.items = [];
+          this.nearStore = [];
           res.data.forEach(element => {
+            if (element.image == null) {
+              element.image = require("@/assets/icons/defaultproduct.png");
+            }
             this.items.push(element);
+
+            let isin = false;
+            for (let i = 0; i < this.nearStore.length; i++) {
+              if (this.nearStore[i].id == element.store.id) {
+                isin = true;
+                break;
+              }
+            }
+            if (!isin) {
+              this.nearStore.push(element.store);
+            }
           });
-          this.recommShow = false;
+          this.searchMarker();
         },
         err => {
           console.log(err);
@@ -249,7 +314,7 @@ export default {
     },
     recomm() {
       console.log("dd");
-      if (!this.recommShow) this.recommShow = !this.recommShow;
+      if (!this.recommshow) this.recommshow = !this.recommshow;
     },
     getNearStore(type) {
       console.log("주변 편의점 검색 type:" + type);
@@ -261,19 +326,17 @@ export default {
         store: []
       };
       console.log(data);
+      this.searchshow = false;
+      this.isSearching = false;
+      this.recommshow = false;
+      this.keyword = "";
       if (type === "none") {
         Axios.getStoreNear(
           data,
           res => {
-            console.log(res.data);
-            console.log("none result");
             this.nearStore = [];
-
             this.nearStore = res.data;
-
             this.addMark();
-
-            this.recommShow = false;
           },
           err => {
             console.log(err);
@@ -283,14 +346,9 @@ export default {
         Axios.getAtmStoreNear(
           data,
           res => {
-            console.log(res.data);
-
             this.nearStore = [];
-            //if (res.data.length > 0) {
             this.nearStore = res.data;
-
             this.addMark();
-            this.recommShow = false;
           },
           err => {
             console.log(err);
@@ -300,14 +358,9 @@ export default {
         Axios.getDeliveryStoreNear(
           data,
           res => {
-            console.log(res.data);
             this.nearStore = [];
-
             this.nearStore = res.data;
-
             this.addMark();
-
-            this.recommShow = false;
           },
           err => {
             console.log(err);
@@ -317,14 +370,9 @@ export default {
         Axios.get24hourStoreNear(
           data,
           res => {
-            console.log(res.data);
             this.nearStore = [];
-
             this.nearStore = res.data;
-
             this.addMark();
-
-            this.recommShow = false;
           },
           err => {
             console.log(err);
@@ -334,14 +382,9 @@ export default {
         Axios.getMedicineStoreNear(
           data,
           res => {
-            console.log(res.data);
             this.nearStore = [];
-
             this.nearStore = res.data;
-
             this.addMark();
-
-            this.recommShow = false;
           },
           err => {
             console.log(err);
@@ -350,40 +393,44 @@ export default {
       }
     },
     addMark() {
-      console.log("호출된겨?");
+      //console.log("호출된겨?");
       var bounds = new kakao.maps.LatLngBounds();
 
-      for (var i = 0; i < this.markers.length; i++) {
+      for (let i = 0; i < this.markers.length; i++) {
         this.markers[i].setMap(null);
+      }
+      for (let i = 0; i < this.infowindows.length; i++) {
+        this.infowindows[i].close();
       }
 
       this.markers = [];
+      this.infowindows = [];
       console.log(this.nearStore.length);
-      for (var i = 0; i < this.nearStore.length; i++) {
+      for (let i = 0; i < this.nearStore.length; i++) {
         /*  franchise_id 
             gs25: 646
             cu : 682
             이마트 : 936 */
         var imageSrc = "";
         if (this.nearStore[i].franchiseId == 646) {
-          imageSrc = require("@/assets/icons/gs25marker.png");
+          imageSrc = require("@/assets/icons/marker_gs.png");
         } else if (this.nearStore[i].franchiseId == 682) {
-          imageSrc = require("@/assets/icons/cumarker.png");
+          imageSrc = require("@/assets/icons/marker_cu.png");
         } else if (this.nearStore[i].franchiseId == 936) {
-          imageSrc = require("@/assets/icons/emartmarker.png");
-        } else {
+          imageSrc = require("@/assets/icons/marker_emart.png");
+        } /* else {
           imageSrc = require("@/assets/icons/defaultmarker.png");
-        }
-        console.log("imageSrc:" + imageSrc);
+        } */
+        //console.log("imageSrc:" + imageSrc);
 
-        var imageSize = new kakao.maps.Size(35, 35), // 마커이미지의 크기입니다
-          imageOption = { offset: new kakao.maps.Point(9, 35) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+        var imageSize = new kakao.maps.Size(45, 45); // 마커이미지의 크기입니다
+        //imageOption = { offset: new kakao.maps.Point(25, 45) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
         // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
         var markerImage = new kakao.maps.MarkerImage(
             imageSrc,
-            imageSize,
-            imageOption
+            imageSize
+            //imageOption
           ),
           markerPosition = new kakao.maps.LatLng(
             this.nearStore[i].latitude,
@@ -428,8 +475,12 @@ export default {
           storeId,
           res => {
             this.itemshow = true;
+            this.recommshow = false;
             this.items = [];
             res.data.forEach(element => {
+              if (element.image == null) {
+                element.image = require("@/assets/icons/defaultproduct.png");
+              }
               this.items.push(element);
             });
           },
@@ -442,55 +493,106 @@ export default {
     goToProductDetail(id) {
       this.$router.push("/detail/" + id);
     },
-    searchMarker(item) {
+    searchMarker() {
       //this.nearStore = [];
       //this.nearStore.push(item);
-      console.log(item);
-      this.searchshow = false;
+      //console.log(item);
+
       //this.addMark();
-      for (var i = 0; i < this.markers.length; i++) {
+      for (let i = 0; i < this.markers.length; i++) {
         this.markers[i].setMap(null);
       }
+      for (let i = 0; i < this.infowindows.length; i++) {
+        this.infowindows[i].close();
+      }
       this.markers = [];
+      this.infowindows = [];
 
-      // 마커가 표시될 위치입니다
+      for (let i = 0; i < this.nearStore.length; i++) {
+        let item = this.nearStore[i];
+        // 마커가 표시될 위치입니다
+        var markerPosition = new kakao.maps.LatLng(
+          item.latitude,
+          item.longitude
+        );
+
+        let imageSrc = "";
+        if (item.franchiseId == 646) {
+          imageSrc = require("@/assets/icons/marker_gs.png");
+        } else if (item.franchiseId == 682) {
+          imageSrc = require("@/assets/icons/marker_cu.png");
+        } else if (item.franchiseId == 936) {
+          imageSrc = require("@/assets/icons/marker_emart.png");
+        }
+
+        var imageSize = new kakao.maps.Size(45, 45); // 마커이미지의 크기입니다
+        //imageOption = { offset: new kakao.maps.Point(25, 45) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+        // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+        var markerImage = new kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize
+          //imageOption
+        );
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+          position: markerPosition,
+          image: markerImage
+        });
+
+        this.markers.push(marker);
+        marker.setMap(this.map);
+        //this.map.setCenter(markerPosition);
+
+        var iwContent = "<div>" + item.storeName + "</div>",
+          iwRemoveable = true; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+
+        // 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({
+          position: markerPosition,
+          content: iwContent,
+          removable: iwRemoveable
+        });
+        this.infowindows.push(infowindow);
+
+        // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+        infowindow.open(this.map, marker);
+        // 마커에 클릭이벤트를 등록합니다
+        /* kakao.maps.event.addListener(marker, "click", function() {
+        // 마커 위에 인포윈도우를 표시합니다
+        infowindow.open(this.map, marker);
+      }); */
+      }
+    },
+    focusSearch(item) {
+      this.searchshow = false;
+      document.documentElement.scrollTop = 0;
       var markerPosition = new kakao.maps.LatLng(
         item.store.latitude,
         item.store.longitude
       );
-
-      // 마커를 생성합니다
-      var marker = new kakao.maps.Marker({
-        position: markerPosition
-      });
-      this.markers.push(marker);
-      marker.setMap(this.map);
       this.map.setCenter(markerPosition);
-
-      var iwContent = "<div>" + item.store.storeName + "</div>",
-        iwRemoveable = true; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-
-      // 인포윈도우를 생성합니다
-      var infowindow = new kakao.maps.InfoWindow({
-        position: markerPosition,
-        content: iwContent,
-        removable: iwRemoveable
-      });
-
-      // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-      infowindow.open(this.map, marker);
-      // 마커에 클릭이벤트를 등록합니다
-      kakao.maps.event.addListener(marker, "click", function() {
-        // 마커 위에 인포윈도우를 표시합니다
-        infowindow.open(this.map, marker);
-      });
+      this.map.setLevel(2);
     },
     cansle() {
-      this.recommShow = !this.recommShow;
+      this.recommshow = !this.recommshow;
       this.isSearching = false;
       this.searchshow = false;
       this.itemshow = false;
       this.keyword = "";
+    },
+    scrollUp() {
+      document.documentElement.scrollTop = 0;
+    },
+    handleScroll() {
+      var scrollup = document.getElementById("scrollup");
+
+      if (document.documentElement.scrollTop < 400) {
+        scrollup.className = "fadeout";
+      } else if (document.documentElement.scrollTop > 400) {
+        scrollup.className = "fadein";
+      }
     }
   }
 };
@@ -499,11 +601,13 @@ export default {
 <style>
 #map {
   /* width: 1000px; */
-  height: 100vh;
+  height: 500px;
+  position: relative;
 }
 .box_search {
   overflow: hidden;
   position: relative;
+
   height: 40px;
   margin: 2px 8px 0;
   padding: 6px 10px 1px;
@@ -527,7 +631,7 @@ export default {
 #gps-button {
   position: absolute;
   padding: 10px;
-  top: 20%;
+  top: 32%;
   left: 10px;
   z-index: 2;
 }
@@ -568,7 +672,7 @@ export default {
 
 .set_map {
   position: absolute;
-  top: 27%;
+  top: 38%;
   z-index: 2;
   width: 40px;
   left: 5px;
@@ -596,5 +700,20 @@ export default {
   display: inline-block;
   width: 66px;
   height: 27px;
+}
+
+#scrollup {
+  transition: opacity 0.5s;
+  position: fixed;
+  top: 530px;
+  right: 20px;
+  z-index: 2;
+}
+
+#scrollup.fadeout {
+  opacity: 0;
+}
+#scrollup.fadein {
+  opacity: 1;
 }
 </style>

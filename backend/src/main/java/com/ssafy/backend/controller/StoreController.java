@@ -28,7 +28,7 @@ public class StoreController {
     @GetMapping("/store")
     public ResponseEntity<List<Store>> getStoreNear(@ModelAttribute MapSearch search) throws Exception {
         System.out.println("getStoreNear");
-        System.out.println(search.toString());
+        // System.out.println(search.toString());
         List<Store> res = service.getStoreNear(search);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
@@ -36,7 +36,7 @@ public class StoreController {
     @GetMapping("/store/atm")
     public ResponseEntity<List<Store>> getAtmStoreNear(@ModelAttribute MapSearch search) throws Exception {
         System.out.println("getAtmStoreNear");
-        System.out.println(search.toString());
+        // System.out.println(search.toString());
         List<Store> res = service.getAtmStoreNear(search);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
@@ -44,7 +44,7 @@ public class StoreController {
     @GetMapping("/store/medicine")
     public ResponseEntity<List<Store>> getMedicineStoreNear(@ModelAttribute MapSearch search) throws Exception {
         System.out.println("getMedicineStoreNear");
-        System.out.println(search.toString());
+        // System.out.println(search.toString());
         List<Store> res = service.getMedicineStoreNear(search);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
@@ -52,7 +52,7 @@ public class StoreController {
     @GetMapping("/store/delivery")
     public ResponseEntity<List<Store>> getDeliveryStoreNear(@ModelAttribute MapSearch search) throws Exception {
         System.out.println("getDeliveryStoreNear");
-        System.out.println(search.toString());
+        // System.out.println(search.toString());
         List<Store> res = service.getDeliveryStoreNear(search);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
@@ -60,7 +60,7 @@ public class StoreController {
     @GetMapping("/store/24hour")
     public ResponseEntity<List<Store>> get24hourStoreNear(@ModelAttribute MapSearch search) throws Exception {
         System.out.println("get24hourStoreNear");
-        System.out.println(search.toString());
+        // System.out.println(search.toString());
         List<Store> res = service.get24hourStoreNear(search);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
@@ -68,7 +68,7 @@ public class StoreController {
     @GetMapping("/store_product")
     public ResponseEntity<List<MapSearchResult>> getStoreProductBySearch(@ModelAttribute MapSearch search)
             throws Exception {
-        System.out.println(search.toString());
+        // System.out.println(search.toString());
         List<MapSearchResult> res = service.getStoreProductBySearch(search);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

@@ -41,11 +41,6 @@ export default [{
     name: "Map",
   },
   {
-    path: "/shy",
-    view: "shytest",
-    name: "shytest",
-  },
-  {
     path: "/shy2",
     view: "shytest2",
     name: "shytest2",
