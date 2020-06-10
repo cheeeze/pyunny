@@ -6,13 +6,13 @@
           <div class="card_image">
             <img
               class="card-img"
-              src="https://picsum.photos/500/300/?image=10"
+              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8806371301614.jpg"
             />
           </div>
           <div class="card_content">
-            <h2 class="card_title">코카콜라 250ml</h2>
+            <h2 class="card_title">푸르밀)검은콩우유300ML</h2>
             <p class="card_text">
-              1,200
+              1,500원
             </p>
             <button class="cardbtn card_btn">상세 정보</button>
           </div>
@@ -23,13 +23,13 @@
           <div class="card_image">
             <img
               class="card-img"
-              src="https://picsum.photos/500/300/?image=5"
+              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8801155731632_001.jpg"
             />
           </div>
           <div class="card_content">
-            <h2 class="card_title">코카콜라 250ml</h2>
+            <h2 class="card_title">덴마크)딸기딸기우유300ML</h2>
             <p class="card_text">
-              1,200
+              1,500원
             </p>
             <button class="cardbtn card_btn">상세 정보</button>
           </div>
@@ -40,13 +40,13 @@
           <div class="card_image">
             <img
               class="card-img"
-              src="https://picsum.photos/500/300/?image=11"
+              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8801121028513_002.jpg"
             />
           </div>
           <div class="card_content">
-            <h2 class="card_title">코카콜라 250ml</h2>
+            <h2 class="card_title">유어스)펭럽유달고나우유300ML</h2>
             <p class="card_text">
-              1,200
+              1,500원
             </p>
             <button class="cardbtn card_btn">상세 정보</button>
           </div>
@@ -57,13 +57,13 @@
           <div class="card_image">
             <img
               class="card-img"
-              src="https://picsum.photos/500/300/?image=14"
+              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8801115137290_001.jpg"
             />
           </div>
           <div class="card_content">
-            <h2 class="card_title">코카콜라 250ml</h2>
+            <h2 class="card_title">서울)바나나우유300ML</h2>
             <p class="card_text">
-              1,200
+              1,500원
             </p>
             <button class="cardbtn card_btn">상세 정보</button>
           </div>

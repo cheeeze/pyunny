@@ -101,10 +101,10 @@ const getSaleByName = (data, success, error) => {
 /* 검색으로 가져오기 */
 const getProductBySearch = (data, success, error) => {
     http
-        .get('/api/product/saerch', {
+        .get('/api/product/search', {
             params: {
                 franchise: data.franchise,
-                keyword: this.keyword
+                keyword: data.keyword
             }
         })
         .then((res) => {
@@ -117,10 +117,10 @@ const getProductBySearch = (data, success, error) => {
 
 const getSaleBySearch = (data, success, error) => {
     http
-        .get('/api/sale/saerch', {
+        .get('/api/sale/search', {
             params: {
                 franchise: data.franchise,
-                keyword: this.keyword
+                keyword: data.keyword
             }
         })
         .then((res) => {
