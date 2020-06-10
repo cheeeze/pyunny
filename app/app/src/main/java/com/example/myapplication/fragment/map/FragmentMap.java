@@ -138,19 +138,19 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
             BitmapDrawable bitmapDrawable = null;
             switch (s.getFranchise_id()){
                 case 0:
-                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.gsmarker2);
+                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_gs);
                     break;
                 case 1:
-                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.cumarker);
+                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_cu);
                     break;
                 case 2:
-                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.seven);
+                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_seven);
                     break;
                 case 3:
-                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.emart);
+                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_emart);
                     break;
                 case 4:
-                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.ministop);
+                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_mini);
             }
 
 
