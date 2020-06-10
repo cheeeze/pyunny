@@ -77,15 +77,20 @@
         </div>
       </div>
 
-      <h3>통신사 할인</h3>
+      <h3 id="modal-title">통신사 할인</h3>
       <div class="images">
-        <img src="@/assets/icons/gs25.png" alt="통신사 로고" height="100px" />
-        <img src alt="통신사 바코드" height="100px" />
+        <img src="@/assets/icons/kt.png" alt="통신사 로고" height="100px" />
+        <img src="@/assets/icons/ktbarcode.png" alt="통신사 바코드" height="100px" />
       </div>
-      <h3>편의점 적립</h3>
+      <h3 id="modal-title">편의점 적립</h3>
       <div class="images">
         <img src="@/assets/icons/gs25.png" alt="편의점 로고" height="100px" />
-        <img src alt="통신사 바코드" height="100px" />
+        <img src="@/assets/icons/gs25barcode.png" alt="통신사 바코드" height="100px" />
+      </div>
+      <h3 id="modal-title">기프티콘</h3>
+      <div class="images">
+        <img src="@/assets/icons/gift1.png" alt="편의점 로고" height="200px" style="margin-right: 10px;" />
+        <img src="@/assets/icons/gift2.png" alt="통신사 바코드" height="200px" />
       </div>
     </div>
   </div>
@@ -159,6 +164,10 @@ export default {
 
 .images {
   width: 90%;
+}
+
+#modal-title {
+  margin-top: 5px;
 }
 
 [type="checkbox"]:checked,

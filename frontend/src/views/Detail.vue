@@ -98,7 +98,7 @@
           <div class="comment">
             <h4 id="nickname">나는야편돌이</h4>
             <div id="comment-box">
-              <p id="comment-text">역시 콜라는 코카콜라죠. 그냥 정-석-</p>
+              <p id="comment-text">역시 우유는 서울우유죠. 그냥 정-석-</p>
             </div>
             <div class="before-reply" v-if="reply">
               <button id="reply-btn" @click="reply = false">답글 달기</button>
@@ -133,7 +133,7 @@
                   height="26px"
                   width="28px"
                   style="margin-right: 2px;"
-                />예?! 콜라는 펩시 아닙니까...
+                />예?! 우유는 파스퇴르 아닙니까...
               </p>
             </div>
             <!---->
@@ -176,7 +176,7 @@ export default {
       value: 50,
       max: 100,
       reply: true,
-      user: false, // 로그인이 되어 있을 경우 true
+      user: true, // 로그인이 되어 있을 경우 true
       score: 0, // 0인 경우 재구매 의향 선택한 적 없는 경우, 1은 있다, 2는 없다
 
       product: {
