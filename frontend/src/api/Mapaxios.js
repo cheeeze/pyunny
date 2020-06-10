@@ -1,5 +1,4 @@
 import http from '../http-common'
-import axios from 'axios'
 
 const getStoreNear = (data, success, error) => {
     http
