@@ -5,33 +5,60 @@
       <!-- 상단 제품 정보 -->
       <div class="detail-info">
         <div class="item-photo">
-          <img
-            class="item-img"
-            src="https://img.danawa.com/prod_img/500000/638/156/img/3156638_1.jpg?shrink=500:500&_v=20200420160304"
-            alt=""
-          />
+          <img class="item-img" :src="product.image" alt />
         </div>
         <div class="item-info">
           <div class="item-convs">
-            <img id="item-conv" src="@/assets/icons/gs25.png" alt="" />
-            <img id="item-conv" src="@/assets/icons/cu.png" alt="" />
-            <img id="item-conv" src="@/assets/icons/emart.jpg" alt="" />
-            <img id="item-conv" src="@/assets/icons/seven.png" alt="" />
-            <img id="item-conv" src="@/assets/icons/ministop.png" alt="" />
+            <img
+              id="item-conv"
+              v-if="product.franchiseId == 646"
+              src="@/assets/icons/gs25.png"
+              alt
+            />
+            <img
+              id="item-conv"
+              v-if="product.franchiseId == 682"
+              src="@/assets/icons/cu.png"
+              alt
+            />
+            <img
+              id="item-conv"
+              v-if="product.franchiseId == 936"
+              src="@/assets/icons/emart.jpg"
+              alt
+            />
+            <img
+              id="item-conv"
+              v-if="product.franchiseId == 970"
+              src="@/assets/icons/seven.png"
+              alt
+            />
+            <img
+              id="item-conv"
+              v-if="product.franchiseId == 756"
+              src="@/assets/icons/ministop.png"
+              alt
+            />
           </div>
-          <h1 id="item-title">코카콜라 250ml</h1>
+          <h1 id="item-title">{{ product.name }}</h1>
           <h2 id="item-price">
-            3,000원<span style="margin-left: 15px;"
-              ><b-badge variant="info">2 + 1</b-badge></span
-            >
+            {{ addComma(product.price) }}원
+            <span style="margin-left: 15px;">
+              <b-badge v-if="product.category.includes('1＋1')" variant="info"
+                >1 + 1</b-badge
+              >
+              <b-badge v-if="product.category.includes('2＋1')" variant="info"
+                >2 + 1</b-badge
+              >
+            </span>
           </h2>
           <!-- <h3 id="item-origin-price">
             (1개당 1,500원)<button id="item-btn">
               <img height="40px;" src="@/assets/icons/plus.png" alt="" />
             </button>
-          </h3> -->
+          </h3>-->
           <h3 id="item-origin-price">
-            (1개당 1,500원)
+            (1개당 {{ addComma(product.price) }}원)
             <b-button
               id="item-btn"
               @click="addFavorite()"
@@ -41,7 +68,7 @@
               title="관심 제품을 등록해보세요!"
               variant="outline-none"
             >
-              <img height="40px;" src="@/assets/icons/plus.png" alt="" />
+              <img height="40px;" src="@/assets/icons/plus.png" alt />
             </b-button>
           </h3>
         </div>
@@ -51,8 +78,8 @@
       <div class="item-like">
         <h2 class="subtitle">재구매 의향</h2>
         <div id="like-btns">
-          <button id="item-like-btn" @click="itemLike()">😆있다</button
-          ><button id="item-like-btn" @click="itemDislike()">없다😑</button>
+          <button id="item-like-btn" @click="itemLike()">😆있다</button>
+          <button id="item-like-btn" @click="itemDislike()">없다😑</button>
         </div>
         <b-progress :value="value" class="mb-3"></b-progress>
       </div>
@@ -64,13 +91,14 @@
           id="item-comment"
           type="text"
           placeholder="한줄평을 적어보세요."
-        /><button id="comment-btn">입력</button>
+        />
+        <button id="comment-btn">입력</button>
         <!-- 한줄평 모음 -->
         <div class="comments">
           <div class="comment">
             <h4 id="nickname">나는야편돌이</h4>
             <div id="comment-box">
-              <p id="comment-text">역시 콜라는 코카콜라죠. 그냥 정-석-</p>
+              <p id="comment-text">역시 우유는 서울우유죠. 그냥 정-석-</p>
             </div>
             <div class="before-reply" v-if="reply">
               <button id="reply-btn" @click="reply = false">답글 달기</button>
@@ -78,14 +106,16 @@
             <div class="after-reply" v-if="!reply">
               <img
                 src="@/assets/icons/rereply.png"
-                alt=""
+                alt
                 height="26px"
                 width="28px"
-              /><input
+              />
+              <input
                 type="text"
                 placeholder="답글을 작성해볼까요?"
                 style="height:30px; width: 80%"
-              /><button id="reply-btn" style="color: #47b8e0">게시</button>
+              />
+              <button id="reply-btn" style="color: #47b8e0">게시</button>
               <button
                 id="reply-btn"
                 style="color: #ff7473; margin-left: 2%;"
@@ -99,11 +129,11 @@
               <p>
                 <img
                   src="@/assets/icons/rereply.png"
-                  alt=""
+                  alt
                   height="26px"
                   width="28px"
                   style="margin-right: 2px;"
-                />예?! 콜라는 펩시 아닙니까...
+                />예?! 우유는 파스퇴르 아닙니까...
               </p>
             </div>
             <!---->
@@ -116,7 +146,7 @@
         <h2 class="subtitle" style="font-size: 1.4rem;">
           이 제품을 사용한 레시피가 궁금하다면?
         </h2>
-        <a href="" style="font-size: 1.3rem; margin-left:65%;">→ 레시피 검색</a>
+        <a href style="font-size: 1.3rem; margin-left:65%;">→ 레시피 검색</a>
       </div>
       <!---->
       <!-- 유사 제품 -->
@@ -132,6 +162,7 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import ItemCard from "@/components/ItemCard.vue";
+import http from "../http-common";
 
 export default {
   components: {
@@ -145,8 +176,17 @@ export default {
       value: 50,
       max: 100,
       reply: true,
-      user: false, // 로그인이 되어 있을 경우 true
+      user: true, // 로그인이 되어 있을 경우 true
       score: 0, // 0인 경우 재구매 의향 선택한 적 없는 경우, 1은 있다, 2는 없다
+
+      product: {
+        category: "",
+        franchiseId: 0,
+        id: 0,
+        image: "",
+        name: "",
+        price: 0,
+      },
     };
   },
   methods: {
@@ -187,6 +227,9 @@ export default {
         this.reply = false;
       }
     },
+    addComma(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
   },
   watch: {
     like: function() {
@@ -195,6 +238,17 @@ export default {
     dislike: function() {
       this.value = (this.like / (this.like + this.dislike)) * 100;
     },
+  },
+  mounted() {
+    http
+      .get("/api/product/" + this.$route.params.id)
+      .then((res) => {
+        this.product = res.data;
+        console.log(this.product);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>

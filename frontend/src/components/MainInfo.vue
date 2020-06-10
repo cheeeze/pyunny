@@ -12,73 +12,65 @@
                 id="convenience-1"
               />
               <label class="for-checkbox-convenience" for="convenience-1">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/all.png"
-                  alt=""/></label
-              ><!--
-						--><input
+                <img class="conv_icon" src="@/assets/icons/all.png" alt />
+              </label>
+              <!--
+              -->
+              <input
                 class="checkbox-convenience"
                 type="checkbox"
                 name="convenience"
                 id="convenience-2"
               />
               <label class="for-checkbox-convenience" for="convenience-2">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/gs25.png"
-                  alt=""/></label
-              ><!--
-						--><input
+                <img class="conv_icon" src="@/assets/icons/gs25.png" alt />
+              </label>
+              <!--
+              -->
+              <input
                 class="checkbox-convenience"
                 type="checkbox"
                 name="convenience"
                 id="convenience-3"
               />
               <label class="for-checkbox-convenience" for="convenience-3">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/cu.png"
-                  alt=""
-                /> </label
-              ><!--
-						--><input
+                <img class="conv_icon" src="@/assets/icons/cu.png" alt />
+              </label>
+              <!--
+              -->
+              <input
                 class="checkbox-convenience"
                 type="checkbox"
                 name="convenience"
                 id="convenience-4"
               />
               <label class="for-checkbox-convenience" for="convenience-4">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/emart.jpg"
-                  alt=""/></label
-              ><!--
-						--><input
+                <img class="conv_icon" src="@/assets/icons/emart.jpg" alt />
+              </label>
+              <!--
+              -->
+              <input
                 class="checkbox-convenience"
                 type="checkbox"
                 name="convenience"
                 id="convenience-5"
               />
               <label class="for-checkbox-convenience" for="convenience-5">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/seven.png"
-                  alt=""/></label
-              ><!--
-						--><input
+                <img class="conv_icon" src="@/assets/icons/seven.png" alt />
+              </label>
+              <!--
+              -->
+              <input
                 class="checkbox-convenience"
                 type="checkbox"
                 name="convenience"
                 id="convenience-6"
               />
               <label class="for-checkbox-convenience" for="convenience-6">
-                <img
-                  class="conv_icon"
-                  src="@/assets/icons/ministop.png"
-                  alt=""/></label
-              ><!--
-						-->
+                <img class="conv_icon" src="@/assets/icons/ministop.png" alt />
+              </label>
+              <!--
+              -->
             </div>
             <!-- 슬라이드 들어가는 부분 -->
             <div class="main-slide">
@@ -88,9 +80,13 @@
                 justified
               >
                 <!-- 할인 정보 -->
-                <b-tab title="할인 정보" active><sale-card></sale-card></b-tab>
+                <b-tab title="할인 정보" active>
+                  <sale-card></sale-card>
+                </b-tab>
                 <!-- 상품 정보 -->
-                <b-tab title="상품 정보"><item-card></item-card></b-tab>
+                <b-tab title="상품 정보">
+                  <item-card></item-card>
+                </b-tab>
               </b-tabs>
             </div>
             <!---->
@@ -108,8 +104,8 @@ import ItemCard from "@/components/ItemCard.vue";
 export default {
   components: {
     SaleCard,
-    ItemCard,
-  },
+    ItemCard
+  }
 };
 </script>
 
@@ -138,10 +134,10 @@ export default {
 
 .body-container {
   width: 100%;
-  height: 100%;
+  height: auto;
   background-color: var(--white);
   overflow-x: hidden;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
   font-size: 17px;
   line-height: 30px;
   -webkit-transition: all 300ms linear;
@@ -189,7 +185,7 @@ mark {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
   background-color: var(--white);
   z-index: 1;
   -webkit-transition: all 300ms linear;
