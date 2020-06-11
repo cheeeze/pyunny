@@ -1,102 +1,138 @@
 <template>
   <div class="barcode-modal" id="container-wrap" v-if="barcode" @click.self="handleWrapperClick">
     <div class="container">
+
       <div class="close">
         <button id="close-btn" @click="$emit('update:barcode', !barcode)">
           <img src="@/assets/icons/x.png" alt height="20px" />
         </button>
       </div>
-      <div class="checkbox-container">
-        <div class="row justify-content-center">
-          <div class="conv-tab" style="margin-top: 15px;">
-            <input
-              class="checkbox-convenience"
-              type="checkbox"
-              name="convenience"
-              id="convenience-1"
-            />
-            <label class="for-checkbox-convenience" for="convenience-1">
-              <img class="conv_icon" src="@/assets/icons/all.png" alt />
-            </label>
-            <!--
-            -->
-            <input
-              class="checkbox-convenience"
-              type="checkbox"
-              name="convenience"
-              id="convenience-2"
-            />
-            <label class="for-checkbox-convenience" for="convenience-2">
-              <img class="conv_icon" src="@/assets/icons/gs25.png" alt />
-            </label>
-            <!--
-            -->
-            <input
-              class="checkbox-convenience"
-              type="checkbox"
-              name="convenience"
-              id="convenience-3"
-            />
-            <label class="for-checkbox-convenience" for="convenience-3">
-              <img class="conv_icon" src="@/assets/icons/cu.png" alt />
-            </label>
-            <!--
-            -->
-            <input
-              class="checkbox-convenience"
-              type="checkbox"
-              name="convenience"
-              id="convenience-4"
-            />
-            <label class="for-checkbox-convenience" for="convenience-4">
-              <img class="conv_icon" src="@/assets/icons/emart.jpg" alt />
-            </label>
-            <!--
-            -->
-            <input
-              class="checkbox-convenience"
-              type="checkbox"
-              name="convenience"
-              id="convenience-5"
-            />
-            <label class="for-checkbox-convenience" for="convenience-5">
-              <img class="conv_icon" src="@/assets/icons/seven.png" alt />
-            </label>
-            <!--
-            -->
-            <input
-              class="checkbox-convenience"
-              type="checkbox"
-              name="convenience"
-              id="convenience-6"
-            />
-            <label class="for-checkbox-convenience" for="convenience-6">
-              <img class="conv_icon" src="@/assets/icons/ministop.png" alt />
-            </label>
+
+      <!-- <div class="checkbox-container"> -->
+        <!-- <div class="row"> -->
+          <div class="barcode-conv-tab">
+            <img @click="choiceStore('')" class="barcode-conv-icon" src="@/assets/icons/gift_black_removebg.png" />
+            <!-- kt 나 lg 할인, gs적립 -->
+            <img @click="choiceStore('gs25')" class="barcode-conv-icon" src="@/assets/icons/gs25.png" />
+            <!-- sk 할인, cu적립-->
+            <img @click="choiceStore('cu')" class="barcode-conv-icon" src="@/assets/icons/cu.png" />
+            <!-- kt 할인, 신세계 포인트 적립 -->
+            <img @click="choiceStore('emart')" class="barcode-conv-icon" src="@/assets/icons/emart.jpg" />
+            <!-- sk 할인, 엘포인트 적립 -->
+            <img @click="choiceStore('seven')" class="barcode-conv-icon" src="@/assets/icons/seven.png" />
+            <!-- ok캐시백1프로 적립 10프로 사용해서 15프로 할인 -->
+            <img @click="choiceStore('ministop')" class="barcode-conv-icon" src="@/assets/icons/ministop.png" />
           </div>
+
+      <div v-if="store=='gs25'">
+          <img v-if="lg" class="telecom" src="@/assets/icons/lguplus_removebg.png" alt="lguplus">
+          <div class="inline">
+            <span v-if="lg || kt" id="modal-title">통신사 할인</span>
+            <barcode v-bind:value="lg">
+              <p class="infowords">등록된 LGU+ 바코드가 없습니다. :(</p>
+            </barcode>
+          </div>
+          
+          <img v-if="kt" class="telecom" src="@/assets/icons/kt_removebg.png" alt="kt">
+          <barcode v-bind:value="kt">
+            <p class="infowords">등록된 kT 바코드가 없습니다. :(</p>
+          </barcode>
+
+          <img v-if="gs" class="telecom" src="@/assets/icons/gspoint_long_removebg.png" alt="gspoint">
+          <div class="inline">
+            <span v-if="gs" id="modal-title">편의점 적립</span>
+            <barcode v-if="gs" v-bind:value="gs">
+              <p class="infowords">등록된 GSpoint 적립 바코드가 없습니다. :(</p>
+            </barcode>
+          </div>
+      </div>
+
+      <div v-if="store=='cu'">
+        <img v-if="sk" class="telecom" src="@/assets/icons/sktelecom_removebg.png" alt="sktelecom">
+        <div class="inline">
+          <span v-if="sk" id="modal-title">통신사 할인</span>
+          <barcode v-bind:value="sk">
+            <p class="infowords">등록된 SKtelecom 바코드가 없습니다. :(</p>
+          </barcode>
+        </div>
+        
+        <img v-if="cu" class="telecom" src="@/assets/icons/cu_long_removebg.png" alt="cu"/>
+        <div class="inline">
+          <span v-if="cu" id="modal-title">편의점 적립</span>
+          <barcode v-bind:value="cu">
+            <p class="infowords">등록된 CU 적립 바코드가 없습니다. :(</p>
+          </barcode>
         </div>
       </div>
 
-      <h3 id="modal-title">통신사 할인</h3>
-      <div class="images">
-        <img src="@/assets/icons/kt.png" alt="통신사 로고" height="100px" />
-        <img src="@/assets/icons/ktbarcode.png" alt="통신사 바코드" height="100px" />
+      <div v-if="store=='emart'">
+        <img v-if="kt" class="telecom" src="@/assets/icons/kt_removebg.png" alt="kt">
+        <div class="inline">
+          <span v-if="kt" id="modal-title">통신사 할인</span>
+          <barcode v-bind:value="kt">
+            <p class="infowords">등록된 kT 바코드가 없습니다. :(</p>
+          </barcode>
+        </div>
+
+        <img v-if="emart" class="telecom" src="@/assets/icons/emart24_removebg.png" alt="emart24">
+        <div class="inline">
+          <span v-if="emart" id="modal-title">편의점 적립</span>
+          <barcode v-bind:value="emart">
+            <p class="infowords">등록된 신세계 포인트 적립 바코드가 없습니다. :(</p>
+          </barcode>
+        </div>
       </div>
-      <h3 id="modal-title">편의점 적립</h3>
-      <div class="images">
-        <img src="@/assets/icons/gs25.png" alt="편의점 로고" height="100px" />
-        <img src="@/assets/icons/gs25barcode.png" alt="통신사 바코드" height="100px" />
+
+      <div v-if="store=='seven'">
+        <img v-if="sk" class="telecom" src="@/assets/icons/sktelecom_removebg.png" alt="sktelecom">
+        <div class="inline">
+          <span v-if="sk" id="modal-title">통신사 할인</span>
+          <barcode v-bind:value="sk">
+            <p class="infowords">등록된 SKtelecom 바코드가 없습니다. :(</p>
+          </barcode>
+        </div>
+
+        <img v-if="seven" class="telecom" src="@/assets/icons/lpoint_long_removebg.png" alt="lpoint">
+        <div class="inline">
+          <span v-if="seven" id="modal-title">편의점 적립</span>
+          <barcode v-bind:value="seven">
+            <p class="infowords">등록된 L.POINT 적립 바코드가 없습니다. :(</p>
+          </barcode>
+        </div>
       </div>
-      <h3 id="modal-title">기프티콘</h3>
-      <div class="images">
-        <img src="@/assets/icons/gift1.png" alt="편의점 로고" height="200px" style="margin-right: 10px;" />
-        <img src="@/assets/icons/gift2.png" alt="통신사 바코드" height="200px" />
+
+      
+      <div v-if="store=='ministop'">
+        <span v-if="ministop" id="modal-title">편의점 적립</span>
+        <img v-if="ministop" class="telecom" src="@/assets/icons/okcashbag_removebg.png" alt="okcashbag">
+        <barcode v-bind:value="ministop">
+          <p class="infowords">등록된 okcashbag 적립/할인 바코드가 없습니다. :(</p>
+        </barcode>
       </div>
+
+      <h3 v-if="this.mygifts.length" id="modal-title">기프티콘</h3>
+      <div class="gifts">
+        <div class="gift" v-for="(item, index) in mygifts" :key="index">
+          <img :src="require(`@/assets/icons/${item.keyword}.png`)" @click="selecgift(item.keyword)">
+        </div>
+      </div>
+        <div v-if="gift" class="large-gift" >
+          <img :src="require(`@/assets/icons/${gift}.png`)" @click="selecgift(gift)">
+          <b-button v-if="!myToggle" @click="useGift(index)" :pressed.sync="myToggle" variant="primary">
+            사용전           
+          </b-button>
+          <b-button v-if="myToggle" @click="useGift(index)" :pressed.sync="myToggle">
+            사용 완료!           
+          </b-button>
+        </div>
     </div>
   </div>
 </template>
 
-<script>
+<script scoped>
+import VueBarcode from "vue-barcode";
+import BarcodeAxios from "@/api/Barcodeaxios.js";
+
 export default {
   name: "barcode-modal",
   props: {
@@ -106,15 +142,104 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+    myToggle: false,
+    store: "",
+    gift: "",
+    user: 1,
+    id: 0,
+    sk: "",
+    kt: "",
+    lg: "",
+    gs: "",
+    cu: "",
+    emart: "",
+    seven: "",
+    ministop: "",
+    mygifts: [
+      {
+        keyword: "gift1",
+        isUse: false
+      },
+      {
+        keyword: "gift2",
+        isUse: false
+      },
+    ],
+  };
+},
+  mounted() {
+      BarcodeAxios.getMembershipByUserId(
+        this.id = this.user
+        ,
+        res => {
+          console.log('first', this.sk);
+          for (var i = 0; i < res.data.length; i ++) {
+            console.log(res.data[i].number);
+            console.log(res.data[i].type);
+
+            this.temptype = res.data[i].type
+            this.tempnum = res.data[i].number
+
+              if(this.temptype == 'sk') {
+                this.sk = this.tempnum
+              } if(this.temptype == 'kt') {
+                this.kt = this.tempnum
+              } if(this.temptype == 'lg') {
+                this.lg = this.tempnum
+              } if(this.temptype == 'gs') {
+                this.gs = this.tempnum
+              } if(this.temptype == 'cu') {
+                this.cu = this.tempnum
+              } if(this.temptype == 'emart') {
+                this.emart = this.tempnum
+              } if(this.temptype == 'seven') {
+                this.seven = this.tempnum
+              } if(this.temptype == 'ministop') {
+                this.ministop = this.tempnum
+              } 
+          }
+          console.log('sec', this.sk);
+        },
+        error => {
+          console.log(error);
+          console.log('!!')
+        }
+      ) 
+    },
+  components: {
+    'barcode': VueBarcode
+  },
   methods: {
     handleWrapperClick() {
       this.$emit("update:barcode", false);
+    },
+    choiceStore(value) {
+      this.store = value
+      this.gift = ""
+    },
+    selecgift(info) {
+      console.log(info)
+      if (this.gift == info) {
+        this.gift = ""
+      } else {
+        this.gift = info
+      }
+      console.log(this.mygifts)
+    },
+    useGift(gift) {
+      // 해당 gift의 정보를 사용했음으로 바꿈.
+      console.log(gift)
+      this.mygifts[gift]
+      console.log(this.mygifts[gift])
+      console.log(this.myToggle)
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 :root {
   --white: #ffffff;
   --light: #f0eff3;
@@ -138,17 +263,72 @@ export default {
   background-color: rgba(255, 255, 255, 0.4);
   z-index: 8;
 }
+.barcode-conv-tab {
+  display: flex;
+  width: 100%;
+  margin-bottom: 2rem;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+.infowords {
+  color: #da2c4d;
+  margin: 1rem 0;
+}
+.inline {
+  display: flex;
+  justify-content:space-around;
+  padding: 0 1vw;
+  margin-bottom: 1.5vw;
+}
+.telecom {
+  height: 2rem;
+  margin-left: 15vw;
+}
 
+.gifts {
+  display: flex;
+  
+}
+.gift > img{
+  width: 8vw;
+  margin: 0.5rem;
+}
+.large-gift {
+  width: 100%;
+  height: 75%;
+}
+.large-gift > img {
+  width: 90%;
+  margin: 1rem 1rem;
+
+}
 .container {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
-  overflow: hidden;
-  min-width: 88%;
+  overflow-y: scroll;
+  overflow-x: auto;
+  min-width: 370px;
+  width: 50%;
+  height: 70%;
   min-height: 90%;
+  margin: 100px 20px;
 }
-
+.container::-webkit-scrollbar {
+  width: 10px;
+}
+.container::-webkit-scrollbar-thumb {
+  background-color:gray;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.container::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
 .close {
   width: 100%;
   padding: 10px 5px;
@@ -162,182 +342,17 @@ export default {
   cursor: pointer;
 }
 
-.images {
-  width: 90%;
+.barcode-conv-icon {
+    /* height: 60px; */
+  width: 8vw;
+  max-width: 65px;
+  min-width: 32px;
+  margin: 5px;
 }
 
 #modal-title {
-  margin-top: 5px;
-}
-
-[type="checkbox"]:checked,
-[type="checkbox"]:not(:checked) {
-  position: absolute;
-  left: -9999px;
-  width: 0;
-  height: 0;
-  visibility: hidden;
-}
-.checkbox:checked + label,
-.checkbox:not(:checked) + label {
-  position: relative;
-  width: 70px;
-  display: inline-block;
-  padding: 0;
-  margin: 0 auto;
-  text-align: center;
-  margin: 100px 0 30px 55%;
-  height: 6px;
-  border-radius: 4px;
-  background-image: linear-gradient(298deg, var(--red), var(--yellow));
-  z-index: 1 !important;
-}
-.checkbox:checked + label:before,
-.checkbox:not(:checked) + label:before {
-  position: absolute;
-  font-family: "unicons";
-  cursor: pointer;
-  top: -17px;
-  z-index: 2;
-  font-size: 20px;
-  line-height: 40px;
-  text-align: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  -webkit-transition: all 300ms linear;
-  transition: all 300ms linear;
-}
-.checkbox:not(:checked) + label:before {
-  content: "\eac1";
-  left: 0;
-  color: var(--yellow);
-  background-color: var(--dark-blue);
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(26, 53, 71, 0.07);
-}
-.checkbox:checked + label:before {
-  content: "\eb8f";
-  left: 30px;
-  color: var(--grey);
-  background-color: var(--white);
-  box-shadow: 0 4px 4px rgba(26, 53, 71, 0.25), 0 0 0 1px rgba(26, 53, 71, 0.07);
-}
-
-.checkbox:checked ~ .section .checkbox-container .row .conv-tab p {
-  color: var(--white);
-}
-.checkbox-convenience:checked + label,
-.checkbox-convenience:not(:checked) + label {
-  position: relative;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-align-items: center;
-  -moz-align-items: center;
-  -ms-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  -moz-justify-content: center;
-  -ms-justify-content: center;
-  justify-content: center;
-  -ms-flex-pack: center;
-  text-align: center;
-  padding: 0;
-  padding: 3px;
-  font-size: 14px;
-  line-height: 30px;
-  letter-spacing: 1px;
-  margin: 0 1.3vw 16px;
-  /* margin-left: 6px;
-  margin-right: 6px;
-  margin-bottom: 16px; */
-  text-align: center;
-  border-radius: 4px;
-  cursor: pointer;
-  color: var(--white);
-  text-transform: uppercase;
-  background-color: var(--light);
-  -webkit-transition: all 300ms linear;
-  transition: all 300ms linear;
-}
-.checkbox-convenience:not(:checked) + label::before {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-}
-.checkbox-convenience:checked + label::before {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-.checkbox-convenience:not(:checked) + label:hover::before {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-.checkbox-convenience:checked + label::before,
-.checkbox-convenience:not(:checked) + label::before {
-  position: absolute;
-  content: "";
-  top: -2px;
-  left: -2px;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  border-radius: 4px;
-  z-index: -2;
-  background-image: linear-gradient(138deg, var(--red), var(--yellow));
-  -webkit-transition: all 300ms linear;
-  transition: all 300ms linear;
-}
-.checkbox-convenience:not(:checked) + label::before {
-  top: -1px;
-  left: -1px;
-  width: calc(100% + 2px);
-  height: calc(100% + 2px);
-}
-.checkbox-convenience:checked + label::after,
-.checkbox-convenience:not(:checked) + label::after {
-  position: absolute;
-  content: "";
-  top: -2px;
-  left: -2px;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  border-radius: 4px;
-  z-index: -2;
-  background-color: var(--light);
-  -webkit-transition: all 300ms linear;
-  transition: all 300ms linear;
-}
-.checkbox-convenience:checked + label::after {
-  opacity: 0;
-}
-.checkbox-convenience:checked + label .uil,
-.checkbox-convenience:not(:checked) + label .uil {
-  font-size: 20px;
-}
-.checkbox-convenience:checked + label .text,
-.checkbox-convenience:not(:checked) + label .text {
-  position: relative;
-  display: inline-block;
-  -webkit-transition: opacity 300ms linear;
-  transition: opacity 300ms linear;
-}
-.checkbox-convenience:checked + label .text {
-  opacity: 0.6;
-}
-.checkbox-convenience:checked + label .text::after,
-.checkbox-convenience:not(:checked) + label .text::after {
-  position: absolute;
-  content: "";
-  width: 0;
-  left: 0;
-  top: 50%;
-  margin-top: -1px;
-  height: 2px;
-  background-image: linear-gradient(138deg, var(--red), var(--yellow));
-  z-index: 1;
-  -webkit-transition: all 300ms linear;
-  transition: all 300ms linear;
-}
-.checkbox-convenience:not(:checked) + label .text::after {
-  width: 0;
-}
-.checkbox-convenience:checked + label .text::after {
-  width: 100%;
+  margin: 2rem 0;
+  font-size: 1.3rem;
+  align-self: center;
 }
 </style>

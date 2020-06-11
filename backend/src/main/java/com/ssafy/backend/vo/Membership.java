@@ -7,6 +7,9 @@ public class Membership {
     private String type;
     private String number;
 
+    public Membership() {
+    }
+
     public Membership(int id, int userId, String type, String number) {
         this.id = id;
         this.userId = userId;
@@ -50,5 +53,5 @@ public class Membership {
     public String toString() {
         return "Membership [id=" + id + ", number=" + number + ", type=" + type + ", userId=" + userId + "]";
     }
-    
+
 }

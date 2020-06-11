@@ -10,9 +10,9 @@
         placeholder="Enter your numbers"
         trim
       ></b-form-input>
-      <b-button variant="outline-secondary">등록하기</b-button>
+      <b-button @click="RegisterTelMembership('sk')" variant="outline-secondary">등록하기</b-button>
       <b-form-invalid-feedback id="input-live-feedback">등록할 멤버십 번호를 16자리 입력해주세요!</b-form-invalid-feedback>
-                  <barcode v-bind:value="sk">
+      <barcode v-bind:value="sk">
         아직 입력된 SKT 멤버십이 없어요. :(
       </barcode>
     </div>
@@ -27,9 +27,9 @@
         placeholder="Enter your numbers"
         trim
       ></b-form-input>
-      <b-button variant="outline-secondary">등록하기</b-button>
+      <b-button @click="RegisterTelMembership('kt')" variant="outline-secondary">등록하기</b-button>
       <b-form-invalid-feedback id="input-live-feedback">등록할 멤버십 번호를 16자리 입력해주세요!</b-form-invalid-feedback>
-                  <barcode v-bind:value="kt">
+      <barcode v-bind:value="kt">
         아직 입력된 KT 멤버십이 없어요. :(
       </barcode>
     </div>
@@ -44,11 +44,11 @@
         placeholder="Enter your numbers"
         trim
       ></b-form-input>
-      <b-button variant="outline-secondary">등록하기</b-button>
+      <b-button @click="RegisterTelMembership('lg')" variant="outline-secondary">등록하기</b-button>
 
       <b-form-invalid-feedback id="input-live-feedback">등록할 멤버십 번호를 16자리 입력해주세요!</b-form-invalid-feedback>
 
-                  <barcode v-bind:value="lg">
+      <barcode v-bind:value="lg">
         아직 입력된 LGU+ 멤버십이 없어요. :(
       </barcode>
     </div>
@@ -57,19 +57,21 @@
 
 <script>
 import VueBarcode from "vue-barcode";
+import BarcodeAxios from "@/api/Barcodeaxios.js";
 
 export default {
   data() {
     return {
       sk: "",
       kt: "",
-      lg: ""
+      lg: "",
+      tempnum: "",
     };
   },
-    components: {
+  components: {
     'barcode': VueBarcode
   },
-    computed: {
+  computed: {
     skState() {
       return this.sk.length > 15 ? true : false;
     },
@@ -80,6 +82,32 @@ export default {
       return this.lg.length > 15 ? true : false;
     }
   },
+  methods: {
+    RegisterMembership(sort) {
+      if (sort == 'sk') {
+        this.tempnum = this.sk
+      } if (sort == 'kt') {
+        this.tempnum = this.kt
+      } if (sort == 'lg') {
+        this.tempnum = this.lg
+      }
+      BarcodeAxios.insertMembership(
+        {
+          number: this.tempnum,
+          type: sort,
+          userId: 1
+        },
+        res => {
+          console.log(res);
+          alert('멤버십 등록이 완료 되었습니다!');
+        },
+        error => {
+          console.log(error);
+          alert('멤버십 등록에 실패했습니다. 다시 요청해주세요!')
+        }
+      )
+    }
+  }
 };
 </script>
 
@@ -114,7 +142,7 @@ export default {
   padding-right: 1rem;
 }
 .lgimg {
-  height: 2.5rem;
-  margin: 10px 20px;
+  height: 2.3rem;
+  margin: 10px 15px;
 }
 </style>
