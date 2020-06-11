@@ -9,9 +9,11 @@
                 class="checkbox-convenience"
                 type="checkbox"
                 name="convenience"
-                id="convenience-1"
+                id="convenience-0"
+                value="all"
+                v-model="convenience_all"
               />
-              <label class="for-checkbox-convenience" for="convenience-1">
+              <label class="for-checkbox-convenience" for="convenience-0">
                 <img class="conv_icon" src="@/assets/icons/all.png" alt />
               </label>
               <!--
@@ -20,9 +22,11 @@
                 class="checkbox-convenience"
                 type="checkbox"
                 name="convenience"
-                id="convenience-2"
+                id="convenience-1"
+                value="646"
+                v-model="conveniences"
               />
-              <label class="for-checkbox-convenience" for="convenience-2">
+              <label class="for-checkbox-convenience" for="convenience-1">
                 <img class="conv_icon" src="@/assets/icons/gs25.png" alt />
               </label>
               <!--
@@ -31,9 +35,11 @@
                 class="checkbox-convenience"
                 type="checkbox"
                 name="convenience"
-                id="convenience-3"
+                id="convenience-2"
+                value="682"
+                v-model="conveniences"
               />
-              <label class="for-checkbox-convenience" for="convenience-3">
+              <label class="for-checkbox-convenience" for="convenience-2">
                 <img class="conv_icon" src="@/assets/icons/cu.png" alt />
               </label>
               <!--
@@ -42,9 +48,11 @@
                 class="checkbox-convenience"
                 type="checkbox"
                 name="convenience"
-                id="convenience-4"
+                id="convenience-3"
+                value="936"
+                v-model="conveniences"
               />
-              <label class="for-checkbox-convenience" for="convenience-4">
+              <label class="for-checkbox-convenience" for="convenience-3">
                 <img class="conv_icon" src="@/assets/icons/emart.jpg" alt />
               </label>
               <!--
@@ -53,9 +61,11 @@
                 class="checkbox-convenience"
                 type="checkbox"
                 name="convenience"
-                id="convenience-5"
+                id="convenience-4"
+                value="970"
+                v-model="conveniences"
               />
-              <label class="for-checkbox-convenience" for="convenience-5">
+              <label class="for-checkbox-convenience" for="convenience-4">
                 <img class="conv_icon" src="@/assets/icons/seven.png" alt />
               </label>
               <!--
@@ -64,15 +74,18 @@
                 class="checkbox-convenience"
                 type="checkbox"
                 name="convenience"
-                id="convenience-6"
+                id="convenience-5"
+                value="756"
+                v-model="conveniences"
               />
-              <label class="for-checkbox-convenience" for="convenience-6">
+              <label class="for-checkbox-convenience" for="convenience-5">
                 <img class="conv_icon" src="@/assets/icons/ministop.png" alt />
               </label>
               <!--
               -->
             </div>
             <!-- 슬라이드 들어가는 부분 -->
+            <!-- v-model -->
             <div class="main-slide">
               <b-tabs
                 active-nav-item-class="font-weight-bold text-uppercase text-danger"
@@ -81,7 +94,7 @@
               >
                 <!-- 할인 정보 -->
                 <b-tab title="할인 정보" active>
-                  <sale-card></sale-card>
+                  <sale-card :selectedStore="conveniences"></sale-card>
                 </b-tab>
                 <!-- 상품 정보 -->
                 <b-tab title="상품 정보">
@@ -102,9 +115,42 @@ import SaleCard from "@/components/SaleCard.vue";
 import ItemCard from "@/components/ItemCard.vue";
 
 export default {
+  name: "MainInfo",
   components: {
     SaleCard,
     ItemCard
+  },
+  data() {
+    return {
+      convenience_all: ["all"],
+      conveniences: []
+    };
+  },
+  methods: {},
+  watch: {
+    convenience_all: function() {
+      console.log("convenience_all", this.convenience_all);
+      console.log("conv length", this.conveniences.length);
+      if (this.convenience_all) {
+        console.log("convenience_all if");
+        if (this.convenience_all.length) {
+          this.conveniences = [];
+        }
+      } else {
+        console.log("convenience_all else");
+      }
+    },
+    conveniences: function() {
+      console.log(this.convenience_all, this.conveniences);
+      if (this.conveniences.length && this.convenience_all) {
+        this.convenience_all = [];
+        console.log("conveniences if");
+      } else if (!this.conveniences.length) {
+        // if (this.convenience_all != ["all"])
+        //   this.convenience_all = ["all"];
+        console.log("conveniences else if");
+      }
+    }
   }
 };
 </script>

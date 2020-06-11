@@ -9,11 +9,12 @@
           <img
             class="main_logo"
             src="@/assets/images/mainlogo_removebg.png"
-            alt=""
+            alt
             style="margin-bottom: 30px;"
           />
           <p style="margin-bottom: 0px;">
-            모든 편의점을 한 곳에서<br />간편하게 관리하세요!
+            모든 편의점을 한 곳에서
+            <br />간편하게 관리하세요!
           </p>
         </div>
       </div>
@@ -34,8 +35,8 @@ import Navbar from "@/components/Navbar.vue";
 export default {
   components: {
     Navbar,
-    MainInfo,
-  },
+    MainInfo
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -157,7 +158,7 @@ a {
 
 .part2 {
   padding: 1rem;
-  height: 100vh;
+  height: 100%;
   display: flex;
 }
 
@@ -169,7 +170,10 @@ a {
 .min(
   900px,
   {.wrapper {.part1 {width: 40%; position: fixed; height: 100vh;} .part2 {width:
-    60%; float: right;}}}
+    60%; height: 100%; float: right;}}}
 );
-.min(1060px, {.wrapper {.part1 {width: 50%;} .part2 {width: 50%;}}});
+.min(
+  1060px,
+  {.wrapper {.part1 {width: 50%; height: 100%;} .part2 {width: 50%; height: 100%}}}
+);
 </style>

@@ -1,91 +1,120 @@
 <template>
   <div class="card-container">
     <ul class="cards">
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="https://img.danawa.com/prod_img/500000/638/156/img/3156638_1.jpg?shrink=500:500&_v=20200420160304"
-            />
+      <li class="cards_item" v-for="showItem in showItems" :key="showItem.id">
+        <router-link class="routeLink" :to="{ name: 'Detail', params: {id: showItem.product.id}}">
+          <div class="card">
+            <div class="card_image">
+              <img
+                src="@/assets/icons/cu.png"
+                v-if="showItem.franchiseId==682"
+                alt
+                class="card-banner"
+              />
+              <img
+                src="@/assets/icons/gs25.png"
+                v-if="showItem.franchiseId==646"
+                alt
+                class="card-banner"
+              />
+              <img
+                src="@/assets/icons/emart.jpg"
+                v-if="showItem.franchiseId==936"
+                alt
+                class="card-banner"
+              />
+              <img
+                src="@/assets/icons/seven.png"
+                v-if="showItem.franchiseId==970"
+                alt
+                class="card-banner"
+              />
+              <img
+                src="@/assets/icons/ministop.png"
+                v-if="showItem.franchiseId==756"
+                alt
+                class="card-banner"
+              />
+              <div class="card-img-box">
+                <img
+                  class="card-img"
+                  v-if="showItem.product.image"
+                  :src="showItem.product.image"
+                  @hover="test(showItem.product.image)"
+                />
+                <img
+                  class="card-img"
+                  v-if="!showItem.product.image"
+                  src="@/assets/icons/defaultproduct.png"
+                />
+              </div>
+            </div>
+            <div class="card_content">
+              <h2 class="card_title">{{ showItem.name }}</h2>
+              <p class="card_text">{{ addComma(showItem.product.price) }}원</p>
+            </div>
           </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img class="card-img" src="https://gdimg.gmarket.co.kr/1109412441/still/600?ver=0" />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img class="card-img" src="https://picsum.photos/500/300/?image=11" />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img class="card-img" src="https://picsum.photos/500/300/?image=14" />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img class="card-img" src="https://picsum.photos/500/300/?image=17" />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img class="card-img" src="https://picsum.photos/500/300/?image=2" />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
+        </router-link>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-export default {};
+import productAxios from "../api/Productaxios";
+export default {
+  name: "SaleCard",
+  components: {},
+  props: {
+    selectedStore: {}
+  },
+  data() {
+    return {
+      saleItems: [],
+      showItems: []
+    };
+  },
+  methods: {
+    addComma(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    test(x) {
+      console.log(x);
+    }
+  },
+  mounted() {
+    productAxios.getSale(
+      res => {
+        console.log(res);
+        this.saleItems = res.data;
+        this.showItems = res.data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  },
+  watch: {
+    selectedStore: function() {
+      let selectedStore = this.selectedStore.map(idx => parseInt(idx));
+      if (this.selectedStore.length) {
+        this.showItems = this.saleItems.filter(item => {
+          return selectedStore.includes(item.franchiseId);
+        });
+      } else {
+        this.showItems = this.saleItems;
+      }
+    }
+  }
+};
 </script>
 
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css?family=Quicksand:400,700");
+
+a.routeLink {
+  text-decoration: none;
+}
 
 /* Design */
 .card-container {
@@ -97,11 +126,25 @@ export default {};
   /* padding: 1rem; */
 }
 
-.card-img {
+.card-banner {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 25%;
+}
+
+.card-img-box {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   width: 60%;
   max-width: 100%;
+}
+
+.card-img {
+  width: 100%;
   vertical-align: middle;
-  margin-top: 5%;
+  top: 5%;
 }
 
 .cardbtn {
@@ -132,7 +175,7 @@ export default {};
 
 .cards_item {
   display: flex;
-  padding: 0.5rem 1rem 1rem;
+  /* padding: 0.5rem 1rem 1rem; */
   /* height: 45%; */
   /* max-height: 300px; */
 }
@@ -145,12 +188,15 @@ export default {};
 
 @media (min-width: 56rem) {
   .cards_item {
+    justify-content: center;
     width: 33.3333%;
     max-height: 260px;
   }
 }
 
 .card {
+  height: 100%;
+  margin: 2px;
   background-color: white;
   border-radius: 0.25rem;
   box-shadow: 0 10px 20px -14px rgba(0, 0, 0, 0.25);
@@ -158,6 +204,11 @@ export default {};
   flex-direction: column;
   overflow: hidden;
   /* height: 300px; */
+}
+
+.card:hover {
+  border: 1.8px solid lightblue;
+  box-shadow: 0 0 10px 5px lightgray;
 }
 
 .card_content {
