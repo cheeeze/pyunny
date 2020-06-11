@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.IntroActivity"
+        <activity android:name=".activity.RecipeDetailActivity"></activity>
+        <activity
+            android:name=".activity.IntroActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
@@ -28,24 +30,27 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC0LCTya1J7JvQJduuBqMuCVqS0fea30Js" />
 
-        <activity android:name=".activity.SignUpActivity"
+        <activity
+            android:name=".activity.SignUpActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".activity.ForgetPasswordActivity"
+        <activity
+            android:name=".activity.ForgetPasswordActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".activity.LoginActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".activity.WelcomeActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.WelcomeActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.MainActivity"
-            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            android:windowSoftInputMode="adjustPan"
+            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>

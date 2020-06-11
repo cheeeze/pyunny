@@ -30,10 +30,10 @@
         app:itemIconTint="@android:color/black"
         app:itemTextColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/menu_bottomnavigationview"/>
-
+        app:menu="@menu/menu_bottomnavigationview" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
