@@ -180,6 +180,12 @@
         (#{userId}, #{productId}, #{date})
     </insert>
 
+    <select id="getRatingcount" parameterType="int" resultType="ratingCount">
+        select sum(score=1) inlike, sum(score=2) dislike
+        from Rating
+        where product_id = #{value}
+    </select>
+
     <delete id="deleteFavorite" parameterType="int">
         delete from Favorite where id = #{value}
     </delete>
@@ -213,7 +219,11 @@
     </insert>
 
     <select id="getCommentById" parameterType="int" resultType="productComment">
-        select * from Product_comment where id = #{value}
+        select 
+        pc.id id, pc.user_id userId, u.nickname nickname, pc.product_id productId, pc.content content
+        from Product_comment pc inner join User u
+        on pc.user_id = u.id
+        where pc.product_id = #{value}
     </select>
 
     <update id="updateComment" parameterType="productComment">

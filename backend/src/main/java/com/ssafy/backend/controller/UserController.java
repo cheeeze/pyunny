@@ -43,9 +43,12 @@ public class UserController {
 
     @PostMapping("login")
     public ResponseEntity login(HttpSession session, @RequestBody User user) {
+
         try {
+            System.out.println(user.toString());
             user = service.login(user);
             session.setAttribute("user", user);
+            System.out.println(user.toString());
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);

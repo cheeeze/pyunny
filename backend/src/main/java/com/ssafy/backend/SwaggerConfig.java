@@ -14,23 +14,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-    
+
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-            .title("API")
-            .description("api swagger")
-            .build();
+        return new ApiInfoBuilder().title("API").description("api swagger").build();
     }
 
     @Bean
-    public Docket api(){
-        return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("example")
-                .apiInfo(this.apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors
-                        .basePackage("com.ssafy.backend.controller"))
-                .paths(PathSelectors.ant("/**"))
-                .build();
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2).groupName("example").apiInfo(this.apiInfo()).select()
+                .apis(RequestHandlerSelectors.basePackage("com.ssafy.backend.controller"))
+                .paths(PathSelectors.ant("/**")).build();
     }
 }

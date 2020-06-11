@@ -7,6 +7,7 @@ import com.ssafy.backend.vo.MainSearch;
 import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.ProductComment;
 import com.ssafy.backend.vo.Rating;
+import com.ssafy.backend.vo.RatingCount;
 import com.ssafy.backend.vo.Sale;
 
 import org.apache.ibatis.session.SqlSession;
@@ -146,6 +147,11 @@ public class ProductDAOImpl implements ProductDAO {
     public void deleteComment(int id) throws Exception {
         session.delete(ns + "deleteComment", id);
 
+    }
+
+    @Override
+    public RatingCount getRatingcount(int id) throws Exception {
+        return session.selectOne(ns + "getRatingcount", id);
     }
 
 }

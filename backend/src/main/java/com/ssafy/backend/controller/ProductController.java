@@ -8,6 +8,7 @@ import com.ssafy.backend.vo.MainSearch;
 import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.ProductComment;
 import com.ssafy.backend.vo.Rating;
+import com.ssafy.backend.vo.RatingCount;
 import com.ssafy.backend.vo.Sale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,13 +133,13 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/favorate")
+    @PostMapping("/favorite")
     public ResponseEntity insertFavorite(@RequestBody Favorite f) throws Exception {
         service.insertFavorite(f);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/favorate/{id}")
+    @DeleteMapping("/favorite/{id}")
     public ResponseEntity deleteFavorite(@PathVariable int id) throws Exception {
         service.deleteFavorite(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -148,6 +149,12 @@ public class ProductController {
     public ResponseEntity insertRating(@RequestBody Rating r) throws Exception {
         service.insertRating(r);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/rating/count/{id}")
+    public ResponseEntity<RatingCount> getRatingcount(@PathVariable int id) throws Exception {
+        RatingCount res = service.getRatingcount(id);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @DeleteMapping("/rating/{id}")

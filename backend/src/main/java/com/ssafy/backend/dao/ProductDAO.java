@@ -7,6 +7,7 @@ import com.ssafy.backend.vo.MainSearch;
 import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.ProductComment;
 import com.ssafy.backend.vo.Rating;
+import com.ssafy.backend.vo.RatingCount;
 import com.ssafy.backend.vo.Sale;
 
 /* 
@@ -46,6 +47,8 @@ public interface ProductDAO {
     void deleteFavorite(int id) throws Exception;
 
     void insertRating(Rating r) throws Exception;
+
+    RatingCount getRatingcount(int id) throws Exception;
 
     void deleteRating(int id) throws Exception;
 

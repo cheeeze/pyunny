@@ -2,7 +2,12 @@
   <div>
     <navbar></navbar>
     <div style="padding:0.7em;">
-      <div style="margin-top:100px;">
+      <div style="margin-top:60px; display: flex; margin-left:20px;">
+        <button class="back" @click="niceback" style="float: left;">
+          <img src="@/assets/icons/back.png" width="25px;" />
+        </button>
+      </div>
+      <div style="margin-top:40px;">
         <div>
           <!-- <div class="avatar-preview">
           <div
@@ -41,7 +46,10 @@
       </div>
 
       <!-- 한줄평 부분 || 채은이를 위한 선물 -->
-      <div>
+      <div v-if="userId==0" style="margin-top:50px;">
+        <router-link to="/">로그인</router-link>후 사용하실수 있습니다
+      </div>
+      <div v-if="userId!=0">
         <div class="item-comment" style="margin-top:50px;">
           <h2 class="subtitle">댓글</h2>
           <input id="item-comment" type="text" placeholder="댓글을 적어보세요." v-model="text" />
@@ -143,11 +151,16 @@ export default {
       replys: [],
       text: "",
       childtext: "",
+      userId: 0,
       editor: new Editor()
     };
   },
   mounted() {
     this.getRecipe();
+
+    if (sessionStorage.getItem("user") != null) {
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+    }
   },
   methods: {
     getRecipe() {
@@ -213,7 +226,7 @@ export default {
     addComment(index, parentId) {
       console.log("index:" + index + " parentId:" + parentId);
       let data = {
-        userId: 1,
+        userId: this.userId,
         recipeId: this.recipe.id,
         //content: this.text,
         parentId: parentId
@@ -234,6 +247,17 @@ export default {
         this.text = "";
         this.childtext = "";
       });
+    },
+    niceback: function() {
+      var numberOfEntries = window.history.length;
+      if (numberOfEntries > 2) {
+        this.$router.go(-1);
+      } else {
+        var fpath = this.PageData.backCrumb.url;
+        this.$router.push({
+          path: fpath
+        });
+      }
     }
   }
 };
