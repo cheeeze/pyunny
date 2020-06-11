@@ -214,7 +214,9 @@ const insertRating = (data, success, error) => {
 
 const deleteRating = (data, success, error) => {
     http
-        .delete('/api/rating/' + data)
+        .delete('/api/rating',{
+          data: data 
+        })
         .then((res) => {
             success(res)
         })
@@ -281,6 +283,17 @@ const deleteComment = (data, success, error) => {
         })
 }
 
+const getRating = (data, success, error) =>{
+    http
+        .get('/api/rating/count/'+data)
+        .then((res) => {
+            success(res)
+        })
+        .catch((err) => {
+            error(err)
+        })
+}
+
 
 
 
@@ -308,6 +321,7 @@ const axiosFunction = {
     getCommentById: (data, success, error) => getCommentById(data, success, error),
     updateComment: (data, success, error) => updateComment(data, success, error),
     deleteComment: (data, success, error) => deleteComment(data, success, error),
+    getRating: (data, success, error) => getRating(data, success, error),
 }
 
 export default axiosFunction

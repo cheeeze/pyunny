@@ -115,8 +115,8 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void deleteRating(int id) throws Exception {
-        session.delete(ns + "deleteRating", id);
+    public void deleteRating(Rating r) throws Exception {
+        session.delete(ns + "deleteRating", r);
 
     }
 

@@ -206,8 +206,8 @@
         user_id = #{userId} and product_id = #{productId}
     </update>
 
-    <delete id="deleteRating" parameterType="int">
-        delete from Rating where id = #{value}
+    <delete id="deleteRating" parameterType="rating">
+        delete from Rating where user_id = #{userId} and product_id = #{productId}
     </delete>
 
     <!-- Product Comment 한줄평 -->

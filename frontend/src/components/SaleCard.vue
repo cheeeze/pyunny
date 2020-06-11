@@ -6,12 +6,14 @@
           <div class="card_image">
             <img
               class="card-img"
-              src="https://img.danawa.com/prod_img/500000/638/156/img/3156638_1.jpg?shrink=500:500&_v=20200420160304"
+              src="https://picsum.photos/500/300/?image=10"
             />
           </div>
           <div class="card_content">
             <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
+            <p class="card_text">
+              1,200
+            </p>
             <button class="cardbtn card_btn">상세 정보</button>
           </div>
         </div>
@@ -19,11 +21,16 @@
       <li class="cards_item">
         <div class="card">
           <div class="card_image">
-            <img class="card-img" src="https://gdimg.gmarket.co.kr/1109412441/still/600?ver=0" />
+            <img
+              class="card-img"
+              src="https://picsum.photos/500/300/?image=5"
+            />
           </div>
           <div class="card_content">
             <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
+            <p class="card_text">
+              1,200
+            </p>
             <button class="cardbtn card_btn">상세 정보</button>
           </div>
         </div>
@@ -31,11 +38,16 @@
       <li class="cards_item">
         <div class="card">
           <div class="card_image">
-            <img class="card-img" src="https://picsum.photos/500/300/?image=11" />
+            <img
+              class="card-img"
+              src="https://picsum.photos/500/300/?image=11"
+            />
           </div>
           <div class="card_content">
             <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
+            <p class="card_text">
+              1,200
+            </p>
             <button class="cardbtn card_btn">상세 정보</button>
           </div>
         </div>
@@ -43,11 +55,16 @@
       <li class="cards_item">
         <div class="card">
           <div class="card_image">
-            <img class="card-img" src="https://picsum.photos/500/300/?image=14" />
+            <img
+              class="card-img"
+              src="https://picsum.photos/500/300/?image=14"
+            />
           </div>
           <div class="card_content">
             <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
+            <p class="card_text">
+              1,200
+            </p>
             <button class="cardbtn card_btn">상세 정보</button>
           </div>
         </div>
@@ -55,11 +72,16 @@
       <li class="cards_item">
         <div class="card">
           <div class="card_image">
-            <img class="card-img" src="https://picsum.photos/500/300/?image=17" />
+            <img
+              class="card-img"
+              src="https://picsum.photos/500/300/?image=17"
+            />
           </div>
           <div class="card_content">
             <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
+            <p class="card_text">
+              1,200
+            </p>
             <button class="cardbtn card_btn">상세 정보</button>
           </div>
         </div>
@@ -67,11 +89,16 @@
       <li class="cards_item">
         <div class="card">
           <div class="card_image">
-            <img class="card-img" src="https://picsum.photos/500/300/?image=2" />
+            <img
+              class="card-img"
+              src="https://picsum.photos/500/300/?image=2"
+            />
           </div>
           <div class="card_content">
             <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">1,200</p>
+            <p class="card_text">
+              1,200
+            </p>
             <button class="cardbtn card_btn">상세 정보</button>
           </div>
         </div>

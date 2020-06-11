@@ -103,8 +103,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteRating(int id) throws Exception {
-        dao.deleteComment(id);
+    public void deleteRating(Rating r) throws Exception {
+        dao.deleteRating(r);
 
     }
 

@@ -47,7 +47,7 @@ public interface ProductService {
 
     RatingCount getRatingcount(int id) throws Exception;
 
-    void deleteRating(int id) throws Exception;
+    void deleteRating(Rating r) throws Exception;
 
     void updateRating(Rating r) throws Exception;
 

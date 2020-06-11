@@ -176,7 +176,7 @@ import ChangeUserInfo from "@/components/ChangeUserInfo.vue";
 import RegisterMembership from "@/components/RegisterMembership.vue";
 import RegisterAccPoint from "@/components/RegisterAccPoint.vue";
 
-//import shytest from "@/views/shytest.vue";
+// import shytest from "@/views/shytest.vue";
 
 export default {
   data() {
@@ -188,7 +188,7 @@ export default {
   },
   components: {
     Navbar,
-    //shytest,
+    // shytest,
     FileUpload,
     ShowUserGift,
     ShowUsedGift,
