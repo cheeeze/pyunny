@@ -150,7 +150,7 @@ export default {
       replys: [],
       comment: "",
       user: true, // 로그인이 되어 있을 경우 true
-      score: 0, // 0인 경우 재구매 의향 선택한 적 없는 경우, 1은 있다, 2는 없다
+      score: parseInt(localStorage.getItem("store")), // 0인 경우 재구매 의향 선택한 적 없는 경우, 1은 있다, 2는 없다
 
       product: {
         category: "",
@@ -179,6 +179,7 @@ export default {
           userId: 1,
         },
         (res) => {
+          res;
           alert("관심 상품이 등록되었습니다!");
         },
         (err) => {
@@ -190,26 +191,112 @@ export default {
       // 로그인이 안되어 있을 때 로그인 필요하다는 alert
       if (this.user) {
         if (this.score === 0) {
+          localStorage.setItem("score",1);
           this.like += 1;
           this.score = 1;
+          Axios.insertRating(
+            {
+              userId:this.userId,
+              productId:this.productId,
+              score: 1,
+            },
+            (res)=>{
+              console.log(res);
+            },
+            (err)=>{
+              console.log(err);
+            }
+          );
         } else if (this.score === 2) {
+          localStorage.setItem("score",1);
           this.like += 1;
           this.score = 1;
           this.dislike -= 1;
+          
+          Axios.deleteRating(
+            {
+              userId:this.userId,
+              productId:this.productId,
+            },
+            (res)=>{
+              console.log(res);
+              Axios.insertRating(
+                {
+                  userId:this.userId,
+                  productId:this.productId,
+                  score: 1,
+                },
+                (res)=>{
+                  console.log(res);
+                },
+                (err)=>{
+                  console.log(err);
+                }
+              );
+            },
+            (err)=>{
+              console.log(err);
+            }
+          );
+          
         }
       } else {
         alert("로그인이 필요한 기능입니다.");
       }
+      console.log(this.score);
     },
     itemDislike() {
       if (this.user) {
         if (this.score === 0) {
+          localStorage.setItem("score",2);
           this.dislike += 1;
           this.score = 2;
+          Axios.insertRating(
+            {
+              userId:this.userId,
+              productId:this.productId,
+              score: 2,
+            },
+            (res)=>{
+              console.log(res);
+            },
+            (err)=>{
+              console.log(err);
+            }
+          );
         } else if (this.score === 1) {
+          localStorage.setItem("score",2);
           this.dislike += 1;
           this.score = 2;
           this.like -= 1;
+          
+
+          Axios.deleteRating(
+            {
+              userId:this.userId,
+              productId:this.productId,
+            },
+            (res)=>{
+              console.log(res);
+              Axios.insertRating(
+                {
+                  userId:this.userId,
+                  productId:this.productId,
+                  score: 2,
+                },
+                (res)=>{
+                  console.log(res);
+                },
+                (err)=>{
+                  console.log(err);
+                }
+              );
+            },
+            (err)=>{
+              console.log(err);
+            }
+          );
+          
         }
       } else {
         alert("로그인이 필요한 기능입니다.");
@@ -264,6 +351,7 @@ export default {
       Axios.deleteComment(
         id,
         (res) => {
+          res;
           alert("한줄평이 정상적으로 삭제되었습니다.");
 
           if (idx > -1) {
@@ -304,6 +392,26 @@ export default {
     },
   },
   mounted() {
+    localStorage.clear();
+    this.userId=1;
+    this.productId=this.$route.params.id;
+    if(localStorage.getItem("score") == null){
+      localStorage.setItem("score",0);
+    }
+    this.score=parseInt(localStorage.getItem("score"));
+
+    Axios.getRating(
+      this.productId,
+      (res) => {
+        console.log(res);
+        this.like = res.data.inlike;
+        this.dislike = res.data.dislike;
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+    console.log(this.score);
     Axios.getProductById(
       this.$route.params.id,
       (res) => {

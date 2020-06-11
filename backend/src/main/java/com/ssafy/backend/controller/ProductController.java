@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -157,9 +158,9 @@ public class ProductController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @DeleteMapping("/rating/{id}")
-    public ResponseEntity deleteRating(@PathVariable int id) throws Exception {
-        service.deleteRating(id);
+    @DeleteMapping("/rating")
+    public ResponseEntity deleteRating(@RequestBody Rating r) throws Exception {
+        service.deleteRating(r);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
