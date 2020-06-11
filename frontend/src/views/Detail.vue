@@ -91,52 +91,24 @@
           id="item-comment"
           type="text"
           placeholder="한줄평을 적어보세요."
+          v-model="comment"
+          @keyup.enter="addComment()"
         />
-        <button id="comment-btn">입력</button>
+        <button id="comment-btn" @click="addComment()">
+          입력
+        </button>
         <!-- 한줄평 모음 -->
         <div class="comments">
-          <div class="comment">
-            <h4 id="nickname">나는야편돌이</h4>
-            <div id="comment-box">
-              <p id="comment-text">역시 우유는 서울우유죠. 그냥 정-석-</p>
+          <div class="comment" v-for="(reply, index) in replys" :key="index">
+            <h4 id="nickname">{{ reply.nickname }}</h4>
+            <div id="comment-box" @click="reply.isreply = !reply.isreply">
+              <p id="comment-text">{{ reply.content }}</p>
             </div>
-            <div class="before-reply" v-if="reply">
-              <button id="reply-btn" @click="reply = false">답글 달기</button>
-            </div>
-            <div class="after-reply" v-if="!reply">
-              <img
-                src="@/assets/icons/rereply.png"
-                alt
-                height="26px"
-                width="28px"
-              />
-              <input
-                type="text"
-                placeholder="답글을 작성해볼까요?"
-                style="height:30px; width: 80%"
-              />
-              <button id="reply-btn" style="color: #47b8e0">게시</button>
-              <button
-                id="reply-btn"
-                style="color: #ff7473; margin-left: 2%;"
-                @click="reply = true"
-              >
-                취소
+            <div class="comment-delete" v-if="reply.isreply">
+              <button id="delete-btn" @click="deleteComment(index, reply.id)">
+                댓글 삭제
               </button>
             </div>
-            <!-- 대댓 모음 -->
-            <div class="rereply">
-              <p>
-                <img
-                  src="@/assets/icons/rereply.png"
-                  alt
-                  height="26px"
-                  width="28px"
-                  style="margin-right: 2px;"
-                />예?! 우유는 파스퇴르 아닙니까...
-              </p>
-            </div>
-            <!---->
           </div>
         </div>
       </div>
@@ -162,7 +134,7 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import ItemCard from "@/components/ItemCard.vue";
-import http from "../http-common";
+import Axios from "@/api/Productaxios.js";
 
 export default {
   components: {
@@ -175,7 +147,8 @@ export default {
       dislike: 0,
       value: 50,
       max: 100,
-      reply: true,
+      replys: [],
+      comment: "",
       user: true, // 로그인이 되어 있을 경우 true
       score: 0, // 0인 경우 재구매 의향 선택한 적 없는 경우, 1은 있다, 2는 없다
 
@@ -192,6 +165,19 @@ export default {
   methods: {
     addFavorite() {
       // 관심 제품 등록
+      console.log("hello");
+      Axios.insertFavorite(
+        {
+          productId: this.$route.params.id,
+          userId: 1,
+        },
+        (res) => {
+          alert("관심 상품이 등록되었습니다!");
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     },
     itemLike() {
       // 로그인이 안되어 있을 때 로그인 필요하다는 alert
@@ -222,10 +208,44 @@ export default {
         alert("로그인이 필요한 기능입니다.");
       }
     },
-    clickReply() {
-      if (this.reply) {
-        this.reply = false;
-      }
+    // clickReply() {
+    //   if (this.reply) {
+    //     this.reply = false;
+    //   }
+    // },
+    addComment() {
+      Axios.insertComment(
+        {
+          content: this.comment,
+          productId: this.product.id,
+          userId: 1,
+        },
+        (res) => {
+          console.log(res);
+          alert("한줄평이 정상적으로 등록되었습니다!");
+          res.data.nickname = this.nickname;
+          this.replys.push(res.data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      ),
+        (this.comment = "");
+    },
+    deleteComment(idx, id) {
+      Axios.deleteComment(
+        id,
+        (res) => {
+          alert("한줄평이 정상적으로 삭제되었습니다.");
+
+          if (idx > -1) {
+            this.replys.splice(idx, 1);
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     },
     addComma(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -240,15 +260,39 @@ export default {
     },
   },
   mounted() {
-    http
-      .get("/api/product/" + this.$route.params.id)
-      .then((res) => {
+    Axios.getProductById(
+      this.$route.params.id,
+      (res) => {
         this.product = res.data;
-        console.log(this.product);
-      })
-      .catch((err) => {
+        console.log(res);
+      },
+      (err) => {
         console.log(err);
-      });
+      }
+    ),
+      Axios.getCommentById(
+        this.$route.params.id,
+        (res) => {
+          this.replys = [];
+          res.data.forEach((element) => {
+            element.isreply = false;
+            this.replys.push(element);
+          });
+          console.log("replys", res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    //   http
+    //     .get("/api/product/" + this.$route.params.id)
+    //     .then((res) => {
+    //       this.product = res.data;
+    //       console.log(this.product);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
   },
 };
 </script>
@@ -366,7 +410,7 @@ export default {
 }
 
 .comment {
-  margin: 5px;
+  margin: 0 5px;
 }
 
 #nickname {
@@ -387,15 +431,16 @@ export default {
   margin-bottom: 0;
 }
 
-#reply-btn {
+#delete-btn {
   background-color: transparent;
   border-style: none;
   margin-right: 5px;
   outline: none;
 }
 
-.before-reply {
+.comment-delete {
   text-align: right;
+  color: #ff7473;
 }
 
 .rereply {
