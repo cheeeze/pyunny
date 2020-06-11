@@ -8,6 +8,7 @@ import com.ssafy.backend.vo.MainSearch;
 import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.ProductComment;
 import com.ssafy.backend.vo.Rating;
+import com.ssafy.backend.vo.RatingCount;
 import com.ssafy.backend.vo.Sale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,6 +146,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductComment> getCommentById(int id) throws Exception {
         return dao.getCommentById(id);
+    }
+
+    @Override
+    public RatingCount getRatingcount(int id) throws Exception {
+        return dao.getRatingcount(id);
     }
 
 }
