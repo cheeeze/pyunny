@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("user")
@@ -41,6 +42,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @ApiOperation(value="웹로그인", notes="로그인이 성공하면 세션에 user라는 key로 User객체를 저장한다")
     @PostMapping("login")
     public ResponseEntity login(HttpSession session, @RequestBody User user) {
         try {
@@ -51,7 +53,18 @@ public class UserController {
             System.out.println(e);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
+    @ApiOperation(value="앱로그인", notes="User 객체로만 로그인 확인")
+    @PostMapping("applogin")
+    public ResponseEntity applogin(@RequestBody User user) {
+        try {
+            user = service.login(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("user")
