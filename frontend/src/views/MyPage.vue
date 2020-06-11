@@ -176,8 +176,6 @@ import ChangeUserInfo from "@/components/ChangeUserInfo.vue";
 import RegisterMembership from "@/components/RegisterMembership.vue";
 import RegisterAccPoint from "@/components/RegisterAccPoint.vue";
 
-//import shytest from "@/views/shytest.vue";
-
 export default {
   data() {
     return {
@@ -188,7 +186,6 @@ export default {
   },
   components: {
     Navbar,
-    //shytest,
     FileUpload,
     ShowUserGift,
     ShowUsedGift,
@@ -206,8 +203,8 @@ export default {
         console.log("컬러가 있다.", menu);
         this.tempClass = this.color + "-chosen";
         this.select_menu = menu;
-      }
-    },
+        }
+      },
     test() {
       console.log("test");
     },

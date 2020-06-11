@@ -109,7 +109,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @font-face {
   font-family: "Kyobo";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff")

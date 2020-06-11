@@ -38,5 +38,10 @@ public class MembershipServiceImpl implements MembershipService {
     public void deleteMembership(int id) throws Exception {
         dao.deleteMembership(id);
     }
-    
+
+    @Override
+    public List<Membership> getMembershipByUserId(int userId) throws Exception {
+        return dao.getMembershipByUserId(userId);
+    }
+
 }
