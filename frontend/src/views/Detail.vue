@@ -160,6 +160,13 @@ export default {
         name: "",
         price: 0,
       },
+
+      replyResult:{
+        content:"",
+        productId:0,
+        userId:1,
+        nickname:"",
+      }
     };
   },
   methods: {
@@ -223,8 +230,29 @@ export default {
         (res) => {
           console.log(res);
           alert("한줄평이 정상적으로 등록되었습니다!");
-          res.data.nickname = this.nickname;
-          this.replys.push(res.data);
+          this.replyResult = {
+            content:res.data.content,
+            productId:res.data.productId,
+            userId:res.data.userId,
+            nickname:this.nickname,
+          };
+          // res.data.nickname = this.nickname;
+          console.log(this.replyResult);
+          this.replys.push(this.replyResult);
+          Axios.getCommentById(
+            this.$route.params.id,
+            (res) => {
+              this.replys = [];
+              res.data.forEach((element) => {
+                element.isreply = false;
+                this.replys.push(element);
+              });
+              console.log("replys", res);
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
         },
         (err) => {
           console.log(err);
@@ -250,6 +278,22 @@ export default {
     addComma(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
+    getProductById(){
+      Axios.getCommentById(
+        this.$route.params.id,
+        (res) => {
+          this.replys = [];
+          res.data.forEach((element) => {
+            element.isreply = false;
+            this.replys.push(element);
+          });
+          console.log("replys", res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   },
   watch: {
     like: function() {
@@ -270,6 +314,7 @@ export default {
         console.log(err);
       }
     ),
+    
       Axios.getCommentById(
         this.$route.params.id,
         (res) => {
