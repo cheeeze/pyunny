@@ -4,6 +4,11 @@ export default [{
     name: "Home",
   },
   {
+    path: "/map",
+    view: "Map",
+    name: "Map",
+  },
+  {
     path: "/detail/:id",
     view: "Detail",
     name: "Detail",
@@ -34,11 +39,6 @@ export default [{
     path: "/map",
     view: "Map",
     name: "Map",
-  },
-  {
-    path: "/shy",
-    view: "shytest",
-    name: "shytest",
   },
   {
     path: "/shy2",

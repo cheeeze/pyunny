@@ -5,6 +5,7 @@ public class StoreProduct {
     private int storeId;
     private int productId;
     private String name;
+    private String image;
     private String description;
     private int price;
     private int stockAmount;
@@ -18,6 +19,18 @@ public class StoreProduct {
         this.storeId = storeId;
         this.productId = productId;
         this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stockAmount = stockAmount;
+    }
+
+    public StoreProduct(int id, int storeId, int productId, String name, String image, String description, int price,
+            int stockAmount) {
+        this.id = id;
+        this.storeId = storeId;
+        this.productId = productId;
+        this.name = name;
+        this.image = image;
         this.description = description;
         this.price = price;
         this.stockAmount = stockAmount;
@@ -79,10 +92,19 @@ public class StoreProduct {
         this.stockAmount = stockAmount;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
-        return "StoreProduct [description=" + description + ", id=" + id + ", name=" + name + ", price=" + price
-                + ", productId=" + productId + ", stockAmount=" + stockAmount + ", storeId=" + storeId + "]";
+        return "StoreProduct [description=" + description + ", id=" + id + ", image=" + image + ", name=" + name
+                + ", price=" + price + ", productId=" + productId + ", stockAmount=" + stockAmount + ", storeId="
+                + storeId + "]";
     }
 
 }

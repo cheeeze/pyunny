@@ -10,8 +10,11 @@ Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 
+
+Vue.use(vuetify)
+
 new Vue({
-  router,
   vuetify,
+  router,
   render: h => h(App)
 }).$mount('#app')

@@ -11,11 +11,7 @@
               <span>기프티콘 관리</span>
             </div>
 
-            <div
-              class="blue-visible left"
-              style="z-index:100;"
-              @click="selec('blue1')"
-            >
+            <div class="blue-visible left" style="z-index:100;" @click="selec('blue1')">
               <span>내가 쓴 레시피</span>
               <img src="@/assets/images/write_img.jpg" />
             </div>
@@ -25,11 +21,7 @@
               <img src="@/assets/images/red_img.jpg" />
             </div>
 
-            <div
-              class="darkgray-visible left"
-              style="z-index:100;"
-              @click="selec('darkgray1')"
-            >
+            <div class="darkgray-visible left" style="z-index:100;" @click="selec('darkgray1')">
               <span>내 정보 수정</span>
               <img src="@/assets/images/person_img.jpg" />
             </div>
@@ -43,29 +35,17 @@
               <span>관심품목</span>
             </div>
 
-            <div
-              class="red-visible left"
-              style="z-index:100;"
-              @click="selec('red1')"
-            >
+            <div class="red-visible left" style="z-index:100;" @click="selec('red1')">
               <span>기프티콘 등록</span>
               <img src="@/assets/images/plus_img.jpg" />
             </div>
 
-            <div
-              class="blue-visible left"
-              style="z-index:100;"
-              @click="selec('blue2')"
-            >
+            <div class="blue-visible left" style="z-index:100;" @click="selec('blue2')">
               <span>내가 쓴 댓글</span>
               <img src="@/assets/images/comment_img.jpg" />
             </div>
 
-            <div
-              class="darkgray-visible left"
-              style="z-index:100;"
-              @click="selec('darkgray2')"
-            >
+            <div class="darkgray-visible left" style="z-index:100;" @click="selec('darkgray2')">
               <span>통신사 멤버십 관리</span>
               <img src="@/assets/images/card_img.jpg" />
             </div>
@@ -79,11 +59,7 @@
               <span>나만의 레시피 관리</span>
             </div>
 
-            <div
-              class="red-visible left"
-              style="z-index:100;"
-              @click="selec('red2')"
-            >
+            <div class="red-visible left" style="z-index:100;" @click="selec('red2')">
               <span>내가 가진 기프티콘</span>
               <img src="@/assets/images/more_img.jpg" />
             </div>
@@ -93,11 +69,7 @@
               <img src="@/assets/images/blue_img.jpg" />
             </div>
 
-            <div
-              class="darkgray-visible left"
-              style="z-index:100;"
-              @click="selec('darkgray3')"
-            >
+            <div class="darkgray-visible left" style="z-index:100;" @click="selec('darkgray3')">
               <span>편의점 적립 관리</span>
               <img src="@/assets/images/save_img.jpg" />
             </div>
@@ -111,20 +83,12 @@
               <span>설정</span>
             </div>
 
-            <div
-              class="red-visible left"
-              style="z-index:100;"
-              @click="selec('red3')"
-            >
+            <div class="red-visible left" style="z-index:100;" @click="selec('red3')">
               <span>사용한 기프티콘</span>
               <img src="@/assets/images/check_img.jpg" />
             </div>
 
-            <div
-              class="blue-visible left"
-              style="z-index:100;"
-              @click="selec('blue3')"
-            >
+            <div class="blue-visible left" style="z-index:100;" @click="selec('blue3')">
               <span>좋아요 한 레시피</span>
               <img src="@/assets/images/heart_img.jpg" />
             </div>
@@ -217,7 +181,7 @@ export default {
     return {
       tempClass: "",
       color: "",
-      select_menu: "",
+      select_menu: ""
     };
   },
   components: {
@@ -231,7 +195,7 @@ export default {
     UserLikePost,
     ChangeUserInfo,
     RegisterAccPoint,
-    RegisterMembership,
+    RegisterMembership
   },
   methods: {
     selec(menu) {
@@ -264,8 +228,8 @@ export default {
           }
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
