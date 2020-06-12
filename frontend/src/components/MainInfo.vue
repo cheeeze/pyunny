@@ -98,11 +98,10 @@
                 </b-tab>
                 <!-- 상품 정보 -->
                 <b-tab title="상품 정보">
-                  <item-card></item-card>
+                  <item-card :selectedStore="conveniences"></item-card>
                 </b-tab>
               </b-tabs>
             </div>
-            <!---->
           </div>
         </div>
       </div>
@@ -129,26 +128,16 @@ export default {
   methods: {},
   watch: {
     convenience_all: function() {
-      console.log("convenience_all", this.convenience_all);
-      console.log("conv length", this.conveniences.length);
       if (this.convenience_all) {
-        console.log("convenience_all if");
         if (this.convenience_all.length) {
           this.conveniences = [];
         }
-      } else {
-        console.log("convenience_all else");
       }
     },
     conveniences: function() {
       console.log(this.convenience_all, this.conveniences);
       if (this.conveniences.length && this.convenience_all) {
         this.convenience_all = [];
-        console.log("conveniences if");
-      } else if (!this.conveniences.length) {
-        // if (this.convenience_all != ["all"])
-        //   this.convenience_all = ["all"];
-        console.log("conveniences else if");
       }
     }
   }

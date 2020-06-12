@@ -1,118 +1,98 @@
 <template>
   <div class="card-container">
     <ul class="cards">
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
+      <li class="cards_item" v-for="showItem in showItems" :key="showItem.id">
+        <router-link class="routeLink" :to="{ name: 'Detail', params: {id: showItem.id}}">
+          <div class="card">
             <img
-              class="card-img"
-              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8806371301614.jpg"
+              src="@/assets/icons/cu.png"
+              v-if="showItem.franchiseId==682"
+              alt
+              class="card-banner"
             />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">푸르밀)검은콩우유300ML</h2>
-            <p class="card_text">
-              1,500원
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
             <img
-              class="card-img"
-              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8801155731632_001.jpg"
+              src="@/assets/icons/gs25.png"
+              v-if="showItem.franchiseId==646"
+              alt
+              class="card-banner"
             />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">덴마크)딸기딸기우유300ML</h2>
-            <p class="card_text">
-              1,500원
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
             <img
-              class="card-img"
-              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8801121028513_002.jpg"
+              src="@/assets/icons/emart.jpg"
+              v-if="showItem.franchiseId==936"
+              alt
+              class="card-banner"
             />
+            <div class="card_image">
+              <img class="card-img" :src="showItem.image" />
+              <img class="card-img" v-if="!showItem.image" src="@/assets/icons/defaultproduct.png" />
+            </div>
+            <div class="card_content">
+              <h2 class="card_title">{{ showItem.name }}</h2>
+              <p class="card_text">{{ addComma(showItem.price) }}</p>
+            </div>
           </div>
-          <div class="card_content">
-            <h2 class="card_title">유어스)펭럽유달고나우유300ML</h2>
-            <p class="card_text">
-              1,500원
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8801115137290_001.jpg"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">서울)바나나우유300ML</h2>
-            <p class="card_text">
-              1,500원
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="https://picsum.photos/500/300/?image=17"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">코카콜라 250ml</h2>
-            <p class="card_text">
-              1,200
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="https://picsum.photos/500/300/?image=2"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">코카콜라 250ml</h2>
-            <p class="card_text">
-              1,200
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
+        </router-link>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-export default {};
+import productAxios from "../api/Productaxios";
+export default {
+  name: "ItemCard",
+  components: {},
+  props: {
+    selectedStore: {}
+  },
+  data() {
+    return {
+      franchiseItems: [],
+      showItems: []
+    };
+  },
+  methods: {
+    addComma(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  },
+  mounted() {
+    productAxios.getProductBySearch(
+      {
+        franchise: this.selectedStore,
+        keyword: ""
+      },
+      res => {
+        console.log(res.data);
+        this.franchiseItems = res.data;
+        this.showItems = res.data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  },
+  watch: {
+    selectedStore: function() {
+      let selectedStore = this.selectedStore.map(idx => parseInt(idx));
+      if (this.selectedStore.length) {
+        this.showItems = this.franchiseItems.filter(item => {
+          return selectedStore.includes(item.franchiseId);
+        });
+      } else {
+        this.showItems = this.franchiseItems;
+      }
+    }
+  }
+};
 </script>
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Quicksand:400,700");
+
+a.routeLink {
+  text-decoration: none;
+}
 
 /* Design */
 .card-container {
@@ -122,6 +102,13 @@ export default {};
   letter-spacing: 0;
   height: 100%;
   /* padding: 1rem; */
+}
+
+.card-banner {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 25%;
 }
 
 .card-img {
@@ -185,6 +172,11 @@ export default {};
   flex-direction: column;
   overflow: hidden;
   /* height: 300px; */
+}
+
+.card:hover {
+  border: 1.8px solid lightblue;
+  box-shadow: 0 0 10px 5px lightgray;
 }
 
 .card_content {
