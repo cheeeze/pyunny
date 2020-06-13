@@ -112,6 +112,18 @@ const deleteMembership = (data, success, error) => {
 }
 
 
+const getMembershipByUserId = (data, success, error) => {
+    http
+        .get('/api/membership/user/' + data)
+        .then((res) => {
+            success(res)
+        })
+        .catch((err) => {
+            error(err)
+        })
+}
+
+
 const axiosFunction = {
     getAllGifticon: (success, error) => getAllGifticon(success, error),
     getGifticonById: (data, success, error) => getGifticonById(data, success, error),
@@ -122,7 +134,8 @@ const axiosFunction = {
     getMembershipById: (data, success, error) => getMembershipById(data, success, error),
     insertMembership: (data, success, error) => insertMembership(data, success, error),
     updateMembership: (data, success, error) => updateMembership(data, success, error),
-    deleteMembership: (data, success, error) => deleteMembership(data, success, error)
+    deleteMembership: (data, success, error) => deleteMembership(data, success, error),
+    getMembershipByUserId: (data, success, error) => getMembershipByUserId(data, success, error),
 
 }
 export default axiosFunction

@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -44,35 +45,39 @@ import java.util.BitSet;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class FragmentMypage extends Fragment {
+public class FragmentMypage extends Fragment implements View.OnClickListener{
 
     private RecyclerView recyclerView;
     private MypageGifticonAdapter mypageGifticonAdapter;
     private ArrayList<Bitmap> imageList = new ArrayList<>();
 
     private ImageButton btn_mypage_add_gifticon;
+
     private static final int REQUEST_CODE = 0;
-
     private static final int WHITE = 0xFFFFFFFF;
-    private static final int BLACK = 0xFF000000;
 
+    private static final int BLACK = 0xFF000000;
     private ImageButton btn_mypage_add_barcode;
+
     private ImageView image_mypage_barcode;
     private EditText edt_mypage_agency_num;
-
     private ImageButton image_btn_sk;
+
     private ImageButton image_btn_kt;
     private ImageButton image_btn_lg;
+    private ImageButton image_btn_gs;
+
+    private ImageButton image_btn_cu;
+    private ImageButton image_btn_seven;
+    private ImageButton image_btn_emart;
+    private ImageButton image_btn_mini;
 
     private TextView txt_mypage_agency;
 
-    private TextView txt_mypage_barcode;
-    private TextView txt_mypage_discount_info;
 
+    private int btnNum=1;
 
-    private int agencyNum=1;
     private SharedPreferences sf;
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view =inflater.inflate(R.layout.fragment_mypage,container,false);
         init(view);
@@ -128,30 +133,34 @@ public class FragmentMypage extends Fragment {
             }
         }));
 
-        txt_mypage_barcode = view.findViewById(R.id.txt_mypage_barcode);
-        txt_mypage_discount_info = view.findViewById(R.id.txt_mypage_discount_info);
         image_btn_sk = view.findViewById(R.id.image_btn_sk);
         image_btn_kt = view.findViewById(R.id.image_btn_kt);
         image_btn_lg = view.findViewById(R.id.image_btn_lg);
+        image_btn_gs = view.findViewById(R.id.image_btn_gs);
+        image_btn_cu = view.findViewById(R.id.image_btn_cu);
+        image_btn_seven = view.findViewById(R.id.image_btn_seven);
+        image_btn_emart = view.findViewById(R.id.image_btn_emart);
+        image_btn_mini = view.findViewById(R.id.image_btn_mini);
+
         txt_mypage_agency = view.findViewById(R.id.txt_mypage_agency);
         btn_mypage_add_barcode = view.findViewById(R.id.btn_mypage_add_barcode);
         image_mypage_barcode = view.findViewById(R.id.image_mypage_barcode);
         edt_mypage_agency_num = view.findViewById(R.id.edt_mypage_agency_num);
         sf = getActivity().getSharedPreferences("barcode",Context.MODE_PRIVATE);
-        agencyNum=1;
-        String discount_info = "* CU - 천원당 100원 할인(VIP/Gold), 천원당 50원 할인(Silver)";
-        discount_info+="\n* 세븐일레븐 - 천원당 100원 할인(VIP/Gold), 천원당 50원 할인(Silver)";
-        txt_mypage_discount_info.setText(discount_info);
+        btnNum=1;
         image_btn_sk.setBackgroundResource(R.drawable.border);
         image_btn_kt.setBackgroundResource(R.drawable.border_unclick);
         image_btn_lg.setBackgroundResource(R.drawable.border_unclick);
+        image_btn_gs.setBackgroundResource(R.drawable.border_unclick);
+        image_btn_cu.setBackgroundResource(R.drawable.border_unclick);
+        image_btn_seven.setBackgroundResource(R.drawable.border_unclick);
+        image_btn_emart.setBackgroundResource(R.drawable.border_unclick);
+        image_btn_mini.setBackgroundResource(R.drawable.border_unclick);
         txt_mypage_agency.setText("SKT");
         String code = sf.getString("skt","");
         edt_mypage_agency_num.setText(code);
-        txt_mypage_barcode.setText(code);
         try {
-
-            Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,600,300);
+            Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.ITF,800,300);
             image_mypage_barcode.setImageBitmap(bitmap);
         }catch (Exception e){
 
@@ -160,20 +169,20 @@ public class FragmentMypage extends Fragment {
             @Override
             public void onClick(View v) {
 
-                agencyNum=1;
+                btnNum=1;
                 image_btn_sk.setBackgroundResource(R.drawable.border);
                 image_btn_kt.setBackgroundResource(R.drawable.border_unclick);
                 image_btn_lg.setBackgroundResource(R.drawable.border_unclick);
-                String discount_info = "* CU - 천원당 100원 할인(VIP/Gold), 천원당 50원 할인(Silver)";
-                discount_info+="\n* 세븐일레븐 - 천원당 100원 할인(VIP/Gold), 천원당 50원 할인(Silver)";
-                txt_mypage_discount_info.setText(discount_info);
+                image_btn_gs.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_cu.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_seven.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_emart.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_mini.setBackgroundResource(R.drawable.border_unclick);
                 txt_mypage_agency.setText("SKT");
                 String code = sf.getString("skt","");
                 edt_mypage_agency_num.setText(code);
-                txt_mypage_barcode.setText(code);
                 try {
-
-                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,600,300);
+                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
                     image_mypage_barcode.setImageBitmap(bitmap);
                 }catch (Exception e){
 
@@ -184,22 +193,21 @@ public class FragmentMypage extends Fragment {
         image_btn_kt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                agencyNum=2;
+                btnNum=2;
                 image_btn_kt.setBackgroundResource(R.drawable.border);
                 image_btn_sk.setBackgroundResource(R.drawable.border_unclick);
                 image_btn_lg.setBackgroundResource(R.drawable.border_unclick);
-                String discount_info = "* GS25 - VVIP/VIP/GOLD 10% 차감할인, SILVER/WHITE/일반 - 5% 차감할인";
-                discount_info+="\n* CU - 도시락/샐러드 1,000원당 200원 차감할인, 결제금액 5천원까지 할인가능";
-                discount_info+="\n* 세븐일레븐 - 천원당 100원 할인(VIP/Gold), 천원당 50원 할인(Silver)";
-                txt_mypage_discount_info.setText(discount_info);
+                image_btn_gs.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_cu.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_seven.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_emart.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_mini.setBackgroundResource(R.drawable.border_unclick);
                 txt_mypage_agency.setText("KT");
                 String code = sf.getString("kt","");
                 edt_mypage_agency_num.setText(code);
-                txt_mypage_barcode.setText(code);
 
                 try {
-
-                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,600,300);
+                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
                     image_mypage_barcode.setImageBitmap(bitmap);
                 }catch (Exception e){
 
@@ -210,19 +218,135 @@ public class FragmentMypage extends Fragment {
         image_btn_lg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                agencyNum=3;
+                btnNum=3;
                 image_btn_lg.setBackgroundResource(R.drawable.border);
                 image_btn_kt.setBackgroundResource(R.drawable.border_unclick);
                 image_btn_sk.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_gs.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_cu.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_seven.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_emart.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_mini.setBackgroundResource(R.drawable.border_unclick);
                 txt_mypage_agency.setText("LG U+");
-                String discount_info = "* GS25 - 5% 할인, 1일 1회 일 최대 10,000원까지 할인 가능";
-                txt_mypage_discount_info.setText(discount_info);
                 String code = sf.getString("lg","");
                 edt_mypage_agency_num.setText(code);
-                txt_mypage_barcode.setText(code);
                 try {
+                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                    image_mypage_barcode.setImageBitmap(bitmap);
+                }catch (Exception e){
 
-                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,600,300);
+                }
+            }
+        });
+        image_btn_gs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnNum=4;
+                image_btn_gs.setBackgroundResource(R.drawable.border);
+                image_btn_kt.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_sk.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_lg.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_cu.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_seven.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_emart.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_mini.setBackgroundResource(R.drawable.border_unclick);
+                txt_mypage_agency.setText("GS25");
+                String code = sf.getString("gs","");
+                edt_mypage_agency_num.setText(code);
+                try {
+                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                    image_mypage_barcode.setImageBitmap(bitmap);
+                }catch (Exception e){
+
+                }
+            }
+        });
+        image_btn_cu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnNum=5;
+                image_btn_cu.setBackgroundResource(R.drawable.border);
+                image_btn_kt.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_sk.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_gs.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_lg.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_seven.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_emart.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_mini.setBackgroundResource(R.drawable.border_unclick);
+                txt_mypage_agency.setText("CU");
+                String code = sf.getString("cu","");
+                edt_mypage_agency_num.setText(code);
+                try {
+                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                    image_mypage_barcode.setImageBitmap(bitmap);
+                }catch (Exception e){
+
+                }
+            }
+        });
+        image_btn_seven.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnNum=6;
+                image_btn_seven.setBackgroundResource(R.drawable.border);
+                image_btn_kt.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_sk.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_gs.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_cu.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_lg.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_emart.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_mini.setBackgroundResource(R.drawable.border_unclick);
+                txt_mypage_agency.setText("세븐일레븐");
+                String code = sf.getString("seven","");
+                edt_mypage_agency_num.setText(code);
+                try {
+                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                    image_mypage_barcode.setImageBitmap(bitmap);
+                }catch (Exception e){
+
+                }
+            }
+        });
+        image_btn_emart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnNum=7;
+                image_btn_emart.setBackgroundResource(R.drawable.border);
+                image_btn_kt.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_sk.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_gs.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_cu.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_seven.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_lg.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_mini.setBackgroundResource(R.drawable.border_unclick);
+                txt_mypage_agency.setText("emart24");
+                String code = sf.getString("emart","");
+                edt_mypage_agency_num.setText(code);
+                try {
+                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                    image_mypage_barcode.setImageBitmap(bitmap);
+                }catch (Exception e){
+
+                }
+            }
+        });
+        image_btn_mini.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnNum=8;
+                image_btn_mini.setBackgroundResource(R.drawable.border);
+                image_btn_kt.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_sk.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_gs.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_cu.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_seven.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_emart.setBackgroundResource(R.drawable.border_unclick);
+                image_btn_lg.setBackgroundResource(R.drawable.border_unclick);
+                txt_mypage_agency.setText("MINISTOP");
+                String code = sf.getString("mini","");
+                edt_mypage_agency_num.setText(code);
+                try {
+                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
                     image_mypage_barcode.setImageBitmap(bitmap);
                 }catch (Exception e){
 
@@ -234,31 +358,63 @@ public class FragmentMypage extends Fragment {
             public void onClick(View v) {
                 try {
 
-                    if(agencyNum==1){
-                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,600,300);
+                    if(btnNum==1){
+                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
                         SharedPreferences.Editor editor = sf.edit();
                         String code = edt_mypage_agency_num.getText().toString();
                         editor.putString("skt",code);
                         editor.commit();
                         image_mypage_barcode.setImageBitmap(bitmap);
-                        txt_mypage_barcode.setText(code);
-                    }else if(agencyNum==2){
-                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,600,300);
+                    }else if(btnNum==2){
+                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
                         SharedPreferences.Editor editor = sf.edit();
                         String code = edt_mypage_agency_num.getText().toString();
                         editor.putString("kt",code);
                         editor.commit();
                         image_mypage_barcode.setImageBitmap(bitmap);
-                        txt_mypage_barcode.setText(code);
 
-                    }else if(agencyNum==3){
-                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,600,300);
+                    }else if(btnNum==3){
+                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
                         SharedPreferences.Editor editor = sf.edit();
                         String code = edt_mypage_agency_num.getText().toString();
                         editor.putString("lg",code);
                         editor.commit();
                         image_mypage_barcode.setImageBitmap(bitmap);
-                        txt_mypage_barcode.setText(code);
+                    }else if(btnNum==4){
+                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                        SharedPreferences.Editor editor = sf.edit();
+                        String code = edt_mypage_agency_num.getText().toString();
+                        editor.putString("gs",code);
+                        editor.commit();
+                        image_mypage_barcode.setImageBitmap(bitmap);
+                    }else if(btnNum==5){
+                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                        SharedPreferences.Editor editor = sf.edit();
+                        String code = edt_mypage_agency_num.getText().toString();
+                        editor.putString("cu",code);
+                        editor.commit();
+                        image_mypage_barcode.setImageBitmap(bitmap);
+                    }else if(btnNum==6){
+                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                        SharedPreferences.Editor editor = sf.edit();
+                        String code = edt_mypage_agency_num.getText().toString();
+                        editor.putString("seven",code);
+                        editor.commit();
+                        image_mypage_barcode.setImageBitmap(bitmap);
+                    }else if(btnNum==7){
+                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                        SharedPreferences.Editor editor = sf.edit();
+                        String code = edt_mypage_agency_num.getText().toString();
+                        editor.putString("emart",code);
+                        editor.commit();
+                        image_mypage_barcode.setImageBitmap(bitmap);
+                    }else if(btnNum==8){
+                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                        SharedPreferences.Editor editor = sf.edit();
+                        String code = edt_mypage_agency_num.getText().toString();
+                        editor.putString("mini",code);
+                        editor.commit();
+                        image_mypage_barcode.setImageBitmap(bitmap);
                     }
                 }catch (WriterException e){
 
@@ -269,7 +425,12 @@ public class FragmentMypage extends Fragment {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        
+    }
     public interface ClickListener{
+
         void onClick(View view, int position);
 
         void onLongClick(View view, int position);
