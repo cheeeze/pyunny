@@ -5,17 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.MainActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -92,6 +90,17 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
 
     }
 
+    private void imageDefault(){
+        Log.d("tttttt",txt_barcode_conv_num.getText().length()+"");
+        if(txt_barcode_conv_num.getText().length()<=0){
+            image_barcode_conv.setImageResource(R.drawable.empty_barcode);
+        }
+
+        if(txt_barcode_membership_num.getText().length()<=0){
+            image_barcode_membership.setImageResource(R.drawable.empty_barcode);
+        }
+    }
+
     private void init(){
         barcode_image_btn_gs.setBackgroundResource(R.drawable.border);
         barcode_image_btn_cu.setBackgroundResource(R.drawable.border_unclick);
@@ -117,6 +126,8 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
         }catch (Exception e){
 
         }
+
+        imageDefault();
     }
     @Override
     public void onClick(View v) {
@@ -253,6 +264,8 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
                 }
                 break;
         }
+
+        imageDefault();
     }
 
 
