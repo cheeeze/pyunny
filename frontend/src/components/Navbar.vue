@@ -2,9 +2,9 @@
   <div class="nav-wrapper">
     <div class="grad-bar"></div>
     <nav class="navbar">
-      <a href="#">
+      <router-link to="/">
         <img class="nav_logo" src="@/assets/images/mainlogo_removebg.png" alt="Logo" />
-      </a>
+      </router-link>
       <div class="menu-toggle" id="mobile-menu">
         <span class="bar"></span>
         <span class="bar"></span>
