@@ -381,7 +381,7 @@ export default {
             //console.log(url);
             tmptext = tmptext.replace(
               url,
-              `http://127.0.0.1:8080/api/upload/${this.imageNames[index]}`
+              `http://k02d1021.p.ssafy.io:8080/api/upload/${this.imageNames[index]}` //'https://k02d1021.p.ssafy.io:8080'
             );
             index++;
           }
