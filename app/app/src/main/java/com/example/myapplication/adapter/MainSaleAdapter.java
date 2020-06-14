@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.vo.Sale;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MainSaleAdapter extends RecyclerView.Adapter<MainSaleAdapter.ViewHolder>{
@@ -38,7 +39,8 @@ public class MainSaleAdapter extends RecyclerView.Adapter<MainSaleAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Sale sale = list.get(position);
         holder.sale_type.setText(sale.getType());
-        holder.sale_product_price.setText(sale.getProduct_price()+"원");
+        DecimalFormat format = new DecimalFormat("###,###");
+        holder.sale_product_price.setText(format.format(sale.getProduct_price())+"원");
         holder.sale_product_name.setText(sale.getProduct_name());
         Glide.with(mContext).load(sale.getProduct_image()).into(holder.sale_product_image);
         switch (sale.getFranchise_id()){
@@ -54,6 +56,7 @@ public class MainSaleAdapter extends RecyclerView.Adapter<MainSaleAdapter.ViewHo
                 holder.sale_franchise_image.setImageResource(R.drawable.seven);
                 break;
             case 3:
+            case 936:
                 holder.sale_franchise_image.setImageResource(R.drawable.emart);
                 break;
             case 4:
