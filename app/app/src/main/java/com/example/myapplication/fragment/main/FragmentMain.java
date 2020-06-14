@@ -2,7 +2,10 @@ package com.example.myapplication.fragment.main;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.JsonReader;
+import android.util.JsonToken;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,14 @@ import com.example.myapplication.adapter.MainSaleAdapter;
 import com.example.myapplication.vo.Sale;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class FragmentMain extends Fragment implements View.OnClickListener{
@@ -51,10 +62,153 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 
         View view = inflater.inflate(R.layout.fragment_main,container,false);
+        new restMethod().execute();
+
         mContext = view.getContext();
+
         init(view);
 
         return view;
+    }
+
+    public class restMethod extends AsyncTask<String, Void, String> {
+
+        String result;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Log.d("RESULT", "in DoinBackground");
+                //btnConvIdx 편의점별 id
+                //btnSaleProductIdx 0:세일품목 1:전체품목
+                URL url;
+                String urlString = "";
+                switch (btnSaleProductIdx){
+                    case 0:
+                        urlString = "http://k02d1021.p.ssafy.io:8080/api/sale/search/?keyword=&franchise=";
+                        break;
+                    case 1:
+                        urlString = "http://k02d1021.p.ssafy.io:8080/api/product/search/?keyword=&franchise=";
+                        break;
+                }
+
+                switch (btnConvIdx){
+                    case 0:
+                        urlString += "646,682,936";
+                        break;
+                    case 1: //gs 646
+                        urlString += "646";
+                        break;
+                    case 2: //cu 682
+                        urlString += "682";
+                        break;
+                    case 3: //7/11
+                        break;
+                    case 4: //emart 936
+                        urlString += "936";
+                        break;
+                    case 5: //ministop
+                        break;
+                }
+
+                Log.d("RESULT", urlString);
+                url = new URL(urlString);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setReadTimeout(3000);
+                conn.setConnectTimeout(3000);
+                conn.setDoInput(true);
+                conn.connect();
+
+                int responseStatusCode = conn.getResponseCode();
+
+                InputStream inputStream;
+                if(responseStatusCode == conn.HTTP_OK) {
+                    inputStream = conn.getInputStream();
+                }else{
+                    inputStream = conn.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream,"UTF-8");
+                JsonReader jsonReader = new JsonReader(inputStreamReader);
+                //jsonReader.beginObject();
+                jsonReader.beginArray();
+                saleList.clear();
+                while(jsonReader.hasNext()){
+                    int id;
+                    String name = "";
+                    int franchiseId = 0;
+                    String type ="";
+                    int price = 0;
+                    String image = "";
+
+                    jsonReader.beginObject();
+                    while(jsonReader.hasNext()){
+                        String title = jsonReader.nextName();
+                        if (title.equals("id")) {
+                            id = jsonReader.nextInt();
+                        } else if (title.equals("name")) {
+                            name = jsonReader.nextString();
+                        } else if (title.equals("type")) {
+                            type = jsonReader.nextString();
+                        } else if (title.equals("franchiseId")) {
+                            franchiseId = jsonReader.nextInt();
+                        } else if (title.equals("product")) {
+                            jsonReader.beginObject();
+                            while(jsonReader.hasNext()){
+                                title = jsonReader.nextName();
+                                if (title.equals("price")) {
+                                    price = jsonReader.nextInt();
+                                } else if (title.equals("image")) {
+                                    image = jsonReader.nextString();
+                                } else {
+                                    jsonReader.skipValue();
+                                }
+                            }
+                            jsonReader.endObject();
+                        } else if (title.equals("price")) {
+                            price = jsonReader.nextInt();
+                        } else if (title.equals("image")) {
+                            image = jsonReader.nextString();
+                        }else {
+                            jsonReader.skipValue();
+                        }
+                    }
+                    jsonReader.endObject();
+                    saleList.add(new Sale(franchiseId,type,name,price,image));
+                }
+                jsonReader.endArray();
+                jsonReader.close();
+
+
+                //check용 br string 출력
+//                BufferedReader br = new BufferedReader(inputStreamReader);
+//                StringBuilder sb = new StringBuilder();
+//                String line;
+//                while((line=br.readLine())!=null) {
+//                    sb.append(line);
+//                }
+//                br.close();
+                conn.disconnect();
+                //result = sb.toString();
+                //Log.d("RESULT", result);
+
+            } catch (Exception e) {
+                Log.d("ERROR", e.toString());
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("RESULT", saleList.toString());
+            //super.onPostExecute(s);
+            setBorderToButton();
+            //getSaleList();
+            mainSaleAdapter = new MainSaleAdapter(mContext,saleList);
+            recyclerView.setAdapter(mainSaleAdapter);
+            Log.d("RESULT", "onPostExecute");
+        }
     }
 
     private void init(View view){
@@ -71,12 +225,13 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
         recyclerView = view.findViewById(R.id.recyclerView_event);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext,2);
         recyclerView.setLayoutManager(mLayoutManager);
-        mainSaleAdapter = new MainSaleAdapter(mContext,saleList);
-
-        recyclerView.setAdapter(mainSaleAdapter);
-        if(btnConvIdx==0&&btnSaleProductIdx==0)
-            getSaleList();
-        setBorderToButton();
+        new restMethod().execute();
+//        mainSaleAdapter = new MainSaleAdapter(mContext,saleList);
+//
+//        recyclerView.setAdapter(mainSaleAdapter);
+//        if(btnConvIdx==0&&btnSaleProductIdx==0)
+//            getSaleList();
+//        setBorderToButton();
 
 
         btn_main_all.setOnClickListener(this);
@@ -99,56 +254,58 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
             case R.id.btn_main_all:
                 btnConvIdx=0;
                 btnSaleProductIdx=0;
-                setBorderToButton();
-                getSaleList();
-                refresh();
+                //new restMethod().execute();
+                //setBorderToButton();
+                //getSaleList();
+                //refresh();
                 break;
             case R.id.btn_main_gs:
                 btnConvIdx=1;
                 btnSaleProductIdx=0;
-                setBorderToButton();
-                getSaleList();
-                refresh();
+                //setBorderToButton();
+                //getSaleList();
+                //refresh();
                 break;
             case R.id.btn_main_cu:
                 btnConvIdx=2;
                 btnSaleProductIdx=0;
-                setBorderToButton();
-                getSaleList();
-                refresh();
+                //setBorderToButton();
+                //getSaleList();
+                //refresh();
                 break;
             case R.id.btn_main_seven:
                 btnConvIdx=3;
                 btnSaleProductIdx=0;
-                setBorderToButton();
-                getSaleList();
-                refresh();
+                //setBorderToButton();
+                //getSaleList();
+                //refresh();
                 break;
             case R.id.btn_main_emart:
                 btnConvIdx=4;
                 btnSaleProductIdx=0;
-                setBorderToButton();
-                getSaleList();
-                refresh();
+                //setBorderToButton();
+                //getSaleList();
+                //refresh();
                 break;
             case R.id.btn_main_ministop:
                 btnConvIdx=5;
                 btnSaleProductIdx=0;
-                setBorderToButton();
-                getSaleList();
-                refresh();
+               // setBorderToButton();
+                //getSaleList();
+                //refresh();
                 break;
             case R.id.btn_main_sale:
                 btnSaleProductIdx=0;
-                getSaleList();
-                refresh();
+                //getSaleList();
+                //refresh();
                 break;
             case R.id.btn_main_product:
                 btnSaleProductIdx=1;
-                getProductList();
-                refresh();
+                //getProductList();
+                //refresh();
                 break;
         }
+        new restMethod().execute();
     }
 
     private void setBorderToButton(){
