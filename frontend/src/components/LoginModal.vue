@@ -1,28 +1,23 @@
 <template>
-  <div
-    class="user-sign-modal"
-    id="container-wrap"
-    v-if="visible"
-    @click.self="handleWrapperClick"
-  >
-    <div class="container" id="container">
+  <div class="user-sign-modal" id="container-wrap" v-if="visible" @click.self="handleWrapperClick">
+    <div class="sign-container" id="sign-container">
       <!-- 회원가입 -->
       <div class="form-container sign-up-container">
         <form action="#">
           <button class="close-btn" @click="$emit('update:visible', !visible)">
-            <img src="@/assets/icons/x.png" alt="" height="20px" />
+            <img src="@/assets/icons/x.png" alt height="20px" />
           </button>
           <h1 style="color: black;">
             <img
               src="@/assets/images/mainlogo_removebg.png"
-              alt=""
+              alt
               height="65px"
               style="vertical-align: middle; padding-bottom: 4px;"
             />&nbsp;회원가입
           </h1>
-          <a href="#" class="social" style="margin-bottom: 5px;"
-            ><img src="@/assets/icons/kakao.png" alt="" width="95%;"
-          /></a>
+          <a href="#" class="social" style="margin-bottom: 5px;">
+            <img src="@/assets/icons/kakao.png" alt width="95%;" />
+          </a>
           <span>or use your email for registration</span>
           <div class="nick">
             <input type="text" class="nickname" placeholder="Nickname" />
@@ -39,21 +34,21 @@
           <h1 style="color: black;">
             <img
               src="@/assets/images/mainlogo_removebg.png"
-              alt=""
+              alt
               height="65px"
               style="vertical-align: middle; padding-bottom: 4px;"
             />&nbsp;로그인
           </h1>
           <div class="social-container">
-            <a href="#" class="social"
-              ><img src="@/assets/icons/kakaotalk.png" alt="" height="40px"
-            /></a>
-            <a href="#" class="social"
-              ><img src="@/assets/icons/google.png" alt="" height="40px"
-            /></a>
-            <a href="#" class="social"
-              ><img src="@/assets/icons/naver.png" alt="" height="40px"
-            /></a>
+            <a href="#" class="social">
+              <img src="@/assets/icons/kakaotalk.png" alt height="40px" />
+            </a>
+            <a href="#" class="social">
+              <img src="@/assets/icons/google.png" alt height="40px" />
+            </a>
+            <a href="#" class="social">
+              <img src="@/assets/icons/naver.png" alt height="40px" />
+            </a>
           </div>
           <span>or use your account</span>
           <input type="email" placeholder="Email" />
@@ -65,41 +60,34 @@
       <div class="overlay-container">
         <div class="overlay">
           <div class="overlay-panel overlay-left">
-            <h1>반갑습니다!<br />편의뽕입니다.</h1>
-            <img src="@/assets/images/shortlogo.png" alt="" height="130px;" />
+            <h1>
+              반갑습니다!
+              <br />편의뽕입니다.
+            </h1>
+            <img src="@/assets/images/shortlogo.png" alt height="130px;" />
             <p>
-              편의점에서 뽕! 뽑을 수 있는 통합 관리 서비스입니다.<br />
-              편의뽕 회원이라면<br />아래 로그인으로 이동해주세요😉↓↓
+              편의점에서 뽕! 뽑을 수 있는 통합 관리 서비스입니다.
+              <br />편의뽕 회원이라면
+              <br />아래 로그인으로 이동해주세요😉↓↓
             </p>
-            <button
-              class="ghost red-btn"
-              id="signIn"
-              @click="signInButtonActive"
-            >
-              로그인으로 이동
-            </button>
+            <button class="ghost red-btn" id="signIn" @click="signInButtonActive">로그인으로 이동</button>
           </div>
           <div class="overlay-panel overlay-right">
-            <button
-              class="close-btn"
-              @click="$emit('update:visible', !visible)"
-            >
-              <img src="@/assets/icons/x.png" alt="" height="20px" />
+            <button class="close-btn" @click="$emit('update:visible', !visible)">
+              <img src="@/assets/icons/x.png" alt height="20px" />
             </button>
-            <h1>안녕하세요!<br />편의뽕입니다.</h1>
-            <img src="@/assets/images/shortlogo.png" alt="" height="130px;" />
+            <h1>
+              안녕하세요!
+              <br />편의뽕입니다.
+            </h1>
+            <img src="@/assets/images/shortlogo.png" alt height="130px;" />
             <p>
-              편의점에서 뽕! 뽑을 수 있는 통합 관리 서비스입니다.<br />
-              아직 편의뽕 회원이 아니라면<br />아래 회원가입으로
+              편의점에서 뽕! 뽑을 수 있는 통합 관리 서비스입니다.
+              <br />아직 편의뽕 회원이 아니라면
+              <br />아래 회원가입으로
               이동해주세요😉↓↓
             </p>
-            <button
-              class="ghost red-btn"
-              id="signUp"
-              @click="signUpButtonActive"
-            >
-              회원가입으로 이동
-            </button>
+            <button class="ghost red-btn" id="signUp" @click="signUpButtonActive">회원가입으로 이동</button>
           </div>
         </div>
       </div>
@@ -114,22 +102,24 @@ export default {
     visible: {
       type: Boolean,
       require: true,
-      default: false,
-    },
+      default: false
+    }
   },
   methods: {
     signUpButtonActive() {
-      document.getElementById("container").classList.add("right-panel-active");
+      document
+        .getElementById("sign-container")
+        .classList.add("right-panel-active");
     },
     signInButtonActive() {
       document
-        .getElementById("container")
+        .getElementById("sign-container")
         .classList.remove("right-panel-active");
     },
     handleWrapperClick() {
       this.$emit("update:visible", false);
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
@@ -276,7 +266,7 @@ input {
   font-size: 9px;
 }
 
-.container {
+.sign-container {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -300,7 +290,7 @@ input {
   z-index: 2;
 }
 
-.container.right-panel-active .sign-in-container {
+.sign-container.right-panel-active .sign-in-container {
   transform: translateX(100%);
 }
 
@@ -311,7 +301,7 @@ input {
   z-index: 1;
 }
 
-.container.right-panel-active .sign-up-container {
+.sign-container.right-panel-active .sign-up-container {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
@@ -343,7 +333,7 @@ input {
   z-index: 100;
 }
 
-.container.right-panel-active .overlay-container {
+.sign-container.right-panel-active .overlay-container {
   transform: translateX(-100%);
 }
 
@@ -363,7 +353,7 @@ input {
   transition: transform 0.6s ease-in-out;
 }
 
-.container.right-panel-active .overlay {
+.sign-container.right-panel-active .overlay {
   transform: translateX(50%);
 }
 
@@ -386,7 +376,7 @@ input {
   transform: translateX(-20%);
 }
 
-.container.right-panel-active .overlay-left {
+.sign-container.right-panel-active .overlay-left {
   transform: translateX(0);
 }
 
@@ -395,7 +385,7 @@ input {
   transform: translateX(0);
 }
 
-.container.right-panel-active .overlay-right {
+.sign-container.right-panel-active .overlay-right {
   transform: translateX(20%);
 }
 
