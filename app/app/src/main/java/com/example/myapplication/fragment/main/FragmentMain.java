@@ -36,6 +36,7 @@ import com.google.android.material.tabs.TabLayout;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -86,7 +87,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
         @Override
         protected String doInBackground(String... strings) {
             try {
-                Log.d("RESULT", "in DoinBackground");
+                //Log.d("RESULT", "in DoinBackground");
                 //btnConvIdx 편의점별 id
                 //btnSaleProductIdx 0:세일품목 1:전체품목
                 URL url;
@@ -143,12 +144,16 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
                 jsonReader.beginArray();
                 saleList.clear();
                 while(jsonReader.hasNext()){
-                    int id;
+                    int id = 0;
                     String name = "";
                     int franchiseId = 0;
                     String type ="";
                     int price = 0;
                     String image = "";
+                    int productId = 0;
+                    String dumName = "";
+                    String dumImage = "";
+                    int dumPrice = 0;
 
                     jsonReader.beginObject();
                     while(jsonReader.hasNext()){
@@ -167,8 +172,10 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
                                 title = jsonReader.nextName();
                                 if (title.equals("price")) {
                                     price = jsonReader.nextInt();
-                                } else if (title.equals("image")) {
+                                } else if (title.equals("image") && jsonReader.peek() != JsonToken.NULL) {
                                     image = jsonReader.nextString();
+                                } else if(title.equals("id")){
+                                    productId = jsonReader.nextInt();
                                 } else {
                                     jsonReader.skipValue();
                                 }
@@ -176,14 +183,29 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
                             jsonReader.endObject();
                         } else if (title.equals("price")) {
                             price = jsonReader.nextInt();
-                        } else if (title.equals("image")) {
+                        } else if (title.equals("image") && jsonReader.peek() != JsonToken.NULL) {
                             image = jsonReader.nextString();
-                        }else {
+                        } else if (title.equals("dumImage") && jsonReader.peek() != JsonToken.NULL) {
+                            dumImage = jsonReader.nextString();
+                        } else if (title.equals("dumName") && jsonReader.peek() != JsonToken.NULL) {
+                            dumName = jsonReader.nextString();
+                        } else if (title.equals("dumPrice") && jsonReader.peek() != JsonToken.NULL) {
+                            dumPrice = jsonReader.nextInt();
+                        } else {
                             jsonReader.skipValue();
                         }
                     }
                     jsonReader.endObject();
-                    saleList.add(new Sale(franchiseId,type,name,price,image));
+                    //saleList.add(new Sale(franchiseId,type,name,price,image));
+                    switch (btnSaleProductIdx){
+                        case 0: //세일
+                            saleList.add(new Sale(id,productId,name,franchiseId,type,dumImage,dumName,dumPrice,name,price,image));
+                            break;
+                        case 1: //전체product
+                            saleList.add(new Sale(id,id,name,franchiseId,type,dumImage,dumName,dumPrice,name,price,image));
+                            break;
+                    }
+
                 }
                 jsonReader.endArray();
                 jsonReader.close();
@@ -210,7 +232,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
 
         @Override
         protected void onPostExecute(String s) {
-            Log.d("RESULT", saleList.toString());
+            //Log.d("RESULT", saleList.get(0).toString());
             //super.onPostExecute(s);
             setBorderToButton();
             //getSaleList();
