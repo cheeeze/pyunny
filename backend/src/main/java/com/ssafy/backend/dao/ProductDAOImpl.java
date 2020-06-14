@@ -154,4 +154,9 @@ public class ProductDAOImpl implements ProductDAO {
         return session.selectOne(ns + "getRatingcount", id);
     }
 
+    @Override
+    public List<Product> getSimilarProduct(Product p) {
+        return session.selectList(ns + "getSimilarProduct", p);
+    }
+
 }

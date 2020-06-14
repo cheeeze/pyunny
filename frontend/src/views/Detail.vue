@@ -104,7 +104,7 @@
       <!---->
       <!-- 유사 제품 -->
       <div class="sim-item">
-        <h2 class="subtitle">이 제품을 좋아한 사용자가 본 다른 제품</h2>
+        <h2 class="subtitle">이런건 어떠세요?</h2>
         <item-card></item-card>
       </div>
       <!---->

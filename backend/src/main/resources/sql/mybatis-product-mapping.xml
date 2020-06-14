@@ -79,6 +79,26 @@
         where id=#{value}
     </select>
 
+    <select id="getSimilarProduct" parameterType="product" resultType="product">
+        SELECT 
+        p.id id, 
+        p.name name, 
+        p.franchise_id franchise_id, 
+        p.price price, 
+        p.category category, 
+        p.image image,
+        p.description description 
+        FROM Rating r INNER JOIN Product p 
+        ON r.product_id = p.id
+        WHERE r.user_id in (SELECT user_id FROM Rating WHERE score = 1 AND product_id = #{id}) 
+        AND r.score = 1 
+        AND r.product_id != #{id} 
+        AND p.category = #{category}
+        GROUP BY p.id
+        ORDER BY COUNT(p.id) DESC
+        limit 20;
+    </select>
+
     <!-- 할인 ID로 가져오기 -->
     <select id="getSaleById" parameterType="int" resultType="sale">
         <include refid="select-sale"/>

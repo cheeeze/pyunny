@@ -21,6 +21,8 @@ public interface ProductService {
 
     Product getProductById(int id) throws Exception;
 
+    List<Product> getSimilarProduct(Product p);
+
     Sale getSaleById(int id) throws Exception;
 
     List<Product> getProductByName(String keyword) throws Exception;

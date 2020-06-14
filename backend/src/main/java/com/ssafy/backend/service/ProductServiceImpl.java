@@ -153,4 +153,9 @@ public class ProductServiceImpl implements ProductService {
         return dao.getRatingcount(id);
     }
 
+    @Override
+    public List<Product> getSimilarProduct(Product p) {
+        return dao.getSimilarProduct(p);
+    }
+
 }

@@ -63,6 +63,19 @@ public class ProductController {
         return new ResponseEntity(res, HttpStatus.OK);
     }
 
+    @GetMapping("/product/user")
+    public ResponseEntity<List<Product>> getSimilarProduct(@ModelAttribute Product p) {
+        System.out.println(p.toString());
+        try {
+
+            List<Product> res = service.getSimilarProduct(p);
+            return new ResponseEntity(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @GetMapping("/sale/{id}")
     public ResponseEntity getSaleById(@PathVariable int id) throws Exception {
         Sale res = service.getSaleById(id);
