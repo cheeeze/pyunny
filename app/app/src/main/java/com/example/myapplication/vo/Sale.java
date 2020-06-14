@@ -8,7 +8,7 @@ public class Sale {
     private String type;
     private String dum_image;
     private String dum_name;
-    private String dum_price;
+    private int dum_price;
     private String product_name;
     private int product_price;
     private String product_image;
@@ -21,7 +21,7 @@ public class Sale {
         this.product_image = product_image;
     }
 
-    public Sale(int id, int product_id, String name, int franchise_id, String type, String dum_image, String dum_name, String dum_price, String product_name, int product_price, String product_image) {
+    public Sale(int id, int product_id, String name, int franchise_id, String type, String dum_image, String dum_name, int dum_price, String product_name, int product_price, String product_image) {
         this.id = id;
         this.product_id = product_id;
         this.name = name;
@@ -91,11 +91,11 @@ public class Sale {
         this.dum_name = dum_name;
     }
 
-    public String getDum_price() {
+    public int getDum_price() {
         return dum_price;
     }
 
-    public void setDum_price(String dum_price) {
+    public void setDum_price(int dum_price) {
         this.dum_price = dum_price;
     }
 
