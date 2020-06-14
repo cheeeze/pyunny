@@ -122,28 +122,28 @@ public class CustomDialog {
         mapProductAdapter = new MapProductAdapter(mContext,storeProductList);
         recyclerView.setAdapter(mapProductAdapter);
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                intent = new Intent(mContext, ProductDetailActivity.class);
-                isProductDetailEnd=false;
-                getProductDetail(storeProductList.get(position).getProductId());
-                while (!isProductDetailEnd){
-                    try {
-
-                        Thread.sleep(500);
-                    }catch (Exception e){
-
-                    }
-                }
-                mContext.startActivity(intent);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
+//        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new ClickListener() {
+//
+//            @Override
+//            public void onClick(View view, int position) {
+//                intent = new Intent(view.getContext(), ProductDetailActivity.class);
+//                isProductDetailEnd=false;
+//                getProductDetail(storeProductList.get(position).getProductId());
+//                while (!isProductDetailEnd){
+//                    try {
+//                        Thread.sleep(500);
+//                    }catch (Exception e){
+//
+//                    }
+//                }
+//                mContext.startActivity(intent);
+//            }
+//
+//            @Override
+//            public void onLongClick(View view, int position) {
+//
+//            }
+//        }));
 //        final MainSaleAdapter mainSaleAdapter = new MainSaleAdapter(mContext,storeProductList);
 //        recyclerView.setAdapter(mainSaleAdapter);
 
@@ -195,7 +195,7 @@ public class CustomDialog {
 
                     conn.disconnect();
                     result = sb.toString();
-                    Log.d("productDetail",result);
+                    Log.d("testtesttest",result);
                     JSONObject product = new JSONObject(result);
                     int id = product.getInt("id");
                     String name = product.getString("name");
@@ -204,7 +204,9 @@ public class CustomDialog {
                     String category = product.getString("category");
                     String description = product.getString("description");
                     String image = product.getString("image");
+
                     intent.putExtra("id",id);
+                    Log.d("productDetail",id+" "+name+" "+franchiseId+" "+price+" "+category+" "+description+" "+image);
                     intent.putExtra("name",name);
                     intent.putExtra("franchiseId",franchiseId);
                     intent.putExtra("price",price);
@@ -219,9 +221,11 @@ public class CustomDialog {
                 }
 
 
+
             }
         });
         thread.start();
+        isProductDetailEnd=true;
     }
 
 

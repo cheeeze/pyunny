@@ -71,7 +71,7 @@ public class ProductDetailActivity extends Activity {
         String category = i.getStringExtra("category");
         String description = i.getStringExtra("description");
         String image = i.getStringExtra("image");
-        Log.d("productid",productId+"");
+        Log.d("productid",productId+" "+name+" "+franchiseId+" "+price+" "+category+" "+description+" "+image);
 
 
 
