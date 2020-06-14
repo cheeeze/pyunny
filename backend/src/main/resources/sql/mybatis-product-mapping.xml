@@ -95,6 +95,7 @@
         AND r.product_id != #{id} 
         AND p.category = #{category}
         GROUP BY p.id
+        ORDER BY COUNT(p.id) DESC
         limit 20;
     </select>
 
