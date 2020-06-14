@@ -148,4 +148,9 @@ public class ProductDAOImpl implements ProductDAO {
 
     }
 
+    @Override
+    public List<Product> getSimilarProduct(Product p) {
+        return session.selectList(ns + "getSimilarProduct", p);
+    }
+
 }

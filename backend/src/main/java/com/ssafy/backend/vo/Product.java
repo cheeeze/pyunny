@@ -6,17 +6,19 @@ public class Product {
     private int franchiseId;
     private int price;
     private String category;
+    private String description;
     private String image;
 
     public Product() {
     }
 
-    public Product(int id, String name, int franchiseId, int price, String category, String image) {
+    public Product(int id, String name, int franchiseId, int price, String category, String description, String image) {
         this.id = id;
         this.name = name;
         this.franchiseId = franchiseId;
         this.price = price;
         this.category = category;
+        this.description = description;
         this.image = image;
     }
 
@@ -68,10 +70,18 @@ public class Product {
         this.franchiseId = franchiseId;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
-        return "Product [category=" + category + ", franchiseId=" + franchiseId + ", id=" + id + ", image=" + image
-                + ", name=" + name + ", price=" + price + "]";
+        return "Product [category=" + category + ", description=" + description + ", franchiseId=" + franchiseId
+                + ", id=" + id + ", image=" + image + ", name=" + name + ", price=" + price + "]";
     }
 
 }

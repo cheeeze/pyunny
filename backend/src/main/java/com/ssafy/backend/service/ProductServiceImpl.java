@@ -147,4 +147,9 @@ public class ProductServiceImpl implements ProductService {
         return dao.getCommentById(id);
     }
 
+    @Override
+    public List<Product> getSimilarProduct(Product p) {
+        return dao.getSimilarProduct(p);
+    }
+
 }

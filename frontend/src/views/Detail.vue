@@ -9,18 +9,8 @@
         </div>
         <div class="item-info">
           <div class="item-convs">
-            <img
-              id="item-conv"
-              v-if="product.franchiseId == 646"
-              src="@/assets/icons/gs25.png"
-              alt
-            />
-            <img
-              id="item-conv"
-              v-if="product.franchiseId == 682"
-              src="@/assets/icons/cu.png"
-              alt
-            />
+            <img id="item-conv" v-if="product.franchiseId == 646" src="@/assets/icons/gs25.png" alt />
+            <img id="item-conv" v-if="product.franchiseId == 682" src="@/assets/icons/cu.png" alt />
             <img
               id="item-conv"
               v-if="product.franchiseId == 936"
@@ -44,12 +34,8 @@
           <h2 id="item-price">
             {{ addComma(product.price) }}원
             <span style="margin-left: 15px;">
-              <b-badge v-if="product.category.includes('1＋1')" variant="info"
-                >1 + 1</b-badge
-              >
-              <b-badge v-if="product.category.includes('2＋1')" variant="info"
-                >2 + 1</b-badge
-              >
+              <b-badge v-if="product.category.includes('1＋1')" variant="info">1 + 1</b-badge>
+              <b-badge v-if="product.category.includes('2＋1')" variant="info">2 + 1</b-badge>
             </span>
           </h2>
           <!-- <h3 id="item-origin-price">
@@ -87,11 +73,7 @@
       <!-- 한줄평 부분 || 채은이를 위한 선물 -->
       <div class="item-comment">
         <h2 class="subtitle">한줄평</h2>
-        <input
-          id="item-comment"
-          type="text"
-          placeholder="한줄평을 적어보세요."
-        />
+        <input id="item-comment" type="text" placeholder="한줄평을 적어보세요." />
         <button id="comment-btn">입력</button>
         <!-- 한줄평 모음 -->
         <div class="comments">
@@ -104,25 +86,14 @@
               <button id="reply-btn" @click="reply = false">답글 달기</button>
             </div>
             <div class="after-reply" v-if="!reply">
-              <img
-                src="@/assets/icons/rereply.png"
-                alt
-                height="26px"
-                width="28px"
-              />
-              <input
-                type="text"
-                placeholder="답글을 작성해볼까요?"
-                style="height:30px; width: 80%"
-              />
+              <img src="@/assets/icons/rereply.png" alt height="26px" width="28px" />
+              <input type="text" placeholder="답글을 작성해볼까요?" style="height:30px; width: 80%" />
               <button id="reply-btn" style="color: #47b8e0">게시</button>
               <button
                 id="reply-btn"
                 style="color: #ff7473; margin-left: 2%;"
                 @click="reply = true"
-              >
-                취소
-              </button>
+              >취소</button>
             </div>
             <!-- 대댓 모음 -->
             <div class="rereply">
@@ -143,15 +114,13 @@
       <!--한줄평 끝-->
       <!-- 제품 레시피 -->
       <div class="item-recipe">
-        <h2 class="subtitle" style="font-size: 1.4rem;">
-          이 제품을 사용한 레시피가 궁금하다면?
-        </h2>
+        <h2 class="subtitle" style="font-size: 1.4rem;">이 제품을 사용한 레시피가 궁금하다면?</h2>
         <a href style="font-size: 1.3rem; margin-left:65%;">→ 레시피 검색</a>
       </div>
       <!---->
       <!-- 유사 제품 -->
       <div class="sim-item">
-        <h2 class="subtitle">이 제품을 좋아한 사용자가 본 다른 제품</h2>
+        <h2 class="subtitle">이런건 어떠세요?</h2>
         <item-card></item-card>
       </div>
       <!---->
@@ -167,7 +136,7 @@ import http from "../http-common";
 export default {
   components: {
     Navbar,
-    ItemCard,
+    ItemCard
   },
   data() {
     return {
@@ -185,8 +154,8 @@ export default {
         id: 0,
         image: "",
         name: "",
-        price: 0,
-      },
+        price: 0
+      }
     };
   },
   methods: {
@@ -229,7 +198,7 @@ export default {
     },
     addComma(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
+    }
   },
   watch: {
     like: function() {
@@ -237,19 +206,19 @@ export default {
     },
     dislike: function() {
       this.value = (this.like / (this.like + this.dislike)) * 100;
-    },
+    }
   },
   mounted() {
     http
       .get("/api/product/" + this.$route.params.id)
-      .then((res) => {
+      .then(res => {
         this.product = res.data;
         console.log(this.product);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
-  },
+  }
 };
 </script>
 

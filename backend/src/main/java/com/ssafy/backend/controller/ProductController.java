@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -59,6 +60,19 @@ public class ProductController {
     public ResponseEntity getProductById(@PathVariable int id) throws Exception {
         Product res = service.getProductById(id);
         return new ResponseEntity(res, HttpStatus.OK);
+    }
+
+    @GetMapping("/product/user")
+    public ResponseEntity<List<Product>> getSimilarProduct(@ModelAttribute Product p) {
+        System.out.println(p.toString());
+        try {
+
+            List<Product> res = service.getSimilarProduct(p);
+            return new ResponseEntity(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/sale/{id}")
