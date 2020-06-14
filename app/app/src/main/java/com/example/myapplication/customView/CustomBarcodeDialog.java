@@ -112,7 +112,7 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
         txt_barcode_conv_num.setText(code);
 
         try {
-            Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,800,300);
+            Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,700,300);
             image_barcode_conv.setImageBitmap(bitmap);
         }catch (Exception e){
 
@@ -121,7 +121,7 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
         txt_barcode_membership.setText("KT");
         txt_barcode_membership_num.setText(code);
         try {
-            Bitmap bitmap = encodeAsBitmap(txt_barcode_membership_num.getText().toString(), BarcodeFormat.CODE_128,800,300);
+            Bitmap bitmap = encodeAsBitmap(txt_barcode_membership_num.getText().toString(), BarcodeFormat.CODE_128,700,300);
             image_barcode_membership.setImageBitmap(bitmap);
         }catch (Exception e){
 
@@ -144,7 +144,7 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
                 txt_barcode_conv_num.setText(code);
 
                 try {
-                    Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,800,300);
+                    Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,700,300);
                     image_barcode_conv.setImageBitmap(bitmap);
                 }catch (Exception e){
 
@@ -153,7 +153,7 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
                 txt_barcode_membership.setText("KT");
                 txt_barcode_membership_num.setText(code);
                 try {
-                    Bitmap bitmap = encodeAsBitmap(txt_barcode_membership_num.getText().toString(), BarcodeFormat.CODE_128,800,300);
+                    Bitmap bitmap = encodeAsBitmap(txt_barcode_membership_num.getText().toString(), BarcodeFormat.CODE_128,700,300);
                     image_barcode_membership.setImageBitmap(bitmap);
                 }catch (Exception e){
 
@@ -170,7 +170,7 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
                 txt_barcode_conv_num.setText(code);
 
                 try {
-                    Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,800,300);
+                    Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,700,300);
                     image_barcode_conv.setImageBitmap(bitmap);
                 }catch (Exception e){
 
@@ -196,7 +196,7 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
                 txt_barcode_conv_num.setText(code);
 
                 try {
-                    Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,800,300);
+                    Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,700,300);
                     image_barcode_conv.setImageBitmap(bitmap);
                 }catch (Exception e){
 
@@ -222,7 +222,7 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
                 txt_barcode_conv_num.setText(code);
 
                 try {
-                    Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,800,300);
+                    Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,700,300);
                     image_barcode_conv.setImageBitmap(bitmap);
                 }catch (Exception e){
 
@@ -231,7 +231,7 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
                 txt_barcode_membership.setText("KT");
                 txt_barcode_membership_num.setText(code);
                 try {
-                    Bitmap bitmap = encodeAsBitmap(txt_barcode_membership_num.getText().toString(), BarcodeFormat.CODE_128,800,300);
+                    Bitmap bitmap = encodeAsBitmap(txt_barcode_membership_num.getText().toString(), BarcodeFormat.CODE_128,700,300);
                     image_barcode_membership.setImageBitmap(bitmap);
                 }catch (Exception e){
 
@@ -248,7 +248,7 @@ public class CustomBarcodeDialog extends Dialog implements View.OnClickListener,
                 txt_barcode_conv_num.setText(code);
 
                 try {
-                    Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,800,300);
+                    Bitmap bitmap = encodeAsBitmap(txt_barcode_conv_num.getText().toString(), BarcodeFormat.CODE_128,700,300);
                     image_barcode_conv.setImageBitmap(bitmap);
                 }catch (Exception e){
 

@@ -1,13 +1,16 @@
 package com.example.myapplication.fragment.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.JsonToken;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,8 +26,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.ProductDetailActivity;
 import com.example.myapplication.adapter.MainPagerAdapter;
 import com.example.myapplication.adapter.MainSaleAdapter;
+import com.example.myapplication.customView.CustomDialog;
 import com.example.myapplication.vo.Sale;
 import com.google.android.material.tabs.TabLayout;
 
@@ -58,6 +63,10 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
     private RecyclerView recyclerView;
     private MainSaleAdapter mainSaleAdapter;
 
+    private boolean isProductDetailEnd;
+
+
+    private Intent intent;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 
@@ -241,6 +250,29 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
         btn_main_emart.setOnClickListener(this);
         btn_main_ministop.setOnClickListener(this);
 
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                intent = new Intent(mContext, ProductDetailActivity.class);
+                isProductDetailEnd=false;
+                Log.d("TTTTT",saleList.get(position).getProduct_id()+"");
+                getProductDetail(saleList.get(position).getProduct_id());
+                while (!isProductDetailEnd){
+                    try {
+
+                        Thread.sleep(500);
+                    }catch (Exception e){
+
+                    }
+                }
+                mContext.startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         btn_main_sale.setOnClickListener(this);
         btn_main_product.setOnClickListener(this);
 
@@ -485,5 +517,121 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
         return saleList;
     }
 
+
+    public interface ClickListener{
+        void onClick(View view, int position);
+
+        void onLongClick(View view, int position);
+    }
+
+    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
+        private GestureDetector gestureDetector;
+        private ClickListener clickListener;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener){
+            this.clickListener=clickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(),e.getY());
+                    if(child!=null&&clickListener!=null){
+                        clickListener.onLongClick(child,recyclerView.getChildAdapterPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+            View child = rv.findChildViewUnder(e.getX(),e.getY());
+            if(child!=null&&clickListener!=null&&gestureDetector.onTouchEvent(e)){
+                clickListener.onClick(child,rv.getChildAdapterPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+    }
+
+    private void getProductDetail(final int productId){
+        Thread thread = new Thread(new Runnable() {
+            String result;
+            @Override
+            public void run() {
+                try{
+                    URL url = new URL("http://k02d1021.p.ssafy.io:8080/api/product/"+productId);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setReadTimeout(3000);
+                    conn.setConnectTimeout(3000);
+                    //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
+                    conn.setDoInput(true);
+
+                    conn.setUseCaches(false);
+                    conn.connect();
+
+                    int responseStatusCode = conn.getResponseCode();
+                    Log.i("CHECK", "thread run");
+                    InputStream inputStream;
+                    if(responseStatusCode == conn.HTTP_OK) {
+                        inputStream = conn.getInputStream();
+                    }else{
+                        inputStream = conn.getErrorStream();
+                    }
+                    Log.d("REQEUSTMETHOD",conn.getRequestMethod());
+
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while((line=bufferedReader.readLine())!=null) {
+                        sb.append(line);
+                    }
+                    bufferedReader.close();
+
+
+                    conn.disconnect();
+                    result = sb.toString();
+                    Log.d("productDetail",result);
+                    JSONObject product = new JSONObject(result);
+                    int id = product.getInt("id");
+                    String name = product.getString("name");
+                    int franchiseId = product.getInt("franchiseId");
+                    int price = product.getInt("price");
+                    String category = product.getString("category");
+                    String description = product.getString("description");
+                    String image = product.getString("image");
+                    intent.putExtra("id",id);
+                    intent.putExtra("name",name);
+                    intent.putExtra("franchiseId",franchiseId);
+                    intent.putExtra("price",price);
+                    intent.putExtra("category",category);
+                    intent.putExtra("description",description);
+                    intent.putExtra("image",image);
+                    isProductDetailEnd=true;
+
+                } catch(Exception e){
+                    result = e.toString();
+                    Log.d("ERROR", e.toString());
+                }
+
+
+            }
+        });
+        thread.start();
+    }
 
 }
