@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:weightSum="7.2"
+    android:weightSum="7"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,155 +45,158 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.5"
-        android:weightSum="5"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:weightSum="3"
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:weightSum="3"
-            android:orientation="horizontal">
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/sk"
-                android:scaleType="centerInside"
-                android:id="@+id/image_btn_sk"
-                android:padding="1dp"
-                android:background="#00000000" />
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/kt"
-                android:scaleType="centerInside"
-                android:id="@+id/image_btn_kt"
-                android:padding="1dp"
-                android:background="#00000000"/>
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/lg"
-                android:scaleType="centerInside"
-                android:id="@+id/image_btn_lg"
-                android:padding="1dp"
-                android:background="#00000000"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:weightSum="4.2"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.2"
-                android:weightSum="5"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="통신사"
-                    android:gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:id="@+id/txt_mypage_agency"/>
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:id="@+id/edt_mypage_agency_num"
-                    android:gravity="center"
-                    android:hint="멤버쉽 번호를 입력하세요."
-                    android:inputType="number"/>
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:id="@+id/btn_mypage_add_barcode"
-                    android:src="@drawable/gifticon_add"
-                    android:scaleType="centerInside"
-                    android:background="#00000000"/>
-            </LinearLayout>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:id="@+id/image_mypage_barcode"/>
-
-        </LinearLayout>
-
-
+            android:src="@drawable/sk"
+            android:scaleType="centerInside"
+            android:id="@+id/image_btn_sk"
+            android:padding="1dp"
+            android:background="#00000000" />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/kt"
+            android:scaleType="centerInside"
+            android:id="@+id/image_btn_kt"
+            android:padding="1dp"
+            android:background="#00000000"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/lg"
+            android:scaleType="centerInside"
+            android:id="@+id/image_btn_lg"
+            android:padding="1dp"
+            android:background="#00000000"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.2"
-        android:orientation="vertical"
-        android:weightSum="3">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:text="번호"
-            android:gravity="center_horizontal"
-            android:id="@+id/txt_mypage_barcode"/>
-
-        <TextView
-            android:id="@+id/txt_mypage_discount_info"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2.5"
-            android:paddingLeft="5dp"
-            android:textSize="10dp"
-            android:text="할인정보" />
-
+        android:layout_weight="0.5"
+        android:weightSum="5"
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/gs25"
+            android:scaleType="centerInside"
+            android:id="@+id/image_btn_gs"
+            android:padding="3dp"
+            android:background="#00000000" />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/cu"
+            android:scaleType="centerInside"
+            android:id="@+id/image_btn_cu"
+            android:padding="3dp"
+            android:background="#00000000"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/seven"
+            android:scaleType="centerInside"
+            android:id="@+id/image_btn_seven"
+            android:padding="3dp"
+            android:background="#00000000"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/emart"
+            android:scaleType="centerInside"
+            android:id="@+id/image_btn_emart"
+            android:padding="3dp"
+            android:background="#00000000"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ministop"
+            android:scaleType="centerInside"
+            android:id="@+id/image_btn_mini"
+            android:padding="3dp"
+            android:background="#00000000"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.5"
-        android:orientation="vertical"
-        android:weightSum="6.4">
+        android:layout_weight="0.6"
+        android:weightSum="5"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="통신사"
+            android:gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:id="@+id/txt_mypage_agency"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:id="@+id/edt_mypage_agency_num"
+            android:gravity="center"
+            android:hint="멤버쉽 번호를 입력하세요."
+            android:inputType="number"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/btn_mypage_add_barcode"
+            android:src="@drawable/gifticon_add"
+            android:scaleType="centerInside"
+            android:background="#00000000"/>
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:id="@+id/image_mypage_barcode"
+        android:scaleType="center"
+        android:background="#ffffff"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:orientation="horizontal"
+        android:weightSum="5">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="기프티콘"
+            android:gravity="center" />
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.4"
-            android:orientation="horizontal"
-            android:weightSum="5">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="기프티콘"
-                android:gravity="center" />
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"/>
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/gifticon_add"
-                android:background="#00000000"
-                android:scaleType="centerInside"
-                android:id="@+id/btn_mypage_add_gifticon"/>
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:id="@+id/recyclerView_mypage_gifticon"/>
-
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/gifticon_add"
+            android:background="#00000000"
+            android:scaleType="centerInside"
+            android:id="@+id/btn_mypage_add_gifticon"/>
 
     </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.8"
+        android:id="@+id/recyclerView_mypage_gifticon"/>
 
 
 </LinearLayout>

@@ -2,12 +2,12 @@
   <div>
     <navbar></navbar>
     <div style="padding:0.7em;">
-      <div style="margin-top:40px;">
-        <button class="back" @click="niceback">
-          <img src="@/assets/icons/back.png" width="50px;" />
+      <div style="margin-top:60px; display: flex; margin-left:20px;">
+        <button class="back" @click="niceback" style="float: left;">
+          <img src="@/assets/icons/back.png" width="25px;" />
         </button>
       </div>
-      <div id="search" class="box_search" style="margin-top:100px;">
+      <div id="search" class="box_search" style="margin-top:15px;">
         <img
           src="@/assets/icons/x.png/"
           v-show="recommShow"
@@ -30,10 +30,13 @@
       </div>
 
       <div>
-        <select v-model="selected" style="margin-bottom:20px;" @onchange="orderChange">
+        <select v-model="selected" style="margin-bottom:20px;margin-right: 40px;">
           <option>인기순</option>
           <option>최신순</option>
         </select>
+        <v-btn class="ma-2" tile outlined color="success" @click="recipeCreate">
+          <v-icon left>mdi-pencil</v-icon>작성하기
+        </v-btn>
       </div>
 
       <div class="recipe-list-area">
@@ -94,6 +97,7 @@ export default {
       recommShow: false,
       keyword: "",
       selected: "최신순",
+      userId: 0,
 
       cards: [
         /* {
@@ -122,6 +126,10 @@ export default {
   },
   mounted() {
     this.recentOrder();
+
+    if (sessionStorage.getItem("user") != null) {
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+    }
   },
   methods: {
     recomm() {
@@ -131,7 +139,12 @@ export default {
         this.keyword = "";
       }
     },
-    orderChange() {},
+    recipeCreate() {
+      if (this.userId == 0) {
+        return alert("로그인 후 이용가능합니다.");
+      }
+      this.$router.push("/recipecreate/");
+    },
     popularityOrder() {
       Axios.getRecipePopularOrdered(
         res => {

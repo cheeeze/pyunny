@@ -13,7 +13,7 @@ const mypage = (data, success, error) => {
 
 const login = (data, success, error) => {
     http
-        .post('/api/login/', data)
+        .post('/api/user/login/', data)
         .then((res) => {
             success(res)
         })
@@ -24,7 +24,7 @@ const login = (data, success, error) => {
 
 const insertUser = (data, success, error) => {
     http
-        .post('/api/user/', data)
+        .post('/api/user/user/', data)
         .then((res) => {
             success(res)
         })

@@ -5,12 +5,12 @@
 
 <mapper namespace="MembershipMapper">
 
-	<resultMap type="com.ssafy.backend.vo.Membership" id="resultMembership">
-		<id column="id" property="id"/>
+    <resultMap type="membership" id="resultMembership">
+        <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
-		<result column="type" property="type"/>
-		<result column="number" property="number"/>
-	</resultMap>
+        <result column="type" property="type"/>
+        <result column="number" property="number"/>
+    </resultMap>
 
     <sql id="select-all">
         SELECT
@@ -25,30 +25,33 @@
     <select id="selectAllMembership" resultMap="resultMembership">
         <include refid="select-all"/>
     </select>
-    
+
     <!-- id로 특정한 하나의 상세 -->
     <select id="selectMembership" parameterType="int" resultMap="resultMembership">
         <include refid="select-all"/>
         WHERE id=#{value}
     </select>
 
-	
-	<insert id="insertMembership"  parameterType="membership" useGeneratedKeys="true" keyProperty="id">
+
+    <select id="getMembershipByUserId" parameterType="int" resultType="membership">
+        <include refid="select-all"/>
+        where user_id=#{value}
+    </select>
+
+
+    <insert id="insertMembership" parameterType="membership" useGeneratedKeys="true" keyProperty="id">
 		INSERT into Membership(user_id, type, number)
-        VALUES(#{user_id}, #{type}, #{number})
-	</insert>
+        VALUES(#{userId}, #{type}, #{number})
+    </insert>
 
     <update id="updateMembership" parameterType="membership">
         UPDATE Membership
-        SET
-            user_id=#{user_id},
-            type=#{type},
-            number=#{number}
+        SET user_id=#{userId}, type=#{type}, number=#{number}
         WHERE id=#{id}
     </update>
 
-	<delete id="deleteMembership" parameterType="int">
+    <delete id="deleteMembership" parameterType="int">
 		delete from Membership where id=#{value}
-	</delete> 
-	
+    </delete>
+
 </mapper>

@@ -17,27 +17,32 @@ public class MembershipDAOImpl implements MembershipDAO {
 
     @Override
     public List<Membership> getAllMembership() throws Exception {
-        return sqlSession.selectList(ns+"selectAllMembership");
+        return sqlSession.selectList(ns + "selectAllMembership");
     }
 
     @Override
     public Membership getMembershipById(int id) throws Exception {
-        return sqlSession.selectOne(ns+"selectMembership");
+        return sqlSession.selectOne(ns + "selectMembership", id);
     }
 
     @Override
     public void insertMembership(Membership membership) throws Exception {
-        sqlSession.insert(ns+"insertMembership", membership);
+        sqlSession.insert(ns + "insertMembership", membership);
     }
 
     @Override
     public void updateMembership(Membership membership) throws Exception {
-        sqlSession.update(ns+"updateMembership", membership);
+        sqlSession.update(ns + "updateMembership", membership);
     }
 
     @Override
     public void deleteMembership(int id) throws Exception {
-        sqlSession.delete(ns+"deleteMembership",id);
+        sqlSession.delete(ns + "deleteMembership", id);
     }
-    
+
+    @Override
+    public List<Membership> getMembershipByUserId(int userId) throws Exception {
+        return sqlSession.selectList(ns + "getMembershipByUserId", userId);
+    }
+
 }

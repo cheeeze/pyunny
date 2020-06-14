@@ -2,13 +2,9 @@
   <div class="nav-wrapper">
     <div class="grad-bar"></div>
     <nav class="navbar">
-      <a href="#">
-        <img
-          class="nav_logo"
-          src="@/assets/images/mainlogo_removebg.png"
-          alt="Logo"
-        />
-      </a>
+      <router-link to="/">
+        <img class="nav_logo" src="@/assets/images/mainlogo_removebg.png" alt="Logo" />
+      </router-link>
       <div class="menu-toggle" id="mobile-menu">
         <span class="bar"></span>
         <span class="bar"></span>
@@ -24,11 +20,16 @@
         <li class="nav-item">
           <router-link to="/recipe">Recipe</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="userId!=0">
           <router-link to="/mypage/">My Page</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="userId==0">
           <button id="login-btn" @click="handleClickButton">
+            <img src="@/assets/icons/sign-in.svg" alt width="22px" />
+          </button>
+        </li>
+        <li class="nav-item" v-if="userId!=0">
+          <button id="login-btn" @click="logout">
             <img src="@/assets/icons/logout.png" alt width="22px" />
           </button>
         </li>
@@ -39,10 +40,7 @@
         </li>
       </ul>
     </nav>
-    <user-sign-modal
-      :visible.sync="visible"
-      style="z-index: 80;"
-    ></user-sign-modal>
+    <user-sign-modal :visible.sync="visible" style="z-index: 80;"></user-sign-modal>
     <barcode-modal :barcode.sync="barcode"></barcode-modal>
   </div>
 </template>
@@ -69,11 +67,19 @@ export default {
     return {
       visible: false,
       barcode: false,
+      userId: 0
     };
   },
   components: {
     UserSignModal,
-    BarcodeModal,
+    BarcodeModal
+  },
+  mounted() {
+    //console.log(sessionStorage.getItem("user"));
+    if (sessionStorage.getItem("user") != null) {
+      //console.log("dd");
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+    }
   },
   methods: {
     handleClickButton() {
@@ -81,10 +87,21 @@ export default {
       console.log("hello");
     },
     handleClickBarcode() {
+      if (this.userId == 0) {
+        return alert("로그인후 이용가능합니다.");
+      }
+
       this.barcode = !this.barcode;
-      console.log("hello");
+      //console.log("hello");
     },
-  },
+    logout() {
+      sessionStorage.removeItem("user");
+      this.userId = 0;
+      if (this.$route.path != "/") {
+        this.$router.push("/");
+      }
+    }
+  }
 };
 </script>
 
@@ -136,7 +153,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr 3fr;
   align-items: center;
-  height: 50px;
+  height: 60px;
   overflow: hidden;
   font-family: "Lato", "Arial", sans-serif;
 }

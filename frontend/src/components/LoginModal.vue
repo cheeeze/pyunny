@@ -15,17 +15,19 @@
               style="vertical-align: middle; padding-bottom: 4px;"
             />&nbsp;회원가입
           </h1>
-          <a href="#" class="social" style="margin-bottom: 5px;">
+          <!-- <a href="#" class="social" style="margin-bottom: 5px;">
             <img src="@/assets/icons/kakao.png" alt width="95%;" />
-          </a>
+          </a>-->
           <span>or use your email for registration</span>
-          <div class="nick">
+          <!-- <div class="nick">
             <input type="text" class="nickname" placeholder="Nickname" />
             <input type="submit" value="랜덤" class="random_btn" />
-          </div>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button class="red-btn">회원가입</button>
+          </div>-->
+          <input type="text" v-model="email" placeholder="Email" />
+          <input type="text" v-model="name" placeholder="Name" />
+          <input type="text" v-model="nickname" placeholder="Nickname" />
+          <input type="password" v-model="password" placeholder="Password" />
+          <button class="red-btn" @click="register">회원가입</button>
         </form>
       </div>
       <!-- 로그인 -->
@@ -40,21 +42,21 @@
             />&nbsp;로그인
           </h1>
           <div class="social-container">
-            <a href="#" class="social">
-              <img src="@/assets/icons/kakaotalk.png" alt height="40px" />
+            <!--<a href="#" class="social">
+              <img src="@/assets/icons/kakaotalk.png" @click="KakaoLogin" alt height="40px" />
             </a>
-            <a href="#" class="social">
-              <img src="@/assets/icons/google.png" alt height="40px" />
-            </a>
-            <a href="#" class="social">
-              <img src="@/assets/icons/naver.png" alt height="40px" />
-            </a>
+             <a href="#" class="social"
+              ><img src="@/assets/icons/google.png" alt="" height="40px"
+            /></a>
+            <a href="#" class="social"
+              ><img src="@/assets/icons/naver.png" alt="" height="40px"
+            /></a>-->
           </div>
           <span>or use your account</span>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+          <input type="email" v-model="email" placeholder="Email" />
+          <input type="password" v-model="password" placeholder="Password" />
           <a href="#">Forgot your password?</a>
-          <button class="red-btn">로그인</button>
+          <button class="red-btn" @click="login">로그인</button>
         </form>
       </div>
       <div class="overlay-container">
@@ -96,6 +98,9 @@
 </template>
 
 <script>
+import Kakao from "@/kakao.js";
+import Axios from "@/api/Useraxios.js";
+
 export default {
   name: "user-sign-modal",
   props: {
@@ -105,19 +110,157 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      kakaoresult: "",
+      kakaoauthObj: "",
+      kakaoinfo: {
+        email: "",
+        nickname: ""
+      },
+      email: "",
+      nickname: "",
+      password: "",
+      name: ""
+    };
+  },
+  created() {
+    Kakao.cleanup();
+    Kakao.init("b6984aaf3f2299bd8bbb050ffba843ca");
+  },
   methods: {
     signUpButtonActive() {
       document
         .getElementById("sign-container")
         .classList.add("right-panel-active");
+      this.email = "";
+      this.name = "";
+      this.nickname = "";
+      this.password = "";
     },
     signInButtonActive() {
       document
         .getElementById("sign-container")
         .classList.remove("right-panel-active");
+
+      this.email = "";
+      this.name = "";
+      this.nickname = "";
+      this.password = "";
     },
     handleWrapperClick() {
       this.$emit("update:visible", false);
+    },
+    register() {
+      let data = {
+        email: this.email,
+        name: this.name,
+        nicknams: this.nickname,
+        password: this.password
+      };
+      Axios.insertUser(
+        data,
+        res => {
+          console.log(res);
+          alert("환영합니다! 로그인하러 고~");
+          this.signInButtonActive();
+          this.email = "";
+          this.name = "";
+          this.nickname = "";
+          this.password = "";
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    },
+    login() {
+      let data = {
+        email: this.email,
+        name: this.name,
+        nicknams: this.nickname,
+        password: this.password
+      };
+
+      console.log(data);
+
+      Axios.login(
+        data,
+        res => {
+          console.log(res.data);
+          //this.visible = false;
+          if (res.data.id == null) {
+            this.email = "";
+            this.password = "";
+            return alert("아이디나 비밀번호가 일치하지 않습니다.");
+          }
+          this.$emit("update:visible", false);
+          sessionStorage.setItem("user", res.data.id);
+          /* let se = JSON.parse(sessionStorage.getItem("user"));
+          console.log(se);
+          if (se != null) {
+            console.log("dddd");
+          } else {
+            console.log("no");
+          } */
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    },
+    KakaoLogin() {
+      if (localStorage.getItem("JWT_token"))
+        return alert("이미 로그인 되어있습니다.");
+      this.loginWithKakao();
+    },
+    loginWithKakao() {
+      console.log("login begin");
+      console.log(Kakao);
+      Kakao.Auth.login({
+        success: async authObj => {
+          console.log(authObj);
+          await this.kakaoApiRequest(authObj);
+        },
+        fail: function(err) {
+          console.log("kakao login error");
+          console.log(err);
+        }
+      });
+    },
+    kakaoApiRequest(authObj) {
+      Kakao.API.request({
+        url: "/v2/user/me",
+        success: async res => {
+          console.log("userinfo");
+          console.log(res);
+          let kakao = res.kakao_account.email;
+          let nickname = res.properties.nickname;
+          let profileImg = res.properties.profile_image;
+          // alert(JSON.stringify(authObj).substring(0,5));
+          let password = authObj.access_token.substring(0, 15);
+          let data = { kakao, nickname, password, profileImg };
+          await UserApi.requestKakaoLogin(
+            data,
+            res => {
+              console.log("kakao login success");
+              console.log(res);
+              if (res.data.status) {
+                alert(res.data.object.nickname + "님 환영합니다.");
+                this.kakaoresult = "login";
+                localStorage.setItem("token", res.data.token);
+                localStorage.setItem("userId", res.data.object.userId);
+                localStorage.setItem("email", res.data.object.email);
+                localStorage.setItem("nickname", res.data.object.nickname);
+                this.$router.push("/main");
+              }
+            },
+            error => {
+              console.log(error);
+            }
+          );
+        }
+      });
     }
   }
 };
