@@ -51,7 +51,7 @@
 	
 	<select id="login" parameterType="user" resultMap="resultUser" >
 		<include refid="select-all-users"/>
-		 WHERE id=#{id} AND password=#{password}
+		 WHERE email=#{email} AND password=#{password}
 	</select>
 
     <select id="selectOne" parameterType="int" resultMap="resultUser">
