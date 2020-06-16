@@ -277,7 +277,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         mapView = (MapView)view.findViewById(R.id.map_view);
         mapView.getMapAsync(this);
 
-        edt_map_product = view.findViewById(R.id.edt_map_product);
+//        edt_map_product = view.findViewById(R.id.edt_map_product);
 
 
 

@@ -122,30 +122,28 @@ public class CustomDialog {
         mapProductAdapter = new MapProductAdapter(mContext,storeProductList);
         recyclerView.setAdapter(mapProductAdapter);
 
-//        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new ClickListener() {
-//
-//            @Override
-//            public void onClick(View view, int position) {
-//                intent = new Intent(view.getContext(), ProductDetailActivity.class);
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new ClickListener() {
+
+            @Override
+            public void onClick(View view, int position) {
+//                intent = new Intent(mContext, ProductDetailActivity.class);
 //                isProductDetailEnd=false;
 //                getProductDetail(storeProductList.get(position).getProductId());
 //                while (!isProductDetailEnd){
 //                    try {
 //                        Thread.sleep(500);
 //                    }catch (Exception e){
-//
+//                        Log.d("Errorerror",e.toString());
 //                    }
 //                }
 //                mContext.startActivity(intent);
-//            }
-//
-//            @Override
-//            public void onLongClick(View view, int position) {
-//
-//            }
-//        }));
-//        final MainSaleAdapter mainSaleAdapter = new MainSaleAdapter(mContext,storeProductList);
-//        recyclerView.setAdapter(mainSaleAdapter);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
     }
 

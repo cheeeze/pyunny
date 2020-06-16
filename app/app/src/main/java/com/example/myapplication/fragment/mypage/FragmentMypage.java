@@ -186,7 +186,7 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
                 String code = sf.getString("skt","");
                 edt_mypage_agency_num.setText(code);
                 try {
-                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.ITF,800,300);
                     image_mypage_barcode.setImageBitmap(bitmap);
                 }catch (Exception e){
 
@@ -363,7 +363,7 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
                 try {
 
                     if(btnNum==1){
-                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.ITF,800,300);
                         SharedPreferences.Editor editor = sf.edit();
                         String code = edt_mypage_agency_num.getText().toString();
                         editor.putString("skt",code);

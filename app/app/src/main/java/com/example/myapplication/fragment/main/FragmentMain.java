@@ -276,17 +276,17 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View view, int position) {
                 intent = new Intent(mContext, ProductDetailActivity.class);
-//                isProductDetailEnd=false;
-//                Log.d("TTTTT",saleList.get(position).getProduct_id()+"");
-//                getProductDetail(saleList.get(position).getProduct_id());
-//                while (!isProductDetailEnd){
-//                    try {
-//
-//                        Thread.sleep(500);
-//                    }catch (Exception e){
-//
-//                    }
-//                }
+                isProductDetailEnd=false;
+                Log.d("TTTTT",saleList.get(position).getProduct_id()+"");
+                getProductDetail(saleList.get(position).getProduct_id());
+                while (!isProductDetailEnd){
+                    try {
+
+                        Thread.sleep(500);
+                    }catch (Exception e){
+
+                    }
+                }
                 mContext.startActivity(intent);
             }
 
