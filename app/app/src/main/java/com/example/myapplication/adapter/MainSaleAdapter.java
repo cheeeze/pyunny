@@ -42,7 +42,7 @@ public class MainSaleAdapter extends RecyclerView.Adapter<MainSaleAdapter.ViewHo
         DecimalFormat format = new DecimalFormat("###,###");
         holder.sale_product_price.setText(format.format(sale.getProduct_price())+"원");
         holder.sale_product_name.setText(sale.getProduct_name());
-        Glide.with(mContext).load(sale.getProduct_image()).into(holder.sale_product_image);
+        Glide.with(mContext).load(sale.getProduct_image()).error(R.drawable.defaultproduct).into(holder.sale_product_image);
         switch (sale.getFranchise_id()){
             case 0:
             case 646:

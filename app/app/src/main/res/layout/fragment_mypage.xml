@@ -159,13 +159,15 @@
             android:scaleType="centerInside"
             android:background="#00000000"/>
     </LinearLayout>
+
     <ImageView
+        android:id="@+id/image_mypage_barcode"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:id="@+id/image_mypage_barcode"
-        android:scaleType="center"
-        android:background="#ffffff"/>
+        android:background="#ffffff"
+        android:scaleType="centerInside" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
