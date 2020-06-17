@@ -64,7 +64,8 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
     private RecyclerView recyclerView;
     private MainSaleAdapter mainSaleAdapter;
 
-    private boolean isProductDetailEnd;
+    private ImageView image_main_nodata;
+
 
 
     private Intent intent;
@@ -112,11 +113,13 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
                         urlString += "682";
                         break;
                     case 3: //7/11
+                        urlString += "1";
                         break;
                     case 4: //emart 936
                         urlString += "936";
                         break;
                     case 5: //ministop
+                        urlString += "1";
                         break;
                 }
 
@@ -253,6 +256,8 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
         btn_main_sale = view.findViewById(R.id.btn_main_sale);
         btn_main_product = view.findViewById(R.id.btn_main_product);
 
+        image_main_nodata = view.findViewById(R.id.image_main_nodata);
+
         recyclerView = view.findViewById(R.id.recyclerView_event);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext,2);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -276,17 +281,17 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View view, int position) {
                 intent = new Intent(mContext, ProductDetailActivity.class);
-                isProductDetailEnd=false;
-                Log.d("TTTTT",saleList.get(position).getProduct_id()+"");
-                getProductDetail(saleList.get(position).getProduct_id());
-                while (!isProductDetailEnd){
-                    try {
-
-                        Thread.sleep(500);
-                    }catch (Exception e){
-
-                    }
-                }
+                intent.putExtra("productId",saleList.get(position).getProduct_id());
+//                Log.d("TTTTT",saleList.get(position).getProduct_id()+"");
+//                getProductDetail(saleList.get(position).getProduct_id());
+//                while (!isProductDetailEnd){
+//                    try {
+//
+//                        Thread.sleep(500);
+//                    }catch (Exception e){
+//
+//                    }
+//                }
                 mContext.startActivity(intent);
             }
 
@@ -308,6 +313,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
             case R.id.btn_main_all:
                 btnConvIdx=0;
                 btnSaleProductIdx=0;
+                image_main_nodata.setImageResource(0);
                 //new restMethod().execute();
                 //setBorderToButton();
                 //getSaleList();
@@ -316,6 +322,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
             case R.id.btn_main_gs:
                 btnConvIdx=1;
                 btnSaleProductIdx=0;
+                image_main_nodata.setImageResource(0);
                 //setBorderToButton();
                 //getSaleList();
                 //refresh();
@@ -323,6 +330,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
             case R.id.btn_main_cu:
                 btnConvIdx=2;
                 btnSaleProductIdx=0;
+                image_main_nodata.setImageResource(0);
                 //setBorderToButton();
                 //getSaleList();
                 //refresh();
@@ -330,6 +338,8 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
             case R.id.btn_main_seven:
                 btnConvIdx=3;
                 btnSaleProductIdx=0;
+                image_main_nodata.setImageResource(R.drawable.none_main);
+
                 //setBorderToButton();
                 //getSaleList();
                 //refresh();
@@ -337,6 +347,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
             case R.id.btn_main_emart:
                 btnConvIdx=4;
                 btnSaleProductIdx=0;
+                image_main_nodata.setImageResource(0);
                 //setBorderToButton();
                 //getSaleList();
                 //refresh();
@@ -344,6 +355,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
             case R.id.btn_main_ministop:
                 btnConvIdx=5;
                 btnSaleProductIdx=0;
+                image_main_nodata.setImageResource(R.drawable.none_main);
                // setBorderToButton();
                 //getSaleList();
                 //refresh();
@@ -355,6 +367,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
                 break;
             case R.id.btn_main_product:
                 btnSaleProductIdx=1;
+
                 //getProductList();
                 //refresh();
                 break;
@@ -643,7 +656,6 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
                     intent.putExtra("category",category);
                     intent.putExtra("description",description);
                     intent.putExtra("image",image);
-                    isProductDetailEnd=true;
 
                 } catch(Exception e){
                     result = e.toString();

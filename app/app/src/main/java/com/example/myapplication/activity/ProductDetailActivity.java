@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.MapProductAdapter;
 
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -64,152 +66,112 @@ public class ProductDetailActivity extends Activity {
         recyclerView_productdetail_comment = findViewById(R.id.recyclerView_productdetail_comment);
 
         Intent i = getIntent();
-        int productId = i.getIntExtra("id",3);
-        String name = i.getStringExtra("name");
-        int franchiseId = i.getIntExtra("franchiseId",682);
-        int price = i.getIntExtra("price",3400);
-        String category = i.getStringExtra("category");
-        String description = i.getStringExtra("description");
-        String image = i.getStringExtra("image");
-        Log.d("productid",productId+" "+name+" "+franchiseId+" "+price+" "+category+" "+description+" "+image);
+        int productId = i.getIntExtra("productId",3);
+
+        new RestApiTask("http://k02d1021.p.ssafy.io:8080/api/product/"+productId).execute();
 
 
+    }
 
-        Glide.with(getApplicationContext()).load(image).override(2000,2000).error(R.drawable.defaultproduct).into(image_productdetail_product);
-        switch (franchiseId){
-            case 0: case 646:
-                image_productdetail_conv.setImageResource(R.drawable.gs25);
-                break;
-            case 1: case 682:
-                image_productdetail_conv.setImageResource(R.drawable.cu);
-                 break;
-            case 2: case 970:
-                image_productdetail_conv.setImageResource(R.drawable.seven);
-                break;
-            case 3: case 936:
-                image_productdetail_conv.setImageResource(R.drawable.emart);
-                break;
-            case  4: case 756:
-                image_productdetail_conv.setImageResource(R.drawable.ministop);
-                break;
-            default:
-                image_productdetail_conv.setImageResource(R.drawable.marker_default);
-                break;
+    private class RestApiTask extends AsyncTask<Integer, Void, String> {
+        private String mURL;
+        private String result;
+        private int id;
+        private String name;
+        private int franchiseId;
+        private int price;
+        private String category;
+        private String description;
+        private String image;
+        public RestApiTask(String mURL) {
+            this.mURL = mURL;
         }
-        txt_productdetail_name.setText(name);
-        txt_productdetail_description.setText(description);
-        DecimalFormat format = new DecimalFormat("###,###");
-        txt_productdetail_price.setText(format.format(price)+"원");
 
+        @Override
+        protected String doInBackground(Integer... integers) {
+
+            try{
+                URL url = new URL(mURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setReadTimeout(3000);
+                conn.setConnectTimeout(3000);
+                //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
+                conn.setDoInput(true);
+
+                conn.setUseCaches(false);
+                conn.connect();
+
+                int responseStatusCode = conn.getResponseCode();
+                Log.i("CHECK", "thread run");
+                InputStream inputStream;
+                if(responseStatusCode == conn.HTTP_OK) {
+                    inputStream = conn.getInputStream();
+                }else{
+                    inputStream = conn.getErrorStream();
+                }
+                Log.d("REQEUSTMETHOD",conn.getRequestMethod());
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while((line=bufferedReader.readLine())!=null) {
+                    sb.append(line);
+                }
+                bufferedReader.close();
+
+
+                conn.disconnect();
+                result = sb.toString();
+                Log.d("testtesttest",result);
+                JSONObject product = new JSONObject(result);
+                id = product.getInt("id");
+                name = product.getString("name");
+                franchiseId = product.getInt("franchiseId");
+                price = product.getInt("price");
+                category = product.getString("category");
+                description = product.getString("description");
+                image = product.getString("image");
+
+                Log.d("productDetail",id+" "+name+" "+franchiseId+" "+price+" "+category+" "+description+" "+image);
+
+            } catch(Exception e){
+                result = e.toString();
+                Log.d("ERROR", e.toString());
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Glide.with(getApplicationContext()).load(image).override(2000,2000).error(R.drawable.defaultproduct).into(image_productdetail_product);
+            switch (franchiseId){
+                case 0: case 646:
+                    image_productdetail_conv.setImageResource(R.drawable.gs25);
+                    break;
+                case 1: case 682:
+                    image_productdetail_conv.setImageResource(R.drawable.cu);
+                    break;
+                case 2: case 970:
+                    image_productdetail_conv.setImageResource(R.drawable.seven);
+                    break;
+                case 3: case 936:
+                    image_productdetail_conv.setImageResource(R.drawable.emart);
+                    break;
+                case  4: case 756:
+                    image_productdetail_conv.setImageResource(R.drawable.ministop);
+                    break;
+                default:
+                    image_productdetail_conv.setImageResource(R.drawable.marker_default);
+                    break;
+            }
+            txt_productdetail_name.setText(name);
+            txt_productdetail_description.setText(description);
+            DecimalFormat format = new DecimalFormat("###,###");
+            txt_productdetail_price.setText(format.format(price)+"원");
+        }
     }
-
-
-
-
-
-
-    /*
-    {
-    "id": 22,
-    "name": "노랑옥수수",
-    "franchiseId": 682,
-    "price": 2200,
-    "category": "안주",
-    "description": "（1＋1가격 2,200원） 바로 먹거나 렌지에 데워서 따뜻하게 먹을 수 있는 썬스위트 노랑 옥수수",
-    "image": "http://bgf-cu.xcache.kinxcdn.com/product/8809405270009.jpg"
-    }
-     */
-//    private void getProductDetail(final int productId){
-//        Thread thread = new Thread(new Runnable() {
-//            String result;
-//            @Override
-//            public void run() {
-//                try{
-//                    URL url = new URL("http://k02d1021.p.ssafy.io:8080/api/product/"+productId);
-//                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//                    conn.setRequestMethod("GET");
-//                    conn.setReadTimeout(3000);
-//                    conn.setConnectTimeout(3000);
-//                    //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
-//                    conn.setDoInput(true);
-//
-//                    conn.setUseCaches(false);
-//                    conn.connect();
-//
-//                    int responseStatusCode = conn.getResponseCode();
-//                    Log.i("CHECK", "thread run");
-//                    InputStream inputStream;
-//                    if(responseStatusCode == conn.HTTP_OK) {
-//                        inputStream = conn.getInputStream();
-//                    }else{
-//                        inputStream = conn.getErrorStream();
-//                    }
-//                    Log.d("REQEUSTMETHOD",conn.getRequestMethod());
-//
-//                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-//                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//                    StringBuilder sb = new StringBuilder();
-//                    String line;
-//                    while((line=bufferedReader.readLine())!=null) {
-//                        sb.append(line);
-//                    }
-//                    bufferedReader.close();
-//
-//
-//                    conn.disconnect();
-//                    result = sb.toString();
-//                    Log.d("productDetail",result);
-//                    JSONObject product = new JSONObject(result);
-//                    int id = product.getInt("id");
-//                    String name = product.getString("name");
-//                    int franchiseId = product.getInt("franchiseId");
-//                    int price = product.getInt("price");
-//                    String category = product.getString("category");
-//                    String description = product.getString("description");
-//                    String image = product.getString("image");
-//
-//                    Glide.with(getApplicationContext()).load(image).error(R.drawable.defaultproduct).into(image_productdetail_product);
-//
-//                    switch (franchiseId){
-//                        case 0:
-//                        case 646:
-//                            image_productdetail_conv.setImageResource(R.drawable.gs25);
-//                            break;
-//                        case 1:
-//                        case 682:
-//                            image_productdetail_conv.setImageResource(R.drawable.cu);
-//                            break;
-//                        case 2:
-//                        case 970:
-//                            image_productdetail_conv.setImageResource(R.drawable.seven);
-//                            break;
-//                        case 3:
-//                        case 936:
-//                            image_productdetail_conv.setImageResource(R.drawable.emart);
-//                            break;
-//                        case  4:
-//                        case 756:
-//                            image_productdetail_conv.setImageResource(R.drawable.ministop);
-//                            break;
-//                        default:
-//                            image_productdetail_conv.setImageResource(R.drawable.marker_default);
-//                            break;
-//                    }
-//                    txt_productdetail_name.setText(name);
-//                    txt_productdetail_description.setText(description);
-//                    DecimalFormat format = new DecimalFormat("###,###");
-//                    txt_productdetail_price.setText(format.format(price)+"원");
-//
-//
-//                } catch(Exception e){
-//                    result = e.toString();
-//                    Log.d("ERROR", e.toString());
-//                }
-//
-//
-//            }
-//        });
-//        thread.start();
-//    }
 
 }

@@ -2,6 +2,7 @@ package com.example.myapplication.fragment.recipe;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -38,6 +40,9 @@ public class FragmentRecipe extends Fragment {
     private ArrayList<Recipe> recipeList = new ArrayList<>();
     private RecipeAdapter mRecipeAdapter;
 
+    private ImageView image_recipe_nodata;
+    private Button btn_recipe_tomap;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_recipe,container,false);
@@ -48,9 +53,11 @@ public class FragmentRecipe extends Fragment {
 
     private void init(View view){
         recyclerView = view.findViewById(R.id.recyclerView_recipe);
-        edt_recipe_search = view.findViewById(R.id.edt_recipe_search);
-        btn_recipe_search = view.findViewById(R.id.btn_recipe_search);
-        spinner_recipe_sort = view.findViewById(R.id.spinner_recipe_sort);
+//        edt_recipe_search = view.findViewById(R.id.edt_recipe_search);
+//        btn_recipe_search = view.findViewById(R.id.btn_recipe_search);
+//        spinner_recipe_sort = view.findViewById(R.id.spinner_recipe_sort);
+        image_recipe_nodata = view.findViewById(R.id.image_recipe_nodata);
+        btn_recipe_tomap = view.findViewById(R.id.btn_recipe_tomap);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext,2);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -58,7 +65,17 @@ public class FragmentRecipe extends Fragment {
         mRecipeAdapter = new RecipeAdapter(mContext,recipeList);
 
         recyclerView.setAdapter(mRecipeAdapter);
-        getRecipeList();
+        image_recipe_nodata.setImageResource(R.drawable.none_recipe);
+
+        btn_recipe_tomap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://k02d1021.p.ssafy.io/recipe"));
+                startActivity(i);
+            }
+        });
+//        getRecipeList();
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
             @Override

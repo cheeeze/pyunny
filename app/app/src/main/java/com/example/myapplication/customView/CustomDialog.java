@@ -3,6 +3,7 @@ package com.example.myapplication.customView;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -41,6 +42,7 @@ import java.util.List;
 
 public class CustomDialog {
     private Context mContext;
+    private RecyclerView recyclerView;
 
     public CustomDialog(Context mContext) {
         this.mContext = mContext;
@@ -56,7 +58,7 @@ public class CustomDialog {
         final ImageView image_dialog_franchise = dig.findViewById(R.id.image_dialog_franchise);
         final TextView txt_dialog_address = dig.findViewById(R.id.txt_dialog_address);
         final TextView txt_dialog_tell = dig.findViewById(R.id.txt_dialog_tell);
-        final RecyclerView recyclerView = dig.findViewById(R.id.recyclerView_dialog);
+        recyclerView = dig.findViewById(R.id.recyclerView_dialog);
         final Button btn_map_marker_dialog_atm = dig.findViewById(R.id.btn_map_marker_dialog_atm);
         final Button btn_map_marker_dialog_lottery = dig.findViewById(R.id.btn_map_marker_dialog_lottery);
         final Button btn_map_marker_dialog_delivery = dig.findViewById(R.id.btn_map_marker_dialog_delivery);
@@ -88,19 +90,15 @@ public class CustomDialog {
         }
         if(store.getIsatm()==1){
             btn_map_marker_dialog_atm.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
-//            btn_map_marker_dialog_atm.setBackgroundResource(R.drawable.border);
         }
         if(store.getIslottery()==1){
             btn_map_marker_dialog_lottery.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
-//            btn_map_marker_dialog_lottery.setBackgroundResource(R.drawable.border);
         }
         if(store.getIsdelivery()==1){
             btn_map_marker_dialog_delivery.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
-//            btn_map_marker_dialog_delivery.setBackgroundResource(R.drawable.border);
         }
         if(store.getIsfulltime()==1){
             btn_map_marker_dialog_fulltime.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
-//            btn_map_marker_dialog_fulltime.setBackgroundResource(R.drawable.border);
         }
 
         txt_dialog_address.setText("주소: "+store.getAddress());
@@ -109,15 +107,7 @@ public class CustomDialog {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext,2);
         recyclerView.setLayoutManager(mLayoutManager);
         storeProductList=new ArrayList<>();
-        getList(store);
-        isEnd=false;
-        while (!isEnd){
-            try{
-                Thread.sleep(500);
-            }catch (Exception e){
-
-            }
-        }
+        new RestApiTask("http://k02d1021.p.ssafy.io:8080/api/store_product/"+store.getId()).execute();
 
         mapProductAdapter = new MapProductAdapter(mContext,storeProductList);
         recyclerView.setAdapter(mapProductAdapter);
@@ -126,17 +116,9 @@ public class CustomDialog {
 
             @Override
             public void onClick(View view, int position) {
-//                intent = new Intent(mContext, ProductDetailActivity.class);
-//                isProductDetailEnd=false;
-//                getProductDetail(storeProductList.get(position).getProductId());
-//                while (!isProductDetailEnd){
-//                    try {
-//                        Thread.sleep(500);
-//                    }catch (Exception e){
-//                        Log.d("Errorerror",e.toString());
-//                    }
-//                }
-//                mContext.startActivity(intent);
+                intent = new Intent(mContext, ProductDetailActivity.class);
+                intent.putExtra("productId",storeProductList.get(position).getProductId());
+                mContext.startActivity(intent);
             }
 
             @Override
@@ -153,136 +135,8 @@ public class CustomDialog {
 
     private Intent intent;
 
-    private boolean isProductDetailEnd;
-    private void getProductDetail(final int productId){
-        Thread thread = new Thread(new Runnable() {
-            String result;
-            @Override
-            public void run() {
-                try{
-                    URL url = new URL("http://k02d1021.p.ssafy.io:8080/api/product/"+productId);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("GET");
-                    conn.setReadTimeout(3000);
-                    conn.setConnectTimeout(3000);
-                    //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
-                    conn.setDoInput(true);
-
-                    conn.setUseCaches(false);
-                    conn.connect();
-
-                    int responseStatusCode = conn.getResponseCode();
-                    Log.i("CHECK", "thread run");
-                    InputStream inputStream;
-                    if(responseStatusCode == conn.HTTP_OK) {
-                        inputStream = conn.getInputStream();
-                    }else{
-                        inputStream = conn.getErrorStream();
-                    }
-                    Log.d("REQEUSTMETHOD",conn.getRequestMethod());
-
-                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while((line=bufferedReader.readLine())!=null) {
-                        sb.append(line);
-                    }
-                    bufferedReader.close();
 
 
-                    conn.disconnect();
-                    result = sb.toString();
-                    Log.d("testtesttest",result);
-                    JSONObject product = new JSONObject(result);
-                    int id = product.getInt("id");
-                    String name = product.getString("name");
-                    int franchiseId = product.getInt("franchiseId");
-                    int price = product.getInt("price");
-                    String category = product.getString("category");
-                    String description = product.getString("description");
-                    String image = product.getString("image");
-
-                    intent.putExtra("id",id);
-                    Log.d("productDetail",id+" "+name+" "+franchiseId+" "+price+" "+category+" "+description+" "+image);
-                    intent.putExtra("name",name);
-                    intent.putExtra("franchiseId",franchiseId);
-                    intent.putExtra("price",price);
-                    intent.putExtra("category",category);
-                    intent.putExtra("description",description);
-                    intent.putExtra("image",image);
-                    isProductDetailEnd=true;
-
-                } catch(Exception e){
-                    result = e.toString();
-                    Log.d("ERROR", e.toString());
-                }
-
-
-
-            }
-        });
-        thread.start();
-        isProductDetailEnd=true;
-    }
-
-
-    private void getList(final Store store){
-        Log.d("제고",store.getId()+"");
-
-        Thread thread = new Thread(new Runnable() {
-            String result;
-            @Override
-            public void run() {
-                try{
-                    URL url = new URL("http://k02d1021.p.ssafy.io:8080/api/store_product/"+store.getId());
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("GET");
-                    conn.setReadTimeout(3000);
-                    conn.setConnectTimeout(3000);
-                    //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
-                    conn.setDoInput(true);
-
-                    conn.setUseCaches(false);
-                    conn.connect();
-
-                    int responseStatusCode = conn.getResponseCode();
-                    Log.i("CHECK", "thread run");
-                    InputStream inputStream;
-                    if(responseStatusCode == conn.HTTP_OK) {
-                        inputStream = conn.getInputStream();
-                    }else{
-                        inputStream = conn.getErrorStream();
-                    }
-                    Log.d("REQEUSTMETHOD",conn.getRequestMethod());
-
-                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while((line=bufferedReader.readLine())!=null) {
-                        sb.append(line);
-                    }
-                    bufferedReader.close();
-
-
-                    conn.disconnect();
-                    result = sb.toString();
-                    Log.d("storeList",result);
-                    storeProductList = getRest(result);
-                } catch(Exception e){
-                    result = e.toString();
-                    Log.d("ERROR", e.toString());
-                }
-
-
-            }
-        });
-        thread.start();
-
-
-
-    }
 
     private ArrayList<StoreProduct> getRest(String value) {
         //json parsing
@@ -314,6 +168,67 @@ public class CustomDialog {
 
         isEnd=true;
         return storeProductList;
+    }
+
+    private class RestApiTask extends AsyncTask<Integer, Void, String> {
+        private String mURL;
+        private String result;
+        public RestApiTask(String mURL) {
+            this.mURL = mURL;
+        }
+
+        @Override
+        protected String doInBackground(Integer... integers) {
+
+            try{
+                URL url = new URL(mURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setReadTimeout(3000);
+                conn.setConnectTimeout(3000);
+                //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
+                conn.setDoInput(true);
+
+                conn.setUseCaches(false);
+                conn.connect();
+
+                int responseStatusCode = conn.getResponseCode();
+                Log.i("CHECK", "thread run");
+                InputStream inputStream;
+                if(responseStatusCode == conn.HTTP_OK) {
+                    inputStream = conn.getInputStream();
+                }else{
+                    inputStream = conn.getErrorStream();
+                }
+                Log.d("REQEUSTMETHOD",conn.getRequestMethod());
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while((line=bufferedReader.readLine())!=null) {
+                    sb.append(line);
+                }
+                bufferedReader.close();
+
+
+                conn.disconnect();
+                result = sb.toString();
+                Log.d("storeList",result);
+                storeProductList = getRest(result);
+            } catch(Exception e){
+                result = e.toString();
+                Log.d("ERROR", e.toString());
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            mapProductAdapter = new MapProductAdapter(mContext,storeProductList);
+            recyclerView.setAdapter(mapProductAdapter);
+        }
     }
 
 
