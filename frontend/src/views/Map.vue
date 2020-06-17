@@ -68,7 +68,7 @@
         v-show="itemshow||searchshow"
         v-bind:style="{ marginTop: itemshow? '30px':'0px'}"
       >
-        <v-container>
+        <v-container style="box-shadow:none;">
           <v-row>
             <v-col flex="6">
               <v-subheader>편의점 상품</v-subheader>
@@ -632,7 +632,7 @@ export default {
   position: absolute;
   padding: 10px;
   top: 32%;
-  left: 10px;
+  left: 18px;
   z-index: 2;
 }
 
@@ -675,7 +675,7 @@ export default {
   top: 38%;
   z-index: 2;
   width: 40px;
-  left: 5px;
+  left: 12px;
 }
 
 .inner_recom {

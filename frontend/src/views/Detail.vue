@@ -9,18 +9,8 @@
         </div>
         <div class="item-info">
           <div class="item-convs">
-            <img
-              id="item-conv"
-              v-if="product.franchiseId == 646"
-              src="@/assets/icons/gs25.png"
-              alt
-            />
-            <img
-              id="item-conv"
-              v-if="product.franchiseId == 682"
-              src="@/assets/icons/cu.png"
-              alt
-            />
+            <img id="item-conv" v-if="product.franchiseId == 646" src="@/assets/icons/gs25.png" alt />
+            <img id="item-conv" v-if="product.franchiseId == 682" src="@/assets/icons/cu.png" alt />
             <img
               id="item-conv"
               v-if="product.franchiseId == 936"
@@ -44,12 +34,8 @@
           <h2 id="item-price">
             {{ addComma(product.price) }}원
             <span style="margin-left: 15px;">
-              <b-badge v-if="product.category.includes('1＋1')" variant="info"
-                >1 + 1</b-badge
-              >
-              <b-badge v-if="product.category.includes('2＋1')" variant="info"
-                >2 + 1</b-badge
-              >
+              <b-badge v-if="product.category.includes('1＋1')" variant="info">1 + 1</b-badge>
+              <b-badge v-if="product.category.includes('2＋1')" variant="info">2 + 1</b-badge>
             </span>
           </h2>
           <!-- <h3 id="item-origin-price">
@@ -61,7 +47,8 @@
             (1개당 {{ addComma(product.price) }}원)
             <b-button
               id="item-btn"
-              @click="addFavorite()"
+              v-if="userId!=0"
+              @click="addFavorite"
               v-b-popover.hover.bottomleft="
                 '관심 제품에 대한 할인 정보를 가장 먼저 알려드려요 :-)'
               "
@@ -78,8 +65,8 @@
       <div class="item-like">
         <h2 class="subtitle">재구매 의향</h2>
         <div id="like-btns">
-          <button id="item-like-btn" @click="itemLike()">😆있다</button>
-          <button id="item-like-btn" @click="itemDislike()">없다😑</button>
+          <button id="item-like-btn" @click="itemLike">😆있다</button>
+          <button id="item-like-btn" @click="itemDislike">없다😑</button>
         </div>
         <b-progress :value="value" class="mb-3"></b-progress>
       </div>
@@ -94,9 +81,7 @@
           v-model="comment"
           @keyup.enter="addComment()"
         />
-        <button id="comment-btn" @click="addComment()">
-          입력
-        </button>
+        <button id="comment-btn" @click="addComment()">입력</button>
         <!-- 한줄평 모음 -->
         <div class="comments">
           <div class="comment" v-for="(reply, index) in replys" :key="index">
@@ -105,9 +90,7 @@
               <p id="comment-text">{{ reply.content }}</p>
             </div>
             <div class="comment-delete" v-if="reply.isreply">
-              <button id="delete-btn" @click="deleteComment(index, reply.id)">
-                댓글 삭제
-              </button>
+              <button id="delete-btn" @click="deleteComment(index, reply.id)">댓글 삭제</button>
             </div>
           </div>
         </div>
@@ -115,9 +98,7 @@
       <!--한줄평 끝-->
       <!-- 제품 레시피 -->
       <div class="item-recipe">
-        <h2 class="subtitle" style="font-size: 1.4rem;">
-          이 제품을 사용한 레시피가 궁금하다면?
-        </h2>
+        <h2 class="subtitle" style="font-size: 1.4rem;">이 제품을 사용한 레시피가 궁금하다면?</h2>
         <a href style="font-size: 1.3rem; margin-left:65%;">→ 레시피 검색</a>
       </div>
       <!---->
@@ -139,7 +120,7 @@ import Axios from "@/api/Productaxios.js";
 export default {
   components: {
     Navbar,
-    ItemCard,
+    ItemCard
   },
   data() {
     return {
@@ -158,16 +139,81 @@ export default {
         id: 0,
         image: "",
         name: "",
-        price: 0,
+        price: 0
       },
 
-      replyResult:{
-        content:"",
-        productId:0,
-        userId:1,
-        nickname:"",
-      }
+      replyResult: {
+        content: "",
+        productId: 0,
+        userId: 1,
+        nickname: ""
+      },
+      userId: 0
     };
+  },
+
+  watch: {
+    like: function() {
+      this.value = (this.like / (this.like + this.dislike)) * 100;
+    },
+    dislike: function() {
+      this.value = (this.like / (this.like + this.dislike)) * 100;
+    }
+  },
+  mounted() {
+    localStorage.clear();
+    this.userId = 1;
+    this.productId = this.$route.params.id;
+    if (localStorage.getItem("score") == null) {
+      localStorage.setItem("score", 0);
+    }
+    this.score = parseInt(localStorage.getItem("score"));
+
+    Axios.getRating(
+      this.productId,
+      res => {
+        console.log(res);
+        this.like = res.data.inlike;
+        this.dislike = res.data.dislike;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    console.log(this.score);
+    Axios.getProductById(
+      this.$route.params.id,
+      res => {
+        this.product = res.data;
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    ),
+      Axios.getCommentById(
+        this.$route.params.id,
+        res => {
+          this.replys = [];
+          res.data.forEach(element => {
+            element.isreply = false;
+            this.replys.push(element);
+          });
+          console.log("replys", res);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    //   http
+    //     .get("/api/product/" + this.$route.params.id)
+    //     .then((res) => {
+    //       this.product = res.data;
+    //       console.log(this.product);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
   },
   methods: {
     addFavorite() {
@@ -176,13 +222,13 @@ export default {
       Axios.insertFavorite(
         {
           productId: this.$route.params.id,
-          userId: 1,
+          userId: this.userId
         },
-        (res) => {
+        res => {
           res;
           alert("관심 상품이 등록되었습니다!");
         },
-        (err) => {
+        err => {
           console.log(err);
         }
       );
@@ -191,54 +237,53 @@ export default {
       // 로그인이 안되어 있을 때 로그인 필요하다는 alert
       if (this.user) {
         if (this.score === 0) {
-          localStorage.setItem("score",1);
+          localStorage.setItem("score", 1);
           this.like += 1;
           this.score = 1;
           Axios.insertRating(
             {
-              userId:this.userId,
-              productId:this.productId,
-              score: 1,
+              userId: this.userId,
+              productId: this.productId,
+              score: 1
             },
-            (res)=>{
+            res => {
               console.log(res);
             },
-            (err)=>{
+            err => {
               console.log(err);
             }
           );
         } else if (this.score === 2) {
-          localStorage.setItem("score",1);
+          localStorage.setItem("score", 1);
           this.like += 1;
           this.score = 1;
           this.dislike -= 1;
-          
+
           Axios.deleteRating(
             {
-              userId:this.userId,
-              productId:this.productId,
+              userId: this.userId,
+              productId: this.productId
             },
-            (res)=>{
+            res => {
               console.log(res);
               Axios.insertRating(
                 {
-                  userId:this.userId,
-                  productId:this.productId,
-                  score: 1,
+                  userId: this.userId,
+                  productId: this.productId,
+                  score: 1
                 },
-                (res)=>{
+                res => {
                   console.log(res);
                 },
-                (err)=>{
+                err => {
                   console.log(err);
                 }
               );
             },
-            (err)=>{
+            err => {
               console.log(err);
             }
           );
-          
         }
       } else {
         alert("로그인이 필요한 기능입니다.");
@@ -248,55 +293,53 @@ export default {
     itemDislike() {
       if (this.user) {
         if (this.score === 0) {
-          localStorage.setItem("score",2);
+          localStorage.setItem("score", 2);
           this.dislike += 1;
           this.score = 2;
           Axios.insertRating(
             {
-              userId:this.userId,
-              productId:this.productId,
-              score: 2,
+              userId: this.userId,
+              productId: this.productId,
+              score: 2
             },
-            (res)=>{
+            res => {
               console.log(res);
             },
-            (err)=>{
+            err => {
               console.log(err);
             }
           );
         } else if (this.score === 1) {
-          localStorage.setItem("score",2);
+          localStorage.setItem("score", 2);
           this.dislike += 1;
           this.score = 2;
           this.like -= 1;
-          
 
           Axios.deleteRating(
             {
-              userId:this.userId,
-              productId:this.productId,
+              userId: this.userId,
+              productId: this.productId
             },
-            (res)=>{
+            res => {
               console.log(res);
               Axios.insertRating(
                 {
-                  userId:this.userId,
-                  productId:this.productId,
-                  score: 2,
+                  userId: this.userId,
+                  productId: this.productId,
+                  score: 2
                 },
-                (res)=>{
+                res => {
                   console.log(res);
                 },
-                (err)=>{
+                err => {
                   console.log(err);
                 }
               );
             },
-            (err)=>{
+            err => {
               console.log(err);
             }
           );
-          
         }
       } else {
         alert("로그인이 필요한 기능입니다.");
@@ -312,36 +355,36 @@ export default {
         {
           content: this.comment,
           productId: this.product.id,
-          userId: 1,
+          userId: 1
         },
-        (res) => {
+        res => {
           console.log(res);
           alert("한줄평이 정상적으로 등록되었습니다!");
           this.replyResult = {
-            content:res.data.content,
-            productId:res.data.productId,
-            userId:res.data.userId,
-            nickname:this.nickname,
+            content: res.data.content,
+            productId: res.data.productId,
+            userId: res.data.userId,
+            nickname: this.nickname
           };
           // res.data.nickname = this.nickname;
           console.log(this.replyResult);
           this.replys.push(this.replyResult);
           Axios.getCommentById(
             this.$route.params.id,
-            (res) => {
+            res => {
               this.replys = [];
-              res.data.forEach((element) => {
+              res.data.forEach(element => {
                 element.isreply = false;
                 this.replys.push(element);
               });
               console.log("replys", res);
             },
-            (err) => {
+            err => {
               console.log(err);
             }
           );
         },
-        (err) => {
+        err => {
           console.log(err);
         }
       ),
@@ -350,7 +393,7 @@ export default {
     deleteComment(idx, id) {
       Axios.deleteComment(
         id,
-        (res) => {
+        res => {
           res;
           alert("한줄평이 정상적으로 삭제되었습니다.");
 
@@ -358,7 +401,7 @@ export default {
             this.replys.splice(idx, 1);
           }
         },
-        (err) => {
+        err => {
           console.log(err);
         }
       );
@@ -366,87 +409,23 @@ export default {
     addComma(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
-    getProductById(){
+    getProductById() {
       Axios.getCommentById(
         this.$route.params.id,
-        (res) => {
+        res => {
           this.replys = [];
-          res.data.forEach((element) => {
+          res.data.forEach(element => {
             element.isreply = false;
             this.replys.push(element);
           });
           console.log("replys", res);
         },
-        (err) => {
+        err => {
           console.log(err);
         }
       );
     }
-  },
-  watch: {
-    like: function() {
-      this.value = (this.like / (this.like + this.dislike)) * 100;
-    },
-    dislike: function() {
-      this.value = (this.like / (this.like + this.dislike)) * 100;
-    },
-  },
-  mounted() {
-    localStorage.clear();
-    this.userId=1;
-    this.productId=this.$route.params.id;
-    if(localStorage.getItem("score") == null){
-      localStorage.setItem("score",0);
-    }
-    this.score=parseInt(localStorage.getItem("score"));
-
-    Axios.getRating(
-      this.productId,
-      (res) => {
-        console.log(res);
-        this.like = res.data.inlike;
-        this.dislike = res.data.dislike;
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
-    console.log(this.score);
-    Axios.getProductById(
-      this.$route.params.id,
-      (res) => {
-        this.product = res.data;
-        console.log(res);
-      },
-      (err) => {
-        console.log(err);
-      }
-    ),
-    
-      Axios.getCommentById(
-        this.$route.params.id,
-        (res) => {
-          this.replys = [];
-          res.data.forEach((element) => {
-            element.isreply = false;
-            this.replys.push(element);
-          });
-          console.log("replys", res);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    //   http
-    //     .get("/api/product/" + this.$route.params.id)
-    //     .then((res) => {
-    //       this.product = res.data;
-    //       console.log(this.product);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-  },
+  }
 };
 </script>
 
