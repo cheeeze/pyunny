@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -39,6 +40,9 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -102,6 +106,8 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(layoutManager);
+        imageList = getImageArrayPref("gifticon");
+        Log.d("image",imageList.size()+"");
         mypageGifticonAdapter = new MypageGifticonAdapter(imageList,getContext());
         recyclerView.setAdapter(mypageGifticonAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
@@ -123,6 +129,8 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
                         Toast.makeText(getContext(),"삭제했습니다.",Toast.LENGTH_SHORT).show();
 
                         imageList.remove(position);
+                        setImageArrayPref("gifticon",imageList);
+                        imageList = getImageArrayPref("gifticon");
                         mypageGifticonAdapter = new MypageGifticonAdapter(imageList,getContext());
                         recyclerView.setAdapter(mypageGifticonAdapter);
                     }
@@ -492,12 +500,6 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
                     imageList.add(img);
-                    gifticonSF = getActivity().getSharedPreferences("gifticon",Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = gifticonSF.edit();
-                    int idx = gifticonSF.getInt("idx",-1);
-                    idx++;
-                    editor.putInt("idx",idx);
-                    editor.putString(idx+"",bitMapToString(img));
                 }catch (Exception e){
 
                 }
@@ -507,8 +509,65 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
                 Toast.makeText(getContext(),"사진 선택 취소",Toast.LENGTH_LONG).show();
             }
         }
+        setImageArrayPref("gifticon",imageList);
+        imageList = getImageArrayPref("gifticon");
         mypageGifticonAdapter = new MypageGifticonAdapter(imageList,getContext());
         recyclerView.setAdapter(mypageGifticonAdapter);
+    }
+
+//    사진 저장
+    private void setImageArrayPref(String key, ArrayList<Bitmap> values){
+        SharedPreferences prefs = getActivity().getSharedPreferences("gifticon",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        JSONArray a = new JSONArray();
+        for (int i = 0; i < values.size(); i++) {
+            String s = BitmapToString(values.get(i));
+            a.put(s);
+        }
+        if (!values.isEmpty()) {
+            editor.putString(key, a.toString());
+        } else {
+            editor.putString(key, null);
+        }
+        editor.apply();
+    }
+//    load gifticon
+    private ArrayList<Bitmap> getImageArrayPref(String key){
+        SharedPreferences prefs = getActivity().getSharedPreferences("gifticon",Context.MODE_PRIVATE);
+        String json = prefs.getString(key,null);
+        ArrayList<Bitmap> list = new ArrayList<>();
+        if(json!=null){
+            try {
+                JSONArray a = new JSONArray(json);
+                for(int i=0;i<a.length();i++){
+                    Bitmap b = StringToBitmap(a.optString(i));
+                    list.add(b);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return list;
+    }
+    private Bitmap StringToBitmap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
+    private String BitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 70, baos);
+        byte[] bytes = baos.toByteArray();
+        String temp = Base64.encodeToString(bytes, Base64.DEFAULT);
+        return temp;
     }
 
 
@@ -561,36 +620,8 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
     }
 
 
-    private void initialGifticonList(){
-        gifticonSF = getActivity().getSharedPreferences("gifticon",Context.MODE_PRIVATE);
-        int idx = gifticonSF.getInt("idx",-1);
-        for(int i=0;i<=idx;i++){
-            String image = gifticonSF.getString(i+"","");
-            if(!image.equals(""))
-                imageList.add(stringToBitmap(image));
-        }
 
-    }
 
-    private String bitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
-        byte[] b = baos.toByteArray();
-        String temp = Base64.encodeToString(b,Base64.DEFAULT);
-        return temp;
-    }
-
-    private Bitmap stringToBitmap(String encodedString){
-        try {
-            byte[] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte,0,encodeByte.length);
-            return bitmap;
-        }catch (Exception e){
-            e.getMessage();
-            return null;
-        }
-
-    }
 
 
 
