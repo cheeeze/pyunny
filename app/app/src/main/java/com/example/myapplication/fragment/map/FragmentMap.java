@@ -15,9 +15,12 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.JsonReader;
+import android.util.JsonToken;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +40,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.MainSaleAdapter;
 import com.example.myapplication.customView.CustomDialog;
 import com.example.myapplication.vo.MapSearchResult;
 import com.example.myapplication.vo.Sale;
@@ -114,19 +118,13 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                 stores = new ArrayList<>();
                 searchResults = new ArrayList<>();
                 isEnd=false;
-                getStoreList(mGoogleMap.getCameraPosition().target.latitude,mGoogleMap.getCameraPosition().target.longitude,0.5f,"");
-                while (!isEnd){
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                addStores(stores);
-                Log.d("pospos", mGoogleMap.getCameraPosition().target.latitude+" "+mGoogleMap.getCameraPosition().target.longitude);
-                Log.d("afterRest",stores.size()+"");
+                double latitude = mGoogleMap.getCameraPosition().target.latitude;
+                double longitude = mGoogleMap.getCameraPosition().target.longitude;
+                float distance = 0.5f;
+                String keyword = "";
+                new RestApiTask("http://k02d1021.p.ssafy.io:8080/api/store?latitude="+latitude+"&longitude="+longitude+"&distance="+distance+"&keyword="+keyword).execute();
 
-                Log.d("afteraddStores",stores.size()+" ");
+
 
 
                 break;
@@ -801,5 +799,74 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
 //    }
 
 
+    private class RestApiTask extends AsyncTask<Integer, Void, String>{
+        private String mURL;
+        private String result;
+        public RestApiTask(String mURL) {
+            this.mURL = mURL;
+        }
+
+        @Override
+        protected String doInBackground(Integer... integers) {
+
+            try{
+                URL url = new URL(mURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setReadTimeout(3000);
+                conn.setConnectTimeout(3000);
+                //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
+                conn.setDoInput(true);
+
+                conn.setUseCaches(false);
+                conn.connect();
+
+                int responseStatusCode = conn.getResponseCode();
+                Log.i("CHECK", "thread run");
+                InputStream inputStream;
+                if(responseStatusCode == conn.HTTP_OK) {
+                    inputStream = conn.getInputStream();
+                }else{
+                    inputStream = conn.getErrorStream();
+                }
+                Log.d("REQEUSTMETHOD",conn.getRequestMethod());
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+//                    JsonReader jsonReader = new JsonReader(inputStreamReader);
+//                    jsonReader.beginObject();
+//
+//                    while(jsonReader.hasNext()){
+//                        Log.d(jsonReader.nextName(),jsonReader.nextString());
+//                    }
+//                    jsonReader.close();
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while((line=bufferedReader.readLine())!=null) {
+                    sb.append(line);
+                    //Log.d("THREAD",line);
+                }
+                bufferedReader.close();
+
+
+                conn.disconnect();
+                result = sb.toString();
+                Log.d("storeList",result);
+                stores = getRest(result);
+            } catch(Exception e){
+                result = e.toString();
+                Log.d("ERROR", e.toString());
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            addStores(stores);
+            Log.d("pospos", mGoogleMap.getCameraPosition().target.latitude+" "+mGoogleMap.getCameraPosition().target.longitude);
+            Log.d("afterRest",stores.size()+"");
+        }
+    }
 
 }
