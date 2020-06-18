@@ -93,14 +93,6 @@
         android:id="@+id/edt_login_password"
         android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/txt_login_forget_password"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="Forget your password?" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -130,10 +122,15 @@
             android:padding="5dp"
             android:id="@+id/btn_signup" />
 
-
-
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/txt_login_forget_password"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Forget your password?" />
 
 
 </LinearLayout>

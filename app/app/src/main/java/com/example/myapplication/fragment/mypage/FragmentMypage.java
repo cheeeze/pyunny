@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -78,6 +80,7 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
     private int btnNum=1;
 
     private SharedPreferences sf;
+    private SharedPreferences gifticonSF;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view =inflater.inflate(R.layout.fragment_mypage,container,false);
         init(view);
@@ -118,6 +121,7 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getContext(),"삭제했습니다.",Toast.LENGTH_SHORT).show();
+
                         imageList.remove(position);
                         mypageGifticonAdapter = new MypageGifticonAdapter(imageList,getContext());
                         recyclerView.setAdapter(mypageGifticonAdapter);
@@ -182,7 +186,7 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
                 String code = sf.getString("skt","");
                 edt_mypage_agency_num.setText(code);
                 try {
-                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                    Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.ITF,800,300);
                     image_mypage_barcode.setImageBitmap(bitmap);
                 }catch (Exception e){
 
@@ -359,7 +363,7 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
                 try {
 
                     if(btnNum==1){
-                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.CODE_128,800,300);
+                        Bitmap bitmap = encodeAsBitmap(edt_mypage_agency_num.getText().toString(),BarcodeFormat.ITF,800,300);
                         SharedPreferences.Editor editor = sf.edit();
                         String code = edt_mypage_agency_num.getText().toString();
                         editor.putString("skt",code);
@@ -488,7 +492,12 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
                     imageList.add(img);
-
+                    gifticonSF = getActivity().getSharedPreferences("gifticon",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = gifticonSF.edit();
+                    int idx = gifticonSF.getInt("idx",-1);
+                    idx++;
+                    editor.putInt("idx",idx);
+                    editor.putString(idx+"",bitMapToString(img));
                 }catch (Exception e){
 
                 }
@@ -549,6 +558,38 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
             }
         }
         return null;
+    }
+
+
+    private void initialGifticonList(){
+        gifticonSF = getActivity().getSharedPreferences("gifticon",Context.MODE_PRIVATE);
+        int idx = gifticonSF.getInt("idx",-1);
+        for(int i=0;i<=idx;i++){
+            String image = gifticonSF.getString(i+"","");
+            if(!image.equals(""))
+                imageList.add(stringToBitmap(image));
+        }
+
+    }
+
+    private String bitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b,Base64.DEFAULT);
+        return temp;
+    }
+
+    private Bitmap stringToBitmap(String encodedString){
+        try {
+            byte[] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte,0,encodeByte.length);
+            return bitmap;
+        }catch (Exception e){
+            e.getMessage();
+            return null;
+        }
+
     }
 
 
