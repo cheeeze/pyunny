@@ -1,105 +1,20 @@
 <template>
   <div class="card-container">
     <ul class="cards">
-      <li class="cards_item">
+      <li
+        class="cards_item"
+        v-for="(item, index) in items"
+        :key="index"
+        @click="gotoDetail(item.id)"
+      >
         <div class="card">
           <div class="card_image">
-            <img
-              class="card-img"
-              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8806371301614.jpg"
-            />
+            <img class="card-img" :src="item.image" />
           </div>
           <div class="card_content">
-            <h2 class="card_title">푸르밀)검은콩우유300ML</h2>
-            <p class="card_text">
-              1,500원
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8801155731632_001.jpg"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">덴마크)딸기딸기우유300ML</h2>
-            <p class="card_text">
-              1,500원
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8801121028513_002.jpg"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">유어스)펭럽유달고나우유300ML</h2>
-            <p class="card_text">
-              1,500원
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8801115137290_001.jpg"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">서울)바나나우유300ML</h2>
-            <p class="card_text">
-              1,500원
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="https://picsum.photos/500/300/?image=17"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">코카콜라 250ml</h2>
-            <p class="card_text">
-              1,200
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="https://picsum.photos/500/300/?image=2"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">코카콜라 250ml</h2>
-            <p class="card_text">
-              1,200
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
+            <h2 class="card_title">{{item.name}}</h2>
+            <p class="card_text">{{item.price}}</p>
+            <button class="cardbtn card_btn">{{item.description}}</button>
           </div>
         </div>
       </li>
@@ -108,7 +23,27 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    items: {
+      type: Array,
+      required: true
+    },
+    type: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    gotoDetail(id) {
+      if (this.type === "product") {
+        this.$router.push("/detail/" + id);
+      } else if (this.type === "recipe") {
+        this.$router.push("/recipedetail/" + id);
+      }
+    }
+  }
+};
 </script>
 
 <style>
