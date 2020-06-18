@@ -22,7 +22,7 @@
           <input type="text" v-model="name" placeholder="Name" />
           <input type="text" v-model="nickname" placeholder="Nickname" />
           <input type="password" v-model="password" placeholder="Password" />
-          <button type="submit" class="red-btn" @click="register">회원가입</button>
+          <button type="submit" class="red-btn">회원가입</button>
           <button class="ghost red-btn hide" id="signIn" @click="signInButtonActive">로그인으로 이동</button>
         </form>
       </div>
@@ -49,8 +49,8 @@
           <span>or use your account</span>
           <input type="email" v-model="email" placeholder="Email" />
           <input type="password" v-model="password" placeholder="Password" />
-          <a href="#">Forgot your password?</a>
-          <button type="submit" class="red-btn" @click="login">로그인</button>
+          <p href="#">Forgot your password?</p>
+          <button type="submit" class="red-btn">로그인</button>
           <button class="ghost red-btn hide" id="signUp" @click="signUpButtonActive">회원가입으로 이동</button>
         </form>
       </div>
@@ -93,7 +93,6 @@
 </template>
 
 <script>
-import Kakao from "@/kakao.js";
 import Axios from "@/api/Useraxios.js";
 
 export default {
@@ -118,10 +117,6 @@ export default {
       password: "",
       name: ""
     };
-  },
-  created() {
-    Kakao.cleanup();
-    Kakao.init("b6984aaf3f2299bd8bbb050ffba843ca");
   },
   methods: {
     signUpButtonActive() {
@@ -200,59 +195,6 @@ export default {
           console.log(err);
         }
       );
-    },
-    KakaoLogin() {
-      if (localStorage.getItem("JWT_token"))
-        return alert("이미 로그인 되어있습니다.");
-      this.loginWithKakao();
-    },
-    loginWithKakao() {
-      console.log("login begin");
-      console.log(Kakao);
-      Kakao.Auth.login({
-        success: async authObj => {
-          console.log(authObj);
-          await this.kakaoApiRequest(authObj);
-        },
-        fail: function(err) {
-          console.log("kakao login error");
-          console.log(err);
-        }
-      });
-    },
-    kakaoApiRequest(authObj) {
-      Kakao.API.request({
-        url: "/v2/user/me",
-        success: async res => {
-          console.log("userinfo");
-          console.log(res);
-          let kakao = res.kakao_account.email;
-          let nickname = res.properties.nickname;
-          let profileImg = res.properties.profile_image;
-          // alert(JSON.stringify(authObj).substring(0,5));
-          let password = authObj.access_token.substring(0, 15);
-          let data = { kakao, nickname, password, profileImg };
-          await UserApi.requestKakaoLogin(
-            data,
-            res => {
-              console.log("kakao login success");
-              console.log(res);
-              if (res.data.status) {
-                alert(res.data.object.nickname + "님 환영합니다.");
-                this.kakaoresult = "login";
-                localStorage.setItem("token", res.data.token);
-                localStorage.setItem("userId", res.data.object.userId);
-                localStorage.setItem("email", res.data.object.email);
-                localStorage.setItem("nickname", res.data.object.nickname);
-                this.$router.push("/main");
-              }
-            },
-            error => {
-              console.log(error);
-            }
-          );
-        }
-      });
     }
   }
 };
