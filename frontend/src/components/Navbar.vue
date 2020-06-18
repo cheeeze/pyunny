@@ -1,7 +1,7 @@
 <template>
   <div class="nav-wrapper">
     <div class="grad-bar"></div>
-    <nav class="navbar">
+    <nav class="main-navbar">
       <router-link to="/">
         <img class="nav_logo" src="@/assets/images/mainlogo_removebg.png" alt="Logo" />
       </router-link>
@@ -149,22 +149,22 @@ export default {
 
 /* NAVIGATION */
 
-.navbar {
+.main-navbar {
   display: grid;
   grid-template-columns: 1fr 3fr;
   align-items: center;
-  height: 60px;
+  height: 55px;
   overflow: hidden;
   font-family: "Lato", "Arial", sans-serif;
 }
 
-.navbar .nav_logo {
+.main-navbar .nav_logo {
   height: 40px;
   width: auto;
   justify-self: start;
 }
 
-.navbar ul {
+.main-navbar ul {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -313,7 +313,7 @@ export default {
 
   /* MOBILE NAVIGATION */
 
-  .navbar ul {
+  .main-navbar ul {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -327,15 +327,15 @@ export default {
     overflow: hidden;
   }
 
-  .navbar li {
+  .main-navbar li {
     padding: 15px;
   }
 
-  .navbar li:first-child {
+  .main-navbar li:first-child {
     margin-top: 50px;
   }
 
-  .navbar li a {
+  .main-navbar li a {
     font-size: 1rem;
   }
 
