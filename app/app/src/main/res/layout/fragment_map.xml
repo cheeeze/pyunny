@@ -6,10 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.gms.maps.MapView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/map_view"
-        android:name="com.google.android.gms.maps.MapFragment"/>
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ImageButton
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -19,16 +20,39 @@
         android:layout_margin="20dp"
         android:id="@+id/btn_map_get_conv"/>
 
-<!--    <EditText-->
-<!--        android:layout_width="230dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="27dp"-->
-<!--        android:layout_marginLeft="75dp"-->
-<!--        android:hint="상품을 입력하세요."-->
-<!--        android:id="@+id/edt_map_product"/>-->
+    <EditText
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:layout_marginLeft="75dp"
+        android:hint="상품을 입력하세요."
+        android:id="@+id/edt_map_product"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="77dp"
+        android:layout_marginLeft="75dp"
+        android:id="@+id/recyclerView_map_search"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:text="목록으로 보기"
+        android:textColor="#ffffff"
+        android:background="@drawable/tolist_border"
+        android:id="@+id/btn_map_searchresult_tolist"/>
 
 
-
+    <ImageButton
+        android:id="@+id/btn_mapsearch_clear"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="275dp"
+        android:layout_marginTop="31dp"
+        android:src="@drawable/x"
+        android:scaleType="centerInside"
+        android:background="#00000000"/>
 
 
 </FrameLayout>

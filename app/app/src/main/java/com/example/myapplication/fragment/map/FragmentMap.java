@@ -22,10 +22,13 @@ import android.provider.Settings;
 import android.util.JsonReader;
 import android.util.JsonToken;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -38,9 +41,12 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MainSaleAdapter;
+import com.example.myapplication.adapter.MapSearchResultAdapter;
 import com.example.myapplication.customView.CustomDialog;
 import com.example.myapplication.vo.MapSearchResult;
 import com.example.myapplication.vo.Sale;
@@ -107,27 +113,61 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
 
     private EditText edt_map_product;
 
+    private RecyclerView recyclerView_map_search;
+    private MapSearchResultAdapter mapSearchResultAdapter;
+
+    private ImageButton btn_mapsearch_clear;
+    private Button btn_map_searchresult_tolist;
+
+    private InputMethodManager imm;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_map_get_conv:
-                for(Marker m:arrayMarker){
-                    m.remove();
+                imm.hideSoftInputFromWindow(edt_map_product.getWindowToken(),0);
+                if(edt_map_product.getText().toString().replace(" ","").length()<=0){
+                    for(Marker m:arrayMarker){
+                        m.remove();
+                    }
+                    arrayMarker = new ArrayList<>();
+                    stores = new ArrayList<>();
+                    searchResults = new ArrayList<>();
+                    double latitude = mGoogleMap.getCameraPosition().target.latitude;
+                    double longitude = mGoogleMap.getCameraPosition().target.longitude;
+                    float distance = 0.5f;
+                    String keyword = "";
+                    new RestApiStoreTask("http://k02d1021.p.ssafy.io:8080/api/store?latitude="+latitude+"&longitude="+longitude+"&distance="+distance+"&keyword="+keyword).execute();
+
+
+                }else{
+                    for(Marker m:arrayMarker){
+                        m.remove();
+                    }
+                    arrayMarker = new ArrayList<>();
+                    stores = new ArrayList<>();
+                    searchResults = new ArrayList<>();
+                    double latitude = mGoogleMap.getCameraPosition().target.latitude;
+                    double longitude = mGoogleMap.getCameraPosition().target.longitude;
+                    float distance = 0.5f;
+                    String keyword = edt_map_product.getText().toString();
+                    new RestApiStoreProductTask("http://k02d1021.p.ssafy.io:8080/api/store_product?latitude="+latitude+"&longitude="+longitude+"&distance="+distance+"&keyword="+keyword).execute();
                 }
-                arrayMarker = new ArrayList<>();
-                stores = new ArrayList<>();
-                searchResults = new ArrayList<>();
-                isEnd=false;
-                double latitude = mGoogleMap.getCameraPosition().target.latitude;
-                double longitude = mGoogleMap.getCameraPosition().target.longitude;
-                float distance = 0.5f;
-                String keyword = "";
-                new RestApiTask("http://k02d1021.p.ssafy.io:8080/api/store?latitude="+latitude+"&longitude="+longitude+"&distance="+distance+"&keyword="+keyword).execute();
-
-
-
-
                 break;
+            case R.id.btn_mapsearch_clear:
+                searchResults = new ArrayList<>();
+                edt_map_product.setText("");
+                mapSearchResultAdapter = new MapSearchResultAdapter(getContext(),searchResults);
+                recyclerView_map_search.setAdapter(mapSearchResultAdapter);
+                recyclerView_map_search.setVisibility(View.VISIBLE);
+                btn_map_searchresult_tolist.setVisibility(View.GONE);
+                break;
+
+            case R.id.btn_map_searchresult_tolist:
+                recyclerView_map_search.setVisibility(View.VISIBLE);
+                btn_map_searchresult_tolist.setVisibility(View.GONE);
+                break;
+
         }
     }
 
@@ -250,10 +290,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
             }
         });
 
-//        getStoreList(googleMap.getCameraPosition().target.latitude,googleMap.getCameraPosition().target.longitude,0.3f,"");
-//
-//
-//        addStores(stores);
         mGoogleMap.setOnMarkerClickListener(this);
 
 
@@ -262,6 +298,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -272,10 +309,42 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
 
         btn_map_get_conv = view.findViewById(R.id.btn_map_get_conv);
         btn_map_get_conv.setOnClickListener(this);
+        btn_mapsearch_clear = view.findViewById(R.id.btn_mapsearch_clear);
+        btn_mapsearch_clear.setOnClickListener(this);
+        btn_map_searchresult_tolist = view.findViewById(R.id.btn_map_searchresult_tolist);
+        btn_map_searchresult_tolist.setVisibility(View.GONE);
+        btn_map_searchresult_tolist.setOnClickListener(this);
+
         mapView = (MapView)view.findViewById(R.id.map_view);
         mapView.getMapAsync(this);
 
-//        edt_map_product = view.findViewById(R.id.edt_map_product);
+        edt_map_product = view.findViewById(R.id.edt_map_product);
+
+        recyclerView_map_search = view.findViewById(R.id.recyclerView_map_search);
+        searchResults = new ArrayList<>();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView_map_search.setLayoutManager(layoutManager);
+        mapSearchResultAdapter = new MapSearchResultAdapter(getContext(),searchResults);
+        recyclerView_map_search.setAdapter(mapSearchResultAdapter);
+
+
+        recyclerView_map_search.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView_map_search, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                MapSearchResult mapSearchResult = searchResults.get(position);
+                LatLng latLng = new LatLng(mapSearchResult.getStore().getLatitude(),mapSearchResult.getStore().getLongitude());
+                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                recyclerView_map_search.setVisibility(View.GONE);
+                btn_map_searchresult_tolist.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
 
 
 
@@ -753,56 +822,57 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
 
 
     private boolean isEndSearchRest;
-//    private List<MapSearchResult> getSearchRest(String value) {
-//        //json parsing
-//        //saleList.clear();
-//        isEnd=false;
-//        Log.d("TEST","in getRest");
-//        Log.d("TEST", value);
-//        try {
-//            JSONArray jsonArray = new JSONArray(value);
-//            for(int i=0;i<jsonArray.length();i++){
-//                JSONObject searchResult = jsonArray.getJSONObject(i);
-//                int id = searchResult.getInt("id");
-//                int storeId = searchResult.getInt("storeId");
-//                int productId = searchResult.getInt("productId");
-//                String name = searchResult.getString("name");
-//                String stockAmount = searchResult.getString("stockAmount");
-//                int price = searchResult.getInt("price");
-//                String image = searchResult.getString("image");
-//                JSONObject store = searchResult.getJSONObject("store");
-//                int franchiseId = store.getInt("franchiseId");
-//                String franchiseName = store.getString("franchiseName");
-//                String storeName = store.getString("storeName");
-//                double latitude=store.getDouble("latitude");
-//                double longitude =store.getDouble("longitude");
-//                String address = store.getString("address");
-//                String city = store.getString("city");
-//                String tel = store.getString("tel");
-//                int isatm = store.getInt("isatm");
-//                int islottery=store.getInt("islottery");
-//                int isdelivery=store.getInt("isdelivery");
-//                int ismedicine=store.getInt("ismedicine");
-//                int isfulltime=store.getInt("isfulltime");
-//                String logoUrl=store.getString("logoUrl");
-//                String deliveryBegin = store.getString("deliveryBegin");
-//                String deliveryEnd = store.getString("deliveryEnd");
-//                Store s = new Store(id,franchiseId,franchiseName,storeName,latitude,longitude,address,city,tel,isatm,islottery,isdelivery,isfulltime,logoUrl,deliveryBegin,deliveryEnd);
-//                searchResults.add(new MapSearchResult(id,storeId,productId,name,stockAmount,price,image,s));
-//            }
-//        } catch(Exception e){
-//
-//        }
-//
-//        isEnd=true;
-//        return searchResults;
-//    }
+    private List<MapSearchResult> getSearchRest(String value) {
+        //json parsing
+        //saleList.clear();
+        isEnd=false;
+        Log.d("TEST","in getRest");
+        Log.d("TEST", value);
+        try {
+            JSONArray jsonArray = new JSONArray(value);
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject searchResult = jsonArray.getJSONObject(i);
+                int id = searchResult.getInt("id");
+                int storeId = searchResult.getInt("storeId");
+                int productId = searchResult.getInt("productId");
+                String name = searchResult.getString("name");
+                String stockAmount = searchResult.getString("stockAmount");
+                int price = searchResult.getInt("price");
+                String image = searchResult.getString("image");
+                JSONObject store = searchResult.getJSONObject("store");
+                int franchiseId = store.getInt("franchiseId");
+                String franchiseName = store.getString("franchiseName");
+                String storeName = store.getString("storeName");
+                double latitude=store.getDouble("latitude");
+                double longitude =store.getDouble("longitude");
+                String address = store.getString("address");
+                String city = store.getString("city");
+                String tel = store.getString("tel");
+                int isatm = store.getInt("isatm");
+                int islottery=store.getInt("islottery");
+                int isdelivery=store.getInt("isdelivery");
+                int ismedicine=store.getInt("ismedicine");
+                int isfulltime=store.getInt("isfulltime");
+                String logoUrl=store.getString("logoUrl");
+                String deliveryBegin = store.getString("deliveryBegin");
+                String deliveryEnd = store.getString("deliveryEnd");
+                Store s = new Store(storeId,franchiseId,franchiseName,storeName,latitude,longitude,address,city,tel,isatm,islottery,isdelivery,isfulltime,logoUrl,deliveryBegin,deliveryEnd);
+                stores.add(s);
+                searchResults.add(new MapSearchResult(id,storeId,productId,name,stockAmount,price,image,s));
+            }
+        } catch(Exception e){
+
+        }
+
+        isEnd=true;
+        return searchResults;
+    }
 
 
-    private class RestApiTask extends AsyncTask<Integer, Void, String>{
+    private class RestApiStoreTask extends AsyncTask<Integer, Void, String>{
         private String mURL;
         private String result;
-        public RestApiTask(String mURL) {
+        public RestApiStoreTask(String mURL) {
             this.mURL = mURL;
         }
 
@@ -864,8 +934,133 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             addStores(stores);
+            mapSearchResultAdapter = new MapSearchResultAdapter(getContext(),searchResults);
+            recyclerView_map_search.setAdapter(mapSearchResultAdapter);
             Log.d("pospos", mGoogleMap.getCameraPosition().target.latitude+" "+mGoogleMap.getCameraPosition().target.longitude);
             Log.d("afterRest",stores.size()+"");
+        }
+    }
+
+
+    private class RestApiStoreProductTask extends AsyncTask<Integer, Void, String>{
+        private String mURL;
+        private String result;
+        public RestApiStoreProductTask(String mURL) {
+            this.mURL = mURL;
+        }
+
+        @Override
+        protected String doInBackground(Integer... integers) {
+
+            try{
+                URL url = new URL(mURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setReadTimeout(3000);
+                conn.setConnectTimeout(3000);
+                //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
+                conn.setDoInput(true);
+
+                conn.setUseCaches(false);
+                conn.connect();
+
+                int responseStatusCode = conn.getResponseCode();
+                Log.i("CHECK", "thread run");
+                InputStream inputStream;
+                if(responseStatusCode == conn.HTTP_OK) {
+                    inputStream = conn.getInputStream();
+                }else{
+                    inputStream = conn.getErrorStream();
+                }
+                Log.d("REQEUSTMETHOD",conn.getRequestMethod());
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+//                    JsonReader jsonReader = new JsonReader(inputStreamReader);
+//                    jsonReader.beginObject();
+//
+//                    while(jsonReader.hasNext()){
+//                        Log.d(jsonReader.nextName(),jsonReader.nextString());
+//                    }
+//                    jsonReader.close();
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while((line=bufferedReader.readLine())!=null) {
+                    sb.append(line);
+                    //Log.d("THREAD",line);
+                }
+                bufferedReader.close();
+
+
+                conn.disconnect();
+                result = sb.toString();
+                Log.d("productList",result);
+                searchResults = getSearchRest(result);
+//                stores = getRest(result);
+            } catch(Exception e){
+                result = e.toString();
+                Log.d("ERROR", e.toString());
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            addStores(stores);
+            mapSearchResultAdapter = new MapSearchResultAdapter(getContext(),searchResults);
+            recyclerView_map_search.setAdapter(mapSearchResultAdapter);
+            Log.d("pospos", mGoogleMap.getCameraPosition().target.latitude+" "+mGoogleMap.getCameraPosition().target.longitude);
+            Log.d("afterRest",searchResults.size()+"");
+        }
+    }
+
+    public interface ClickListener{
+        void onClick(View view, int position);
+
+        void onLongClick(View view, int position);
+    }
+
+
+    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
+        private GestureDetector gestureDetector;
+        private ClickListener clickListener;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener){
+            this.clickListener=clickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(),e.getY());
+                    if(child!=null&&clickListener!=null){
+                        clickListener.onLongClick(child,recyclerView.getChildAdapterPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+            View child = rv.findChildViewUnder(e.getX(),e.getY());
+            if(child!=null&&clickListener!=null&&gestureDetector.onTouchEvent(e)){
+                clickListener.onClick(child,rv.getChildAdapterPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
         }
     }
 

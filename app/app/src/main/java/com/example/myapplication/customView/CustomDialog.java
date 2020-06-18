@@ -116,9 +116,9 @@ public class CustomDialog {
 
             @Override
             public void onClick(View view, int position) {
-                intent = new Intent(mContext, ProductDetailActivity.class);
-                intent.putExtra("productId",storeProductList.get(position).getProductId());
-                mContext.startActivity(intent);
+//                intent = new Intent(mContext, ProductDetailActivity.class);
+//                intent.putExtra("productId",storeProductList.get(position).getProductId());
+//                mContext.startActivity(intent);
             }
 
             @Override
