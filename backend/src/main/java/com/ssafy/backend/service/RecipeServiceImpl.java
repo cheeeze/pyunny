@@ -7,6 +7,7 @@ import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.Recipe;
 import com.ssafy.backend.vo.RecipeComment;
 import com.ssafy.backend.vo.RecipeCommentParent;
+import com.ssafy.backend.vo.RecipeLike;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,6 +82,23 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<Product> getIngredientProduct(int id) throws Exception {
         return dao.getIngredientProduct(id);
+    }
+
+    @Override
+    public void insertRecipeLike(RecipeLike rl) {
+        dao.insertRecipeLike(rl);
+
+    }
+
+    @Override
+    public void deleteRecipeLike(RecipeLike rl) {
+        dao.deleteRecipeLike(rl);
+
+    }
+
+    @Override
+    public RecipeLike getRecipeLike(RecipeLike rl) {
+        return dao.getRecipeLike(rl);
     }
 
 }

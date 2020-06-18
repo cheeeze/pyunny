@@ -197,8 +197,13 @@
         insert into Favorite
         (user_id, product_id, date)
         values 
-        (#{userId}, #{productId}, #{date})
+        (#{userId}, #{productId}, convert_tz(now(),'+00:00','+09:00'))
     </insert>
+
+    <select id="getFavorite" parameterType="favorite" resultType="favorite">
+        select * from Favorite
+        where user_id = #{userId} and product_id = #{productId}
+    </select>
 
     <select id="getRatingcount" parameterType="int" resultType="ratingCount">
         select sum(score=1) inlike, sum(score=2) dislike
@@ -217,6 +222,11 @@
         values
         (#{userId}, #{productId}, #{score})
     </insert>
+
+    <select id="getRating" parameterType="rating" resultType="rating">
+        select * from Rating 
+        where user_id = #{userId} and product_id = #{productId}
+    </select>
 
     <update id="updateRating" parameterType="rating">
         update Rating
@@ -257,7 +267,12 @@
         delete from Product_comment where id = #{value}
     </delete>
 
-
+    <select id="getUsedRecipe" parameterType="int" resultType="recipe">
+        select r.id id, r.title title, r.date date, r.ingredient ingredient 
+        from Recipe r inner join Product_recipe pr
+        on r.id = pr.recipe_id
+        where pr.product_id = #{value}
+    </select>
 
 
 </mapper>

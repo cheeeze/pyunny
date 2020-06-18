@@ -8,6 +8,7 @@ import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.ProductComment;
 import com.ssafy.backend.vo.Rating;
 import com.ssafy.backend.vo.RatingCount;
+import com.ssafy.backend.vo.Recipe;
 import com.ssafy.backend.vo.Sale;
 
 import org.apache.ibatis.session.SqlSession;
@@ -97,7 +98,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void insertFavorite(Favorite f) throws Exception {
+    public void insertFavorite(Favorite f) {
         session.insert(ns + "insertFavorite", f);
 
     }
@@ -109,19 +110,19 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void insertRating(Rating r) throws Exception {
+    public void insertRating(Rating r) {
         session.insert(ns + "insertRating", r);
 
     }
 
     @Override
-    public void deleteRating(Rating r) throws Exception {
+    public void deleteRating(Rating r) {
         session.delete(ns + "deleteRating", r);
 
     }
 
     @Override
-    public void updateRating(Rating r) throws Exception {
+    public void updateRating(Rating r) {
         session.update(ns + "updateRating", r);
 
     }
@@ -133,7 +134,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<ProductComment> getCommentById(int id) throws Exception {
+    public List<ProductComment> getCommentById(int id) {
         return session.selectList(ns + "getCommentById", id);
     }
 
@@ -157,6 +158,21 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> getSimilarProduct(Product p) {
         return session.selectList(ns + "getSimilarProduct", p);
+    }
+
+    @Override
+    public Rating getRating(Rating r) {
+        return session.selectOne(ns + "getRating", r);
+    }
+
+    @Override
+    public Favorite getFavorite(Favorite f) {
+        return session.selectOne(ns + "getFavorite", f);
+    }
+
+    @Override
+    public List<Recipe> getUsedRecipe(int id) {
+        return session.selectList(ns + "getUsedRecipe", id);
     }
 
 }
