@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar></navbar>
-    <div style="padding:0.5em;">
+    <div class="recipecontainer">
       <div style="margin-top:60px; display: flex; margin-left:20px;">
         <button class="back" @click="niceback" style="float: left;">
           <img src="@/assets/icons/back.png" width="25px;" />
@@ -403,8 +403,7 @@ export default {
       }
 
       let data = {
-        userId: 1,
-
+        userId: this.userId,
         title: this.title,
         content: this.recipe.content,
         ingredient: this.ingredient,
@@ -476,5 +475,15 @@ export default {
   border-radius: 5px;
   background-color: #f2f3f5;
   margin-bottom: 10px;
+}
+
+.recipecontainer {
+  padding: 1.5em 20vw;
+}
+
+@media only screen and (max-width: 430px) {
+  .recipecontainer {
+    padding: 1.5em 5vw;
+  }
 }
 </style>

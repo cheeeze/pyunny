@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar></navbar>
-    <div style="padding:0.7em;">
+    <div class="recipecontainer">
       <div style="margin-top:60px; display: flex; margin-left:20px;">
         <button class="back" @click="niceback" style="float: left;">
           <img src="@/assets/icons/back.png" width="25px;" />
@@ -266,5 +266,15 @@ export default {
 
 select {
   -webkit-appearance: auto;
+}
+
+.recipecontainer {
+  padding: 1.5em 20vw;
+}
+
+@media only screen and (max-width: 430px) {
+  .recipecontainer {
+    padding: 1.5em 5vw;
+  }
 }
 </style>

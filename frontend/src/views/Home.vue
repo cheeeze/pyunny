@@ -9,11 +9,12 @@
           <img
             class="main_logo"
             src="@/assets/images/mainlogo_removebg.png"
-            alt=""
+            alt
             style="margin-bottom: 30px;"
           />
           <p style="margin-bottom: 0px;">
-            모든 편의점을 한 곳에서<br />간편하게 관리하세요!
+            모든 편의점을 한 곳에서
+            <br />간편하게 관리하세요!
           </p>
         </div>
       </div>
@@ -34,8 +35,8 @@ import Navbar from "@/components/Navbar.vue";
 export default {
   components: {
     Navbar,
-    MainInfo,
-  },
+    MainInfo
+  }
 };
 </script>
 <style lang="less" scoped>

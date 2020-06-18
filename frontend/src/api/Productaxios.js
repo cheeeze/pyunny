@@ -214,8 +214,8 @@ const insertRating = (data, success, error) => {
 
 const deleteRating = (data, success, error) => {
     http
-        .delete('/api/rating',{
-          data: data 
+        .delete('/api/rating', {
+            data: data
         })
         .then((res) => {
             success(res)
@@ -283,9 +283,9 @@ const deleteComment = (data, success, error) => {
         })
 }
 
-const getRating = (data, success, error) =>{
+const getRating = (data, success, error) => {
     http
-        .get('/api/rating/count/'+data)
+        .get('/api/rating/count/' + data)
         .then((res) => {
             success(res)
         })
@@ -296,6 +296,27 @@ const getRating = (data, success, error) =>{
 
 
 
+const getSimilarProduct = (data, success, error) => {
+    http
+        .get('/api/product/user?id=' + data.id + '&category=' + data.category)
+        .then(res => {
+            success(res)
+        })
+        .catch(err => {
+            error(err)
+        })
+}
+
+const getUsedRecipe = (data, success, error) => {
+    http
+        .get('/api/product/recipe/' + data)
+        .then(res => {
+            success(res)
+        })
+        .catch(err => {
+            error(err)
+        })
+}
 
 const axiosFunction = {
     insertProduct: (data, success, error) => insertProduct(data, success, error),
@@ -322,6 +343,9 @@ const axiosFunction = {
     updateComment: (data, success, error) => updateComment(data, success, error),
     deleteComment: (data, success, error) => deleteComment(data, success, error),
     getRating: (data, success, error) => getRating(data, success, error),
+    getSimilarProduct: (data, success, error) =>
+        getSimilarProduct(data, success, error),
+    getUsedRecipe: (data, success, error) => getUsedRecipe(data, success, error),
 }
 
 export default axiosFunction

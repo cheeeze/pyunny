@@ -2,7 +2,7 @@
 <template>
   <div>
     <navbar></navbar>
-    <div>
+    <div class="mapcontainer">
       <div id="search" class="box_search" style="margin-top:80px;" v-show="!itemshow">
         <img
           src="@/assets/icons/x.png/"
@@ -601,8 +601,8 @@ export default {
 <style>
 #map {
   /* width: 1000px; */
-  height: 500px;
-  position: relative;
+  height: 600px; /* 100vh-120px; */
+  position: sticky;
 }
 .box_search {
   overflow: hidden;
@@ -715,5 +715,14 @@ export default {
 }
 #scrollup.fadein {
   opacity: 1;
+}
+
+.mapcontainer {
+  padding: 0 20vw;
+}
+@media only screen and (max-width: 430px) {
+  .mapcontainer {
+    padding: 0 5vw;
+  }
 }
 </style>

@@ -79,6 +79,26 @@
         where id=#{value}
     </select>
 
+    <select id="getSimilarProduct" parameterType="product" resultType="product">
+        SELECT 
+        p.id id, 
+        p.name name, 
+        p.franchise_id franchise_id, 
+        p.price price, 
+        p.category category, 
+        p.image image,
+        p.description description 
+        FROM Rating r INNER JOIN Product p 
+        ON r.product_id = p.id
+        WHERE r.user_id in (SELECT user_id FROM Rating WHERE score = 1 AND product_id = #{id}) 
+        AND r.score = 1 
+        AND r.product_id != #{id} 
+        AND p.category = #{category}
+        GROUP BY p.id
+        ORDER BY COUNT(p.id) DESC
+        limit 20;
+    </select>
+
     <!-- 할인 ID로 가져오기 -->
     <select id="getSaleById" parameterType="int" resultType="sale">
         <include refid="select-sale"/>
@@ -177,8 +197,13 @@
         insert into Favorite
         (user_id, product_id, date)
         values 
-        (#{userId}, #{productId}, #{date})
+        (#{userId}, #{productId}, convert_tz(now(),'+00:00','+09:00'))
     </insert>
+
+    <select id="getFavorite" parameterType="favorite" resultType="favorite">
+        select * from Favorite
+        where user_id = #{userId} and product_id = #{productId}
+    </select>
 
     <select id="getRatingcount" parameterType="int" resultType="ratingCount">
         select sum(score=1) inlike, sum(score=2) dislike
@@ -197,6 +222,11 @@
         values
         (#{userId}, #{productId}, #{score})
     </insert>
+
+    <select id="getRating" parameterType="rating" resultType="rating">
+        select * from Rating 
+        where user_id = #{userId} and product_id = #{productId}
+    </select>
 
     <update id="updateRating" parameterType="rating">
         update Rating
@@ -237,7 +267,12 @@
         delete from Product_comment where id = #{value}
     </delete>
 
-
+    <select id="getUsedRecipe" parameterType="int" resultType="recipe">
+        select r.id id, r.title title, r.date date, r.ingredient ingredient 
+        from Recipe r inner join Product_recipe pr
+        on r.id = pr.recipe_id
+        where pr.product_id = #{value}
+    </select>
 
 
 </mapper>

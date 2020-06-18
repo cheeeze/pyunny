@@ -113,4 +113,22 @@
         delete from Recipe_comment
         where id = #{value}
     </delete>
+
+
+    <insert id="insertRecipeLike" parameterType="recipeLike">
+        insert into Recipe_like 
+        (user_id, recipe_id)
+        values
+        (#{userId}, #{recipeId})
+    </insert>
+
+    <delete id="deleteRecipeLike" parameterType="recipeLike">
+        delete from Recipe_like
+        where user_id = #{userId} and recipe_id = #{recipeId}
+    </delete>
+
+    <select id="getRecipeLike" parameterType="recipeLike" resultType="recipeLike">
+        select * from Recipe_like
+        where user_id = #{userId} and recipe_id = #{recipeId}
+    </select>
 </mapper>

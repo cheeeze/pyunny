@@ -40,7 +40,7 @@
         </li>
       </ul>
     </nav>
-    <user-sign-modal :visible.sync="visible" style="z-index: 80;"></user-sign-modal>
+    <user-sign-modal :visible.sync="visible" :userId.sync="userId" style="z-index: 80;"></user-sign-modal>
     <barcode-modal :barcode.sync="barcode"></barcode-modal>
   </div>
 </template>

@@ -3,7 +3,7 @@
     <div class="sign-container" id="sign-container">
       <!-- 회원가입 -->
       <div class="form-container sign-up-container">
-        <form action="#">
+        <form v-on:submit.prevent="register">
           <button class="close-btn" @click="$emit('update:visible', !visible)">
             <img src="@/assets/icons/x.png" alt height="20px" />
           </button>
@@ -22,13 +22,13 @@
           <input type="text" v-model="name" placeholder="Name" />
           <input type="text" v-model="nickname" placeholder="Nickname" />
           <input type="password" v-model="password" placeholder="Password" />
-          <button class="red-btn" @click="register">회원가입</button>
+          <button type="submit" class="red-btn" @click="register">회원가입</button>
           <button class="ghost red-btn hide" id="signIn" @click="signInButtonActive">로그인으로 이동</button>
         </form>
       </div>
       <!-- 로그인 -->
       <div class="form-container sign-in-container">
-        <form action="#">
+        <form v-on:submit.prevent="login">
           <button class="close-btn hide" @click="$emit('update:visible', !visible)">
             <img src="@/assets/icons/x.png" alt height="20px" />
           </button>
@@ -50,7 +50,7 @@
           <input type="email" v-model="email" placeholder="Email" />
           <input type="password" v-model="password" placeholder="Password" />
           <a href="#">Forgot your password?</a>
-          <button class="red-btn" @click="login">로그인</button>
+          <button type="submit" class="red-btn" @click="login">로그인</button>
           <button class="ghost red-btn hide" id="signUp" @click="signUpButtonActive">회원가입으로 이동</button>
         </form>
       </div>
@@ -189,15 +189,12 @@ export default {
             this.password = "";
             return alert("아이디나 비밀번호가 일치하지 않습니다.");
           }
+          console.log("로그인 되었다.");
           this.$emit("update:visible", false);
+          this.$emit("update:userId", res.data.id);
           sessionStorage.setItem("user", res.data.id);
-          /* let se = JSON.parse(sessionStorage.getItem("user"));
-          console.log(se);
-          if (se != null) {
-            console.log("dddd");
-          } else {
-            console.log("no");
-          } */
+          this.email = "";
+          this.password = "";
         },
         err => {
           console.log(err);

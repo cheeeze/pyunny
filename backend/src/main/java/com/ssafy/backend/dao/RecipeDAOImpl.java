@@ -6,6 +6,7 @@ import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.Recipe;
 import com.ssafy.backend.vo.RecipeComment;
 import com.ssafy.backend.vo.RecipeCommentParent;
+import com.ssafy.backend.vo.RecipeLike;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,23 @@ public class RecipeDAOImpl implements RecipeDAO {
     @Override
     public List<Product> getIngredientProduct(int id) throws Exception {
         return session.selectList(ns + "getIngredientProduct", id);
+    }
+
+    @Override
+    public void insertRecipeLike(RecipeLike rl) {
+        session.insert(ns + "insertRecipeLike", rl);
+
+    }
+
+    @Override
+    public void deleteRecipeLike(RecipeLike rl) {
+        session.delete(ns + "deleteRecipeLike", rl);
+
+    }
+
+    @Override
+    public RecipeLike getRecipeLike(RecipeLike rl) {
+        return session.selectOne(ns + "getRecipeLike", rl);
     }
 
 }

@@ -9,6 +9,7 @@ import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.ProductComment;
 import com.ssafy.backend.vo.Rating;
 import com.ssafy.backend.vo.RatingCount;
+import com.ssafy.backend.vo.Recipe;
 import com.ssafy.backend.vo.Sale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +104,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteRating(Rating r) throws Exception {
+    public void deleteRating(Rating r) {
         dao.deleteRating(r);
 
     }
@@ -114,19 +115,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void insertFavorite(Favorite f) throws Exception {
+    public void insertFavorite(Favorite f) {
         dao.insertFavorite(f);
 
     }
 
     @Override
-    public void insertRating(Rating r) throws Exception {
+    public void insertRating(Rating r) {
         dao.insertRating(r);
 
     }
 
     @Override
-    public void updateRating(Rating r) throws Exception {
+    public void updateRating(Rating r) {
         dao.updateRating(r);
 
     }
@@ -144,13 +145,33 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductComment> getCommentById(int id) throws Exception {
+    public List<ProductComment> getCommentById(int id) {
         return dao.getCommentById(id);
     }
 
     @Override
     public RatingCount getRatingcount(int id) throws Exception {
         return dao.getRatingcount(id);
+    }
+
+    @Override
+    public List<Product> getSimilarProduct(Product p) {
+        return dao.getSimilarProduct(p);
+    }
+
+    @Override
+    public Rating getRating(Rating r) {
+        return dao.getRating(r);
+    }
+
+    @Override
+    public Favorite getFavorite(Favorite f) {
+        return dao.getFavorite(f);
+    }
+
+    @Override
+    public List<Recipe> getUsedRecipe(int id) {
+        return dao.getUsedRecipe(id);
     }
 
 }
