@@ -3,7 +3,7 @@
     <div class="sign-container" id="sign-container">
       <!-- 회원가입 -->
       <div class="form-container sign-up-container">
-        <form action="#">
+        <form v-on:submit.prevent="register">
           <button class="close-btn" @click="$emit('update:visible', !visible)">
             <img src="@/assets/icons/x.png" alt height="20px" />
           </button>
@@ -27,12 +27,12 @@
           <input type="text" v-model="name" placeholder="Name" />
           <input type="text" v-model="nickname" placeholder="Nickname" />
           <input type="password" v-model="password" placeholder="Password" />
-          <button class="red-btn" @click="register">회원가입</button>
+          <button type="submit" class="red-btn">회원가입</button>
         </form>
       </div>
       <!-- 로그인 -->
       <div class="form-container sign-in-container">
-        <form action="#">
+        <form v-on:submit.prevent="login">
           <h1 style="color: black;">
             <img
               src="@/assets/images/mainlogo_removebg.png"
@@ -55,8 +55,8 @@
           <span>or use your account</span>
           <input type="email" v-model="email" placeholder="Email" />
           <input type="password" v-model="password" placeholder="Password" />
-          <a href="#">Forgot your password?</a>
-          <button class="red-btn" @click="login">로그인</button>
+          <p href="#">Forgot your password?</p>
+          <button type="submit" class="red-btn">로그인</button>
         </form>
       </div>
       <div class="overlay-container">
@@ -194,15 +194,12 @@ export default {
             this.password = "";
             return alert("아이디나 비밀번호가 일치하지 않습니다.");
           }
+          console.log("로그인 되었다.");
           this.$emit("update:visible", false);
+          this.$emit("update:userId", res.data.id);
           sessionStorage.setItem("user", res.data.id);
-          /* let se = JSON.parse(sessionStorage.getItem("user"));
-          console.log(se);
-          if (se != null) {
-            console.log("dddd");
-          } else {
-            console.log("no");
-          } */
+          this.email = "";
+          this.password = "";
         },
         err => {
           console.log(err);

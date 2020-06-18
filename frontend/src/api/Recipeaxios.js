@@ -144,6 +144,41 @@ const getIngredientProduct = (data, success, error) => {
 }
 
 
+const getLike = (data, success, error) => {
+    http
+        .get('/api/recipe_like?userId=' + data.userId + '&recipeId=' + data.recipeId)
+        .then((res) => {
+            success(res)
+        })
+        .catch((err) => {
+            error(err)
+        })
+}
+
+const insertRecipeLike = (data, success, error) => {
+    http
+        .post('/api/recipe_like', data)
+        .then((res) => {
+            success(res)
+        })
+        .catch((err) => {
+            error(err)
+        })
+}
+
+const deleteRecipeLike = (data, success, error) => {
+    http
+        .delete('/api/recipe_like?userId=' + data.userId + '&recipeId=' + data.recipeId)
+        .then((res) => {
+            success(res)
+        })
+        .catch((err) => {
+            error(err)
+        })
+}
+
+
+
 const axiosFunction = {
     getRecipePopularOrdered: (data, success, error) => getRecipePopularOrdered(data, success, error),
     getRecipeRecentOrdered: (data, success, error) => getRecipeRecentOrdered(data, success, error),
@@ -158,6 +193,10 @@ const axiosFunction = {
     getComment: (data, success, error) => getComment(data, success, error),
     uploadFiles: (data, success, error) => uploadFiles(data, success, error),
     getIngredientProduct: (data, success, error) => getIngredientProduct(data, success, error),
+    insertRecipeLike: (data, success, error) => insertRecipeLike(data, success, error),
+    deleteRecipeLike: (data, success, error) => deleteRecipeLike(data, success, error),
+    getLike: (data, success, error) => getLike(data, success, error),
+
 }
 
 export default axiosFunction
