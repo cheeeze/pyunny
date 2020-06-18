@@ -7,13 +7,8 @@
           <button class="close-btn" @click="$emit('update:visible', !visible)">
             <img src="@/assets/icons/x.png" alt height="20px" />
           </button>
-          <h1 style="color: black;">
-            <img
-              src="@/assets/images/mainlogo_removebg.png"
-              alt
-              height="65px"
-              style="vertical-align: middle; padding-bottom: 4px;"
-            />&nbsp;회원가입
+          <h1 id="sign-title" style="color: black;">
+            <img id="sign-logo" src="@/assets/images/mainlogo_removebg.png" alt />&nbsp;회원가입
           </h1>
           <!-- <a href="#" class="social" style="margin-bottom: 5px;">
             <img src="@/assets/icons/kakao.png" alt width="95%;" />
@@ -28,18 +23,17 @@
           <input type="text" v-model="nickname" placeholder="Nickname" />
           <input type="password" v-model="password" placeholder="Password" />
           <button class="red-btn" @click="register">회원가입</button>
+          <button class="ghost red-btn hide" id="signIn" @click="signInButtonActive">로그인으로 이동</button>
         </form>
       </div>
       <!-- 로그인 -->
       <div class="form-container sign-in-container">
         <form action="#">
-          <h1 style="color: black;">
-            <img
-              src="@/assets/images/mainlogo_removebg.png"
-              alt
-              height="65px"
-              style="vertical-align: middle; padding-bottom: 4px;"
-            />&nbsp;로그인
+          <button class="close-btn hide" @click="$emit('update:visible', !visible)">
+            <img src="@/assets/icons/x.png" alt height="20px" />
+          </button>
+          <h1 id="sign-title" style="color: black;">
+            <img id="sign-logo" src="@/assets/images/mainlogo_removebg.png" alt />&nbsp;로그인
           </h1>
           <div class="social-container">
             <!--<a href="#" class="social">
@@ -57,6 +51,7 @@
           <input type="password" v-model="password" placeholder="Password" />
           <a href="#">Forgot your password?</a>
           <button class="red-btn" @click="login">로그인</button>
+          <button class="ghost red-btn hide" id="signUp" @click="signUpButtonActive">회원가입으로 이동</button>
         </form>
       </div>
       <div class="overlay-container">
@@ -343,6 +338,13 @@ a {
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
+  margin-top: 10px;
+}
+
+#sign-logo {
+  height: 65px;
+  vertical-align: middle;
+  padding-bottom: 4px;
 }
 
 .close-btn {
@@ -407,6 +409,10 @@ input {
   padding: 3px;
   border: solid 1px #6699ff;
   font-size: 9px;
+}
+
+.hide {
+  display: none;
 }
 
 .sign-container {
@@ -570,5 +576,64 @@ footer i {
 footer a {
   color: #3c97bf;
   text-decoration: none;
+}
+
+@media only screen and (max-width: 700px) {
+  .sign-container {
+    width: 80%;
+    min-height: 580px;
+  }
+  .overlay-container {
+    display: none;
+  }
+  form {
+    display: block;
+    padding: 35px 15% 0px;
+  }
+  .sign-in-container {
+    width: 100%;
+  }
+  .sign-up-container {
+    width: 100%;
+  }
+
+  .red-btn {
+    display: block;
+    margin: 10px auto;
+  }
+  button.ghost {
+    background-color: transparent;
+    border-color: #80d4f6;
+    color: #80d4f6;
+  }
+  .sign-container.right-panel-active .sign-up-container {
+    transform: none;
+    opacity: 1;
+    z-index: 5;
+    animation: none;
+  }
+  .hide {
+    display: inline-flex;
+  }
+}
+
+@media only screen and (max-width: 430px) {
+  form {
+    padding: 30px 8% 0px;
+  }
+
+  #sign-title {
+    font-size: 2rem;
+  }
+
+  #sign-logo {
+    height: 60px;
+  }
+}
+
+@media only screen and (max-width: 335px) {
+  #sign-logo {
+    height: 50px;
+  }
 }
 </style>
