@@ -22,10 +22,13 @@ import android.provider.Settings;
 import android.util.JsonReader;
 import android.util.JsonToken;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -38,9 +41,12 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MainSaleAdapter;
+import com.example.myapplication.adapter.MapSearchResultAdapter;
 import com.example.myapplication.customView.CustomDialog;
 import com.example.myapplication.vo.MapSearchResult;
 import com.example.myapplication.vo.Sale;
@@ -107,10 +113,19 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
 
     private EditText edt_map_product;
 
+    private RecyclerView recyclerView_map_search;
+    private MapSearchResultAdapter mapSearchResultAdapter;
+
+    private ImageButton btn_mapsearch_clear;
+    private Button btn_map_searchresult_tolist;
+
+    private InputMethodManager imm;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_map_get_conv:
+                imm.hideSoftInputFromWindow(edt_map_product.getWindowToken(),0);
                 if(edt_map_product.getText().toString().replace(" ","").length()<=0){
                     for(Marker m:arrayMarker){
                         m.remove();
@@ -123,6 +138,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                     float distance = 0.5f;
                     String keyword = "";
                     new RestApiStoreTask("http://k02d1021.p.ssafy.io:8080/api/store?latitude="+latitude+"&longitude="+longitude+"&distance="+distance+"&keyword="+keyword).execute();
+
 
                 }else{
                     for(Marker m:arrayMarker){
@@ -137,12 +153,19 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                     String keyword = edt_map_product.getText().toString();
                     new RestApiStoreProductTask("http://k02d1021.p.ssafy.io:8080/api/store_product?latitude="+latitude+"&longitude="+longitude+"&distance="+distance+"&keyword="+keyword).execute();
                 }
-
-
-
-
-
                 break;
+            case R.id.btn_mapsearch_clear:
+                searchResults = new ArrayList<>();
+                edt_map_product.setText("");
+                mapSearchResultAdapter = new MapSearchResultAdapter(getContext(),searchResults);
+                recyclerView_map_search.setAdapter(mapSearchResultAdapter);
+                break;
+
+            case R.id.btn_map_searchresult_tolist:
+                recyclerView_map_search.setVisibility(View.VISIBLE);
+                btn_map_searchresult_tolist.setVisibility(View.GONE);
+                break;
+
         }
     }
 
@@ -273,6 +296,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -283,10 +307,42 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
 
         btn_map_get_conv = view.findViewById(R.id.btn_map_get_conv);
         btn_map_get_conv.setOnClickListener(this);
+        btn_mapsearch_clear = view.findViewById(R.id.btn_mapsearch_clear);
+        btn_mapsearch_clear.setOnClickListener(this);
+        btn_map_searchresult_tolist = view.findViewById(R.id.btn_map_searchresult_tolist);
+        btn_map_searchresult_tolist.setVisibility(View.GONE);
+        btn_map_searchresult_tolist.setOnClickListener(this);
+
         mapView = (MapView)view.findViewById(R.id.map_view);
         mapView.getMapAsync(this);
 
         edt_map_product = view.findViewById(R.id.edt_map_product);
+
+        recyclerView_map_search = view.findViewById(R.id.recyclerView_map_search);
+        searchResults = new ArrayList<>();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView_map_search.setLayoutManager(layoutManager);
+        mapSearchResultAdapter = new MapSearchResultAdapter(getContext(),searchResults);
+        recyclerView_map_search.setAdapter(mapSearchResultAdapter);
+
+
+        recyclerView_map_search.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView_map_search, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                MapSearchResult mapSearchResult = searchResults.get(position);
+                LatLng latLng = new LatLng(mapSearchResult.getStore().getLatitude(),mapSearchResult.getStore().getLongitude());
+                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                recyclerView_map_search.setVisibility(View.GONE);
+                btn_map_searchresult_tolist.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
 
 
 
@@ -798,7 +854,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                 String logoUrl=store.getString("logoUrl");
                 String deliveryBegin = store.getString("deliveryBegin");
                 String deliveryEnd = store.getString("deliveryEnd");
-                Store s = new Store(id,franchiseId,franchiseName,storeName,latitude,longitude,address,city,tel,isatm,islottery,isdelivery,isfulltime,logoUrl,deliveryBegin,deliveryEnd);
+                Store s = new Store(storeId,franchiseId,franchiseName,storeName,latitude,longitude,address,city,tel,isatm,islottery,isdelivery,isfulltime,logoUrl,deliveryBegin,deliveryEnd);
                 stores.add(s);
                 searchResults.add(new MapSearchResult(id,storeId,productId,name,stockAmount,price,image,s));
             }
@@ -876,6 +932,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             addStores(stores);
+            mapSearchResultAdapter = new MapSearchResultAdapter(getContext(),searchResults);
+            recyclerView_map_search.setAdapter(mapSearchResultAdapter);
             Log.d("pospos", mGoogleMap.getCameraPosition().target.latitude+" "+mGoogleMap.getCameraPosition().target.longitude);
             Log.d("afterRest",stores.size()+"");
         }
@@ -948,8 +1006,59 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             addStores(stores);
+            mapSearchResultAdapter = new MapSearchResultAdapter(getContext(),searchResults);
+            recyclerView_map_search.setAdapter(mapSearchResultAdapter);
             Log.d("pospos", mGoogleMap.getCameraPosition().target.latitude+" "+mGoogleMap.getCameraPosition().target.longitude);
-            Log.d("afterRest",stores.size()+"");
+            Log.d("afterRest",searchResults.size()+"");
+        }
+    }
+
+    public interface ClickListener{
+        void onClick(View view, int position);
+
+        void onLongClick(View view, int position);
+    }
+
+
+    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
+        private GestureDetector gestureDetector;
+        private ClickListener clickListener;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener){
+            this.clickListener=clickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(),e.getY());
+                    if(child!=null&&clickListener!=null){
+                        clickListener.onLongClick(child,recyclerView.getChildAdapterPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+            View child = rv.findChildViewUnder(e.getX(),e.getY());
+            if(child!=null&&clickListener!=null&&gestureDetector.onTouchEvent(e)){
+                clickListener.onClick(child,rv.getChildAdapterPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
         }
     }
 
