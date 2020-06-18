@@ -152,7 +152,7 @@ export default {
       if (this.selectedTab == "sale") {
         setTimeout(() => {
           this.saleShowItems = this.saleShowItems.concat(
-            this.saleFilteredItems.splice(0, 6)
+            this.saleFilteredItems.splice(0, 12)
           );
           this.saleItemIdx += 6;
           $state.loaded();
@@ -160,7 +160,7 @@ export default {
       } else if (this.selectedTab == "all") {
         setTimeout(() => {
           this.allShowItems = this.allShowItems.concat(
-            this.allFilteredItems.splice(0, 6)
+            this.allFilteredItems.splice(0, 12)
           );
           this.allItemIdx += 6;
           $state.loaded();
@@ -180,7 +180,7 @@ export default {
       res => {
         this.saleItems = Object.assign([], res.data);
         this.saleFilteredItems = Object.assign([], res.data);
-        this.saleShowItems = this.saleFilteredItems.splice(0, 6);
+        this.saleShowItems = this.saleFilteredItems.splice(0, 12);
       },
       err => {
         console.log(err);
@@ -198,7 +198,7 @@ export default {
         });
         this.allItems = res.data;
         this.allFilteredItems = res.data;
-        this.allShowItems = this.allFilteredItems.splice(0, 6);
+        this.allShowItems = this.allFilteredItems.splice(0, 12);
       },
       err => {
         console.log(err);
@@ -211,10 +211,10 @@ export default {
         this.conveniences = [];
         if (this.selectedTab == "sale") {
           this.saleFilteredItems = Object.assign([], this.saleItems);
-          this.saleShowItems = this.saleFilteredItems.splice(0, 6);
+          this.saleShowItems = this.saleFilteredItems.splice(0, 12);
         } else if (this.selectedTab == "all") {
           this.allFilteredItems = Object.assign([], this.allItems);
-          this.allShowItems = this.allFilteredItems.splice(0, 6);
+          this.allShowItems = this.allFilteredItems.splice(0, 12);
         }
       } else if (!this.conveniences.length && !this.convenience_all.length) {
         this.convenience_all = ["all"];
@@ -239,12 +239,12 @@ export default {
           this.saleFilteredItems = this.saleItems.filter(item => {
             return this.conveniences.includes(item.franchiseId.toString());
           });
-          this.saleShowItems = this.saleFilteredItems.splice(0, 6);
+          this.saleShowItems = this.saleFilteredItems.splice(0, 12);
         } else if (this.selectedTab == "all") {
           this.allFilteredItems = this.allItems.filter(item => {
             return this.conveniences.includes(item.franchiseId.toString());
           });
-          this.allShowItems = this.allFilteredItems.splice(0, 6);
+          this.allShowItems = this.allFilteredItems.splice(0, 12);
         }
       }
     }

@@ -14,6 +14,13 @@ public class Recipe {
     public Recipe() {
     }
 
+    public Recipe(int id, String ingredient, String date, String title) {
+        this.id = id;
+        this.ingredient = ingredient;
+        this.date = date;
+        this.title = title;
+    }
+
     public Recipe(int id, int userId, String ingredient, String date, String title, String content) {
         this.id = id;
         this.userId = userId;

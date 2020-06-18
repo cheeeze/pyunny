@@ -2,7 +2,7 @@
 <template>
   <div>
     <navbar></navbar>
-    <div>
+    <div class="mapcontainer">
       <div id="search" class="box_search" style="margin-top:80px;" v-show="!itemshow">
         <img
           src="@/assets/icons/x.png/"
@@ -68,7 +68,7 @@
         v-show="itemshow||searchshow"
         v-bind:style="{ marginTop: itemshow? '30px':'0px'}"
       >
-        <v-container>
+        <v-container style="box-shadow:none;">
           <v-row>
             <v-col flex="6">
               <v-subheader>편의점 상품</v-subheader>
@@ -122,7 +122,7 @@
       v-show="isSearching&&!searchshow"
       @click="searchshow=!searchshow"
       style="position: absolute;
-    top: 560px;
+    top: 90%;
     right:20px;
     z-index: 2;"
     >
@@ -601,8 +601,8 @@ export default {
 <style>
 #map {
   /* width: 1000px; */
-  height: 500px;
-  position: relative;
+  height: calc(100vh - 120px);
+  position: sticky;
 }
 .box_search {
   overflow: hidden;
@@ -632,7 +632,7 @@ export default {
   position: absolute;
   padding: 10px;
   top: 32%;
-  left: 10px;
+  left: 18px;
   z-index: 2;
 }
 
@@ -675,7 +675,7 @@ export default {
   top: 38%;
   z-index: 2;
   width: 40px;
-  left: 5px;
+  left: 12px;
 }
 
 .inner_recom {
@@ -705,7 +705,7 @@ export default {
 #scrollup {
   transition: opacity 0.5s;
   position: fixed;
-  top: 530px;
+  top: 90%;
   right: 20px;
   z-index: 2;
 }
@@ -715,5 +715,14 @@ export default {
 }
 #scrollup.fadein {
   opacity: 1;
+}
+
+.mapcontainer {
+  padding: 0 20vw;
+}
+@media only screen and (max-width: 430px) {
+  .mapcontainer {
+    padding: 0 5vw;
+  }
 }
 </style>

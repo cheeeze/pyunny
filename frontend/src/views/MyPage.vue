@@ -2,9 +2,9 @@
   <div id="full">
     <navbar></navbar>
     <section id="banner" class="topbanner">
-      <div id="boxes" :class="tempClass">
+      <div id="boxes" :class="tempClass" style="display:flex; flex-direction: column;">
         <!-- red box -->
-
+        <!-- <div style="flex: 1 1 0;"> -->
         <div class="small-box red" @click="filp('red')">
           <div>
             <div class="red-visible original left">
@@ -100,8 +100,11 @@
           </div>
         </div>
 
+        <!---->
+        <!-- </div> -->
+
         <!-- big-box -->
-        <div class="big-box">
+        <div class="big-box" style="display: flex; flex: 1 1 0;">
           <div class="whatis">
             <div class="red-visible right">
               <diV v-if="this.select_menu == 'red1'">
@@ -203,8 +206,8 @@ export default {
         console.log("컬러가 있다.", menu);
         this.tempClass = this.color + "-chosen";
         this.select_menu = menu;
-        }
-      },
+      }
+    },
     test() {
       console.log("test");
     },
@@ -503,7 +506,7 @@ body {
   height: 100%;
   background-repeat: no-repeat;
   background-position: 0 0;
-  overflow: hidden;
+  overflow-y: auto;
 }
 .big-box > .right > div.original {
   background-color: #ddd;

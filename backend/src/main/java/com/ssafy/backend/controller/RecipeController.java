@@ -9,6 +9,7 @@ import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.Recipe;
 import com.ssafy.backend.vo.RecipeComment;
 import com.ssafy.backend.vo.RecipeCommentParent;
+import com.ssafy.backend.vo.RecipeLike;
 import com.ssafy.backend.vo.TempKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -104,6 +106,47 @@ public class RecipeController {
     public ResponseEntity<List<RecipeCommentParent>> getComment(@PathVariable int recipeId) throws Exception {
         List<RecipeCommentParent> res = service.getComment(recipeId);
         return new ResponseEntity(res, HttpStatus.OK);
+    }
+
+    @PostMapping("/recipe_like")
+    public ResponseEntity insertRecipeLike(@RequestBody RecipeLike rl) {
+        // System.out.println(r.toString());
+        try {
+            service.insertRecipeLike(rl);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("/recipe_like")
+    public ResponseEntity deleteRecipeLike(@ModelAttribute RecipeLike rl) {
+
+        try {
+            service.deleteRecipeLike(rl);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/recipe_like")
+    public ResponseEntity getRecipeLike(@ModelAttribute RecipeLike rl) {
+
+        try {
+            RecipeLike res = service.getRecipeLike(rl);
+            if (res != null) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(false, HttpStatus.OK);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/uploadFiles")

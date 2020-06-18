@@ -15,32 +15,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig extends WebMvcConfigurationSupport{
-    
+public class SwaggerConfig {
+
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-            .title("API")
-            .description("api swagger")
-            .build();
+        return new ApiInfoBuilder().title("API").description("api swagger").build();
     }
 
-    @Override
-     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-       // Make Swagger meta-data available via <baseURL>/v2/api-docs/
-       registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-       // Make Swagger UI available via <baseURL>/swagger-ui.html
-       registry.addResourceHandler("/**").addResourceLocations("classpath:/META-INF/resources/");
-     }
-
     @Bean
-    public Docket api(){
-        return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("example")
-                .apiInfo(this.apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors
-                        .basePackage("com.ssafy.backend.controller"))
-                .paths(PathSelectors.ant("/**"))
-                .build();
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2).groupName("example").apiInfo(this.apiInfo()).select()
+                .apis(RequestHandlerSelectors.basePackage("com.ssafy.backend.controller"))
+                .paths(PathSelectors.ant("/**")).build();
     }
 }

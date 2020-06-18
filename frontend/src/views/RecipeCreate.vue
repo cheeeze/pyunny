@@ -1,8 +1,13 @@
 <template>
   <div>
     <navbar></navbar>
-    <div style="padding:0.5em;">
-      <div class="text-area" style="margin-top:100px">
+    <div class="recipecontainer">
+      <div style="margin-top:60px; display: flex; margin-left:20px;">
+        <button class="back" @click="niceback" style="float: left;">
+          <img src="@/assets/icons/back.png" width="25px;" />
+        </button>
+      </div>
+      <div class="text-area" style="margin-top:20px">
         <input
           type="search"
           id="innerQuery"
@@ -28,7 +33,7 @@
         />
       </div>
 
-      <v-container fluid>
+      <v-container fluid style="box-shadow:none;">
         <v-row>
           <v-col cols="12">
             <v-combobox v-model="select" :items="items" label="편의점 상품" multiple outlined dense></v-combobox>
@@ -211,7 +216,6 @@ import {
   Underline,
   History,
   Image
-  //Placeholder
 } from "tiptap-extensions";
 
 export default {
@@ -230,6 +234,7 @@ export default {
       title: "",
       ingredient: "",
       imageNames: [],
+      userId: 0,
 
       editor: new Editor({
         extensions: [
@@ -252,17 +257,15 @@ export default {
           new History(),
           new Image()
           /* new Placeholder({
-            emptyNodeClass: "is-empty",
-            emptyNodeText: "여기에 글을 적어주세요..",
+            emptyNodeClass: "is-empty, is-editor-empty",
+            emptyNodeText: "여기에 글을 적어주세요..궁극의 레시피를...!",
             showOnlyWhenEditable: true
           }) */
         ],
-        content: `<h2>
+        content: `<p>
             궁극의 레시피!
-          </h2>
-          <p>
-            <b>정신차려 이 각박한 세상속에서! (찰싹)</b>
-          </p>`
+          </ㅔ>
+          `
       })
     };
   },
@@ -284,6 +287,10 @@ export default {
         console.log(err);
       }
     );
+
+    if (sessionStorage.getItem("user") != null) {
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+    }
   },
   methods: {
     showImagePrompt(command) {
@@ -374,7 +381,7 @@ export default {
             //console.log(url);
             tmptext = tmptext.replace(
               url,
-              `http://127.0.0.1:8080/api/upload/${this.imageNames[index]}`
+              `http://k02d1021.p.ssafy.io:8080/api/upload/${this.imageNames[index]}` //'https://k02d1021.p.ssafy.io:8080'
             );
             index++;
           }
@@ -396,8 +403,7 @@ export default {
       }
 
       let data = {
-        userId: 1,
-
+        userId: this.userId,
         title: this.title,
         content: this.recipe.content,
         ingredient: this.ingredient,
@@ -418,6 +424,17 @@ export default {
           console.log(error);
         }
       );
+    },
+    niceback: function() {
+      var numberOfEntries = window.history.length;
+      if (numberOfEntries > 2) {
+        this.$router.go(-1);
+      } else {
+        var fpath = this.PageData.backCrumb.url;
+        this.$router.push({
+          path: fpath
+        });
+      }
     }
   },
   beforeDestroy() {
@@ -458,5 +475,15 @@ export default {
   border-radius: 5px;
   background-color: #f2f3f5;
   margin-bottom: 10px;
+}
+
+.recipecontainer {
+  padding: 1.5em 20vw;
+}
+
+@media only screen and (max-width: 430px) {
+  .recipecontainer {
+    padding: 1.5em 5vw;
+  }
 }
 </style>

@@ -7,6 +7,8 @@ import com.ssafy.backend.vo.MainSearch;
 import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.ProductComment;
 import com.ssafy.backend.vo.Rating;
+import com.ssafy.backend.vo.RatingCount;
+import com.ssafy.backend.vo.Recipe;
 import com.ssafy.backend.vo.Sale;
 
 public interface ProductService {
@@ -19,6 +21,8 @@ public interface ProductService {
     List<Sale> getSale() throws Exception;
 
     Product getProductById(int id) throws Exception;
+
+    List<Product> getSimilarProduct(Product p);
 
     Sale getSaleById(int id) throws Exception;
 
@@ -38,21 +42,29 @@ public interface ProductService {
 
     void deleteSale(int id) throws Exception;
 
-    void insertFavorite(Favorite f) throws Exception;
+    void insertFavorite(Favorite f);
+
+    Favorite getFavorite(Favorite f);
 
     void deleteFavorite(int id) throws Exception;
 
-    void insertRating(Rating r) throws Exception;
+    void insertRating(Rating r);
 
-    void deleteRating(int id) throws Exception;
+    Rating getRating(Rating r);
 
-    void updateRating(Rating r) throws Exception;
+    RatingCount getRatingcount(int id) throws Exception;
+
+    void deleteRating(Rating r);
+
+    void updateRating(Rating r);
 
     void insertComment(ProductComment pc) throws Exception;
 
-    List<ProductComment> getCommentById(int id) throws Exception;
+    List<ProductComment> getCommentById(int id);
 
     void updateComment(ProductComment pc) throws Exception;
 
     void deleteComment(int id) throws Exception;
+
+    List<Recipe> getUsedRecipe(int id);
 }

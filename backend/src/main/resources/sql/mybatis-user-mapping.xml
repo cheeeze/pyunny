@@ -5,15 +5,15 @@
 
 <mapper namespace="UserMapper">
 
-	<resultMap type="com.ssafy.backend.vo.User" id="resultUser">
-		<id column="id" property="id"/>
+    <resultMap type="com.ssafy.backend.vo.User" id="resultUser">
+        <id column="id" property="id"/>
         <result column="name" property="name"/>
-		<result column="password" property="password"/>
-		<result column="nickname" property="nickname"/>
-		<result column="email" property="email"/>
-		<result column="kakao" property="kakao"/>
-		<result column="profile_image" property="profileImage"/>
-	</resultMap>
+        <result column="password" property="password"/>
+        <result column="nickname" property="nickname"/>
+        <result column="email" property="email"/>
+        <result column="kakao" property="kakao"/>
+        <result column="profile_image" property="profileImage"/>
+    </resultMap>
 
     <sql id="select-all-users">
         SELECT
@@ -27,40 +27,34 @@
         FROM
             User
     </sql>
-	
-	<insert id="insertUser"  parameterType="user" useGeneratedKeys="true" keyProperty="id">
+
+    <insert id="insertUser" parameterType="user" useGeneratedKeys="true" keyProperty="id">
 		INSERT into User(name, password, nickname, email, kakao, profile_image)
         VALUES(#{name}, #{password}, #{nickname}, #{email}, #{kakao}, #{profileImage})
-	</insert>
+    </insert>
 
     <update id="updateUser" parameterType="user">
         UPDATE User
-        SET
-            name=#{name},
-            password=#{password},
-            nickname=#{nickname},
-            email=#{email},
-            kakao=#{kakao},
-            profile_image=#{profileImage}
+        SET name=#{name}, password=#{password}, nickname=#{nickname}, email=#{email}, kakao=#{kakao}, profile_image=#{profileImage}
         WHERE id=#{id}
     </update>
 
-	<delete id="deleteMember" parameterType="int">
+    <delete id="deleteMember" parameterType="int">
 		delete from User where id=#{value}
-	</delete>
-	
-	<select id="login" parameterType="user" resultMap="resultUser" >
-		<include refid="select-all-users"/>
+    </delete>
+
+    <select id="login" parameterType="user" resultMap="resultUser">
+        <include refid="select-all-users"/>
 		 WHERE email=#{email} AND password=#{password}
-	</select>
+    </select>
 
     <select id="selectOne" parameterType="int" resultMap="resultUser">
-    	<include refid="select-all-users"/>
+        <include refid="select-all-users"/>
 		 WHERE id=#{value}
     </select>
 
     <select id="duplicateNickname" parameterType="String" resultType="int">
         SELECT count(*) FROM User WHERE nickname=#{value}
     </select>
-	
+
 </mapper>

@@ -1,8 +1,13 @@
 <template>
   <div>
     <navbar></navbar>
-    <div style="padding:0.7em;">
-      <div style="margin-top:100px;">
+    <div class="recipecontainer">
+      <div style="margin-top:60px; display: flex; margin-left:20px;">
+        <button class="back" @click="niceback" style="float: left;">
+          <img src="@/assets/icons/back.png" width="25px;" />
+        </button>
+      </div>
+      <div style="margin-top:40px;">
         <div>
           <!-- <div class="avatar-preview">
           <div
@@ -17,7 +22,7 @@
 
           <div style="float:right;">
             <p>작성자: {{user.nickname}}</p>
-            <p>{{recipe.date.substring(0,10)}}</p>
+            <p>{{recipe.date}}</p>
           </div>
         </div>
       </div>
@@ -41,9 +46,38 @@
       </div>
 
       <!-- 한줄평 부분 || 채은이를 위한 선물 -->
-      <div>
+      <div v-if="userId==0" style="margin-top:50px;">
+        <router-link to="/">로그인</router-link>후 사용하실수 있습니다
+      </div>
+      <div v-if="userId!=0">
         <div class="item-comment" style="margin-top:50px;">
-          <h2 class="subtitle">댓글</h2>
+          <div style="display: flow-root;margin-bottom: 20px;">
+            <h2 class="subtitle" style="float: left;">댓글</h2>
+            <v-btn
+              v-if="islike==true"
+              @click="delHeart"
+              class="mx-2"
+              fab
+              dark
+              small
+              color="pink"
+              style="float: right;"
+            >
+              <v-icon dark>mdi-heart</v-icon>
+            </v-btn>
+            <v-btn
+              v-if="islike==false"
+              @click="addHeart"
+              class="mx-2"
+              fab
+              outlined
+              small
+              color="pink"
+              style="float: right;"
+            >
+              <v-icon dark>mdi-heart</v-icon>
+            </v-btn>
+          </div>
           <input id="item-comment" type="text" placeholder="댓글을 적어보세요." v-model="text" />
           <button id="comment-btn" @click="addComment(0,0)">입력</button>
           <!-- 한줄평 모음 -->
@@ -105,25 +139,6 @@ import Navbar from "@/components/Navbar.vue";
 import Axios from "@/api/Recipeaxios";
 import UserAxios from "@/api/Useraxios";
 import { Editor, EditorContent } from "tiptap";
-/* import {
-  Blockquote,
-  CodeBlock,
-  HardBreak,
-  Heading,
-  HorizontalRule,
-  OrderedList,
-  BulletList,
-  ListItem,
-  TodoItem,
-  TodoList,
-  Bold,
-  Code,
-  Italic,
-  Link,
-  Strike,
-  Underline,
-  History
-} from "tiptap-extensions"; */
 
 export default {
   components: {
@@ -143,11 +158,18 @@ export default {
       replys: [],
       text: "",
       childtext: "",
+      userId: 0,
+      islike: false,
       editor: new Editor()
     };
   },
   mounted() {
     this.getRecipe();
+
+    if (sessionStorage.getItem("user") != null) {
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+      this.getLike();
+    }
   },
   methods: {
     getRecipe() {
@@ -156,6 +178,27 @@ export default {
         res => {
           console.log(res);
 
+          let start = res.data.content.indexOf("<img ", 1);
+          let prestart = 0;
+
+          while (start > 0) {
+            let newcontent = res.data.content
+              .substring(0, start + 4)
+              .concat(
+                ' style="width: 300px;"',
+                res.data.content.substring(start + 4)
+              );
+            //console.log(newcontent);
+            //console.log(res.data.content.substring(prestart, start + 4));
+            //console.log(res.data.content.substring(start + 4));
+            //let last = element.content.indexOf('"', start);
+            //src = element.content.substring(start, last);
+            res.data.content = newcontent;
+
+            prestart = start;
+            start = res.data.content.indexOf("<img ", prestart + 1);
+          }
+          res.data.date = res.data.date.substring(0, 10);
           this.recipe = res.data;
           this.getUser(res.data.userId);
           this.getProduct(res.data.id);
@@ -213,7 +256,7 @@ export default {
     addComment(index, parentId) {
       console.log("index:" + index + " parentId:" + parentId);
       let data = {
-        userId: 1,
+        userId: this.userId,
         recipeId: this.recipe.id,
         //content: this.text,
         parentId: parentId
@@ -226,6 +269,7 @@ export default {
       Axios.insertRecipeComment(data, res => {
         console.log(res.data);
         res.data.nickname = this.user.nickname;
+        res.data.isreply = false;
         if (parentId == 0) {
           this.replys.push(res.data);
         } else {
@@ -234,11 +278,85 @@ export default {
         this.text = "";
         this.childtext = "";
       });
+    },
+    niceback: function() {
+      var numberOfEntries = window.history.length;
+      if (numberOfEntries > 2) {
+        this.$router.go(-1);
+      } else {
+        var fpath = this.PageData.backCrumb.url;
+        this.$router.push({
+          path: fpath
+        });
+      }
+    },
+    addHeart() {
+      if (this.userId == 0) {
+        return alert("로그인 후 이용가능합니다.");
+      }
+
+      let data = {
+        userId: this.userId,
+        recipeId: this.id
+      };
+      Axios.insertRecipeLike(
+        data,
+        res => {
+          this.islike = true;
+          res;
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    },
+    delHeart() {
+      if (this.userId == 0) {
+        return alert("로그인 후 이용가능합니다.");
+      }
+
+      let data = {
+        userId: this.userId,
+        recipeId: Number(this.id)
+      };
+
+      Axios.deleteRecipeLike(
+        data,
+        res => {
+          this.islike = false;
+          res;
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    },
+    getLike() {
+      let data = {
+        userId: this.userId,
+        recipeId: this.id
+      };
+      Axios.getLike(
+        data,
+        res => {
+          this.islike = res.data;
+        },
+        err => {
+          console.log(err);
+        }
+      );
     }
   }
 };
 </script>
 <style scoped>
+.max-small {
+  /* width: auto;
+  height: auto; */
+  max-width: 100px;
+  max-height: 100px;
+}
+
 .subtitle {
   font-size: 1.6rem;
   font-weight: bold;
@@ -304,5 +422,15 @@ export default {
 .rereply {
   margin: -5px 5px 3px;
   z-index: 3;
+}
+
+.recipecontainer {
+  padding: 1.5em 20vw;
+}
+
+@media only screen and (max-width: 430px) {
+  .recipecontainer {
+    padding: 1.5em 5vw;
+  }
 }
 </style>

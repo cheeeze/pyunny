@@ -3,24 +3,19 @@
     <navbar></navbar>
     <div class="detail-container">
       <!-- 상단 제품 정보 -->
+      <div style="display: flex; margin-left:20px; margin-bottom:20px;">
+        <button class="back" @click="niceback" style="float: left;">
+          <img src="@/assets/icons/back.png" width="25px;" />
+        </button>
+      </div>
       <div class="detail-info">
         <div class="item-photo">
           <img class="item-img" :src="product.image" alt />
         </div>
         <div class="item-info">
           <div class="item-convs">
-            <img
-              id="item-conv"
-              v-if="product.franchiseId == 646"
-              src="@/assets/icons/gs25.png"
-              alt
-            />
-            <img
-              id="item-conv"
-              v-if="product.franchiseId == 682"
-              src="@/assets/icons/cu.png"
-              alt
-            />
+            <img id="item-conv" v-if="product.franchiseId == 646" src="@/assets/icons/gs25.png" alt />
+            <img id="item-conv" v-if="product.franchiseId == 682" src="@/assets/icons/cu.png" alt />
             <img
               id="item-conv"
               v-if="product.franchiseId == 936"
@@ -42,15 +37,12 @@
           </div>
           <h1 id="item-title">{{ product.name }}</h1>
           <h2 id="item-price">
-            {{ addComma(product.price) }}원
-            <span style="margin-left: 15px;">
-              <b-badge v-if="product.category.includes('1＋1')" variant="info"
-                >1 + 1</b-badge
-              >
-              <b-badge v-if="product.category.includes('2＋1')" variant="info"
-                >2 + 1</b-badge
-              >
-            </span>
+            {{ product.price }}원
+            <!-- <span style="margin-left: 15px;">
+              <b-badge v-if="product.category.includes('1＋1')" variant="info">1 + 1</b-badge>
+              <b-badge variant="info">1 + 1</b-badge>
+              <b-badge v-if="product.category.includes('2＋1')" variant="info">2 + 1</b-badge>
+            </span>-->
           </h2>
           <!-- <h3 id="item-origin-price">
             (1개당 1,500원)<button id="item-btn">
@@ -58,17 +50,22 @@
             </button>
           </h3>-->
           <h3 id="item-origin-price">
-            (1개당 {{ addComma(product.price) }}원)
+            (1개당 {{ product.price }}원)
             <b-button
               id="item-btn"
-              @click="addFavorite()"
+              @click="addFavorite"
               v-b-popover.hover.bottomleft="
                 '관심 제품에 대한 할인 정보를 가장 먼저 알려드려요 :-)'
               "
               title="관심 제품을 등록해보세요!"
               variant="outline-none"
             >
-              <img height="40px;" src="@/assets/icons/plus.png" alt />
+              <img
+                height="40px;"
+                src="@/assets/icons/plus.png"
+                style="border: 3px solid; border-radius: 50%;"
+                alt
+              />
             </b-button>
           </h3>
         </div>
@@ -78,8 +75,8 @@
       <div class="item-like">
         <h2 class="subtitle">재구매 의향</h2>
         <div id="like-btns">
-          <button id="item-like-btn" @click="itemLike()">😆있다</button>
-          <button id="item-like-btn" @click="itemDislike()">없다😑</button>
+          <button id="item-like-btn" @click="itemLike">😆있다({{like}})</button>
+          <button id="item-like-btn" @click="itemDislike">없다😑({{dislike}})</button>
         </div>
         <b-progress :value="value" class="mb-3"></b-progress>
       </div>
@@ -91,68 +88,36 @@
           id="item-comment"
           type="text"
           placeholder="한줄평을 적어보세요."
+          v-model="comment"
+          @keyup.enter="addComment()"
         />
-        <button id="comment-btn">입력</button>
+        <button id="comment-btn" @click="addComment()">입력</button>
         <!-- 한줄평 모음 -->
         <div class="comments">
-          <div class="comment">
-            <h4 id="nickname">나는야편돌이</h4>
-            <div id="comment-box">
-              <p id="comment-text">역시 우유는 서울우유죠. 그냥 정-석-</p>
+          <div class="comment" v-for="(reply, index) in replys" :key="index">
+            <h4 id="nickname">{{ reply.nickname }}</h4>
+            <div id="comment-box" @click="reply.isreply = !reply.isreply">
+              <p id="comment-text">{{ reply.content }}</p>
             </div>
-            <div class="before-reply" v-if="reply">
-              <button id="reply-btn" @click="reply = false">답글 달기</button>
+            <div class="comment-delete" v-if="reply.isreply">
+              <button id="delete-btn" @click="deleteComment(index, reply.id)">댓글 삭제</button>
             </div>
-            <div class="after-reply" v-if="!reply">
-              <img
-                src="@/assets/icons/rereply.png"
-                alt
-                height="26px"
-                width="28px"
-              />
-              <input
-                type="text"
-                placeholder="답글을 작성해볼까요?"
-                style="height:30px; width: 80%"
-              />
-              <button id="reply-btn" style="color: #47b8e0">게시</button>
-              <button
-                id="reply-btn"
-                style="color: #ff7473; margin-left: 2%;"
-                @click="reply = true"
-              >
-                취소
-              </button>
-            </div>
-            <!-- 대댓 모음 -->
-            <div class="rereply">
-              <p>
-                <img
-                  src="@/assets/icons/rereply.png"
-                  alt
-                  height="26px"
-                  width="28px"
-                  style="margin-right: 2px;"
-                />예?! 우유는 파스퇴르 아닙니까...
-              </p>
-            </div>
-            <!---->
           </div>
         </div>
       </div>
       <!--한줄평 끝-->
-      <!-- 제품 레시피 -->
-      <div class="item-recipe">
-        <h2 class="subtitle" style="font-size: 1.4rem;">
-          이 제품을 사용한 레시피가 궁금하다면?
-        </h2>
-        <a href style="font-size: 1.3rem; margin-left:65%;">→ 레시피 검색</a>
+
+      <!-- 유사 제품 -->
+      <div class="sim-item" style="margin-top:20px;">
+        <h2 class="subtitle">이런건 어떠세요?</h2>
+        <item-card :items="items"></item-card>
       </div>
       <!---->
-      <!-- 유사 제품 -->
-      <div class="sim-item">
-        <h2 class="subtitle">이 제품을 좋아한 사용자가 본 다른 제품</h2>
-        <item-card></item-card>
+      <!-- 제품 레시피 -->
+      <div class="item-recipe">
+        <h2 class="subtitle" style="font-size: 1.4rem;">이 제품을 사용한 레시피가 궁금하다면?</h2>
+        <!-- <p style="font-size: 1.3rem; margin-left:65%; color: blue;" @click="recipeSearch">→ 레시피 검색</p> -->
+        <sale-card :items="recipes"></sale-card>
       </div>
       <!---->
     </div>
@@ -162,94 +127,297 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import ItemCard from "@/components/ItemCard.vue";
-import http from "../http-common";
+import SaleCard from "@/components/SaleCard.vue";
+import Axios from "@/api/Productaxios.js";
+import UserAxios from "@/api/Useraxios.js";
 
 export default {
   components: {
     Navbar,
     ItemCard,
+    SaleCard
   },
+  props: [
+    //param: { type: Object },
+    "id"
+  ],
   data() {
     return {
       like: 0,
       dislike: 0,
-      value: 50,
-      max: 100,
-      reply: true,
-      user: true, // 로그인이 되어 있을 경우 true
-      score: 0, // 0인 경우 재구매 의향 선택한 적 없는 경우, 1은 있다, 2는 없다
-
-      product: {
-        category: "",
-        franchiseId: 0,
-        id: 0,
-        image: "",
-        name: "",
-        price: 0,
-      },
+      value: 0,
+      max: 0,
+      replys: [],
+      comment: "",
+      user: {},
+      product: {},
+      replyResult: {},
+      userId: 0,
+      items: [],
+      recipes: []
     };
   },
+  mounted() {
+    if (sessionStorage.getItem("user") != null) {
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+
+      UserAxios.mypage(
+        this.userId,
+        res => {
+          this.user = res.data;
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
+
+    Axios.getRating(
+      this.id,
+      res => {
+        console.log(res);
+        this.like = res.data.inlike;
+        this.dislike = res.data.dislike;
+
+        this.value = (this.like / (this.like + this.dislike)) * 100;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+
+    Axios.getProductById(
+      this.id,
+      res => {
+        this.product = res.data;
+        this.product.price = this.product.price
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        if (this.product.image == null) {
+          this.product.image = require("@/assets/icons/defaultproduct.png");
+        }
+
+        this.getSimilarProduct();
+        this.getUsedRecipe();
+      },
+      err => {
+        console.log(err);
+      }
+    );
+
+    Axios.getCommentById(
+      this.id,
+      res => {
+        this.replys = [];
+        res.data.forEach(element => {
+          element.isreply = false;
+          this.replys.push(element);
+        });
+        //console.log("replys", res);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  },
   methods: {
+    getSimilarProduct() {
+      Axios.getSimilarProduct(
+        this.product,
+        res => {
+          this.items = [];
+          res.data.forEach(element => {
+            element.product = {
+              id: element.id,
+              name: element.name,
+              image: element.image,
+              price: element.price
+            };
+            /* element.price = element.price
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            element.price = element.price + "원"; */
+            this.items.push(element);
+          });
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    },
+    getUsedRecipe() {
+      Axios.getUsedRecipe(
+        this.id,
+        res => {
+          this.recipes = [];
+          res.data.forEach(element => {
+            element.date = element.date.substring(0, 10);
+
+            this.recipes.push(element);
+          });
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    },
     addFavorite() {
       // 관심 제품 등록
+
+      if (sessionStorage.getItem("user") != null) {
+        //console.log("dd");
+        this.userId = JSON.parse(sessionStorage.getItem("user"));
+      }
+      if (this.userId == 0) {
+        return alert("로그인 후 이용가능합니다.");
+      }
+
+      Axios.insertFavorite(
+        {
+          productId: this.id,
+          userId: this.userId
+        },
+        res => {
+          res;
+          alert("관심 상품이 등록되었습니다!");
+        },
+        err => {
+          console.log(err);
+        }
+      );
     },
     itemLike() {
-      // 로그인이 안되어 있을 때 로그인 필요하다는 alert
-      if (this.user) {
-        if (this.score === 0) {
-          this.like += 1;
-          this.score = 1;
-        } else if (this.score === 2) {
-          this.like += 1;
-          this.score = 1;
-          this.dislike -= 1;
-        }
-      } else {
-        alert("로그인이 필요한 기능입니다.");
+      if (sessionStorage.getItem("user") != null) {
+        //console.log("dd");
+        this.userId = JSON.parse(sessionStorage.getItem("user"));
       }
+      if (this.userId == 0) {
+        return alert("로그인 후 이용가능합니다.");
+      }
+
+      let data = {
+        userId: this.userId,
+        productId: this.id,
+        score: 1
+      };
+      Axios.insertRating(
+        data,
+        res => {
+          res;
+          this.like = parseInt(this.like + 1);
+        },
+        err => {
+          console.log(err);
+        }
+      );
     },
     itemDislike() {
-      if (this.user) {
-        if (this.score === 0) {
-          this.dislike += 1;
-          this.score = 2;
-        } else if (this.score === 1) {
-          this.dislike += 1;
-          this.score = 2;
-          this.like -= 1;
+      if (sessionStorage.getItem("user") != null) {
+        //console.log("dd");
+        this.userId = JSON.parse(sessionStorage.getItem("user"));
+      }
+
+      if (this.userId == 0) {
+        return alert("로그인 후 이용가능합니다.");
+      }
+      let data = {
+        userId: this.userId,
+        productId: this.id,
+        score: 2
+      };
+      Axios.insertRating(
+        data,
+        res => {
+          res;
+          this.dislike = parseInt(this.dislike + 1);
+        },
+        err => {
+          console.log(err);
         }
-      } else {
-        alert("로그인이 필요한 기능입니다.");
-      }
+      );
     },
-    clickReply() {
-      if (this.reply) {
-        this.reply = false;
+    addComment() {
+      if (sessionStorage.getItem("user") != null) {
+        //console.log("dd");
+        this.userId = JSON.parse(sessionStorage.getItem("user"));
       }
+
+      if (this.userId == 0) {
+        return alert("로그인 후 이용가능합니다.");
+      }
+
+      Axios.insertComment(
+        {
+          content: this.comment,
+          productId: this.product.id,
+          userId: this.userId
+        },
+        res => {
+          console.log(res);
+          alert("한줄평이 정상적으로 등록되었습니다!");
+          this.replyResult = {
+            content: res.data.content,
+            productId: res.data.productId,
+            userId: res.data.userId,
+            nickname: this.user.nickname
+          };
+          this.replys.push(this.replyResult);
+          this.comment = "";
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    },
+    deleteComment(idx, id) {
+      Axios.deleteComment(
+        id,
+        res => {
+          res;
+          alert("한줄평이 정상적으로 삭제되었습니다.");
+
+          if (idx > -1) {
+            this.replys.splice(idx, 1);
+          }
+        },
+        err => {
+          console.log(err);
+        }
+      );
     },
     addComma(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
-  },
-  watch: {
-    like: function() {
-      this.value = (this.like / (this.like + this.dislike)) * 100;
+    getProductById() {
+      Axios.getCommentById(
+        this.$route.params.id,
+        res => {
+          this.replys = [];
+          res.data.forEach(element => {
+            element.isreply = false;
+            this.replys.push(element);
+          });
+          console.log("replys", res);
+        },
+        err => {
+          console.log(err);
+        }
+      );
     },
-    dislike: function() {
-      this.value = (this.like / (this.like + this.dislike)) * 100;
-    },
-  },
-  mounted() {
-    http
-      .get("/api/product/" + this.$route.params.id)
-      .then((res) => {
-        this.product = res.data;
-        console.log(this.product);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
+
+    niceback: function() {
+      var numberOfEntries = window.history.length;
+      if (numberOfEntries > 2) {
+        this.$router.go(-1);
+      } else {
+        var fpath = this.PageData.backCrumb.url;
+        this.$router.push({
+          path: fpath
+        });
+      }
+    }
+  }
 };
 </script>
 
@@ -366,7 +534,7 @@ export default {
 }
 
 .comment {
-  margin: 5px;
+  margin: 0 5px;
 }
 
 #nickname {
@@ -387,15 +555,16 @@ export default {
   margin-bottom: 0;
 }
 
-#reply-btn {
+#delete-btn {
   background-color: transparent;
   border-style: none;
   margin-right: 5px;
   outline: none;
 }
 
-.before-reply {
+.comment-delete {
   text-align: right;
+  color: #ff7473;
 }
 
 .rereply {

@@ -8,6 +8,8 @@ import com.ssafy.backend.vo.MainSearch;
 import com.ssafy.backend.vo.Product;
 import com.ssafy.backend.vo.ProductComment;
 import com.ssafy.backend.vo.Rating;
+import com.ssafy.backend.vo.RatingCount;
+import com.ssafy.backend.vo.Recipe;
 import com.ssafy.backend.vo.Sale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -59,6 +62,19 @@ public class ProductController {
     public ResponseEntity getProductById(@PathVariable int id) throws Exception {
         Product res = service.getProductById(id);
         return new ResponseEntity(res, HttpStatus.OK);
+    }
+
+    @GetMapping("/product/user")
+    public ResponseEntity<List<Product>> getSimilarProduct(@ModelAttribute Product p) {
+        System.out.println(p.toString());
+        try {
+
+            List<Product> res = service.getSimilarProduct(p);
+            return new ResponseEntity(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/sale/{id}")
@@ -132,28 +148,75 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/favorate")
-    public ResponseEntity insertFavorite(@RequestBody Favorite f) throws Exception {
-        service.insertFavorite(f);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping("/favorite")
+    public ResponseEntity insertFavorite(@RequestBody Favorite f) {
+        try {
+            Favorite res = service.getFavorite(f);
+            if (res == null) {
+                service.insertFavorite(f);
+            }
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/favorate/{id}")
+    @DeleteMapping("/favorite/{id}")
     public ResponseEntity deleteFavorite(@PathVariable int id) throws Exception {
         service.deleteFavorite(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/rating")
-    public ResponseEntity insertRating(@RequestBody Rating r) throws Exception {
-        service.insertRating(r);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity insertRating(@RequestBody Rating r) {
+        System.out.println(r.toString());
+        try {
+            Rating res = service.getRating(r);
+
+            if (res == null) {
+                service.insertRating(r);
+            } else {
+                service.updateRating(r);
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/rating/{id}")
-    public ResponseEntity deleteRating(@PathVariable int id) throws Exception {
-        service.deleteRating(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/rating")
+    public ResponseEntity<Rating> getRating(@ModelAttribute Rating r) {
+        try {
+
+            Rating res = service.getRating(r);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/rating/count/{id}")
+    public ResponseEntity<RatingCount> getRatingcount(@PathVariable int id) throws Exception {
+        // System.out.println("dd");
+        RatingCount res = service.getRatingcount(id);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/rating")
+    public ResponseEntity deleteRating(@RequestBody Rating r) {
+        try {
+            service.deleteRating(r);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/rating")
@@ -165,14 +228,31 @@ public class ProductController {
     @PostMapping("/product_comment")
     public ResponseEntity insertComment(@RequestBody ProductComment pc) throws Exception {
         service.insertComment(pc);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(pc, HttpStatus.OK);
     }
 
     @GetMapping("/product_comment/{id}")
-    public ResponseEntity<List<ProductComment>> getCommentById(@PathVariable int id) throws Exception {
-        List<ProductComment> res = service.getCommentById(id);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+    public ResponseEntity<List<ProductComment>> getCommentById(@PathVariable int id) {
+        try {
+
+            List<ProductComment> res = service.getCommentById(id);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    /*
+     * @GetMapping("/product_comment/{id}") public
+     * ResponseEntity<List<ProductComment>> getCommentByProductId(@PathVariable int
+     * productId) { try { List<ProductComment> res =
+     * service.getCommentByProductId(productId); return new ResponseEntity<>(res,
+     * HttpStatus.OK); } catch (Exception e) { System.out.println(e.toString()); }
+     * return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+     * 
+     * }
+     */
 
     @PutMapping("/comment")
     public ResponseEntity updateComment(@RequestBody ProductComment pc) throws Exception {
@@ -184,6 +264,19 @@ public class ProductController {
     public ResponseEntity deleteComment(@PathVariable int id) throws Exception {
         service.deleteComment(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/product/recipe/{id}")
+    public ResponseEntity<List<Recipe>> getUsedRecipe(@PathVariable int id) {
+        try {
+
+            List<Recipe> res = service.getUsedRecipe(id);
+            return new ResponseEntity(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 }

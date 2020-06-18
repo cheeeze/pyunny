@@ -22,8 +22,7 @@ public class RedisConfiguration {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        //LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisHost);
-        //return lettuceConnectionFactory;
+
         return new LettuceConnectionFactory(redisHost, redisPort);
     }
 
@@ -34,5 +33,5 @@ public class RedisConfiguration {
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Store.class));
         return redisTemplate;
-    }  
+    }
 }

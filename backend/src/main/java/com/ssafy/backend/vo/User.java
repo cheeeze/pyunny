@@ -9,14 +9,23 @@ public class User {
     private String kakao;
     private String profileImage;
 
-    public User(){
-        
+    public User() {
+
     }
 
-    public User(int id, String name, String nickname, String password, String kakao, String profileImage) {
+    /*
+     * public User(int id, String name, String nickname, String password, String
+     * kakao, String profileImage) { this.id = id; this.name = name; this.nickname =
+     * nickname; this.password = password; this.kakao = kakao; this.profileImage =
+     * profileImage; }
+     */
+
+    public User(int id, String name, String nickname, String email, String password, String kakao,
+            String profileImage) {
         this.id = id;
         this.name = name;
         this.nickname = nickname;
+        this.email = email;
         this.password = password;
         this.kakao = kakao;
         this.profileImage = profileImage;
@@ -80,8 +89,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", kakao=" + kakao + ", name=" + name + ", nickname=" + nickname + ", password="
-                + password + ", profileImage=" + profileImage + "]";
+        return "User [email=" + email + ", id=" + id + ", kakao=" + kakao + ", name=" + name + ", nickname=" + nickname
+                + ", password=" + password + ", profileImage=" + profileImage + "]";
     }
 
 }

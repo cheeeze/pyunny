@@ -1,7 +1,7 @@
 <template>
   <div class="nav-wrapper">
     <div class="grad-bar"></div>
-    <nav class="navbar">
+    <nav class="main-navbar">
       <router-link to="/">
         <img class="nav_logo" src="@/assets/images/mainlogo_removebg.png" alt="Logo" />
       </router-link>
@@ -20,11 +20,16 @@
         <li class="nav-item">
           <router-link to="/recipe">Recipe</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="userId!=0">
           <router-link to="/mypage/">My Page</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="userId==0">
           <button id="login-btn" @click="handleClickButton">
+            <img src="@/assets/icons/sign-in.svg" alt width="22px" />
+          </button>
+        </li>
+        <li class="nav-item" v-if="userId!=0">
+          <button id="login-btn" @click="logout">
             <img src="@/assets/icons/logout.png" alt width="22px" />
           </button>
         </li>
@@ -35,7 +40,7 @@
         </li>
       </ul>
     </nav>
-    <user-sign-modal :visible.sync="visible" style="z-index: 80;"></user-sign-modal>
+    <user-sign-modal :visible.sync="visible" :userId.sync="userId" style="z-index: 80;"></user-sign-modal>
     <barcode-modal :barcode.sync="barcode"></barcode-modal>
   </div>
 </template>
@@ -61,12 +66,20 @@ export default {
   data() {
     return {
       visible: false,
-      barcode: false
+      barcode: false,
+      userId: 0
     };
   },
   components: {
     UserSignModal,
     BarcodeModal
+  },
+  mounted() {
+    //console.log(sessionStorage.getItem("user"));
+    if (sessionStorage.getItem("user") != null) {
+      //console.log("dd");
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+    }
   },
   methods: {
     handleClickButton() {
@@ -74,8 +87,19 @@ export default {
       console.log("hello");
     },
     handleClickBarcode() {
+      if (this.userId == 0) {
+        return alert("로그인후 이용가능합니다.");
+      }
+
       this.barcode = !this.barcode;
-      console.log("hello");
+      //console.log("hello");
+    },
+    logout() {
+      sessionStorage.removeItem("user");
+      this.userId = 0;
+      if (this.$route.path != "/") {
+        this.$router.push("/");
+      }
     }
   }
 };
@@ -125,22 +149,22 @@ export default {
 
 /* NAVIGATION */
 
-.navbar {
+.main-navbar {
   display: grid;
   grid-template-columns: 1fr 3fr;
   align-items: center;
-  height: 50px;
+  height: 55px;
   overflow: hidden;
   font-family: "Lato", "Arial", sans-serif;
 }
 
-.navbar .nav_logo {
+.main-navbar .nav_logo {
   height: 40px;
   width: auto;
   justify-self: start;
 }
 
-.navbar ul {
+.main-navbar ul {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -289,7 +313,7 @@ export default {
 
   /* MOBILE NAVIGATION */
 
-  .navbar ul {
+  .main-navbar ul {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -303,15 +327,15 @@ export default {
     overflow: hidden;
   }
 
-  .navbar li {
+  .main-navbar li {
     padding: 15px;
   }
 
-  .navbar li:first-child {
+  .main-navbar li:first-child {
     margin-top: 50px;
   }
 
-  .navbar li a {
+  .main-navbar li a {
     font-size: 1rem;
   }
 
