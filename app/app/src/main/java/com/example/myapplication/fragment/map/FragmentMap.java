@@ -111,18 +111,33 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_map_get_conv:
-                for(Marker m:arrayMarker){
-                    m.remove();
+                if(edt_map_product.getText().toString().replace(" ","").length()<=0){
+                    for(Marker m:arrayMarker){
+                        m.remove();
+                    }
+                    arrayMarker = new ArrayList<>();
+                    stores = new ArrayList<>();
+                    searchResults = new ArrayList<>();
+                    double latitude = mGoogleMap.getCameraPosition().target.latitude;
+                    double longitude = mGoogleMap.getCameraPosition().target.longitude;
+                    float distance = 0.5f;
+                    String keyword = "";
+                    new RestApiStoreTask("http://k02d1021.p.ssafy.io:8080/api/store?latitude="+latitude+"&longitude="+longitude+"&distance="+distance+"&keyword="+keyword).execute();
+
+                }else{
+                    for(Marker m:arrayMarker){
+                        m.remove();
+                    }
+                    arrayMarker = new ArrayList<>();
+                    stores = new ArrayList<>();
+                    searchResults = new ArrayList<>();
+                    double latitude = mGoogleMap.getCameraPosition().target.latitude;
+                    double longitude = mGoogleMap.getCameraPosition().target.longitude;
+                    float distance = 0.5f;
+                    String keyword = edt_map_product.getText().toString();
+                    new RestApiStoreProductTask("http://k02d1021.p.ssafy.io:8080/api/store_product?latitude="+latitude+"&longitude="+longitude+"&distance="+distance+"&keyword="+keyword).execute();
                 }
-                arrayMarker = new ArrayList<>();
-                stores = new ArrayList<>();
-                searchResults = new ArrayList<>();
-                isEnd=false;
-                double latitude = mGoogleMap.getCameraPosition().target.latitude;
-                double longitude = mGoogleMap.getCameraPosition().target.longitude;
-                float distance = 0.5f;
-                String keyword = "";
-                new RestApiTask("http://k02d1021.p.ssafy.io:8080/api/store?latitude="+latitude+"&longitude="+longitude+"&distance="+distance+"&keyword="+keyword).execute();
+
 
 
 
@@ -250,10 +265,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
             }
         });
 
-//        getStoreList(googleMap.getCameraPosition().target.latitude,googleMap.getCameraPosition().target.longitude,0.3f,"");
-//
-//
-//        addStores(stores);
         mGoogleMap.setOnMarkerClickListener(this);
 
 
@@ -275,7 +286,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         mapView = (MapView)view.findViewById(R.id.map_view);
         mapView.getMapAsync(this);
 
-//        edt_map_product = view.findViewById(R.id.edt_map_product);
+        edt_map_product = view.findViewById(R.id.edt_map_product);
 
 
 
@@ -753,56 +764,57 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
 
 
     private boolean isEndSearchRest;
-//    private List<MapSearchResult> getSearchRest(String value) {
-//        //json parsing
-//        //saleList.clear();
-//        isEnd=false;
-//        Log.d("TEST","in getRest");
-//        Log.d("TEST", value);
-//        try {
-//            JSONArray jsonArray = new JSONArray(value);
-//            for(int i=0;i<jsonArray.length();i++){
-//                JSONObject searchResult = jsonArray.getJSONObject(i);
-//                int id = searchResult.getInt("id");
-//                int storeId = searchResult.getInt("storeId");
-//                int productId = searchResult.getInt("productId");
-//                String name = searchResult.getString("name");
-//                String stockAmount = searchResult.getString("stockAmount");
-//                int price = searchResult.getInt("price");
-//                String image = searchResult.getString("image");
-//                JSONObject store = searchResult.getJSONObject("store");
-//                int franchiseId = store.getInt("franchiseId");
-//                String franchiseName = store.getString("franchiseName");
-//                String storeName = store.getString("storeName");
-//                double latitude=store.getDouble("latitude");
-//                double longitude =store.getDouble("longitude");
-//                String address = store.getString("address");
-//                String city = store.getString("city");
-//                String tel = store.getString("tel");
-//                int isatm = store.getInt("isatm");
-//                int islottery=store.getInt("islottery");
-//                int isdelivery=store.getInt("isdelivery");
-//                int ismedicine=store.getInt("ismedicine");
-//                int isfulltime=store.getInt("isfulltime");
-//                String logoUrl=store.getString("logoUrl");
-//                String deliveryBegin = store.getString("deliveryBegin");
-//                String deliveryEnd = store.getString("deliveryEnd");
-//                Store s = new Store(id,franchiseId,franchiseName,storeName,latitude,longitude,address,city,tel,isatm,islottery,isdelivery,isfulltime,logoUrl,deliveryBegin,deliveryEnd);
-//                searchResults.add(new MapSearchResult(id,storeId,productId,name,stockAmount,price,image,s));
-//            }
-//        } catch(Exception e){
-//
-//        }
-//
-//        isEnd=true;
-//        return searchResults;
-//    }
+    private List<MapSearchResult> getSearchRest(String value) {
+        //json parsing
+        //saleList.clear();
+        isEnd=false;
+        Log.d("TEST","in getRest");
+        Log.d("TEST", value);
+        try {
+            JSONArray jsonArray = new JSONArray(value);
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject searchResult = jsonArray.getJSONObject(i);
+                int id = searchResult.getInt("id");
+                int storeId = searchResult.getInt("storeId");
+                int productId = searchResult.getInt("productId");
+                String name = searchResult.getString("name");
+                String stockAmount = searchResult.getString("stockAmount");
+                int price = searchResult.getInt("price");
+                String image = searchResult.getString("image");
+                JSONObject store = searchResult.getJSONObject("store");
+                int franchiseId = store.getInt("franchiseId");
+                String franchiseName = store.getString("franchiseName");
+                String storeName = store.getString("storeName");
+                double latitude=store.getDouble("latitude");
+                double longitude =store.getDouble("longitude");
+                String address = store.getString("address");
+                String city = store.getString("city");
+                String tel = store.getString("tel");
+                int isatm = store.getInt("isatm");
+                int islottery=store.getInt("islottery");
+                int isdelivery=store.getInt("isdelivery");
+                int ismedicine=store.getInt("ismedicine");
+                int isfulltime=store.getInt("isfulltime");
+                String logoUrl=store.getString("logoUrl");
+                String deliveryBegin = store.getString("deliveryBegin");
+                String deliveryEnd = store.getString("deliveryEnd");
+                Store s = new Store(id,franchiseId,franchiseName,storeName,latitude,longitude,address,city,tel,isatm,islottery,isdelivery,isfulltime,logoUrl,deliveryBegin,deliveryEnd);
+                stores.add(s);
+                searchResults.add(new MapSearchResult(id,storeId,productId,name,stockAmount,price,image,s));
+            }
+        } catch(Exception e){
+
+        }
+
+        isEnd=true;
+        return searchResults;
+    }
 
 
-    private class RestApiTask extends AsyncTask<Integer, Void, String>{
+    private class RestApiStoreTask extends AsyncTask<Integer, Void, String>{
         private String mURL;
         private String result;
-        public RestApiTask(String mURL) {
+        public RestApiStoreTask(String mURL) {
             this.mURL = mURL;
         }
 
@@ -853,6 +865,78 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                 result = sb.toString();
                 Log.d("storeList",result);
                 stores = getRest(result);
+            } catch(Exception e){
+                result = e.toString();
+                Log.d("ERROR", e.toString());
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            addStores(stores);
+            Log.d("pospos", mGoogleMap.getCameraPosition().target.latitude+" "+mGoogleMap.getCameraPosition().target.longitude);
+            Log.d("afterRest",stores.size()+"");
+        }
+    }
+
+
+    private class RestApiStoreProductTask extends AsyncTask<Integer, Void, String>{
+        private String mURL;
+        private String result;
+        public RestApiStoreProductTask(String mURL) {
+            this.mURL = mURL;
+        }
+
+        @Override
+        protected String doInBackground(Integer... integers) {
+
+            try{
+                URL url = new URL(mURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setReadTimeout(3000);
+                conn.setConnectTimeout(3000);
+                //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
+                conn.setDoInput(true);
+
+                conn.setUseCaches(false);
+                conn.connect();
+
+                int responseStatusCode = conn.getResponseCode();
+                Log.i("CHECK", "thread run");
+                InputStream inputStream;
+                if(responseStatusCode == conn.HTTP_OK) {
+                    inputStream = conn.getInputStream();
+                }else{
+                    inputStream = conn.getErrorStream();
+                }
+                Log.d("REQEUSTMETHOD",conn.getRequestMethod());
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+//                    JsonReader jsonReader = new JsonReader(inputStreamReader);
+//                    jsonReader.beginObject();
+//
+//                    while(jsonReader.hasNext()){
+//                        Log.d(jsonReader.nextName(),jsonReader.nextString());
+//                    }
+//                    jsonReader.close();
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while((line=bufferedReader.readLine())!=null) {
+                    sb.append(line);
+                    //Log.d("THREAD",line);
+                }
+                bufferedReader.close();
+
+
+                conn.disconnect();
+                result = sb.toString();
+                Log.d("productList",result);
+                searchResults = getSearchRest(result);
+//                stores = getRest(result);
             } catch(Exception e){
                 result = e.toString();
                 Log.d("ERROR", e.toString());

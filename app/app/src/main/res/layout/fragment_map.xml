@@ -19,13 +19,20 @@
         android:layout_margin="20dp"
         android:id="@+id/btn_map_get_conv"/>
 
-<!--    <EditText-->
-<!--        android:layout_width="230dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="27dp"-->
-<!--        android:layout_marginLeft="75dp"-->
-<!--        android:hint="상품을 입력하세요."-->
-<!--        android:id="@+id/edt_map_product"/>-->
+    <EditText
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:layout_marginLeft="75dp"
+        android:hint="상품을 입력하세요."
+        android:id="@+id/edt_map_product"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="77dp"
+        android:layout_marginLeft="75dp"
+        android:id="@+id/recyclerView_map_search"/>
 
 
 
