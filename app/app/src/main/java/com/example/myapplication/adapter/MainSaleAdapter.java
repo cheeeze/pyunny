@@ -43,6 +43,8 @@ public class MainSaleAdapter extends RecyclerView.Adapter<MainSaleAdapter.ViewHo
             holder.sale_type.setBackgroundResource(R.drawable.round_corner_opo);
         }else if(sale.getType().equals("2+1")){
             holder.sale_type.setBackgroundResource(R.drawable.round_corner_tpo);
+        }else if(sale.getType().equals("dum")){
+            holder.sale_type.setBackgroundResource(R.drawable.round_corner_dum);
         }
         DecimalFormat format = new DecimalFormat("###,###");
         holder.sale_product_price.setText(format.format(sale.getProduct_price())+"원");
