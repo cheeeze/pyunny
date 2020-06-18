@@ -9,17 +9,18 @@
           <img
             class="main_logo"
             src="@/assets/images/mainlogo_removebg.png"
-            alt=""
+            alt
             style="margin-bottom: 30px;"
           />
           <p style="margin-bottom: 0px;">
-            모든 편의점을 한 곳에서<br />간편하게 관리하세요!
+            모든 편의점을 한 곳에서
+            <br />간편하게 관리하세요!
           </p>
         </div>
       </div>
       <!---->
       <!--오른쪽 화면 부분-->
-      <div class="main-container part2" style="z-index: 5;">
+      <div class="main-container part2">
         <main-info style="z-index: 7;"></main-info>
       </div>
       <!---->
@@ -32,10 +33,12 @@ import MainInfo from "@/components/MainInfo.vue";
 import Navbar from "@/components/Navbar.vue";
 
 export default {
+  name: "Home",
   components: {
     Navbar,
-    MainInfo,
+    MainInfo
   },
+  methods: {}
 };
 </script>
 <style lang="less" scoped>
@@ -157,7 +160,7 @@ a {
 
 .part2 {
   padding: 1rem;
-  height: 100vh;
+  height: 100%;
   display: flex;
 }
 
@@ -169,7 +172,10 @@ a {
 .min(
   900px,
   {.wrapper {.part1 {width: 40%; position: fixed; height: 100vh;} .part2 {width:
-    60%; float: right;}}}
+    60%; height: 100%; float: right;}}}
 );
-.min(1060px, {.wrapper {.part1 {width: 50%;} .part2 {width: 50%;}}});
+.min(
+  1060px,
+  {.wrapper {.part1 {width: 50%; height: 100%;} .part2 {width: 50%; height: 100%}}}
+);
 </style>

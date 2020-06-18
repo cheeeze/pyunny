@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.MainAllAdapter;
 import com.example.myapplication.activity.ProductDetailActivity;
 import com.example.myapplication.adapter.MainPagerAdapter;
 import com.example.myapplication.adapter.MainSaleAdapter;
@@ -46,9 +47,7 @@ import java.util.ArrayList;
 
 public class FragmentMain extends Fragment implements View.OnClickListener{
 
-
     private Context mContext;
-
 
     private ImageButton btn_main_all,btn_main_gs,btn_main_cu,btn_main_seven,btn_main_emart,btn_main_ministop;
 
@@ -63,10 +62,9 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
 
     private RecyclerView recyclerView;
     private MainSaleAdapter mainSaleAdapter;
+    private MainAllAdapter mainAllAdapter;
 
     private ImageView image_main_nodata;
-
-
 
     private Intent intent;
 
@@ -223,8 +221,18 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
         @Override
         protected void onPostExecute(String s) {
             setBorderToButton();
-            mainSaleAdapter = new MainSaleAdapter(mContext,saleList);
-            recyclerView.setAdapter(mainSaleAdapter);
+            //getSaleList();
+            switch(btnSaleProductIdx) {
+                case 0: //세일
+                    mainSaleAdapter = new MainSaleAdapter(mContext,saleList);
+                    recyclerView.setAdapter(mainSaleAdapter);
+                    break;
+                case 1: //프로덕트
+                    mainAllAdapter = new MainAllAdapter(mContext,saleList);
+                    recyclerView.setAdapter(mainAllAdapter);
+                    break;
+            }
+
             Log.d("RESULT", "onPostExecute");
         }
     }

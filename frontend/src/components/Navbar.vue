@@ -2,13 +2,9 @@
   <div class="nav-wrapper">
     <div class="grad-bar"></div>
     <nav class="navbar">
-      <a href="#">
-        <img
-          class="nav_logo"
-          src="@/assets/images/mainlogo_removebg.png"
-          alt="Logo"
-        />
-      </a>
+      <router-link to="/">
+        <img class="nav_logo" src="@/assets/images/mainlogo_removebg.png" alt="Logo" />
+      </router-link>
       <div class="menu-toggle" id="mobile-menu">
         <span class="bar"></span>
         <span class="bar"></span>
@@ -39,10 +35,7 @@
         </li>
       </ul>
     </nav>
-    <user-sign-modal
-      :visible.sync="visible"
-      style="z-index: 80;"
-    ></user-sign-modal>
+    <user-sign-modal :visible.sync="visible" style="z-index: 80;"></user-sign-modal>
     <barcode-modal :barcode.sync="barcode"></barcode-modal>
   </div>
 </template>
@@ -68,12 +61,12 @@ export default {
   data() {
     return {
       visible: false,
-      barcode: false,
+      barcode: false
     };
   },
   components: {
     UserSignModal,
-    BarcodeModal,
+    BarcodeModal
   },
   methods: {
     handleClickButton() {
@@ -83,8 +76,8 @@ export default {
     handleClickBarcode() {
       this.barcode = !this.barcode;
       console.log("hello");
-    },
-  },
+    }
+  }
 };
 </script>
 
