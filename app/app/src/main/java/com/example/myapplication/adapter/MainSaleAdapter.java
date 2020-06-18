@@ -39,6 +39,11 @@ public class MainSaleAdapter extends RecyclerView.Adapter<MainSaleAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Sale sale = list.get(position);
         holder.sale_type.setText(sale.getType());
+        if(sale.getType().equals("1+1")){
+            holder.sale_type.setBackgroundResource(R.drawable.round_corner_opo);
+        }else if(sale.getType().equals("2+1")){
+            holder.sale_type.setBackgroundResource(R.drawable.round_corner_tpo);
+        }
         DecimalFormat format = new DecimalFormat("###,###");
         holder.sale_product_price.setText(format.format(sale.getProduct_price())+"원");
         holder.sale_product_name.setText(sale.getProduct_name());

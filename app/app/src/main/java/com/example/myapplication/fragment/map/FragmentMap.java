@@ -159,6 +159,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                 edt_map_product.setText("");
                 mapSearchResultAdapter = new MapSearchResultAdapter(getContext(),searchResults);
                 recyclerView_map_search.setAdapter(mapSearchResultAdapter);
+                recyclerView_map_search.setVisibility(View.VISIBLE);
+                btn_map_searchresult_tolist.setVisibility(View.GONE);
                 break;
 
             case R.id.btn_map_searchresult_tolist:
