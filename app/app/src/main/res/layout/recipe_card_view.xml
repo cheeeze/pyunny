@@ -26,8 +26,8 @@
                     android:scaleType="centerInside"
                     android:background="#00000000"
                     android:id="@+id/btn_recipe_item_main_image"/>
-                <com.example.myapplication.customView.CustomTextOutLineView
-                    xmlns:textoutline="http://schemas.android.com/apk/res/com.example.myapplication"
+                <ssafy.d102.pyunny.customView.CustomTextOutLineView
+                    xmlns:textoutline="http://schemas.android.com/apk/res/ssafy.d102.pyunny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"

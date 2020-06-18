@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".fragment.main.FragmentMainAll">
+    tools:context="ssafy.d102.pyunny.fragment.main.FragmentMainAll">
 
     <LinearLayout
         android:layout_width="match_parent"

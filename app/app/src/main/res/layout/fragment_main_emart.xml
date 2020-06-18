@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.main.FragmentMainEmart">
+    tools:context="ssafy.d102.pyunny.fragment.main.FragmentMainEmart">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     android:src="@drawable/intro"
     android:scaleType="fitXY"
-    tools:context=".activity.IntroActivity">
+    tools:context="ssafy.d102.pyunny.activity.IntroActivity">
 
 </ImageView>
