@@ -44,6 +44,8 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="1+1"
+                        android:background="@drawable/round_corner"
+                        android:textColor="#ffffff"
                         android:layout_marginLeft="10dp"
                         android:id="@+id/txt_sale_cardview_type"/>
                     <TextView
