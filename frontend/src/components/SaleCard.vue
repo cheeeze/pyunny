@@ -1,118 +1,39 @@
 <template>
   <div class="card-container">
     <ul class="cards">
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="https://picsum.photos/500/300/?image=10"
-            />
+      <li class="cards_item" v-for="(item, index) in items" :key="index">
+        <router-link class="routeLink" :to="{ name: 'Recipedetail', params: {id: item.id}}">
+          <div class="card">
+            <div class="card_content">
+              <h2 class="card_title">{{item.title}}</h2>
+              <p class="card_text">{{item.date}}</p>
+              <button class="cardbtn card_btn">{{item.ingredient}}</button>
+            </div>
           </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">
-              1,200
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="https://picsum.photos/500/300/?image=5"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">
-              1,200
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="https://picsum.photos/500/300/?image=11"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">
-              1,200
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="https://picsum.photos/500/300/?image=14"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">
-              1,200
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="https://picsum.photos/500/300/?image=17"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">
-              1,200
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card">
-          <div class="card_image">
-            <img
-              class="card-img"
-              src="https://picsum.photos/500/300/?image=2"
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">1 + 1 코카콜라 250ml</h2>
-            <p class="card_text">
-              1,200
-            </p>
-            <button class="cardbtn card_btn">상세 정보</button>
-          </div>
-        </div>
+        </router-link>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "ItemCard",
+  props: {
+    items: {
+      type: Array
+      //required: true
+    }
+  }
+};
 </script>
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Quicksand:400,700");
+
+a.routeLink {
+  text-decoration: none;
+}
 
 /* Design */
 .card-container {

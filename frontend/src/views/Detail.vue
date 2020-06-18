@@ -110,14 +110,14 @@
       <!-- 유사 제품 -->
       <div class="sim-item" style="margin-top:20px;">
         <h2 class="subtitle">이런건 어떠세요?</h2>
-        <item-card :items="items" :type="'product'"></item-card>
+        <item-card :items="items"></item-card>
       </div>
       <!---->
       <!-- 제품 레시피 -->
       <div class="item-recipe">
         <h2 class="subtitle" style="font-size: 1.4rem;">이 제품을 사용한 레시피가 궁금하다면?</h2>
         <!-- <p style="font-size: 1.3rem; margin-left:65%; color: blue;" @click="recipeSearch">→ 레시피 검색</p> -->
-        <item-card :items="recipes" :type="'recipe'"></item-card>
+        <sale-card :items="recipes"></sale-card>
       </div>
       <!---->
     </div>
@@ -127,13 +127,15 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import ItemCard from "@/components/ItemCard.vue";
+import SaleCard from "@/components/SaleCard.vue";
 import Axios from "@/api/Productaxios.js";
 import UserAxios from "@/api/Useraxios.js";
 
 export default {
   components: {
     Navbar,
-    ItemCard
+    ItemCard,
+    SaleCard
   },
   props: [
     //param: { type: Object },
@@ -192,6 +194,10 @@ export default {
           .toString()
           .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
+        if (this.product.image == null) {
+          this.product.image = require("@/assets/icons/defaultproduct.png");
+        }
+
         this.getSimilarProduct();
         this.getUsedRecipe();
       },
@@ -217,16 +223,21 @@ export default {
   },
   methods: {
     getSimilarProduct() {
-      this.product.category = "즉석식품";
       Axios.getSimilarProduct(
         this.product,
         res => {
           this.items = [];
           res.data.forEach(element => {
-            element.price = element.price
+            element.product = {
+              id: element.id,
+              name: element.name,
+              image: element.image,
+              price: element.price
+            };
+            /* element.price = element.price
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            element.price = element.price + "원";
+            element.price = element.price + "원"; */
             this.items.push(element);
           });
         },
@@ -241,9 +252,8 @@ export default {
         res => {
           this.recipes = [];
           res.data.forEach(element => {
-            element.name = element.title;
-            element.price = element.date.substring(0, 10);
-            element.description = element.ingredient;
+            element.date = element.date.substring(0, 10);
+
             this.recipes.push(element);
           });
         },
@@ -254,9 +264,15 @@ export default {
     },
     addFavorite() {
       // 관심 제품 등록
+
+      if (sessionStorage.getItem("user") != null) {
+        //console.log("dd");
+        this.userId = JSON.parse(sessionStorage.getItem("user"));
+      }
       if (this.userId == 0) {
         return alert("로그인 후 이용가능합니다.");
       }
+
       Axios.insertFavorite(
         {
           productId: this.id,
@@ -272,9 +288,14 @@ export default {
       );
     },
     itemLike() {
+      if (sessionStorage.getItem("user") != null) {
+        //console.log("dd");
+        this.userId = JSON.parse(sessionStorage.getItem("user"));
+      }
       if (this.userId == 0) {
         return alert("로그인 후 이용가능합니다.");
       }
+
       let data = {
         userId: this.userId,
         productId: this.id,
@@ -292,6 +313,11 @@ export default {
       );
     },
     itemDislike() {
+      if (sessionStorage.getItem("user") != null) {
+        //console.log("dd");
+        this.userId = JSON.parse(sessionStorage.getItem("user"));
+      }
+
       if (this.userId == 0) {
         return alert("로그인 후 이용가능합니다.");
       }
@@ -312,6 +338,11 @@ export default {
       );
     },
     addComment() {
+      if (sessionStorage.getItem("user") != null) {
+        //console.log("dd");
+        this.userId = JSON.parse(sessionStorage.getItem("user"));
+      }
+
       if (this.userId == 0) {
         return alert("로그인 후 이용가능합니다.");
       }

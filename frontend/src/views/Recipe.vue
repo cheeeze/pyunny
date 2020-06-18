@@ -140,6 +140,11 @@ export default {
       }
     },
     recipeCreate() {
+      if (sessionStorage.getItem("user") != null) {
+        //console.log("dd");
+        this.userId = JSON.parse(sessionStorage.getItem("user"));
+      }
+
       if (this.userId == 0) {
         return alert("로그인 후 이용가능합니다.");
       }
@@ -152,7 +157,7 @@ export default {
           //console.log(res.data);
           res.data.forEach(element => {
             let src = require("@/assets/icons/defaultrecipe.png");
-            let start = element.content.indexOf("http://", 1);
+            let start = element.content.indexOf("http", 1);
             if (start > 0) {
               let last = element.content.indexOf('"', start);
               src = element.content.substring(start, last);
@@ -181,7 +186,7 @@ export default {
           //console.log(res.data);
           res.data.forEach(element => {
             let src = require("@/assets/icons/defaultrecipe.png");
-            let start = element.content.indexOf("http://", 1);
+            let start = element.content.indexOf("http", 1);
             if (start > 0) {
               let last = element.content.indexOf('"', start);
               src = element.content.substring(start, last);
@@ -214,7 +219,7 @@ export default {
           //console.log(res.data);
           res.data.forEach(element => {
             let src = require("@/assets/icons/defaultrecipe.png");
-            let start = element.content.indexOf("http://", 1);
+            let start = element.content.indexOf("http", 1);
             if (start > 0) {
               let last = element.content.indexOf('"', start);
               src = element.content.substring(start, last);

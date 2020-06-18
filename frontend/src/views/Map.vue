@@ -122,7 +122,7 @@
       v-show="isSearching&&!searchshow"
       @click="searchshow=!searchshow"
       style="position: absolute;
-    top: 560px;
+    top: 90%;
     right:20px;
     z-index: 2;"
     >
@@ -601,7 +601,7 @@ export default {
 <style>
 #map {
   /* width: 1000px; */
-  height: 600px; /* 100vh-120px; */
+  height: calc(100vh - 120px);
   position: sticky;
 }
 .box_search {
@@ -705,7 +705,7 @@ export default {
 #scrollup {
   transition: opacity 0.5s;
   position: fixed;
-  top: 530px;
+  top: 90%;
   right: 20px;
   z-index: 2;
 }
