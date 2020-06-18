@@ -93,13 +93,23 @@
                 justified
               >
                 <!-- 할인 정보 -->
-                <b-tab title="할인 정보" active>
-                  <sale-card :selectedStore="conveniences"></sale-card>
+                <b-tab title="할인 정보" @click="tabClick('sale')" active>
+                  <item-card :items="saleShowItems"></item-card>
                 </b-tab>
+                <infinite-loading
+                  v-show="selectedTab == 'sale'"
+                  @infinite="infiniteHandler"
+                  force-use-infinite-wrapper="#__BVID__12__BV_tab_container_"
+                ></infinite-loading>
                 <!-- 상품 정보 -->
-                <b-tab title="상품 정보">
-                  <item-card :selectedStore="conveniences"></item-card>
+                <b-tab title="상품 정보" @click="tabClick('all')">
+                  <item-card :items="allShowItems"></item-card>
                 </b-tab>
+                <infinite-loading
+                  v-show="selectedTab == 'all'"
+                  @infinite="infiniteHandler"
+                  force-use-infinite-wrapper="#__BVID__19__BV_tab_container_"
+                ></infinite-loading>
               </b-tabs>
             </div>
           </div>
@@ -110,34 +120,132 @@
 </template>
 
 <script>
-import SaleCard from "@/components/SaleCard.vue";
+import productAxios from "../api/Productaxios";
+import InfiniteLoading from "vue-infinite-loading";
 import ItemCard from "@/components/ItemCard.vue";
 
 export default {
   name: "MainInfo",
   components: {
-    SaleCard,
+    InfiniteLoading,
     ItemCard
   },
   data() {
     return {
+      selectedTab: "sale",
       convenience_all: ["all"],
-      conveniences: []
+      conveniences: [],
+
+      saleItems: [],
+      saleFilteredItems: [],
+      saleShowItems: [],
+      saleItemIdx: 0,
+
+      allItems: [],
+      allFilteredItems: [],
+      allShowItems: [],
+      allItemIdx: 0
     };
   },
-  methods: {},
+  methods: {
+    infiniteHandler($state) {
+      if (this.selectedTab == "sale") {
+        setTimeout(() => {
+          this.saleShowItems = this.saleShowItems.concat(
+            this.saleFilteredItems.splice(0, 6)
+          );
+          this.saleItemIdx += 6;
+          $state.loaded();
+        }, 500);
+      } else if (this.selectedTab == "all") {
+        setTimeout(() => {
+          this.allShowItems = this.allShowItems.concat(
+            this.allFilteredItems.splice(0, 6)
+          );
+          this.allItemIdx += 6;
+          $state.loaded();
+        }, 500);
+      }
+    },
+    tabClick(tab) {
+      if (tab == "sale") {
+        this.selectedTab = "sale";
+      } else if (tab == "all") {
+        this.selectedTab = "all";
+      }
+    }
+  },
+  mounted() {
+    productAxios.getSale(
+      res => {
+        this.saleItems = Object.assign([], res.data);
+        this.saleFilteredItems = Object.assign([], res.data);
+        this.saleShowItems = this.saleFilteredItems.splice(0, 6);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    productAxios.getProduct(
+      res => {
+        res.data.forEach(item => {
+          item.product = {
+            id: item.id,
+            name: item.name,
+            image: item.image,
+            price: item.price
+          };
+        });
+        this.allItems = res.data;
+        this.allFilteredItems = res.data;
+        this.allShowItems = this.allFilteredItems.splice(0, 6);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  },
   watch: {
     convenience_all: function() {
-      if (this.convenience_all) {
-        if (this.convenience_all.length) {
-          this.conveniences = [];
+      if (this.conveniences.length && this.convenience_all.length) {
+        this.conveniences = [];
+        if (this.selectedTab == "sale") {
+          this.saleFilteredItems = Object.assign([], this.saleItems);
+          this.saleShowItems = this.saleFilteredItems.splice(0, 6);
+        } else if (this.selectedTab == "all") {
+          this.allFilteredItems = Object.assign([], this.allItems);
+          this.allShowItems = this.allFilteredItems.splice(0, 6);
         }
+      } else if (!this.conveniences.length && !this.convenience_all.length) {
+        this.convenience_all = ["all"];
+        document.getElementById("convenience-0").checked = true;
       }
     },
     conveniences: function() {
-      console.log(this.convenience_all, this.conveniences);
-      if (this.conveniences.length && this.convenience_all) {
+      if (this.conveniences.length && this.convenience_all.length) {
         this.convenience_all = [];
+        if (this.selectedTab == "sale") {
+          this.saleFilteredItems = Object.assign([], this.saleItems);
+          this.saleShowItems = this.saleFilteredItems.splice(0, 12);
+        } else if (this.selectedTab == "all") {
+          this.allFilteredItems = Object.assign([], this.allItems);
+          this.allShowItems = this.allFilteredItems.splice(0, 12);
+        }
+      } else if (!this.conveniences.length && !this.convenience_all.length) {
+        this.convenience_all = ["all"];
+      }
+      if (this.conveniences.length) {
+        if (this.selectedTab == "sale") {
+          this.saleFilteredItems = this.saleItems.filter(item => {
+            return this.conveniences.includes(item.franchiseId.toString());
+          });
+          this.saleShowItems = this.saleFilteredItems.splice(0, 6);
+        } else if (this.selectedTab == "all") {
+          this.allFilteredItems = this.allItems.filter(item => {
+            return this.conveniences.includes(item.franchiseId.toString());
+          });
+          this.allShowItems = this.allFilteredItems.splice(0, 6);
+        }
       }
     }
   }

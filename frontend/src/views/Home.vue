@@ -20,7 +20,7 @@
       </div>
       <!---->
       <!--오른쪽 화면 부분-->
-      <div class="main-container part2" style="z-index: 5;">
+      <div class="main-container part2">
         <main-info style="z-index: 7;"></main-info>
       </div>
       <!---->
@@ -33,10 +33,12 @@ import MainInfo from "@/components/MainInfo.vue";
 import Navbar from "@/components/Navbar.vue";
 
 export default {
+  name: "Home",
   components: {
     Navbar,
     MainInfo
-  }
+  },
+  methods: {}
 };
 </script>
 <style lang="less" scoped>

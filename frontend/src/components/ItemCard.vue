@@ -1,34 +1,33 @@
 <template>
   <div class="card-container">
     <ul class="cards">
-      <li class="cards_item" v-for="showItem in showItems" :key="showItem.id">
-        <router-link class="routeLink" :to="{ name: 'Detail', params: {id: showItem.id}}">
+      <li class="cards_item" v-for="item in items" :key="item.id">
+        <router-link class="routeLink" :to="{ name: 'Detail', params: {id: item.product.id}}">
           <div class="card">
-            <img
-              src="@/assets/icons/cu.png"
-              v-if="showItem.franchiseId==682"
-              alt
-              class="card-banner"
-            />
-            <img
-              src="@/assets/icons/gs25.png"
-              v-if="showItem.franchiseId==646"
-              alt
-              class="card-banner"
-            />
+            <img src="@/assets/icons/cu.png" v-if="item.franchiseId==682" alt class="card-banner" />
+            <img src="@/assets/icons/gs25.png" v-if="item.franchiseId==646" alt class="card-banner" />
             <img
               src="@/assets/icons/emart.jpg"
-              v-if="showItem.franchiseId==936"
+              v-if="item.franchiseId==936"
               alt
               class="card-banner"
             />
             <div class="card_image">
-              <img class="card-img" :src="showItem.image" />
-              <img class="card-img" v-if="!showItem.image" src="@/assets/icons/defaultproduct.png" />
+              <img class="card-img" v-if="item.product.image" :src="item.product.image" />
+              <img
+                class="card-img"
+                v-if="!item.product.image"
+                src="@/assets/icons/defaultproduct.png"
+              />
             </div>
             <div class="card_content">
-              <h2 class="card_title">{{ showItem.name }}</h2>
-              <p class="card_text">{{ addComma(showItem.price) }}</p>
+              <h2 class="card_title">
+                <b-badge v-if="item.type == '1+1'" variant="info">1+1</b-badge>
+                <b-badge v-if="item.type == '2+1'" variant="info">2+1</b-badge>
+                <b-badge v-if="item.type == 'dum'" variant="info">덤</b-badge>
+                {{ item.name }}
+              </h2>
+              <p class="card_text">{{ addComma(item.product.price) }}원</p>
             </div>
           </div>
         </router-link>
@@ -38,52 +37,22 @@
 </template>
 
 <script>
-import productAxios from "../api/Productaxios";
 export default {
   name: "ItemCard",
   components: {},
   props: {
-    selectedStore: {}
+    items: {}
   },
   data() {
-    return {
-      franchiseItems: [],
-      showItems: []
-    };
+    return {};
   },
   methods: {
     addComma(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   },
-  mounted() {
-    productAxios.getProductBySearch(
-      {
-        franchise: this.selectedStore,
-        keyword: ""
-      },
-      res => {
-        console.log(res.data);
-        this.franchiseItems = res.data;
-        this.showItems = res.data;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  },
-  watch: {
-    selectedStore: function() {
-      let selectedStore = this.selectedStore.map(idx => parseInt(idx));
-      if (this.selectedStore.length) {
-        this.showItems = this.franchiseItems.filter(item => {
-          return selectedStore.includes(item.franchiseId);
-        });
-      } else {
-        this.showItems = this.franchiseItems;
-      }
-    }
-  }
+  mounted() {},
+  watch: {}
 };
 </script>
 
@@ -170,7 +139,8 @@ a.routeLink {
   box-shadow: 0 10px 20px -14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  width: 100%;
+  /* overflow: hidden; */
   /* height: 300px; */
 }
 
