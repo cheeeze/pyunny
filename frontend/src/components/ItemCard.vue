@@ -1,22 +1,36 @@
 <template>
   <div class="card-container">
     <ul class="cards">
-      <li
-        class="cards_item"
-        v-for="(item, index) in items"
-        :key="index"
-        @click="gotoDetail(item.id)"
-      >
-        <div class="card">
-          <div class="card_image">
-            <img class="card-img" :src="item.image" />
+      <li class="cards_item" v-for="item in items" :key="item.id">
+        <router-link class="routeLink" :to="{ name: 'Detail', params: {id: item.product.id}}">
+          <div class="card">
+            <img src="@/assets/icons/cu.png" v-if="item.franchiseId==682" alt class="card-banner" />
+            <img src="@/assets/icons/gs25.png" v-if="item.franchiseId==646" alt class="card-banner" />
+            <img
+              src="@/assets/icons/emart.jpg"
+              v-if="item.franchiseId==936"
+              alt
+              class="card-banner"
+            />
+            <div class="card_image">
+              <img class="card-img" v-if="item.product.image" :src="item.product.image" />
+              <img
+                class="card-img"
+                v-if="!item.product.image"
+                src="@/assets/icons/defaultproduct.png"
+              />
+            </div>
+            <div class="card_content">
+              <h2 class="card_title">
+                <b-badge v-if="item.type == '1+1'" variant="info">1+1</b-badge>
+                <b-badge v-if="item.type == '2+1'" variant="info">2+1</b-badge>
+                <b-badge v-if="item.type == 'dum'" variant="info">덤</b-badge>
+                {{ item.name }}
+              </h2>
+              <p class="card_text">{{ addComma(item.product.price) }}원</p>
+            </div>
           </div>
-          <div class="card_content">
-            <h2 class="card_title">{{item.name}}</h2>
-            <p class="card_text">{{item.price}}</p>
-            <button class="cardbtn card_btn">{{item.description}}</button>
-          </div>
-        </div>
+        </router-link>
       </li>
     </ul>
   </div>
@@ -24,30 +38,30 @@
 
 <script>
 export default {
+  name: "ItemCard",
+  components: {},
   props: {
-    items: {
-      type: Array,
-      required: true
-    },
-    type: {
-      type: String,
-      required: true
-    }
+    items: {}
+  },
+  data() {
+    return {};
   },
   methods: {
-    gotoDetail(id) {
-      if (this.type === "product") {
-        this.$router.push("/detail/" + id);
-      } else if (this.type === "recipe") {
-        this.$router.push("/recipedetail/" + id);
-      }
+    addComma(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-  }
+  },
+  mounted() {},
+  watch: {}
 };
 </script>
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Quicksand:400,700");
+
+a.routeLink {
+  text-decoration: none;
+}
 
 /* Design */
 .card-container {
@@ -57,6 +71,13 @@ export default {
   letter-spacing: 0;
   height: 100%;
   /* padding: 1rem; */
+}
+
+.card-banner {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 25%;
 }
 
 .card-img {
@@ -118,8 +139,14 @@ export default {
   box-shadow: 0 10px 20px -14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  width: 100%;
+  /* overflow: hidden; */
   /* height: 300px; */
+}
+
+.card:hover {
+  border: 1.8px solid lightblue;
+  box-shadow: 0 0 10px 5px lightgray;
 }
 
 .card_content {
