@@ -100,7 +100,8 @@ public class UserController {
     }
 
     @PutMapping("user")
-    public ResponseEntity updateUser(User user) {
+    public ResponseEntity updateUser(@RequestBody User user) {
+        System.out.println(user.toString());
         try {
             service.updateUser(user);
             return new ResponseEntity<>(HttpStatus.OK);

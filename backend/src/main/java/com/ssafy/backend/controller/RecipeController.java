@@ -169,8 +169,8 @@ public class RecipeController {
             name = new String(name.getBytes("8859_1"), "utf-8");
 
             // String root = "C://Users/multicampus/SketchBook/back-sk/";
-            String path = "C://upload/";
-            // String path = "/home/ubuntu/project/upload/";
+            // String path = "C://upload/";
+            String path = "/home/ubuntu/project/upload/";
             /*
              * String root = request.getSession().getServletContext().getRealPath("/");
              * String path = root + "/";
