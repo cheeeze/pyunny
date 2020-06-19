@@ -12,9 +12,7 @@
       ></b-form-input>
       <b-button @click="RegisterTelMembership('sk')" variant="outline-secondary">등록하기</b-button>
       <b-form-invalid-feedback id="input-live-feedback">등록할 멤버십 번호를 16자리 입력해주세요!</b-form-invalid-feedback>
-      <barcode v-bind:value="sk">
-        아직 입력된 SKT 멤버십이 없어요. :(
-      </barcode>
+      <barcode v-bind:value="sk">아직 입력된 SKT 멤버십이 없어요. :(</barcode>
     </div>
 
     <div class="inline">
@@ -29,9 +27,7 @@
       ></b-form-input>
       <b-button @click="RegisterTelMembership('kt')" variant="outline-secondary">등록하기</b-button>
       <b-form-invalid-feedback id="input-live-feedback">등록할 멤버십 번호를 16자리 입력해주세요!</b-form-invalid-feedback>
-      <barcode v-bind:value="kt">
-        아직 입력된 KT 멤버십이 없어요. :(
-      </barcode>
+      <barcode v-bind:value="kt">아직 입력된 KT 멤버십이 없어요. :(</barcode>
     </div>
 
     <div class="inline">
@@ -45,12 +41,8 @@
         trim
       ></b-form-input>
       <b-button @click="RegisterTelMembership('lg')" variant="outline-secondary">등록하기</b-button>
-
       <b-form-invalid-feedback id="input-live-feedback">등록할 멤버십 번호를 16자리 입력해주세요!</b-form-invalid-feedback>
-
-      <barcode v-bind:value="lg">
-        아직 입력된 LGU+ 멤버십이 없어요. :(
-      </barcode>
+      <barcode v-bind:value="lg">아직 입력된 LGU+ 멤버십이 없어요. :(</barcode>
     </div>
   </div>
 </template>
@@ -66,10 +58,11 @@ export default {
       kt: "",
       lg: "",
       tempnum: "",
+      userId: 0
     };
   },
   components: {
-    'barcode': VueBarcode
+    barcode: VueBarcode
   },
   computed: {
     skState() {
@@ -82,30 +75,37 @@ export default {
       return this.lg.length > 15 ? true : false;
     }
   },
+  mounted() {
+    if (sessionStorage.getItem("user") != null) {
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+    }
+  },
   methods: {
-    RegisterMembership(sort) {
-      if (sort == 'sk') {
-        this.tempnum = this.sk
-      } if (sort == 'kt') {
-        this.tempnum = this.kt
-      } if (sort == 'lg') {
-        this.tempnum = this.lg
+    RegisterTelMembership(sort) {
+      if (sort == "sk") {
+        this.tempnum = this.sk;
+      }
+      if (sort == "kt") {
+        this.tempnum = this.kt;
+      }
+      if (sort == "lg") {
+        this.tempnum = this.lg;
       }
       BarcodeAxios.insertMembership(
         {
           number: this.tempnum,
           type: sort,
-          userId: 1
+          userId: this.userId
         },
         res => {
           console.log(res);
-          alert('멤버십 등록이 완료 되었습니다!');
+          alert("멤버십 등록이 완료 되었습니다!");
         },
         error => {
           console.log(error);
-          alert('멤버십 등록에 실패했습니다. 다시 요청해주세요!')
+          alert("멤버십 등록에 실패했습니다. 다시 요청해주세요!");
         }
-      )
+      );
     }
   }
 };
