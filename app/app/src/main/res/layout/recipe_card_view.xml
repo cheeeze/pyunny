@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center_horizontal"
+    android:padding="5dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        app:cardCornerRadius="10dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="4">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3">
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/cocacola"
+                    android:scaleType="centerInside"
+                    android:background="#00000000"
+                    android:id="@+id/btn_recipe_item_main_image"/>
+                <com.example.myapplication.customView.CustomTextOutLineView
+                    xmlns:textoutline="http://schemas.android.com/apk/res/com.example.myapplication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="10dp"
+                    android:textSize="20dp"
+                    android:text="코카콜라"
+
+                    android:textColor="#ffffff"
+                    textoutline:textStroke="true"
+                    textoutline:textStrokeColor="#000000"
+                    textoutline:textStrokeWidth="5.0"
+                    android:id="@+id/txt_recipe_item_title"/>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="bottom"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:text="코카콜라"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:id="@+id/txt_recipe_item_title"/>-->
+
+            </FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:weightSum="2"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="작성자"
+                    android:gravity="center_vertical"
+                    android:id="@+id/txt_recipe_item_writer"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="2020-06-11"
+                    android:gravity="right|center"
+                    android:id="@+id/txt_recipe_item_date"/>
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

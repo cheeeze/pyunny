@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserMapper">
+
+    <resultMap type="com.ssafy.backend.vo.User" id="resultUser">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="nickname" property="nickname"/>
+        <result column="email" property="email"/>
+        <result column="kakao" property="kakao"/>
+        <result column="profile_image" property="profileImage"/>
+    </resultMap>
+
+    <sql id="select-all-users">
+        SELECT
+            id,
+            name,
+            password,
+            nickname,
+            email,
+            kakao,
+            profile_image
+        FROM
+            User
+    </sql>
+
+    <insert id="insertUser" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+		INSERT into User(name, password, nickname, email, kakao, profile_image)
+        VALUES(#{name}, #{password}, #{nickname}, #{email}, #{kakao}, #{profileImage})
+    </insert>
+
+    <update id="updateUser" parameterType="user">
+        UPDATE User
+        SET name=#{name}, password=#{password}, nickname=#{nickname}, email=#{email}, kakao=#{kakao}, profile_image=#{profileImage}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteMember" parameterType="int">
+		delete from User where id=#{value}
+    </delete>
+
+    <select id="login" parameterType="user" resultMap="resultUser">
+        <include refid="select-all-users"/>
+		 WHERE email=#{email} AND password=#{password}
+    </select>
+
+    <select id="selectOne" parameterType="int" resultMap="resultUser">
+        <include refid="select-all-users"/>
+		 WHERE id=#{value}
+    </select>
+
+    <select id="duplicateNickname" parameterType="String" resultType="int">
+        SELECT count(*) FROM User WHERE nickname=#{value}
+    </select>
+
+    <select id="getUserRecipe" parameterType="int" resultType="recipe">
+        select id, ingredient, date, title
+        from Recipe
+        where user_id = #{value}
+    </select>
+
+    <select id="getUserRecipeLike" parameterType="int" resultType="recipe">
+        select r.id id, r.ingredient ingredient, r.date date, r.title title
+        from Recipe r inner join Recipe_like rl
+        on r.id = rl.recipe_id
+        where rl.user_id = #{value}
+    </select>
+
+    <select id="getUserRecipeComment" parameterType="int" resultType="recipeComment">
+        select rc.id id, rc.recipe_id recipe_id ,rc.content content, rc.date date, r.title nickname
+        from Recipe r inner join Recipe_comment rc
+        on r.id = rc.recipe_id
+        where rc.user_id = #{value}
+    </select>
+
+    <select id="getUserFavorite" parameterType="int" resultType="product">
+        select p.id id, p.name name, p.franchise_id franchise_id, p.price price, p.category category, p.image image, p.description description
+        from Product p inner join Favorite f 
+        on p.id = f.product_id 
+        where f.user_id = #{value}
+    </select>
+
+
+    <delete id="deleteUserFavorite" parameterType="favorite">
+        delete from Favorite 
+        where user_id = #{userId} and product_id = #{productId}
+    </delete>
+
+</mapper>

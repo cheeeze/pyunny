@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:weightSum="8"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:weightSum="6"
+        android:background="#EAD9D9">
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/all2"
+            android:scaleType="centerInside"
+            android:background="#00000000"
+            android:padding="10dp"
+            android:id="@+id/btn_main_all"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/gs25"
+            android:scaleType="centerInside"
+            android:background="#00000000"
+            android:padding="10dp"
+            android:id="@+id/btn_main_gs"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/cu"
+            android:scaleType="centerInside"
+            android:background="#00000000"
+            android:padding="10dp"
+            android:id="@+id/btn_main_cu"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/seven"
+            android:scaleType="centerInside"
+            android:background="#00000000"
+            android:padding="10dp"
+            android:id="@+id/btn_main_seven"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/emart"
+            android:scaleType="centerInside"
+            android:background="#00000000"
+            android:padding="10dp"
+            android:id="@+id/btn_main_emart"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ministop"
+            android:scaleType="centerInside"
+            android:background="#00000000"
+            android:padding="10dp"
+            android:id="@+id/btn_main_ministop"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_main_sale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:text="할인 정보">
+            </Button>
+            <Button
+                android:id="@+id/btn_main_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:text="상품 정보">
+            </Button>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_main_nodata" />
+    </LinearLayout>
+
+</LinearLayout>

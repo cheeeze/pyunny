@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 상품, 할인상품 관련 SQL mapper 입니다 -->
+<mapper namespace="ProductMapper">
+
+    <sql id="select-product">
+        select * from Product
+    </sql>
+
+    <sql id="select-sale">
+        select * from Sale
+    </sql>
+
+    <resultMap id="saleSearchResult" type="sale">
+        <id property="id" column="id"/>
+
+        <result property="name" column="sale_name"/>
+        <result property="franchiseId" column="franchise_id"/>
+        <result property="type" column="type"/>
+        <result property="dumImage" column="dum_image"/>
+        <result property="dumName" column="dum_name"/>
+        <result property="dumPrice" column="dum_price"/>
+        <association property="product" column="product_id" javaType="product" resultMap="productResult"/>
+    </resultMap>
+
+    <resultMap id="productResult" type="product">
+        <id property="id" column="product_id"/>
+        <result property="name" column="name"/>
+        <result property="price" column="price"/>
+        <result property="category" column="category"/>
+        <result property="image" column="image"/>
+    </resultMap>
+
+    <!-- 상품 등록 -->
+    <insert id="insertProduct" parameterType="product" useGeneratedKeys="true" keyProperty="id">
+        insert into Product 
+        (name, franchise_id ,price, category, image) 
+        values (#{name}, #{franchiseId}, #{price}, #{category}, #{image})
+    </insert>
+
+    <!-- 할인 등록 -->
+    <insert id="insertSale" parameterType="sale" useGeneratedKeys="true" keyProperty="id">
+        insert into Sale 
+        (product_id, name, franchise_id, type, dum_image, dum_name, dum_price)
+        values 
+        (#{productId}, #{name}, #{franchiseId}, #{type}, #{dumImage}, #{dumName}, #{dumPrice})
+    </insert>
+
+    <!-- 상품 다 가져오기 -->
+    <select id="getProduct" resultType="product">
+        <include refid="select-product"/>
+    </select>
+
+    <!-- 할인 다 가져오기 -->
+    <select id="getSale" resultMap="saleSearchResult">
+        <!-- <include refid="select-product"/> -->
+        SELECT 
+        s.id AS id , 
+        s.name AS sale_name, 
+        s.franchise_id AS franchise_id,
+        s.product_id as product_id,
+        s.type AS type, 
+        s.dum_image AS dum_image, 
+        s.dum_name AS dum_name, 
+        s.dum_price AS dum_price,
+        p.id AS id,
+        p.name AS NAME, p.price AS price, 
+        p.category AS category, 
+        p.image AS image 
+        FROM Sale s LEFT OUTER JOIN Product p 
+        ON s.product_id = p.id   
+    </select>
+
+    <!-- 상품 ID로 가져오기 -->
+    <select id="getProductById" parameterType="int" resultType="product">
+        <include refid="select-product"/>
+        where id=#{value}
+    </select>
+
+    <select id="getSimilarProduct" parameterType="product" resultType="product">
+        SELECT 
+        p.id id, 
+        p.name name, 
+        p.franchise_id franchise_id, 
+        p.price price, 
+        p.category category, 
+        p.image image,
+        p.description description 
+        FROM Rating r INNER JOIN Product p 
+        ON r.product_id = p.id
+        WHERE r.user_id in (SELECT user_id FROM Rating WHERE score = 1 AND product_id = #{id}) 
+        AND r.score = 1 
+        AND r.product_id != #{id} 
+        AND p.category = #{category}
+        GROUP BY p.id
+        ORDER BY COUNT(p.id) DESC
+        limit 20;
+    </select>
+
+    <!-- 할인 ID로 가져오기 -->
+    <select id="getSaleById" parameterType="int" resultType="sale">
+        <include refid="select-sale"/>
+        where id=#{value}
+    </select>
+
+    <!-- 상품 이름으로 가져오기 -->
+    <select id="getProductByName" parameterType="string" resultType="product">
+        <include refid="select-product"/>
+        where name like '%${value}%'
+    </select>
+
+
+    <!-- 할인 이름으로 가져오기 -->
+    <select id="getSaleByName" parameterType="string" resultType="sale">
+        <include refid="select-sale"/>
+        where name like '%${value}%'
+    </select>
+
+    <!-- 검색으로 가져오기 (편의점, 키워드) -->
+    <select id="getProductBySearch" parameterType="mainSearch" resultType="product">
+        <include refid="select-product"/>
+        <where>
+            <if test="franchise != null">                <!-- 전체가 아닐때 -->
+                franchise_id in 
+                <foreach collection="franchise" item="type" open="(" close=")" separator=",">
+                    #{type.value}
+                </foreach>
+            </if>
+            <if test="keyword != null">
+                and name like '%${keyword}%'
+            </if>
+        </where> 
+        order by name;
+    </select>
+
+    <!-- 검색으로 가져오기 (편의점, 키워드) -->
+    <select id="getSaleBySearch" parameterType="mainSearch" resultMap="saleSearchResult">
+        SELECT 
+        s.id AS id , 
+        s.name AS sale_name, 
+        s.franchise_id AS franchise_id,
+        s.product_id as product_id,
+        s.type AS type, 
+        s.dum_image AS dum_image, 
+        s.dum_name AS dum_name, 
+        s.dum_price AS dum_price,
+        p.id AS id,
+        p.name AS NAME, p.price AS price, 
+        p.category AS category, 
+        p.image AS image 
+        FROM Sale s LEFT OUTER JOIN Product p 
+        ON s.product_id = p.id   
+        <where>
+            <if test="franchise != null">                <!-- 전체가 아닐때 -->
+                s.franchise_id in 
+                <foreach collection="franchise" item="type" open="(" close=")" separator=",">
+                    #{type.value}
+                </foreach>
+            </if>
+            <if test="keyword != null">
+                and s.name like '%${keyword}%'
+            </if>
+        </where> 
+        order by name;
+    </select>
+
+    <!-- 상품 수정 -->
+    <update id="updateProduct" parameterType="product"> 
+        update Product
+        set 
+        name = #{name}, franchise_id = #{franchiseId}, price = #{price}, category = #{category}, image = #{image}
+        where id=#{id}
+    </update>
+
+    <!-- 할인 수정 -->
+    <update id="updateSale" parameterType="sale"> 
+        update Sale
+        set 
+        product_id = #{productId}, name = #{name}, franchise_id = #{franchiseId}, type = #{type}, dum_image = #{dumImage}, dum_name = #{dumName}, dum_price = #{dumPrice}
+        where id=#{id}
+    </update>
+
+    <!-- 상품 삭제 -->
+    <delete id="deleteProduct" parameterType="int">
+        delete from Product where id = #{value}
+    </delete>
+
+    <!-- 할인 삭제 -->
+    <delete id="deleteSale" parameterType="int">
+        delete from Sale where id = #{value}
+    </delete>
+
+    <!-- Favorite 관심상품 -->
+    <insert id="insertFavorite" parameterType="favorite">
+        insert into Favorite
+        (user_id, product_id, date)
+        values 
+        (#{userId}, #{productId}, convert_tz(now(),'+00:00','+09:00'))
+    </insert>
+
+    <select id="getFavorite" parameterType="favorite" resultType="favorite">
+        select * from Favorite
+        where user_id = #{userId} and product_id = #{productId}
+    </select>
+
+    <select id="getRatingcount" parameterType="int" resultType="ratingCount">
+        select sum(score=1) inlike, sum(score=2) dislike
+        from Rating
+        where product_id = #{value}
+    </select>
+
+    <delete id="deleteFavorite" parameterType="int">
+        delete from Favorite where id = #{value}
+    </delete>
+
+    <!-- rating 평가 -->
+    <insert id="insertRating" parameterType="rating" useGeneratedKeys="true" keyProperty="id">
+        insert into Rating
+        (user_id, product_id, score)
+        values
+        (#{userId}, #{productId}, #{score})
+    </insert>
+
+    <select id="getRating" parameterType="rating" resultType="rating">
+        select * from Rating 
+        where user_id = #{userId} and product_id = #{productId}
+    </select>
+
+    <update id="updateRating" parameterType="rating">
+        update Rating
+        set
+        score = #{score}
+        where
+        user_id = #{userId} and product_id = #{productId}
+    </update>
+
+    <delete id="deleteRating" parameterType="rating">
+        delete from Rating where user_id = #{userId} and product_id = #{productId}
+    </delete>
+
+    <!-- Product Comment 한줄평 -->
+    <insert id="insertComment" parameterType="productComment" useGeneratedKeys="true" keyProperty="id">
+        insert into Product_comment
+        (user_id, product_id, content)
+        values
+        (#{userId}, #{productId}, #{content})
+    </insert>
+
+    <select id="getCommentById" parameterType="int" resultType="productComment">
+        select 
+        pc.id id, pc.user_id userId, u.nickname nickname, pc.product_id productId, pc.content content
+        from Product_comment pc inner join User u
+        on pc.user_id = u.id
+        where pc.product_id = #{value}
+    </select>
+
+    <update id="updateComment" parameterType="productComment">
+        update Product_comment
+        set
+        content = #{content}
+        where user_id = #{userId} and product_id = #{productId}
+    </update>
+
+    <delete id="deleteComment" parameterType="int">
+        delete from Product_comment where id = #{value}
+    </delete>
+
+    <select id="getUsedRecipe" parameterType="int" resultType="recipe">
+        select r.id id, r.title title, r.date date, r.ingredient ingredient 
+        from Recipe r inner join Product_recipe pr
+        on r.id = pr.recipe_id
+        where pr.product_id = #{value}
+    </select>
+
+
+</mapper>

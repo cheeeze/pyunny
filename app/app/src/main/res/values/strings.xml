@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">편의뽕</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">편의점에서 뽕을 뽑자 편의뽕!</string>
+    <string name="slide_1_desc">여러 편의점 할인정보/PB상품을 한눈에 확인해요!</string>
+
+    <string name="slide_2_title">레시피</string>
+    <string name="slide_2_desc">편의점 꿀조합도 찾아보고 나만의 레시피도 올려봐요!</string>
+
+    <string name="slide_3_title">주변 편의점 검색</string>
+    <string name="slide_3_desc">이곳 저곳 없는 물건 찾아 다니지 말고 지도로 한눈에 찾아요!</string>
+
+    <string name="slide_4_title">기프티콘/바코드 관리</string>
+    <string name="slide_4_desc">통신사 앱열고 기프티콘 열고 번거롭게 하지말고 편의뽕으로 한번에 열어요!</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+</resources>

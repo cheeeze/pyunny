@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="RecipeMapper">
+    <sql id="select-recipe">
+        select * from Recipe
+    </sql>
+
+    <!-- 인기순 조회 -->
+    <select id="getRecipePopularOrdered" resultType="recipe">
+        <include refid="select-recipe"/>
+        R
+        order by (select ifnull(count(-1), 0) from Recipe_like where recipe_id = R.id) desc;
+    </select>
+
+    <!-- 최신순 조회 -->
+    <select id="getRecipeRecentOrdered" resultType="recipe">
+        <include refid="select-recipe"/>
+        order by date desc;
+    </select>
+
+    <!-- 레시피 검색 -->
+    <select id="getRecipeBySearch" parameterType="string" resultType="recipe">
+        <include refid="select-recipe"/>
+        R
+        where
+        title like '%${value}%' or ingredient like '%${value}%'
+        order by (select ifnull(count(-1), 0) from Recipe_like where recipe_id = R.id) desc;
+    </select>
+
+    <select id="getRecipeById" parameterType="int" resultType="recipe">
+        <include refid="select-recipe"/>
+        where id= #{value}
+    </select>
+
+    <insert id="insertRecipe" parameterType="recipe" useGeneratedKeys="true" keyProperty="id">
+        insert into Recipe
+        (user_id, ingredient, date, title, content)
+        values 
+        (#{userId}, #{ingredient}, convert_tz(now(),'+00:00','+09:00'), #{title}, #{content})
+    </insert>
+
+    <insert id="insertIngredient" parameterType="recipe">
+        insert into Product_recipe
+        (recipe_id, product_id)
+        values
+        <if test="ingredientProduct != null">
+            <foreach collection="ingredientProduct" item="item" separator=",">
+            (#{id}, #{item.value})
+            </foreach>
+        </if>
+    </insert>
+
+    <update id="updateRecipe" parameterType="recipe">
+        update Recipe
+        set
+        ingredient = #{ingredient}, date = convert_tz(now(),'+00:00','+09:00'), title = #{title}, content = #{content}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteRecipe" parameterType="int">
+        delete from Recipe
+        where id=#{value}
+    </delete>
+
+    <!-- 재료 자동완성 -->
+    <select id="getProductAutoComplete" parameterType="string" resultType="product">
+        select * from Product
+        where name like '%${value}%'
+    </select>
+
+    <select id="getIngredientProduct" parameterType="int" resultType="product">
+        SELECT p.id id, p.name name, p.franchise_id franchise_id, p.price price, p.category category, p.image image, p.description description FROM Product p INNER JOIN Product_recipe r
+            ON p.id = r.product_id 
+        WHERE r.recipe_id = #{value};
+    </select>
+
+
+    <resultMap id="recipeCommentResult" type="recipeCommentParent">
+        <id property="id" column="id"/>
+        <collection property="childComment" javaType="arrayList" column="id" ofType="recipeComment" select="getChildComment"/>
+    </resultMap>
+
+    <!-- 레시피 댓글 등록 -->
+    <insert id="insertComment" parameterType="recipeComment" useGeneratedKeys="true" keyProperty="id">
+        insert into Recipe_comment
+        (user_id, recipe_id, date, content, parent_id)
+        values
+        (#{userId}, #{recipeId}, convert_tz(now(),'+00:00','+09:00'), #{content}, #{parentId})
+    </insert>
+
+    <!-- 댓글 가져오기 (대댓글 포함) -->
+    <select id="getComment" parameterType="int" resultMap="recipeCommentResult">
+        SELECT p.id id, p.user_id user_id, p.recipe_id recipe_id, p.parent_id , p.content content, p.date date, u.nickname nickname
+        FROM Recipe_comment p INNER JOIN User u
+        ON p.user_id = u.id
+        where p.recipe_id = #{value} and p.parent_id = 0
+    </select>
+
+    <select id="getChildComment" resultType="recipeComment">
+        select  pp.id id, pp.user_id user_id, pp.recipe_id recipe_id, pp.parent_id parent_id, pp.content content, pp.date date, u.nickname nickname
+        FROM Recipe_comment pp INNER JOIN User u
+        ON pp.user_id = u.id
+        WHERE pp.parent_id = #{id} 
+    </select>
+
+    <select id="test" parameterType="int" resultType="recipeComment">
+        select * from Recipe_comment where recipe_id = #{value} and parent_id != null
+    </select>
+
+    <delete id="deleteComment" parameterType="int">
+        delete from Recipe_comment
+        where id = #{value}
+    </delete>
+
+
+    <insert id="insertRecipeLike" parameterType="recipeLike">
+        insert into Recipe_like 
+        (user_id, recipe_id)
+        values
+        (#{userId}, #{recipeId})
+    </insert>
+
+    <delete id="deleteRecipeLike" parameterType="recipeLike">
+        delete from Recipe_like
+        where user_id = #{userId} and recipe_id = #{recipeId}
+    </delete>
+
+    <select id="getRecipeLike" parameterType="recipeLike" resultType="recipeLike">
+        select * from Recipe_like
+        where user_id = #{userId} and recipe_id = #{recipeId}
+    </select>
+</mapper>

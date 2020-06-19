@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_weight="7">
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:weightSum="6">-->
+
+<!--        <EditText-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="5"-->
+<!--            android:hint="상품 검색"-->
+<!--            android:fontFamily="@font/custom_font"-->
+<!--            android:textColor="#000000"-->
+<!--            android:id="@+id/edt_recipe_search"/>-->
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="검색"-->
+<!--            android:background="#00000000"-->
+<!--            android:id="@+id/btn_recipe_search"/>-->
+<!--    </LinearLayout>-->
+<!--    <Spinner-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/spinner_recipe_sort"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:spinnerMode="dialog"-->
+<!--        android:entries="@array/recipe_item"/>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_recipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:id="@+id/image_recipe_nodata"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="웹으로 이용하기"
+        android:id="@+id/btn_recipe_tomap"/>
+
+
+
+
+
+</LinearLayout>

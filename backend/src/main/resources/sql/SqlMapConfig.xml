@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<setting value="true" name="mapUnderscoreToCamelCase"/>
+	</settings>
+	<typeAliases>
+		<package name="com.ssafy.backend.vo" />
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="sql/mybatis-product-mapping.xml"/>
+        <mapper resource="sql/mybatis-store-mapping.xml"/>
+        <mapper resource="sql/mybatis-recipe-mapping.xml"/>
+		<mapper resource="sql/mybatis-user-mapping.xml" />
+		<mapper resource="sql/mybatis-gifticon-mapping.xml" />
+		<mapper resource="sql/mybatis-membership-mapping.xml" />
+	</mappers>
+</configuration>

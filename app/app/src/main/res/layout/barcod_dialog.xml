@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="9">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:weightSum="5"
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/gs25"
+            android:scaleType="centerInside"
+            android:id="@+id/barcode_image_btn_gs"
+            android:padding="3dp"
+            android:background="#00000000" />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/cu"
+            android:scaleType="centerInside"
+            android:id="@+id/barcode_image_btn_cu"
+            android:padding="3dp"
+            android:background="#00000000"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/seven"
+            android:scaleType="centerInside"
+            android:id="@+id/barcode_image_btn_seven"
+            android:padding="3dp"
+            android:background="#00000000"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/emart"
+            android:scaleType="centerInside"
+            android:id="@+id/barcode_image_btn_emart"
+            android:padding="3dp"
+            android:background="#00000000"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ministop"
+            android:scaleType="centerInside"
+            android:id="@+id/barcode_image_btn_mini"
+            android:padding="3dp"
+            android:background="#00000000"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:text="통신사"
+        android:gravity="center_vertical"
+        android:textSize="20dp"
+        android:padding="5dp"
+        android:id="@+id/txt_barcode_membership"/>
+
+    <ImageView
+        android:id="@+id/image_barcode_membership"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"
+        android:background="#ffffff"
+        android:padding="30dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/empty_barcode" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:text="번호"
+        android:gravity="center_horizontal"
+        android:id="@+id/txt_barcode_membership_num"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:text="적립"
+        android:gravity="center_vertical"
+        android:textSize="20dp"
+        android:padding="5dp"
+        android:id="@+id/txt_barcode_conv"/>
+
+    <ImageView
+        android:id="@+id/image_barcode_conv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"
+        android:background="#ffffff"
+        android:scaleType="centerCrop"
+        android:padding="30dp"
+        android:src="@drawable/empty_barcode" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:text="번호"
+        android:gravity="center_horizontal"
+        android:id="@+id/txt_barcode_conv_num"/>
+
+
+
+
+</LinearLayout>

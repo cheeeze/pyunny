@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.RecipeDetailActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="마크 정식"
+            android:textSize="30dp"
+            android:gravity="bottom|center"
+            android:padding="10dp"
+            android:id="@+id/txt_recipe_detail_title"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="필요재료: 올바른 정신머리와 건강한 체력"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:id="@+id/txt_recipe_detail_ingredient"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="작성자: 편의뽕마스터"
+            android:textSize="15dp"
+            android:gravity="right"
+            android:paddingRight="5dp"
+            android:id="@+id/txt_recipe_detail_writer"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="2020-06-11"
+            android:gravity="right"
+            android:paddingRight="5dp"
+            android:id="@+id/txt_recipe_detail_date"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="사용한 편의점 상품"
+            android:textSize="12dp"
+            android:gravity="center"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="통모짜스트링치즈"
+                android:textSize="11dp"
+                android:textColor="#ffffff"
+                android:padding="5dp"
+                android:background="@drawable/button_background"
+                android:scaleY="0.6"
+                android:scaleX="0.8"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="자이언트떡볶이"
+                android:textSize="11dp"
+                android:textColor="#ffffff"
+                android:padding="5dp"
+                android:background="@drawable/button_background"
+                android:scaleY="0.6"
+                android:scaleX="0.8"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="의성마늘프랑크"
+                android:textSize="11dp"
+                android:textColor="#ffffff"
+                android:padding="5dp"
+                android:background="@drawable/button_background"
+                android:scaleY="0.6"
+                android:scaleX="0.8"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="스파게티컵"
+                android:textSize="11dp"
+                android:textColor="#ffffff"
+                android:padding="5dp"
+                android:background="@drawable/button_background"
+                android:scaleY="0.6"
+                android:scaleX="0.8"
+                android:gravity="center"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="궁극의 편의점 조합"
+            android:textSize="18dp"
+            android:gravity="bottom|center"
+            android:paddingBottom="10dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/mark1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="재료: 자이언트 떡볶이, 콕콕 스파게티, 소시지 햄, 스트링 치즈, 모차렐라 치즈"
+            android:textSize="12dp"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="가격: 7,100원"
+            android:textSize="12dp"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="마크 정식의 레시피는 라볶이와 비슷하다."
+            android:textSize="12dp"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="컵 떡볶이에 라면을 넣고 소시지와 치즈를 넣어 전자레인지에 돌리면 된다."
+            android:textSize="12dp"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="여기서 핵심은 콕콕 스파게티."
+            android:textSize="12dp"
+            android:gravity="center"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/mark2"
+            android:scaleType="centerInside"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="여기에 동봉된 스파게티 소스가 마크 정식의 맛을 좌우할 정도로 중요한 역할을 하기 때문에 다른 재료의 경우 비슷한 것으로 구매해도 좋지만, 컵라면은 콕콕 스파게티를 추천한다. 조리법은 정말 간단하다. 포장을 뜯고 순서에 따라 전자레인지에 돌리고 재료를 올려주기만 하면 그럴싸한 요리가 완성된다."
+            android:textSize="12dp"
+            android:gravity="center"
+            android:padding="5dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="1."
+                android:textSize="12dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="9"
+                android:text="컵 떡볶이를 순서대로 조리한다.(전자레인지 3분)"
+                android:textSize="12dp"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="2."
+                android:textSize="12dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="9"
+                android:text="컵 스파게티는 건더기와 면만 뜨거운 물에 익힌다."
+                android:textSize="12dp"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="3."
+                android:textSize="12dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="9"
+                android:text="완성된 컵 떡볶이에 익힌 스파게티 면을 넣는다."
+                android:textSize="12dp"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="4."
+                android:textSize="12dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="9"
+                android:text="컵 스파게티의 분말수프와 액상 소스를 넣고 섞는다."
+                android:textSize="12dp"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="5."
+                android:textSize="12dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="9"
+                android:text="그 위에 모차렐라 치즈를 고루 뿌려준다."
+                android:textSize="12dp"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="6."
+                android:textSize="12dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="9"
+                android:text="소시지를 먹기 좋은 크기로 잘라서 넣는다."
+                android:textSize="12dp"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="7."
+                android:textSize="12dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="9"
+                android:text="스트링 치즈를 찢어서 올린다."
+                android:textSize="12dp"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="8."
+                android:textSize="12dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="9"
+                android:text="전자레인지에 1분 30초 동안 돌린다."
+                android:textSize="12dp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/mark3" />
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+</ScrollView>
