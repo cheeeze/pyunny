@@ -99,6 +99,7 @@ export default {
         },
         res => {
           if (sort == "sk") {
+            res;
             this.sk = this.tempnum;
             this.tempnum = "";
           }

@@ -36,8 +36,7 @@
             />
           </div>
           <h1 id="item-title">{{ product.name }}</h1>
-          <h2 id="item-price">
-            {{ product.price }}원
+          <h2 id="item-price">{{ product.price }}원</h2>
           <h3 id="item-origin-price">
             (1개당 {{ product.price }}원)
             <b-button
@@ -125,9 +124,7 @@ export default {
     ItemCard,
     SaleCard
   },
-  props: [
-    "id"
-  ],
+  props: ["id"],
   data() {
     return {
       like: 0,
