@@ -1,6 +1,6 @@
 # 편의뽕
 
-## Overview
+# 📖 Overview
 **편의점에서 뽕을 뽑자. 편의뽕!**
 1. 상품정보 및 할인정보
 2. 인기 레시피 검색 및 나만의 레시피 공유
@@ -11,8 +11,8 @@
 ![images](image/overview.jpg)
 
 
-## Before You Begin
-프로젝트를 이해하고 사용하기 위해서 다음과 같은 언어, 프레임워크, 환경에 대한 이해가 필요합ㄴ디ㅏ.
+# 🤔 Before You Begin
+프로젝트를 이해하고 사용하기 위해서 다음과 같은 언어, 프레임워크, 환경에 대한 이해가 필요합니다.
 - Spring Boot
 - MariaDB
 - Vue.js
@@ -20,15 +20,15 @@
 - Android
 - Git
 
-## Language
+# 🌐 Language
 - JavaScript
 - Java
 - HTML
 - CSS
 - Python
 
-## Setup
-### Frontend Setting
+# 📌 Setup
+## Frontend Setting
 
 Node.js 설치
 
@@ -50,7 +50,7 @@ vue-router 설치
 
 - yarn add vue-router
 
-### Vue project Requirments
+## Vue project Requirments
 
 - ESlint v6.8.0
 - Prettier v1.19.1
@@ -64,7 +64,7 @@ vue-router 설치
 - vue-infinite-loading ^2.4.5
 - axios ^0.19.2
 
-### Backend Setting
+## Backend Setting
 
 Spring Boot 설치
 
@@ -99,9 +99,9 @@ sudo apt-get upgrade
 sudo apt-get install redis-server
 ```
 
-## Build and Run
+# 👟 Build and Run
 
-### Local
+## Local
 
 ```bash
 cd frontend
@@ -114,7 +114,7 @@ cd backend
 .\mvnw spring-boot:run
 ```
 
-### Build
+## Build
 
 ```bash
 cd frontend
@@ -123,20 +123,23 @@ yarn build
 
 백엔드는 .jar파일로 빌드
 
-## Deploy
+# 🌷 Deploy
 
-### AWS EC2 Ubuntu
+AWS EC2 Ubuntu 18.04
 
-frontend : nginx
-backend : nohup
+- frontend : nginx
+- backend : nohup
 ```bash
 nohup java -jar filename.jar&
 ```
-android : playstore 배포
-또는 아래의 apk파일을 통해 설치할 수 있습니다.
-[apk](app-release.apk)
+- android : playstore 배포
 
-## Test
+    또는 아래의 apk파일을 통해 설치할 수 있습니다.
+    
+    [Link to apk](app-release.apk)
+
+# 🧪 Test
 테스트 계정
+
     email : tt@tt.com
     password : 1234
