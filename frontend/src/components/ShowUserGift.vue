@@ -1,18 +1,20 @@
 <template>
   <div>
-    <b-card-group deck>
-              <b-card
-        img-src="https://s3.orbi.kr/data/file/united/e7a9995bee7b702f01a06eeea05b860a.jpg"
+    <b-card-group columns>
+      <b-card
+        v-for="(gift,index) in gifticons"
+        :key="index"
+        :img-src="gift.image"
         img-alt="Image"
         img-top
       >
         <template v-slot:footer>
-          <small class="text-muted">~ 2020.07.11까지</small>
+          <v-switch v-model="gift.isDelete" class="ma-2"></v-switch>
+          <small class="text-muted">토글시 사용완료됩니다.</small>
         </template>
       </b-card>
 
-      
-      <b-card
+      <!-- <b-card
         img-src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQZR29UxIjOPSwkIxCwQJyWgKeTMgzs-Vh-YImmP6c2z6igipPU&usqp=CAU"
         img-alt="Image"
         img-top
@@ -30,16 +32,69 @@
         <template v-slot:footer>
           <small class="text-muted">~ 2020.10.06까지</small>
         </template>
-      </b-card>
+      </b-card>-->
     </b-card-group>
+    <b-button @click="delGifticon" variant="warning">저장</b-button>
   </div>
 </template>
 
 <script>
+import Axios from "@/api/Barcodeaxios.js";
 export default {
   data() {
-    return {};
+    return {
+      //isOn: false,
+      userId: 0,
+      gifticons: []
+    };
   },
+  mounted() {
+    if (sessionStorage.getItem("user") != null) {
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+
+      Axios.getGifticonUserId(
+        this.userId,
+        res => {
+          res.data.forEach(element => {
+            element.isDelete = false;
+            this.gifticons.push(element);
+          });
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
+  },
+  methods: {
+    delGifticon() {
+      let data = [];
+      for (let i = 0; i < this.gifticons.length; i++) {
+        if (this.gifticons[i].isDelete == true) {
+          data.push(this.gifticons[i].id);
+          this.gifticons.splice(i, 1);
+        }
+      }
+      if (data.length == 0) {
+        alert("저장 완료되었습니다.");
+        return;
+      }
+      //this.$set(this.gifticons[index], "isDelete", false);
+      //this.gifticons[index].isDelete = false;
+
+      Axios.updateGifticon(
+        data,
+        res => {
+          alert("저장 완료되었습니다.");
+          //this.gifticons.splice(index, 1);
+          res;
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
+  }
 };
 </script>
 
@@ -56,9 +111,9 @@ export default {
   padding: 0;
 }
 .text-muted {
-    color: red!important;
+  color: red !important;
 }
 small {
-    font-size: 100%;
+  font-size: 100%;
 }
 </style>

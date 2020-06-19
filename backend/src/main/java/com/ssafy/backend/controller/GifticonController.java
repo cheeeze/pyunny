@@ -3,6 +3,7 @@ package com.ssafy.backend.controller;
 import java.util.List;
 
 import com.ssafy.backend.service.GifticonService;
+import com.ssafy.backend.vo.GiftInsert;
 import com.ssafy.backend.vo.Gifticon;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -51,8 +53,21 @@ public class GifticonController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    /*
+     * @PostMapping("gift") public ResponseEntity insertGifticon(@RequestBody
+     * Gifticon gifticon) { try { service.insertGifticon(gifticon); return new
+     * ResponseEntity<>(HttpStatus.OK); } catch (Exception e) {
+     * System.out.println(e); } return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+     * }
+     */
     @PostMapping("gift")
-    public ResponseEntity insertGifticon(@RequestBody Gifticon gifticon) {
+    public ResponseEntity insertGifticon(@RequestBody GiftInsert gifticon) {
+        System.out.println(gifticon.toString());
+        System.out.println(gifticon.getUserId());
+        for (String s : gifticon.getImageUrl()) {
+            System.out.println(s);
+        }
+        // System.out.println(gifticon.toString());
         try {
             service.insertGifticon(gifticon);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -62,8 +77,30 @@ public class GifticonController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity deleteGifticon(@PathVariable("id") int id) {
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Gifticon>> getGifticonUserId(@PathVariable int id) {
+        try {
+            List<Gifticon> res = service.getGifticonUserId(id);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/user/used/{id}")
+    public ResponseEntity<List<Gifticon>> getUsedGifticonUserId(@PathVariable int id) {
+        try {
+            List<Gifticon> res = service.getUsedGifticonUserId(id);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity deleteGifticon(@RequestParam List<Integer> id) {
         try {
             service.deleteGifticon(id);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -74,9 +111,9 @@ public class GifticonController {
     }
 
     @PutMapping("gift")
-    public ResponseEntity updateGifticon(@RequestBody Gifticon gifticon) {
+    public ResponseEntity updateGifticon(@RequestParam List<Integer> id) {
         try {
-            service.updateGifticon(gifticon);
+            service.updateGifticon(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);

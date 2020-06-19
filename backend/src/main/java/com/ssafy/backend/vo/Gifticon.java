@@ -1,18 +1,19 @@
 package com.ssafy.backend.vo;
 
-import java.util.Date;
-
 public class Gifticon {
     private int id;
     private int userId;
     private String name;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private int franchise;
     private String number;
     private String image;
 
-    public Gifticon(int id, int userId, String name, Date startDate, Date endDate, int franchise, String number,
+    public Gifticon() {
+    }
+
+    public Gifticon(int id, int userId, String name, String startDate, String endDate, int franchise, String number,
             String image) {
         this.id = id;
         this.userId = userId;
@@ -48,19 +49,19 @@ public class Gifticon {
         this.name = name;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -94,5 +95,4 @@ public class Gifticon {
                 + ", name=" + name + ", number=" + number + ", startDate=" + startDate + ", userId=" + userId + "]";
     }
 
-    
 }

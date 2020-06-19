@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       email: "",
-      userid: 1,
+      userId: 0,
       kakao: "",
       nickname: "",
       tempnick: "",
@@ -66,8 +66,12 @@ export default {
     };
   },
   mounted() {
+    if (sessionStorage.getItem("user") != null) {
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+    }
+
     UserRequest.mypage(
-      this.userid,
+      this.userId,
       res => {
         this.email = res.data.email;
         this.kakao = res.data.kakao;
@@ -91,7 +95,7 @@ export default {
             UserRequest.updateUser(
               {
                 email: this.email,
-                id: this.userid,
+                id: this.userId,
                 kakao: this.kakao,
                 name: this.name,
                 nickname: this.nickname,

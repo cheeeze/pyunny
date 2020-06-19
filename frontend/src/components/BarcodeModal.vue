@@ -162,22 +162,18 @@
       <h3 v-if="this.mygifts.length" id="modal-title">기프티콘</h3>
       <div class="gifts">
         <div class="gift" v-for="(item, index) in mygifts" :key="index">
-          <img
-            :src="require(`@/assets/icons/${item.keyword}.png`)"
-            @click="selecgift(item.keyword)"
-            style="cursor: pointer;"
-          />
+          <img :src="item.image" @click="selecgift(item.image)" style="cursor: pointer;" />
         </div>
       </div>
-      <div v-if="gift" class="large-gift">
-        <img :src="require(`@/assets/icons/${gift}.png`)" @click="selecgift(gift)" />
-        <b-button
+      <div v-if="gift" class="large-gift" style="display: initial;">
+        <img :src="gift" @click="selecgift(gift)" />
+        <!--         <b-button
           v-if="!myToggle"
           @click="useGift(index)"
           :pressed.sync="myToggle"
           variant="primary"
         >사용전</b-button>
-        <b-button v-if="myToggle" @click="useGift(index)" :pressed.sync="myToggle">사용 완료!</b-button>
+        <b-button v-if="myToggle" @click="useGift(index)" :pressed.sync="myToggle">사용 완료!</b-button>-->
       </div>
     </div>
   </div>
@@ -212,14 +208,14 @@ export default {
       seven: "",
       ministop: "",
       mygifts: [
-        {
+        /*         {
           keyword: "gift1",
           isUse: false
         },
         {
           keyword: "gift2",
           isUse: false
-        }
+        } */
       ]
     };
   },
@@ -235,6 +231,7 @@ export default {
       this.userId = JSON.parse(sessionStorage.getItem("user"));
     }
     this.getBarcode();
+    this.getGifticonUserId();
   },
   components: {
     barcode: VueBarcode
@@ -296,6 +293,20 @@ export default {
         },
         error => {
           console.log(error);
+        }
+      );
+    },
+    getGifticonUserId() {
+      BarcodeAxios.getGifticonUserId(
+        this.userId,
+        res => {
+          res.data.forEach(element => {
+            //element.isDelete = false;
+            this.mygifts.push(element);
+          });
+        },
+        err => {
+          console.log(err);
         }
       );
     }

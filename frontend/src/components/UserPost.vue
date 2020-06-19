@@ -1,6 +1,6 @@
 <template>
   <div class="overflow-auto">
-    <b-table
+    <!-- <b-table
       id="my-table"
       :items="items"
       :per-page="perPage"
@@ -9,7 +9,8 @@
       :hover="hover"
       @row-clicked="myRowClickHandler"
     ></b-table>
-
+    -->
+    <sale-card :items="items"></sale-card>
     <div class="number">
       <b-pagination
         style="margin-left: 33%"
@@ -23,41 +24,62 @@
 </template>
 
 <script>
+import SaleCard from "@/components/SaleCard.vue";
+import Axios from "@/api/Useraxios.js";
+
 export default {
+  components: {
+    SaleCard
+  },
   data() {
     return {
       hover: true,
       perPage: 10,
       currentPage: 1,
+      userId: 0,
       items: [
-        {
+        /*         {
           id: 1,
           제목: "이거슨 바로 shy정식",
-          작성일: "2020.06.01",
+          작성일: "2020.06.01"
         },
         {
           id: 2,
           제목: "마크정식 업글!",
-          작성일: "2020.05.25",
+          작성일: "2020.05.25"
         },
         {
           id: 3,
           제목: "편스토랑 신메뉴",
-          작성일: "2020.05.20",
-        },
-      ],
+          작성일: "2020.05.20"
+        } */
+      ]
     };
+  },
+  mounted() {
+    if (sessionStorage.getItem("user") != null) {
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+
+      Axios.userRecipe(
+        this.userId,
+        res => {
+          this.items = [];
+          res.data.forEach(element => {
+            element.date = element.date.substring(0, 10);
+            this.items.push(element);
+          });
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
   },
   computed: {
     rows() {
       return this.items.length;
-    },
-  },
-  methods: {
-    myRowClickHandler(index) {
-      console.log(index.id, "클릭");
-    },
-  },
+    }
+  }
 };
 </script>
 

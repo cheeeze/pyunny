@@ -190,9 +190,9 @@ export default {
       color: "",
       tempClass: "",
       select_menu: "",
-
       responsive: 0,
-      windowWidth: 0
+      windowWidth: 0,
+      favoriteshow: false
     };
   },
   components: {

@@ -1,6 +1,12 @@
 package com.ssafy.backend.service;
 
+import java.util.List;
+
 import com.ssafy.backend.dao.UserDAO;
+import com.ssafy.backend.vo.Favorite;
+import com.ssafy.backend.vo.Product;
+import com.ssafy.backend.vo.Recipe;
+import com.ssafy.backend.vo.RecipeComment;
 import com.ssafy.backend.vo.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +46,31 @@ public class UserServiceImpl implements UserService {
     @Override
     public User selectOne(int id) throws Exception {
         return dao.selectOne(id);
+    }
+
+    @Override
+    public List<Recipe> getUserRecipe(int id) {
+        return dao.getUserRecipe(id);
+    }
+
+    @Override
+    public List<Recipe> getUserRecipeLike(int id) {
+        return dao.getUserRecipeLike(id);
+    }
+
+    @Override
+    public List<RecipeComment> getUserRecipeComment(int id) {
+        return dao.getUserRecipeComment(id);
+    }
+
+    @Override
+    public List<Product> getUserFavorite(int id) {
+        return dao.getUserFavorite(id);
+    }
+
+    @Override
+    public void deleteUserFavorite(Favorite f) {
+        dao.deleteUserFavorite(f);
+
     }
 }

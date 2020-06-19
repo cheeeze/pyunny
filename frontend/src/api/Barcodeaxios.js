@@ -35,7 +35,7 @@ const insertGifticon = (data, success, error) => {
 
 const deleteGifticon = (data, success, error) => {
     http
-        .delete('/api/gift/' + data)
+        .delete('/api/gift?id=' + data)
         .then((res) => {
             success(res)
         })
@@ -46,7 +46,7 @@ const deleteGifticon = (data, success, error) => {
 
 const updateGifticon = (data, success, error) => {
     http
-        .put('/api/gift/gist', data)
+        .put('/api/gift/gift?id=' + data)
         .then((res) => {
             success(res)
         })
@@ -123,10 +123,34 @@ const getMembershipByUserId = (data, success, error) => {
         })
 }
 
+const getGifticonUserId = (data, success, error) => {
+    http
+        .get('/api/gift/user/' + data)
+        .then((res) => {
+            success(res)
+        })
+        .catch((err) => {
+            error(err)
+        })
+}
+
+const getUsedGifticonUserId = (data, success, error) => {
+    http
+        .get('/api/gift/user/used/' + data)
+        .then((res) => {
+            success(res)
+        })
+        .catch((err) => {
+            error(err)
+        })
+}
+
 
 const axiosFunction = {
     getAllGifticon: (success, error) => getAllGifticon(success, error),
     getGifticonById: (data, success, error) => getGifticonById(data, success, error),
+    getGifticonUserId: (data, success, error) => getGifticonUserId(data, success, error),
+    getUsedGifticonUserId: (data, success, error) => getUsedGifticonUserId(data, success, error),
     insertGifticon: (data, success, error) => insertGifticon(data, success, error),
     deleteGifticon: (data, success, error) => deleteGifticon(data, success, error),
     updateGifticon: (data, success, error) => updateGifticon(data, success, error),
