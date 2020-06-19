@@ -8,22 +8,20 @@
         </button>
       </div>
 
-      <!-- <div class="checkbox-container"> -->
-        <!-- <div class="row"> -->
-          <div class="barcode-conv-tab">
-            <img @click="choiceStore('')" class="barcode-conv-icon" src="@/assets/icons/gift_black_removebg.png" />
-            <!-- kt 나 lg 할인, gs적립 -->
-            <img @click="choiceStore('gs25')" class="barcode-conv-icon" src="@/assets/icons/gs25.png" />
-            <!-- sk 할인, cu적립-->
-            <img @click="choiceStore('cu')" class="barcode-conv-icon" src="@/assets/icons/cu.png" />
-            <!-- kt 할인, 신세계 포인트 적립 -->
-            <img @click="choiceStore('emart')" class="barcode-conv-icon" src="@/assets/icons/emart.jpg" />
-            <!-- sk 할인, 엘포인트 적립 -->
-            <img @click="choiceStore('seven')" class="barcode-conv-icon" src="@/assets/icons/seven.png" />
-            <!-- ok캐시백1프로 적립 10프로 사용해서 15프로 할인 -->
-            <img @click="choiceStore('ministop')" class="barcode-conv-icon" src="@/assets/icons/ministop.png" />
-          </div>
-
+      <div class="barcode-conv-tab">
+        <img @click="choiceStore('')" class="barcode-conv-icon" src="@/assets/icons/gift_black_removebg.png" />
+        <!-- kt 나 lg 할인, gs적립 -->
+        <img @click="choiceStore('gs25')" class="barcode-conv-icon" src="@/assets/icons/gs25.png" />
+        <!-- sk 할인, cu적립-->
+        <img @click="choiceStore('cu')" class="barcode-conv-icon" src="@/assets/icons/cu.png" />
+        <!-- kt 할인, 신세계 포인트 적립 -->
+        <img @click="choiceStore('emart')" class="barcode-conv-icon" src="@/assets/icons/emart.jpg" />
+        <!-- sk 할인, 엘포인트 적립 -->
+        <img @click="choiceStore('seven')" class="barcode-conv-icon" src="@/assets/icons/seven.png" />
+        <!-- ok캐시백1프로 적립 10프로 사용해서 15프로 할인 -->
+        <img @click="choiceStore('ministop')" class="barcode-conv-icon" src="@/assets/icons/ministop.png" />
+      </div>
+      <!--  gs -->
       <div v-if="store=='gs25'">
           <img v-if="lg" class="telecom" src="@/assets/icons/lguplus_removebg.png" alt="lguplus">
           <div class="inline">
@@ -47,6 +45,7 @@
           </div>
       </div>
 
+      <!-- cu  -->
       <div v-if="store=='cu'">
         <img v-if="sk" class="telecom" src="@/assets/icons/sktelecom_removebg.png" alt="sktelecom">
         <div class="inline">
@@ -65,6 +64,7 @@
         </div>
       </div>
 
+      <!-- emart24  -->
       <div v-if="store=='emart'">
         <img v-if="kt" class="telecom" src="@/assets/icons/kt_removebg.png" alt="kt">
         <div class="inline">
@@ -83,6 +83,7 @@
         </div>
       </div>
 
+      <!-- seven -->
       <div v-if="store=='seven'">
         <img v-if="sk" class="telecom" src="@/assets/icons/sktelecom_removebg.png" alt="sktelecom">
         <div class="inline">
@@ -101,7 +102,7 @@
         </div>
       </div>
 
-      
+      <!-- ministop -->
       <div v-if="store=='ministop'">
         <span v-if="ministop" id="modal-title">편의점 적립</span>
         <img v-if="ministop" class="telecom" src="@/assets/icons/okcashbag_removebg.png" alt="okcashbag">
@@ -110,6 +111,7 @@
         </barcode>
       </div>
 
+      <!-- gift -->
       <h3 v-if="this.mygifts.length" id="modal-title">기프티콘</h3>
       <div class="gifts">
         <div class="gift" v-for="(item, index) in mygifts" :key="index">
@@ -174,11 +176,7 @@ export default {
         this.id = this.user
         ,
         res => {
-          console.log('first', this.sk);
           for (var i = 0; i < res.data.length; i ++) {
-            console.log(res.data[i].number);
-            console.log(res.data[i].type);
-
             this.temptype = res.data[i].type
             this.tempnum = res.data[i].number
 
@@ -200,7 +198,6 @@ export default {
                 this.ministop = this.tempnum
               } 
           }
-          console.log('sec', this.sk);
         },
         error => {
           console.log(error);
@@ -220,16 +217,14 @@ export default {
       this.gift = ""
     },
     selecgift(info) {
-      console.log(info)
       if (this.gift == info) {
         this.gift = ""
       } else {
         this.gift = info
       }
-      console.log(this.mygifts)
     },
     useGift(gift) {
-      // 해당 gift의 정보를 사용했음으로 바꿈.
+      // 해당 gift의 정보를 사용했음으로 바꿈. how?
       console.log(gift)
       this.mygifts[gift]
       console.log(this.mygifts[gift])

@@ -47,7 +47,7 @@ const deleteUser = (data, success, error) => {
 
 const updateUser = (data, success, error) => {
     http
-        .put('/api/user/', data)
+        .put('/api/user/user', data)
         .then((res) => {
             success(res)
         })
@@ -58,7 +58,7 @@ const updateUser = (data, success, error) => {
 
 const duplicateNickname = (data, success, error) => {
     http
-        .get('/api/nicknamecheck/' + data)
+        .get('/api/user/nicknamecheck/' + data)
         .then((res) => {
             success(res)
         })

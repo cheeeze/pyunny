@@ -105,7 +105,7 @@
 
 <script>
 import VueBarcode from "vue-barcode";
- 
+import BarcodeAxios from "@/api/Barcodeaxios.js";
 
 export default {
   data() {
