@@ -120,8 +120,8 @@
                 <ShowUsedGift></ShowUsedGift>
               </diV>
             </div>
-            <div class="yellow-visible right">
-              <h3>관심품목을 추가해보세요!</h3>
+            <div class="yellow-visible right" v-if="color == 'yellow'">
+              <h3>나의 관심품목</h3>
               <MyFavorite></MyFavorite>
             </div>
 
@@ -184,7 +184,8 @@ export default {
     return {
       tempClass: "",
       color: "",
-      select_menu: ""
+      select_menu: "",
+      favoriteshow: false
     };
   },
   components: {

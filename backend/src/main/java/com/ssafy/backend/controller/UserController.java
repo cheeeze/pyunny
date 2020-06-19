@@ -1,8 +1,14 @@
 package com.ssafy.backend.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import com.ssafy.backend.service.UserService;
+import com.ssafy.backend.vo.Favorite;
+import com.ssafy.backend.vo.Product;
+import com.ssafy.backend.vo.Recipe;
+import com.ssafy.backend.vo.RecipeComment;
 import com.ssafy.backend.vo.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -114,4 +121,58 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     };
 
+    @GetMapping("/recipe/{id}")
+    public ResponseEntity<List<Recipe>> getUserRecipe(@PathVariable int id) {
+        try {
+            List<Recipe> res = service.getUserRecipe(id);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/recipe_like/{id}")
+    public ResponseEntity<List<Recipe>> getUserRecipeLike(@PathVariable int id) {
+        try {
+            List<Recipe> res = service.getUserRecipeLike(id);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/recipe_comment/{id}")
+    public ResponseEntity<List<RecipeComment>> getUserRecipeComment(@PathVariable int id) {
+        try {
+            List<RecipeComment> res = service.getUserRecipeComment(id);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/favorite/{id}")
+    public ResponseEntity<List<Product>> getUserFavorite(@PathVariable int id) {
+        try {
+            List<Product> res = service.getUserFavorite(id);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("/favorite")
+    public ResponseEntity<List<Product>> deleteUserFavorite(@ModelAttribute Favorite f) {
+        try {
+            service.deleteUserFavorite(f);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 }

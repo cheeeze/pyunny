@@ -12,6 +12,14 @@ public class RecipeComment {
     public RecipeComment() {
     }
 
+    public RecipeComment(int id, int recipeId, String date, String content, String nickname) {
+        this.id = id;
+        this.recipeId = recipeId;
+        this.date = date;
+        this.content = content;
+        this.nickname = nickname;
+    }
+
     public RecipeComment(int id, int userId, int recipeId, String date, String content, int parentId) {
         this.id = id;
         this.userId = userId;

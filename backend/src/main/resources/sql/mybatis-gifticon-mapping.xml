@@ -5,16 +5,16 @@
 
 <mapper namespace="GifticonMapper">
 
-	<resultMap type="com.ssafy.backend.vo.Gifticon" id="resultGifticon">
-		<id column="id" property="id"/>
+    <resultMap id="resultGifticon" type="gifticon">
+        <id column="id" property="id"/>
         <id column="user_id" property="userId"/>
         <result column="name" property="name"/>
         <result column="start_date" property="startDate"/>
         <result column="end_date" property="endDate"/>
-		<result column="franchise" property="franchise"/>
-		<result column="number" property="number"/>
-		<result column="image" property="image"/>
-	</resultMap>
+        <result column="franchise" property="franchise"/>
+        <result column="number" property="number"/>
+        <result column="image" property="image"/>
+    </resultMap>
 
     <sql id="select-all">
         SELECT
@@ -27,41 +27,67 @@
             number,
             image
         FROM
-            Gifticon
+            Gifiticon
     </sql>
-	
+
 
     <!-- select All / selectOne / insert / delete / update?  -->
     <select id="selectAllGifticon" resultMap="resultGifticon">
         <include refid="select-all"/>
     </select>
-    
+
     <!-- id로 특정한 하나의 기프티콘의 상세 -->
     <select id="selectGifticon" parameterType="int" resultMap="resultGifticon">
         <include refid="select-all"/>
-        WHERE id=#{data}
+        WHERE id=#{value}
     </select>
 
-    <insert id="insertGifticon" parameterType="gifticon" useGeneratedKeys="true" keyProperty="id">
+    <select id="getGifticonUserId" parameterType="int" resultMap="resultGifticon">
+        <include refid="select-all"/>
+        where user_id = #{value} and end_date is null
+    </select>
+
+    <select id="getUsedGifticonUserId" parameterType="int" resultMap="resultGifticon">
+        <include refid="select-all"/>
+        where user_id = #{value} and end_date is not null
+    </select>
+
+    <!-- <insert id="insertGifticon" parameterType="gifticon" useGeneratedKeys="true" keyProperty="id">
         INSERT into Gifticon(user_id, name, start_date, end_date, franchise, number, image)
         VALUES(#{user_id}, #{name}, #{start_date}, #{end_date}, #{franchise}, #{number}, #{image})
+    </insert> -->
+    <insert id="insertGifticon" parameterType="giftInsert">
+        insert into Gifiticon
+        (user_id, start_date, image)
+        values
+        <if test="imageUrl != null">
+            <foreach collection="imageUrl" item="item" separator=",">
+            (#{userId},convert_tz(now(),'+00:00','+09:00') , #{item , jdbcType=VARCHAR})
+            </foreach>
+        </if>
     </insert>
 
     <delete id="deleteGifticon" parameterType="int">
-        DELETe from Gifticon where id=#{value}
+        DELETE from Gifiticon 
+        where id in
+        
+        <foreach collection="list" item="item" open="(" close=")" separator=","> 
+            #{item.value}
+        </foreach>
     </delete>
 
-    <update id="updateGifticon" parameterType="gifticon">
+    <!-- <update id="updateGifticon" parameterType="gifticon">
         update Gifticon
-        SET
-            user_id=#{user_id},
-            name=#{name},
-            start_date=#{start_date},
-            end_date=#{end_date},
-            franchise=#{franchise},
-            number=#{number},
-            image=#{image}
+        SET user_id=#{user_id}, name=#{name}, start_date=#{start_date}, end_date=#{end_date}, franchise=#{franchise}, number=#{number}, image=#{image}
         WHERE id=#{id}
+    </update> -->
+    <update id="updateGifticon" parameterType="int">
+    update Gifiticon 
+        set end_date = convert_tz(now(),'+00:00','+09:00')
+        where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=","> 
+            #{item.value}
+        </foreach>
     </update>
-	
+
 </mapper>

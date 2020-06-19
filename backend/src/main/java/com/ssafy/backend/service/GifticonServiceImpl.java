@@ -3,6 +3,7 @@ package com.ssafy.backend.service;
 import java.util.List;
 
 import com.ssafy.backend.dao.GifticonDAO;
+import com.ssafy.backend.vo.GiftInsert;
 import com.ssafy.backend.vo.Gifticon;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +26,28 @@ public class GifticonServiceImpl implements GifticonService {
     }
 
     @Override
-    public void insertGifticon(Gifticon gifticon) throws Exception {
+    public void insertGifticon(GiftInsert gifticon) throws Exception {
         dao.insertGifticon(gifticon);
     }
 
     @Override
-    public void deleteGifticon(int id) throws Exception {
+    public void deleteGifticon(List<Integer> id) throws Exception {
         dao.deleteGifticon(id);
     }
 
     @Override
-    public void updateGifticon(Gifticon gifticon) throws Exception {
-        dao.updateGifticon(gifticon);
+    public void updateGifticon(List<Integer> id) throws Exception {
+        dao.updateGifticon(id);
     }
-    
+
+    @Override
+    public List<Gifticon> getGifticonUserId(int id) {
+        return dao.getGifticonUserId(id);
+    }
+
+    @Override
+    public List<Gifticon> getUsedGifticonUserId(int id) {
+        return dao.getUsedGifticonUserId(id);
+    }
+
 }

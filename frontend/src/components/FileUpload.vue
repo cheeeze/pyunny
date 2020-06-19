@@ -10,43 +10,87 @@
           id="file"
           ref="file"
           type="file"
+          multiple
           v-on:change="handleFileUpload()"
         />
       </div>
-      <button v-on:click="submitFile()" class="file-uploader__submit-button">
-        등록하기
-      </button>
+      <button v-on:click="submitFile()" class="file-uploader__submit-button">등록하기</button>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import RecipeAxios from "@/api/Recipeaxios.js";
+import BarcodeAxios from "@/api/Barcodeaxios.js";
 export default {
   data() {
     return {
-      file: "",
+      files: [],
+      imageNames: []
     };
+  },
+  mounted() {
+    if (sessionStorage.getItem("user") != null) {
+      this.userId = JSON.parse(sessionStorage.getItem("user"));
+    }
   },
   methods: {
     handleFileUpload() {
-      this.file = this.$refs.file.files[0];
+      this.$refs.file.files.forEach(item => {
+        this.files.push(item);
+      });
     },
     submitFile() {
+      if (this.files.length == 0) {
+        return alert("기프티콘(사진)을 선택해주세요.");
+      }
+
       let formData = new FormData();
-      formData.append("file", this.file);
-      axios
-        .post("/single-file", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
+      for (let i = 0; i < this.files.length; i++)
+        formData.append("files", this.files[i]);
+      //formData.append("file", this.files);
+
+      RecipeAxios.uploadFiles(formData, res => {
+        console.log(res.data);
+        this.imageNames = [];
+        res.data.forEach(element => {
+          //datas.push({userId: this.userId, image: `http://k02d1021.p.ssafy.io:8080/api/upload/${element}`});
+          this.imageNames.push(
+            `http://k02d1021.p.ssafy.io:8080/api/upload/${element}`
+          );
+        });
+        this.submit();
+      });
+      /*  .post("/single-file", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
         })
         .then(function() {
           console.log("SUCCESS!!");
         })
         .catch(function() {
           console.log("FAILURE!!");
-        });
+        }); */
     },
-  },
+    submit() {
+      let data = {
+        imageUrl: this.imageNames,
+        userId: this.userId
+      };
+      BarcodeAxios.insertGifticon(
+        data,
+        res => {
+          alert("등록 완료하였습니다.");
+          this.imageNames = [];
+          this.files = [];
+
+          res;
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
+  }
 };
 </script>
 
