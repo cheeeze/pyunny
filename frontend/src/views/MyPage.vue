@@ -2,26 +2,30 @@
   <div id="full">
     <navbar></navbar>
     <section id="banner" class="topbanner">
+      <div class="btn-container">
+        <v-btn id="btn-prev" v-show="responsive && select_menu" @click="goPrev">이전으로</v-btn>
+      </div>
+
       <div id="boxes" :class="tempClass">
         <!-- red box -->
 
-        <div class="small-box red" @click="filp('red')">
+        <div class="small-box red" @click="flip('red')">
           <div>
             <div class="red-visible original left">
               <span>기프티콘 관리</span>
             </div>
 
-            <div class="blue-visible left" style="z-index:100;" @click="selec('blue1')">
+            <div class="blue-visible left" @click="selec('blue1')">
               <span>내가 쓴 레시피</span>
               <img src="@/assets/images/write_img.jpg" />
             </div>
 
             <div class="yellow-visible left" @click="selec('yellow1')">
-              <span>서비스 준비중</span>
+              <span>관심품목 추가</span>
               <img src="@/assets/images/red_img.jpg" />
             </div>
 
-            <div class="darkgray-visible left" style="z-index:100;" @click="selec('darkgray1')">
+            <div class="darkgray-visible left" @click="selec('darkgray1')">
               <span>내 정보 수정</span>
               <img src="@/assets/images/person_img.jpg" />
             </div>
@@ -29,23 +33,23 @@
         </div>
 
         <!-- yellow-box -->
-        <div class="small-box yellow" @click="filp('yellow')">
+        <div class="small-box yellow" @click="flip('yellow')">
           <div>
             <div class="yellow-visible original left">
               <span>관심품목</span>
             </div>
 
-            <div class="red-visible left" style="z-index:100;" @click="selec('red1')">
+            <div class="red-visible left" @click="selec('red1')">
               <span>기프티콘 등록</span>
               <img src="@/assets/images/plus_img.jpg" />
             </div>
 
-            <div class="blue-visible left" style="z-index:100;" @click="selec('blue2')">
+            <div class="blue-visible left" @click="selec('blue2')">
               <span>내가 쓴 댓글</span>
               <img src="@/assets/images/comment_img.jpg" />
             </div>
 
-            <div class="darkgray-visible left" style="z-index:100;" @click="selec('darkgray2')">
+            <div class="darkgray-visible left" @click="selec('darkgray2')">
               <span>통신사 멤버십 관리</span>
               <img src="@/assets/images/card_img.jpg" />
             </div>
@@ -53,23 +57,23 @@
         </div>
 
         <!-- blue-box -->
-        <div class="small-box blue" @click="filp('blue')">
+        <div class="small-box blue" @click="flip('blue')">
           <div>
             <div class="blue-visible original left">
               <span>나만의 레시피 관리</span>
             </div>
 
-            <div class="red-visible left" style="z-index:100;" @click="selec('red2')">
+            <div class="red-visible left" @click="selec('red2')">
               <span>내가 가진 기프티콘</span>
               <img src="@/assets/images/more_img.jpg" />
             </div>
 
-            <div class="yellow-visible left" @click="selec('yellow2')">
+            <div class="yellow-visible left">
               <span>서비스 준비중</span>
               <img src="@/assets/images/blue_img.jpg" />
             </div>
 
-            <div class="darkgray-visible left" style="z-index:100;" @click="selec('darkgray3')">
+            <div class="darkgray-visible left" @click="selec('darkgray3')">
               <span>편의점 적립 관리</span>
               <img src="@/assets/images/save_img.jpg" />
             </div>
@@ -77,23 +81,23 @@
         </div>
 
         <!-- black-box -->
-        <div class="small-box darkgray" @click="filp('darkgray')">
+        <div class="small-box darkgray" @click="flip('darkgray')">
           <div>
             <div class="darkgray-visible original left">
               <span>설정</span>
             </div>
 
-            <div class="red-visible left" style="z-index:100;" @click="selec('red3')">
+            <div class="red-visible left" @click="selec('red3')">
               <span>사용한 기프티콘</span>
               <img src="@/assets/images/check_img.jpg" />
             </div>
 
-            <div class="blue-visible left" style="z-index:100;" @click="selec('blue3')">
+            <div class="blue-visible left" @click="selec('blue3')">
               <span>좋아요 한 레시피</span>
               <img src="@/assets/images/heart_img.jpg" />
             </div>
 
-            <div class="yellow-visible left" @click="selec('yellow3')">
+            <div class="yellow-visible left">
               <span>서비스 준비중</span>
               <img src="@/assets/images/darkgray_img.jpg" />
             </div>
@@ -101,59 +105,60 @@
         </div>
 
         <!-- big-box -->
-        <div class="big-box">
+        <div class="big-box" id="big-box-test">
           <div class="whatis">
             <div class="red-visible right">
-              <diV v-if="this.select_menu == 'red1'">
+              <diV v-show="select_menu == 'red1'">
                 <h3>기프티콘 등록하기</h3>
                 <FileUpload></FileUpload>
               </diV>
-              <diV v-if="this.select_menu == 'red2'">
+              <diV v-show="select_menu == 'red2'">
                 <h3>사용전 기프티콘</h3>
                 <ShowUserGift></ShowUserGift>
               </diV>
-              <diV v-if="this.select_menu == 'red3'">
+              <diV v-show="select_menu == 'red3'">
                 <h3>사용한 기프티콘</h3>
                 <ShowUsedGift></ShowUsedGift>
               </diV>
             </div>
             <div class="yellow-visible right">
-              <h3>관심품목을 추가해보세요!</h3>
-              <MyFavorite></MyFavorite>
+              <div v-show="select_menu == 'yellow1'">
+                <h3>관심품목을 추가해보세요!</h3>
+                <MyFavorite></MyFavorite>
+              </div>
             </div>
 
             <div class="blue-visible right">
-              <diV v-if="this.select_menu == 'blue1'">
+              <diV v-show="select_menu == 'blue1'">
                 <h3>내가 쓴 레시피</h3>
                 <UserPost></UserPost>
               </diV>
-              <diV v-if="this.select_menu == 'blue2'">
+              <diV v-show="select_menu == 'blue2'">
                 <h3>내가 쓴 댓글</h3>
                 <UserComment></UserComment>
               </diV>
-              <diV v-if="this.select_menu == 'blue3'">
+              <diV v-show="select_menu == 'blue3'">
                 <h3>좋아요 레시피</h3>
                 <UserLikePost></UserLikePost>
               </diV>
             </div>
 
             <div class="darkgray-visible right">
-              <diV v-if="this.select_menu == 'darkgray1'">
+              <diV v-show="select_menu == 'darkgray1'">
                 <h3>닉네임 변경하기</h3>
                 <ChangeUserInfo></ChangeUserInfo>
               </diV>
-              <diV v-if="this.select_menu == 'darkgray2'">
+              <diV v-show="select_menu == 'darkgray2'">
                 <h3>통신사 멤버십 등록하기</h3>
                 <RegisterMembership></RegisterMembership>
               </diV>
-              <diV v-if="this.select_menu == 'darkgray3'">
+              <diV v-show="select_menu == 'darkgray3'">
                 <h3>편의점 적립 등록하기</h3>
                 <RegisterAccPoint></RegisterAccPoint>
               </diV>
             </div>
 
-            <div class="original right">
-              <!-- <UserComment></UserComment> -->
+            <div class="original right" v-show="!responsive">
               <img src="@/assets/images/center_cloud.png" />
             </div>
           </div>
@@ -165,33 +170,36 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import UserPost from "@/components/UserPost.vue";
 import FileUpload from "@/components/FileUpload.vue";
+import MyFavorite from "@/components/MyFavorite.vue";
+import UserComment from "@/components/UserComment.vue";
 import ShowUserGift from "@/components/ShowUserGift.vue";
 import ShowUsedGift from "@/components/ShowUsedGift.vue";
-import MyFavorite from "@/components/MyFavorite.vue";
-import UserPost from "@/components/UserPost.vue";
-import UserComment from "@/components/UserComment.vue";
 import UserLikePost from "@/components/UserLikePost.vue";
 import ChangeUserInfo from "@/components/ChangeUserInfo.vue";
-import RegisterMembership from "@/components/RegisterMembership.vue";
 import RegisterAccPoint from "@/components/RegisterAccPoint.vue";
+import RegisterMembership from "@/components/RegisterMembership.vue";
 
 export default {
   data() {
     return {
-      tempClass: "",
       color: "",
-      select_menu: ""
+      tempClass: "",
+      select_menu: "",
+
+      responsive: 0,
+      windowWidth: 0
     };
   },
   components: {
     Navbar,
+    UserPost,
     FileUpload,
+    MyFavorite,
+    UserComment,
     ShowUserGift,
     ShowUsedGift,
-    MyFavorite,
-    UserPost,
-    UserComment,
     UserLikePost,
     ChangeUserInfo,
     RegisterAccPoint,
@@ -200,36 +208,83 @@ export default {
   methods: {
     selec(menu) {
       if (this.color != "") {
-        console.log("컬러가 있다.", menu);
         this.tempClass = this.color + "-chosen";
         this.select_menu = menu;
+
+        if (this.responsive) {
+          document.getElementById("boxes").style.visibility = "hidden";
+          document.getElementById("big-box-test").style.visibility = "visible";
+          document.getElementById("big-box-test").style.position = "unset";
+          document.getElementById("big-box-test").style.zIndex = 10;
         }
-      },
-    test() {
-      console.log("test");
+      }
     },
-    filp(value) {
+    flip(value) {
       if (this.tempClass == "") {
-        console.log("start flip", this.tempClass);
         if ($("#boxes").attr("class") !== "") {
           $("#boxes").attr("class", "");
         } else {
           this.tempClass = value + "-chosen";
           this.color = value;
-          console.log("flip-else", this.tempClass, this.color);
         }
       } else {
         if (this.tempClass != "" && this.color != "") {
           if (this.color == value) {
             $("#boxes").attr("class", "");
-            this.tempClass = "";
             this.color = "";
+            this.tempClass = "";
             this.select_menu = "";
           }
         }
       }
+    },
+    onResize() {
+      this.windowWidth = window.innerWidth;
+      if (this.windowWidth > 1190) {
+        this.responsive = 0;
+        banner.style.width = "1170px";
+        if (this.select_menu || this.tempClass) {
+          document.getElementById("boxes").style.visibility = "visible";
+          document.getElementById("big-box-test").style.position = "absolute";
+          document.getElementById("big-box-test").style.zIndex = 1;
+        }
+      } else {
+        this.responsive = 1;
+        banner.style.width = "500px";
+        if (this.select_menu) {
+          document.getElementById("boxes").style.visibility = "hidden";
+          document.getElementById("big-box-test").style.visibility = "visible";
+          document.getElementById("big-box-test").style.position = "unset";
+          document.getElementById("big-box-test").style.zIndex = 10;
+        }
+      }
+    },
+    goPrev() {
+      if (this.select_menu) {
+        this.select_menu = "";
+        document.getElementById("boxes").style.visibility = "visible";
+        document.getElementById("big-box-test").style.position = "absolute";
+        document.getElementById("big-box-test").style.zIndex = 1;
+      } else if (this.tempClass) {
+        this.tempClass = "";
+      }
     }
-  }
+  },
+  mounted() {
+    window.addEventListener("resize", this.onResize);
+    this.windowWidth = window.innerWidth;
+    if (this.windowWidth > 1190) {
+      this.responsive = 0;
+      banner.style.width = "1170px";
+    } else {
+      this.responsive = 1;
+      banner.style.width = "500px";
+    }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.onResize);
+  },
+  watch: {}
 };
 </script>
 
@@ -241,9 +296,22 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
+.btn-container {
+  display: flex;
+  height: 40px;
+  padding: 4px;
+}
+#btn-prev {
+  justify-content: flex-start;
+  margin: 2px;
+  height: 100%;
+}
 .big-box > div > .original > img {
   width: 100%;
   height: 100%;
+}
+.big-box > div > div {
+  background: white;
 }
 body {
   min-width: 320px;
@@ -255,20 +323,17 @@ body {
 }
 .topbanner {
   width: 1170px;
-  margin: 20px auto;
+  margin: auto;
   margin-top: 8rem;
 }
 #banner #boxes {
   height: 500px;
   position: relative;
-  z-index: 1;
 }
 #banner > #boxes > div {
   position: absolute;
 }
 .small-box {
-  -webkit-perspective: 1000;
-  perspective: 1000;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -290,17 +355,11 @@ body {
   -moz-backface-visibility: hidden;
   -ms-backface-visibility: hidden;
   backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  -ms-perspective: 1000;
-  -moz-perspective: 1000;
-  perspective: 1000;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-repeat: no-repeat;
-  background-position: 0 0;
   overflow: hidden;
 }
 .small-box div:before {
@@ -318,7 +377,6 @@ body {
 .big-box div:before {
 }
 .small-box div:hover:before {
-  z-index: 98;
   background: rgba(0, 0, 0, 0.3);
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
@@ -329,6 +387,9 @@ body {
 
 .original {
   opacity: 0.9999;
+}
+.small-box {
+  z-index: 5;
 }
 .small-box .left:not(.original) {
   -webkit-transform: rotateY(180deg);
@@ -356,9 +417,6 @@ body {
   box-sizing: border-box;
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.8);
 }
-/* .small-box .original img {
-  display: none;
-} */
 .small-box > div > .left > img {
   width: 100%;
 }
@@ -370,10 +428,6 @@ body {
   background: none;
   text-shadow: none;
 }
-/* .big-box div span {
-  font-size: 24px;
-  font-weight: normal;
-} */
 .small-box.red {
   top: 0;
   left: 0;
@@ -470,8 +524,6 @@ body {
   transition-delay: 0.3s;
 }
 #boxes .big-box {
-  -webkit-perspective: 1000;
-  perspective: 1000;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -494,16 +546,11 @@ body {
   -moz-backface-visibility: hidden;
   -ms-backface-visibility: hidden;
   backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  perspective: 1000;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  overflow: hidden;
 }
 .big-box > .right > div.original {
   background-color: #ddd;
@@ -538,7 +585,6 @@ body {
 .darkgray-chosen .big-box .right {
   -webkit-transition-delay: 0.4s;
   transition-delay: 0.4s;
-  z-index: 100;
 }
 /* #ff7473 / #ffc952 / #47b8e0 / #34314c */
 .red .original {
