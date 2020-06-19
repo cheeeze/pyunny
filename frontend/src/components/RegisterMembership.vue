@@ -98,6 +98,18 @@ export default {
           userId: this.userId
         },
         res => {
+          if (sort == "sk") {
+            this.sk = this.tempnum;
+            this.tempnum = "";
+          }
+          if (sort == "kt") {
+            this.kt = this.tempnum;
+            this.tempnum = "";
+          }
+          if (sort == "lg") {
+            this.lg = this.tempnum;
+            this.tempnum = "";
+          }
           console.log(res);
           alert("멤버십 등록이 완료 되었습니다!");
         },

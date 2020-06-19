@@ -142,7 +142,7 @@
 
             <div class="darkgray-visible right">
               <diV v-if="this.select_menu == 'darkgray1'">
-                <h3>닉네임 변경하기</h3>
+                <h3>내 정보 변경하기</h3>
                 <ChangeUserInfo></ChangeUserInfo>
               </diV>
               <diV v-if="this.select_menu == 'darkgray2'">
@@ -156,7 +156,6 @@
             </div>
 
             <div class="original right">
-              <!-- <UserComment></UserComment> -->
               <img src="@/assets/images/center_cloud.png" />
             </div>
           </div>
@@ -203,13 +202,9 @@ export default {
   methods: {
     selec(menu) {
       if (this.color != "") {
-        console.log("컬러가 있다.", menu);
         this.tempClass = this.color + "-chosen";
         this.select_menu = menu;
       }
-    },
-    test() {
-      console.log("test");
     },
     filp(value) {
       if (this.tempClass == "") {

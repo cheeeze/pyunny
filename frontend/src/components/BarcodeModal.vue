@@ -6,7 +6,6 @@
           <img src="@/assets/icons/x.png" alt height="20px" />
         </button>
       </div>
-
       <!-- <div class="checkbox-container"> -->
       <!-- <div class="row"> -->
       <div class="barcode-conv-tab">
@@ -30,7 +29,7 @@
           src="@/assets/icons/ministop.png"
         />
       </div>
-
+      <!--  gs -->
       <div v-if="store=='gs25'">
         <img v-if="lg" class="telecom" src="@/assets/icons/lguplus_removebg.png" alt="lguplus" />
         <h5 id="barcode-title">통신사 할인</h5>
@@ -56,6 +55,7 @@
         </div>
       </div>
 
+      <!-- cu  -->
       <div v-if="store=='cu'">
         <img v-if="sk" class="telecom" src="@/assets/icons/sktelecom_removebg.png" alt="sktelecom" />
         <h5 id="barcode-title">통신사 할인</h5>
@@ -76,6 +76,7 @@
         </div>
       </div>
 
+      <!-- emart24  -->
       <div v-if="store=='emart'">
         <img v-if="kt" class="telecom" src="@/assets/icons/kt_removebg.png" alt="kt" />
         <h5 id="barcode-title">통신사 할인</h5>
@@ -96,6 +97,7 @@
         </div>
       </div>
 
+      <!-- seven -->
       <div v-if="store=='seven'">
         <img v-if="sk" class="telecom" src="@/assets/icons/sktelecom_removebg.png" alt="sktelecom" />
         <h5 id="barcode-title">통신사 할인</h5>
@@ -120,7 +122,7 @@
           </barcode>
         </div>
       </div>
-
+      <!-- ministop -->
       <div v-if="store=='ministop'">
         <!-- <span v-if="ministop" id="modal-title">편의점 적립</span> -->
         <h5 id="barcode-title">편의점 할인, 적립</h5>
@@ -135,6 +137,7 @@
         </barcode>
       </div>
 
+      <!-- gift -->
       <h3 v-if="this.mygifts.length" id="modal-title">기프티콘</h3>
       <div class="gifts">
         <div class="gift" v-for="(item, index) in mygifts" :key="index">
