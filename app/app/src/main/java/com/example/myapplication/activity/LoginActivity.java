@@ -1,26 +1,15 @@
 package com.example.myapplication.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
-import android.util.JsonReader;
-import android.util.JsonToken;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.MainSaleAdapter;
-import com.example.myapplication.auth.SaveSharedPreference;
-import com.example.myapplication.vo.Sale;
 
 import org.json.JSONObject;
 
@@ -30,7 +19,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.Buffer;
+
 
 public class LoginActivity extends Activity  {
 
@@ -51,8 +40,6 @@ public class LoginActivity extends Activity  {
 
             @Override
             public void onClick(View v) {
-                Log.d("TEST", edt_login_email.getText().toString());
-                //임시로 메인으로 넘어가게 작성함
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -83,8 +70,6 @@ public class LoginActivity extends Activity  {
                 conn.setDoOutput(true);
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestProperty("Accept","application/json");
-                Log.d("TEST", "doInBack");
-                Log.d("TEST", body.toString());
                 OutputStream os = conn.getOutputStream();
                 os.write(body.getBytes());
                 os.flush();
@@ -101,14 +86,10 @@ public class LoginActivity extends Activity  {
                 }
 
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream,"UTF-8");
-                //JsonReader jsonReader = new JsonReader(inputStreamReader);
                 BufferedReader br = new BufferedReader(inputStreamReader);
-
-
                 conn.disconnect();
 
             } catch (Exception e) {
-                Log.d("ERROR", e.toString());
                 e.printStackTrace();
             }
             return result;
@@ -116,57 +97,8 @@ public class LoginActivity extends Activity  {
 
         @Override
         protected void onPostExecute(String s) {
-            Log.d("RESULT", "onPostExecute");
+
         }
-    }
-
-    private void checkLogin() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    JSONObject json = new JSONObject();
-                    json.put("email",edt_login_email.getText());
-                    json.put("password", edt_login_password.getText());
-                    String body = json.toString();
-
-                    URL url = new URL("http://k02d1021.p.ssafy.io:8080/api/user/applogin");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                    conn.setRequestMethod("POST");
-                    conn.setDoInput(true);
-                    conn.setDoOutput(true);
-                    conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setRequestProperty("Accept","application/json");
-                    conn.connect();
-
-                    OutputStream os = conn.getOutputStream();
-                    os.write(body.getBytes());
-                    os.flush();
-
-                    int responseStatusCode = conn.getResponseCode();
-                    Log.d("TEST", responseStatusCode+"");
-                    //Looper.prepare();
-                    //InputStream inputStream;
-                    if(responseStatusCode == conn.HTTP_OK) {
-                        //login 성공
-                        //Toast.makeText(LoginActivity.this, "login성공", Toast.LENGTH_SHORT).show();
-                        Log.d("TEST", "login");
-                        SaveSharedPreference.setEmail(LoginActivity.this,edt_login_email.getText().toString());
-                    }else{
-                        Log.d("TEST", "loginfail");
-                        //Toast.makeText(LoginActivity.this, "login실패", Toast.LENGTH_SHORT).show();
-                    }
-                    //Looper.loop();
-
-                    conn.disconnect();
-
-                } catch(Exception e) {
-                    Log.d("REST ERRER",e.toString());
-                }
-            }
-        });
-        thread.start();
     }
 
     private void init(){

@@ -2,7 +2,6 @@ package com.example.myapplication.fragment.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -20,28 +19,17 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MainAllAdapter;
-import com.example.myapplication.activity.ProductDetailActivity;
-import com.example.myapplication.adapter.MainPagerAdapter;
 import com.example.myapplication.adapter.MainSaleAdapter;
-import com.example.myapplication.customView.CustomDialog;
 import com.example.myapplication.vo.Sale;
-import com.google.android.material.tabs.TabLayout;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -86,8 +74,6 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
         @Override
         protected String doInBackground(String... strings) {
             try {
-                //btnConvIdx 편의점별 id
-                //btnSaleProductIdx 0:세일품목 1:전체품목
                 URL url;
                 String urlString = "";
                 switch (btnSaleProductIdx){
@@ -103,24 +89,23 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
                     case 0:
                         urlString += "646,682,936";
                         break;
-                    case 1: //gs 646
+                    case 1:
                         urlString += "646";
                         break;
-                    case 2: //cu 682
+                    case 2:
                         urlString += "682";
                         break;
-                    case 3: //7/11
+                    case 3:
                         urlString += "1";
                         break;
-                    case 4: //emart 936
+                    case 4:
                         urlString += "936";
                         break;
-                    case 5: //ministop
+                    case 5:
                         urlString += "1";
                         break;
                 }
 
-                Log.d("RESULT", urlString);
                 url = new URL(urlString);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
@@ -196,10 +181,10 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
                     }
                     jsonReader.endObject();
                     switch (btnSaleProductIdx){
-                        case 0: //세일
+                        case 0:
                             saleList.add(new Sale(id,productId,name,franchiseId,type,dumImage,dumName,dumPrice,name,price,image));
                             break;
-                        case 1: //전체product
+                        case 1:
                             saleList.add(new Sale(id,id,name,franchiseId,type,dumImage,dumName,dumPrice,name,price,image));
                             break;
                     }
@@ -207,12 +192,9 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
                 }
                 jsonReader.endArray();
                 jsonReader.close();
-
-
                 conn.disconnect();
 
             } catch (Exception e) {
-                Log.d("ERROR", e.toString());
                 e.printStackTrace();
             }
             return result;
@@ -221,19 +203,16 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
         @Override
         protected void onPostExecute(String s) {
             setBorderToButton();
-            //getSaleList();
             switch(btnSaleProductIdx) {
-                case 0: //세일
+                case 0:
                     mainSaleAdapter = new MainSaleAdapter(mContext,saleList);
                     recyclerView.setAdapter(mainSaleAdapter);
                     break;
-                case 1: //프로덕트
+                case 1:
                     mainAllAdapter = new MainAllAdapter(mContext,saleList);
                     recyclerView.setAdapter(mainAllAdapter);
                     break;
             }
-
-            Log.d("RESULT", "onPostExecute");
         }
     }
 
@@ -266,9 +245,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-//                intent = new Intent(mContext, ProductDetailActivity.class);
-//                intent.putExtra("productId",saleList.get(position).getProduct_id());
-//                mContext.startActivity(intent);
+
             }
 
             @Override
@@ -278,9 +255,6 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
         }));
         btn_main_sale.setOnClickListener(this);
         btn_main_product.setOnClickListener(this);
-
-
-
     }
 
     @Override
@@ -390,10 +364,6 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
         }
     }
 
-
-
-
-
     public interface ClickListener{
         void onClick(View view, int position);
 
@@ -441,72 +411,5 @@ public class FragmentMain extends Fragment implements View.OnClickListener{
 
         }
     }
-
-//    private void getProductDetail(final int productId){
-//        Thread thread = new Thread(new Runnable() {
-//            String result;
-//            @Override
-//            public void run() {
-//                try{
-//                    URL url = new URL("http://k02d1021.p.ssafy.io:8080/api/product/"+productId);
-//                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//                    conn.setRequestMethod("GET");
-//                    conn.setReadTimeout(3000);
-//                    conn.setConnectTimeout(3000);
-//                    //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
-//                    conn.setDoInput(true);
-//
-//                    conn.setUseCaches(false);
-//                    conn.connect();
-//
-//                    int responseStatusCode = conn.getResponseCode();
-//                    Log.i("CHECK", "thread run");
-//                    InputStream inputStream;
-//                    if(responseStatusCode == conn.HTTP_OK) {
-//                        inputStream = conn.getInputStream();
-//                    }else{
-//                        inputStream = conn.getErrorStream();
-//                    }
-//                    Log.d("REQEUSTMETHOD",conn.getRequestMethod());
-//
-//                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-//                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//                    StringBuilder sb = new StringBuilder();
-//                    String line;
-//                    while((line=bufferedReader.readLine())!=null) {
-//                        sb.append(line);
-//                    }
-//                    bufferedReader.close();
-//
-//
-//                    conn.disconnect();
-//                    result = sb.toString();
-//                    Log.d("productDetail",result);
-//                    JSONObject product = new JSONObject(result);
-//                    int id = product.getInt("id");
-//                    String name = product.getString("name");
-//                    int franchiseId = product.getInt("franchiseId");
-//                    int price = product.getInt("price");
-//                    String category = product.getString("category");
-//                    String description = product.getString("description");
-//                    String image = product.getString("image");
-//                    intent.putExtra("id",id);
-//                    intent.putExtra("name",name);
-//                    intent.putExtra("franchiseId",franchiseId);
-//                    intent.putExtra("price",price);
-//                    intent.putExtra("category",category);
-//                    intent.putExtra("description",description);
-//                    intent.putExtra("image",image);
-//
-//                } catch(Exception e){
-//                    result = e.toString();
-//                    Log.d("ERROR", e.toString());
-//                }
-//
-//
-//            }
-//        });
-//        thread.start();
-//    }
 
 }

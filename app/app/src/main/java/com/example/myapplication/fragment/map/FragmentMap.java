@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ProviderInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
@@ -19,9 +18,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.JsonReader;
-import android.util.JsonToken;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -32,9 +28,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,11 +38,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.MainSaleAdapter;
 import com.example.myapplication.adapter.MapSearchResultAdapter;
 import com.example.myapplication.customView.CustomDialog;
 import com.example.myapplication.vo.MapSearchResult;
-import com.example.myapplication.vo.Sale;
 import com.example.myapplication.vo.Store;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -65,7 +56,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -345,10 +335,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
             }
         }));
 
-
-
-
-
         return view;
     }
 
@@ -440,11 +426,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         markerOptions.title(markerTitle);
         markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
-        Log.d("currentLoc",location.getLatitude()+" "+location.getLongitude());
-
-
-
-
 
         if(mMoveMapByAPI){
 
@@ -650,80 +631,10 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         return true;
     }
 
-//    marker rest
-
     private boolean isEnd;
 
-    private void getStoreList(final double latitude, final double longitude, final float distance, final String keyword) {
-        Log.d("TEST", "in getSaleList()");
-        Thread thread = new Thread(new Runnable() {
-            String result;
-            @Override
-            public void run() {
-                try{
-                    URL url = new URL("http://k02d1021.p.ssafy.io:8080/api/store?latitude="+latitude+"&longitude="+longitude+"&distance="+distance+"&keyword="+keyword);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("GET");
-                    conn.setReadTimeout(3000);
-                    conn.setConnectTimeout(3000);
-                    //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
-                    conn.setDoInput(true);
-
-                    conn.setUseCaches(false);
-                    conn.connect();
-
-                    int responseStatusCode = conn.getResponseCode();
-                    Log.i("CHECK", "thread run");
-                    InputStream inputStream;
-                    if(responseStatusCode == conn.HTTP_OK) {
-                        inputStream = conn.getInputStream();
-                    }else{
-                        inputStream = conn.getErrorStream();
-                    }
-                    Log.d("REQEUSTMETHOD",conn.getRequestMethod());
-
-                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-//                    JsonReader jsonReader = new JsonReader(inputStreamReader);
-//                    jsonReader.beginObject();
-//
-//                    while(jsonReader.hasNext()){
-//                        Log.d(jsonReader.nextName(),jsonReader.nextString());
-//                    }
-//                    jsonReader.close();
-                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while((line=bufferedReader.readLine())!=null) {
-                        sb.append(line);
-                        //Log.d("THREAD",line);
-                    }
-                    bufferedReader.close();
-
-
-                    conn.disconnect();
-                    result = sb.toString();
-                    Log.d("storeList",result);
-                    stores = getRest(result);
-                } catch(Exception e){
-                    result = e.toString();
-                    Log.d("ERROR", e.toString());
-                }
-
-
-            }
-        });
-        thread.start();
-
-
-    }
-
-
     private List<Store> getRest(String value) {
-        //json parsing
-        //saleList.clear();
         isEnd=false;
-        Log.d("TEST","in getRest");
-        Log.d("TEST", value);
         try {
             JSONArray jsonArray = new JSONArray(value);
             for(int i=0;i<jsonArray.length();i++){
@@ -747,7 +658,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                 String deliveryEnd = store.getString("deliveryEnd");
 
                 stores.add(new Store(id,franchiseId,franchiseName,storeName,latitude,longitude,address,city,tel,isatm,islottery,isdelivery,isfulltime,logoUrl,deliveryBegin,deliveryEnd));
-                Log.d("TEST", stores.get(i).toString());
             }
         } catch(Exception e){
 
@@ -757,77 +667,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         return stores;
     }
 
-
-//    private void getProductList(final double latitude, final double longitude, final float distance, final String keyword){
-//        Log.d("TEST", "in getSaleList()");
-//        Thread thread = new Thread(new Runnable() {
-//            String result;
-//            @Override
-//            public void run() {
-//                try{
-//                    URL url = new URL("http://k02d1021.p.ssafy.io:8080/api/store_product?latitude="+latitude+"&longitude="+longitude+"&distance="+distance+"&keyword="+keyword);
-//                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//                    conn.setRequestMethod("GET");
-//                    conn.setReadTimeout(3000);
-//                    conn.setConnectTimeout(3000);
-//                    //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
-//                    conn.setDoInput(true);
-//
-//                    conn.setUseCaches(false);
-//                    conn.connect();
-//
-//                    int responseStatusCode = conn.getResponseCode();
-//                    Log.i("CHECK", "thread run");
-//                    InputStream inputStream;
-//                    if(responseStatusCode == conn.HTTP_OK) {
-//                        inputStream = conn.getInputStream();
-//                    }else{
-//                        inputStream = conn.getErrorStream();
-//                    }
-//                    Log.d("REQEUSTMETHOD",conn.getRequestMethod());
-//
-//                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-////                    JsonReader jsonReader = new JsonReader(inputStreamReader);
-////                    jsonReader.beginObject();
-////
-////                    while(jsonReader.hasNext()){
-////                        Log.d(jsonReader.nextName(),jsonReader.nextString());
-////                    }
-////                    jsonReader.close();
-//                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//                    StringBuilder sb = new StringBuilder();
-//                    String line;
-//                    while((line=bufferedReader.readLine())!=null) {
-//                        sb.append(line);
-//                        //Log.d("THREAD",line);
-//                    }
-//                    bufferedReader.close();
-//
-//
-//                    conn.disconnect();
-//                    result = sb.toString();
-//                    Log.d("storeList",result);
-//                    searchResults = getSearchRest(result);
-//                } catch(Exception e){
-//                    result = e.toString();
-//                    Log.d("ERROR", e.toString());
-//                }
-//
-//
-//            }
-//        });
-//        thread.start();
-//
-//    }
-
-
     private boolean isEndSearchRest;
     private List<MapSearchResult> getSearchRest(String value) {
-        //json parsing
-        //saleList.clear();
         isEnd=false;
-        Log.d("TEST","in getRest");
-        Log.d("TEST", value);
         try {
             JSONArray jsonArray = new JSONArray(value);
             for(int i=0;i<jsonArray.length();i++){
@@ -885,47 +727,32 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                 conn.setRequestMethod("GET");
                 conn.setReadTimeout(3000);
                 conn.setConnectTimeout(3000);
-                //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
                 conn.setDoInput(true);
 
                 conn.setUseCaches(false);
                 conn.connect();
 
                 int responseStatusCode = conn.getResponseCode();
-                Log.i("CHECK", "thread run");
                 InputStream inputStream;
                 if(responseStatusCode == conn.HTTP_OK) {
                     inputStream = conn.getInputStream();
                 }else{
                     inputStream = conn.getErrorStream();
                 }
-                Log.d("REQEUSTMETHOD",conn.getRequestMethod());
 
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-//                    JsonReader jsonReader = new JsonReader(inputStreamReader);
-//                    jsonReader.beginObject();
-//
-//                    while(jsonReader.hasNext()){
-//                        Log.d(jsonReader.nextName(),jsonReader.nextString());
-//                    }
-//                    jsonReader.close();
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 StringBuilder sb = new StringBuilder();
                 String line;
                 while((line=bufferedReader.readLine())!=null) {
                     sb.append(line);
-                    //Log.d("THREAD",line);
                 }
                 bufferedReader.close();
-
-
                 conn.disconnect();
                 result = sb.toString();
-                Log.d("storeList",result);
                 stores = getRest(result);
             } catch(Exception e){
                 result = e.toString();
-                Log.d("ERROR", e.toString());
             }
             return result;
         }
@@ -936,8 +763,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
             addStores(stores);
             mapSearchResultAdapter = new MapSearchResultAdapter(getContext(),searchResults);
             recyclerView_map_search.setAdapter(mapSearchResultAdapter);
-            Log.d("pospos", mGoogleMap.getCameraPosition().target.latitude+" "+mGoogleMap.getCameraPosition().target.longitude);
-            Log.d("afterRest",stores.size()+"");
         }
     }
 
@@ -958,48 +783,34 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                 conn.setRequestMethod("GET");
                 conn.setReadTimeout(3000);
                 conn.setConnectTimeout(3000);
-                //conn.setDoOutput(true); //이거  있으면 무조건 POST로 메소드 변경됨!! 주의!
                 conn.setDoInput(true);
 
                 conn.setUseCaches(false);
                 conn.connect();
 
                 int responseStatusCode = conn.getResponseCode();
-                Log.i("CHECK", "thread run");
                 InputStream inputStream;
                 if(responseStatusCode == conn.HTTP_OK) {
                     inputStream = conn.getInputStream();
                 }else{
                     inputStream = conn.getErrorStream();
                 }
-                Log.d("REQEUSTMETHOD",conn.getRequestMethod());
 
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-//                    JsonReader jsonReader = new JsonReader(inputStreamReader);
-//                    jsonReader.beginObject();
-//
-//                    while(jsonReader.hasNext()){
-//                        Log.d(jsonReader.nextName(),jsonReader.nextString());
-//                    }
-//                    jsonReader.close();
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 StringBuilder sb = new StringBuilder();
                 String line;
                 while((line=bufferedReader.readLine())!=null) {
                     sb.append(line);
-                    //Log.d("THREAD",line);
                 }
                 bufferedReader.close();
 
 
                 conn.disconnect();
                 result = sb.toString();
-                Log.d("productList",result);
                 searchResults = getSearchRest(result);
-//                stores = getRest(result);
             } catch(Exception e){
                 result = e.toString();
-                Log.d("ERROR", e.toString());
             }
             return result;
         }
@@ -1010,8 +821,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
             addStores(stores);
             mapSearchResultAdapter = new MapSearchResultAdapter(getContext(),searchResults);
             recyclerView_map_search.setAdapter(mapSearchResultAdapter);
-            Log.d("pospos", mGoogleMap.getCameraPosition().target.latitude+" "+mGoogleMap.getCameraPosition().target.longitude);
-            Log.d("afterRest",searchResults.size()+"");
         }
     }
 
