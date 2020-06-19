@@ -10,18 +10,39 @@
       <!-- <div class="row"> -->
       <div class="barcode-conv-tab">
         <img
-          @click="choiceStore('')"
+          id="default"
+          @click="choiceStore('default')"
           class="barcode-conv-icon"
           src="@/assets/icons/gift_black_removebg.png"
         />
         <!-- kt 나 lg 할인, gs적립 -->
-        <img @click="choiceStore('gs25')" class="barcode-conv-icon" src="@/assets/icons/gs25.png" />
+        <img
+          @click="choiceStore('gs25')"
+          id="gs25"
+          class="barcode-conv-icon"
+          src="@/assets/icons/gs25.png"
+        />
         <!-- sk 할인, cu적립-->
-        <img @click="choiceStore('cu')" class="barcode-conv-icon" src="@/assets/icons/cu.png" />
+        <img
+          @click="choiceStore('cu')"
+          id="cu"
+          class="barcode-conv-icon"
+          src="@/assets/icons/cu.png"
+        />
         <!-- kt 할인, 신세계 포인트 적립 -->
-        <img @click="choiceStore('emart')" class="barcode-conv-icon" src="@/assets/icons/emart.jpg" />
+        <img
+          @click="choiceStore('emart')"
+          id="emart"
+          class="barcode-conv-icon"
+          src="@/assets/icons/emart.jpg"
+        />
         <!-- sk 할인, 엘포인트 적립 -->
-        <img @click="choiceStore('seven')" class="barcode-conv-icon" src="@/assets/icons/seven.png" />
+        <img
+          @click="choiceStore('seven')"
+          id="seven"
+          class="barcode-conv-icon"
+          src="@/assets/icons/seven.png"
+        />
         <!-- ok캐시백1프로 적립 10프로 사용해서 15프로 할인 -->
         <img
           @click="choiceStore('ministop')"
@@ -225,6 +246,7 @@ export default {
     choiceStore(value) {
       this.store = value;
       this.gift = "";
+      document.getElementById(value).classList.add("choice");
     },
     selecgift(info) {
       if (this.gift == info) {
@@ -400,5 +422,9 @@ export default {
 #barcode-title {
   text-align: left;
   margin-left: 10%;
+}
+
+.choice {
+  border: #da2c4d 2px solid;
 }
 </style>
