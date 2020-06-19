@@ -1,6 +1,6 @@
 <template>
   <div class="card-container">
-    <ul class="cards">
+    <ul class="cards" style="padding: 0;">
       <li class="cards_item" v-for="item in items" :key="item.id">
         <router-link class="routeLink" :to="{ name: 'Detail', params: {id: item.product.id}}">
           <div class="card">
@@ -61,6 +61,7 @@ export default {
 
 a.routeLink {
   text-decoration: none;
+  width: 100%;
 }
 
 /* Design */
@@ -116,8 +117,7 @@ a.routeLink {
 .cards_item {
   display: flex;
   padding: 0.5rem 1rem 1rem;
-  /* height: 45%; */
-  /* max-height: 300px; */
+  width: 100%;
 }
 
 @media (min-width: 40rem) {
@@ -140,8 +140,7 @@ a.routeLink {
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* overflow: hidden; */
-  /* height: 300px; */
+  height: 100%;
 }
 
 .card:hover {
@@ -153,6 +152,10 @@ a.routeLink {
   padding: 1rem;
   /* background: linear-gradient(to bottom left, #ef8d9c 40%, #ffc39e 100%); */
   height: 100%;
+}
+
+.card_image {
+  width: 100%;
 }
 
 .card_title {
