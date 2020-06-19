@@ -16,8 +16,8 @@ export default [{
   },
   {
     path: "/recipecreate",
-    view: "Recipecreate",
-    name: "Recipecreate",
+    view: "RecipeCreate",
+    name: "RecipeCreate",
   },
   {
     path: "/recipe",

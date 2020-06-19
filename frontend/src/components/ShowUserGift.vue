@@ -13,26 +13,6 @@
           <small class="text-muted">토글시 사용완료됩니다.</small>
         </template>
       </b-card>
-
-      <!-- <b-card
-        img-src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQZR29UxIjOPSwkIxCwQJyWgKeTMgzs-Vh-YImmP6c2z6igipPU&usqp=CAU"
-        img-alt="Image"
-        img-top
-      >
-        <template v-slot:footer>
-          <small class="text-muted">~ 2020.09.25까지</small>
-        </template>
-      </b-card>
-
-      <b-card
-        img-src="https://image.fmkorea.com/files/attach/new/20200318/4168377/1432819841/2836115197/4086c69db3885fca63150ceb230532e6.jpeg"
-        img-alt="Image"
-        img-top
-      >
-        <template v-slot:footer>
-          <small class="text-muted">~ 2020.10.06까지</small>
-        </template>
-      </b-card>-->
     </b-card-group>
     <b-button @click="delGifticon" variant="warning">저장</b-button>
   </div>
@@ -43,7 +23,6 @@ import Axios from "@/api/Barcodeaxios.js";
 export default {
   data() {
     return {
-      //isOn: false,
       userId: 0,
       gifticons: []
     };
@@ -79,14 +58,11 @@ export default {
         alert("저장 완료되었습니다.");
         return;
       }
-      //this.$set(this.gifticons[index], "isDelete", false);
-      //this.gifticons[index].isDelete = false;
 
       Axios.updateGifticon(
         data,
         res => {
           alert("저장 완료되었습니다.");
-          //this.gifticons.splice(index, 1);
           res;
         },
         err => {
@@ -106,7 +82,6 @@ export default {
 }
 .card-body {
   flex: 1 1 auto;
-  /* min-height: 1px; */
   height: 0;
   padding: 0;
 }

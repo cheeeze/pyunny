@@ -139,7 +139,6 @@ export default {
       if (sort == "ministop") {
         this.tempnum = this.ministop;
       }
-      console.log(sort);
       BarcodeAxios.insertMembership(
         {
           number: this.tempnum,
@@ -147,8 +146,8 @@ export default {
           userId: this.userId
         },
         res => {
-          console.log(res);
           alert("멤버십 등록이 완료 되었습니다!");
+          res;
         },
         error => {
           console.log(error);

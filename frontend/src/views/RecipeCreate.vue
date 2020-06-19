@@ -256,11 +256,6 @@ export default {
           new Underline(),
           new History(),
           new Image()
-          /* new Placeholder({
-            emptyNodeClass: "is-empty, is-editor-empty",
-            emptyNodeText: "여기에 글을 적어주세요..궁극의 레시피를...!",
-            showOnlyWhenEditable: true
-          }) */
         ],
         content: `<p>
             궁극의 레시피!
@@ -272,16 +267,10 @@ export default {
   mounted() {
     productAxios.getProduct(
       res => {
-        //console.log(res.data);
-
-        //console.log(res);
-
         this.items = [];
         res.data.forEach(element => {
           this.items.push({ text: element.name, key: element.id });
         });
-
-        //this.items = res.data;
       },
       err => {
         console.log(err);
@@ -295,7 +284,6 @@ export default {
   methods: {
     showImagePrompt(command) {
       this.comm = command;
-      //console.log(this.comm);
       this.$refs.image.click();
     },
     readURL(input) {
@@ -304,10 +292,8 @@ export default {
       if (input.target.files && input.target.files[0]) {
         var reader = new FileReader();
         reader.onload = e => {
-          //console.log(e.target);
           const src = e.target.result;
           this.comm({ src });
-          //this.comm = "";
         };
         reader.readAsDataURL(fileList[0]);
       }
@@ -334,13 +320,8 @@ export default {
         if (start < 0) break;
 
         last = tmptext.indexOf('"', start);
-        //console.log("start:" + start + " last:" + last);
 
         let tmp = this.dataURItoBlob(tmptext.substring(start, last));
-        //console.log(tmp);
-
-        //let file = new FormData();
-        //file.append("file", tmp);
         this.imageFiles.push(new File([tmp], "name"));
       }
       this.$set(this.recipe, "content", tmptext);
@@ -372,13 +353,9 @@ export default {
             start = tmptext.indexOf("data:image", start + 1);
             if (start < 0) break;
 
-            //console.log("본분 파일 index:" + index);
-
             last = tmptext.indexOf('"', start);
-            //console.log("start:" + start + " last:" + last);
 
             var url = tmptext.substring(start, last);
-            //console.log(url);
             tmptext = tmptext.replace(
               url,
               `http://k02d1021.p.ssafy.io:8080/api/upload/${this.imageNames[index]}` //'https://k02d1021.p.ssafy.io:8080'
@@ -409,15 +386,11 @@ export default {
         ingredient: this.ingredient,
         ingredientProduct: ingredientProduct
       };
-      //console.log("data check");
-      //console.log(data);
-
       recipeAxios.insertRecipe(
         data,
         res => {
           console.log(res);
           alert("작성 완료 되었습니다!");
-          //this.$router.push("/reviewdetail/" + res.data);
           this.$router.push("/recipe/");
         },
         error => {

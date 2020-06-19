@@ -6,8 +6,6 @@
           <img src="@/assets/icons/x.png" alt height="20px" />
         </button>
       </div>
-      <!-- <div class="checkbox-container"> -->
-      <!-- <div class="row"> -->
       <div class="barcode-conv-tab">
         <img
           id="default"
@@ -56,7 +54,6 @@
         <img v-if="lg" class="telecom" src="@/assets/icons/lguplus_removebg.png" alt="lguplus" />
         <h5 id="barcode-title">통신사 할인</h5>
         <div class="inline">
-          <!-- <span v-if="lg || kt" id="modal-title">통신사 할인</span> -->
           <barcode v-bind:value="lg">
             <p class="infowords">등록된 LGU+ 바코드가 없습니다. :(</p>
           </barcode>
@@ -70,7 +67,6 @@
         <img v-if="gs" class="telecom" src="@/assets/icons/gspoint_long_removebg.png" alt="gspoint" />
         <h5 id="barcode-title">편의점 적립</h5>
         <div class="inline">
-          <!-- <span v-if="gs" id="modal-title">편의점 적립</span> -->
           <barcode v-bind:value="gs">
             <p class="infowords">등록된 GSpoint 적립 바코드가 없습니다. :(</p>
           </barcode>
@@ -82,7 +78,6 @@
         <img v-if="sk" class="telecom" src="@/assets/icons/sktelecom_removebg.png" alt="sktelecom" />
         <h5 id="barcode-title">통신사 할인</h5>
         <div class="inline">
-          <!-- <span v-if="sk" id="modal-title">통신사 할인</span> -->
           <barcode v-bind:value="sk">
             <p class="infowords">등록된 SKtelecom 바코드가 없습니다. :(</p>
           </barcode>
@@ -91,7 +86,6 @@
         <img v-if="cu" class="telecom" src="@/assets/icons/cu_long_removebg.png" alt="cu" />
         <h5 id="barcode-title">편의점 적립</h5>
         <div class="inline">
-          <!-- <span v-if="cu" id="modal-title">편의점 적립</span> -->
           <barcode v-bind:value="cu">
             <p class="infowords">등록된 CU 적립 바코드가 없습니다. :(</p>
           </barcode>
@@ -103,7 +97,6 @@
         <img v-if="kt" class="telecom" src="@/assets/icons/kt_removebg.png" alt="kt" />
         <h5 id="barcode-title">통신사 할인</h5>
         <div class="inline">
-          <!-- <span v-if="kt" id="modal-title">통신사 할인</span> -->
           <barcode v-bind:value="kt">
             <p class="infowords">등록된 kT 바코드가 없습니다. :(</p>
           </barcode>
@@ -112,7 +105,6 @@
         <img v-if="emart" class="telecom" src="@/assets/icons/emart24_removebg.png" alt="emart24" />
         <h5 id="barcode-title">편의점 적립</h5>
         <div class="inline">
-          <!-- <span v-if="emart" id="modal-title">편의점 적립</span> -->
           <barcode v-bind:value="emart">
             <p class="infowords">등록된 신세계 포인트 적립 바코드가 없습니다. :(</p>
           </barcode>
@@ -124,7 +116,6 @@
         <img v-if="sk" class="telecom" src="@/assets/icons/sktelecom_removebg.png" alt="sktelecom" />
         <h5 id="barcode-title">통신사 할인</h5>
         <div class="inline">
-          <!-- <span v-if="sk" id="modal-title">통신사 할인</span> -->
           <barcode v-bind:value="sk">
             <p class="infowords">등록된 SKtelecom 바코드가 없습니다. :(</p>
           </barcode>
@@ -138,7 +129,6 @@
         />
         <h5 id="barcode-title">편의점 적립</h5>
         <div class="inline">
-          <!-- <span v-if="seven" id="modal-title">편의점 적립</span> -->
           <barcode v-bind:value="seven">
             <p class="infowords">등록된 L.POINT 적립 바코드가 없습니다. :(</p>
           </barcode>
@@ -146,7 +136,6 @@
       </div>
       <!-- ministop -->
       <div v-if="store=='ministop'">
-        <!-- <span v-if="ministop" id="modal-title">편의점 적립</span> -->
         <h5 id="barcode-title">편의점 할인, 적립</h5>
         <img
           v-if="ministop"
@@ -168,13 +157,6 @@
       </div>
       <div v-if="gift" class="large-gift" style="display: initial;">
         <img :src="gift" @click="selecgift(gift)" />
-        <!--         <b-button
-          v-if="!myToggle"
-          @click="useGift(index)"
-          :pressed.sync="myToggle"
-          variant="primary"
-        >사용전</b-button>
-        <b-button v-if="myToggle" @click="useGift(index)" :pressed.sync="myToggle">사용 완료!</b-button>-->
       </div>
     </div>
   </div>
@@ -208,16 +190,7 @@ export default {
       emart: "",
       seven: "",
       ministop: "",
-      mygifts: [
-        /*         {
-          keyword: "gift1",
-          isUse: false
-        },
-        {
-          keyword: "gift2",
-          isUse: false
-        } */
-      ]
+      mygifts: []
     };
   },
   watch: {
@@ -306,7 +279,6 @@ export default {
         this.userId,
         res => {
           res.data.forEach(element => {
-            //element.isDelete = false;
             this.mygifts.push(element);
           });
         },
@@ -421,7 +393,6 @@ export default {
 }
 
 .barcode-conv-icon {
-  /* height: 60px; */
   width: 8vw;
   max-width: 65px;
   min-width: 32px;

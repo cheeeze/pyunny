@@ -190,7 +190,6 @@ export default {
       var container = document.getElementById("map");
       var options = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
-        //center: new kakao.maps.LatLng(35.894325256347656, 128.61961364746094),
         level: 3
       };
 
@@ -202,7 +201,6 @@ export default {
         "center_changed",
         this.chagePosition()
       );
-      //map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
 
       this.gpsFocus();
     },
@@ -212,8 +210,6 @@ export default {
         navigator.geolocation.getCurrentPosition(pos => {
           this.latitude = pos.coords.latitude;
           this.longitude = pos.coords.longitude;
-
-          // console.log("dd");
 
           var imageSrc = require("@/assets/icons/currentposition.png"),
             imageSize = new kakao.maps.Size(15, 15); // 마커이미지의 크기입니다
@@ -308,16 +304,12 @@ export default {
         var latlng = this.map.getCenter();
         this.latitude = latlng.getLat();
         this.longitude = latlng.getLng();
-
-        //console.log(this.latitude + " " + this.longitude);
       };
     },
     recomm() {
-      console.log("dd");
       if (!this.recommshow) this.recommshow = !this.recommshow;
     },
     getNearStore(type) {
-      console.log("주변 편의점 검색 type:" + type);
       let data = {
         latitude: this.latitude, //37.6079188467982
         longitude: this.longitude, //127.076352365393
@@ -325,7 +317,6 @@ export default {
         keyword: "",
         store: []
       };
-      console.log(data);
       this.searchshow = false;
       this.isSearching = false;
       this.recommshow = false;
@@ -393,7 +384,6 @@ export default {
       }
     },
     addMark() {
-      //console.log("호출된겨?");
       var bounds = new kakao.maps.LatLngBounds();
 
       for (let i = 0; i < this.markers.length; i++) {
@@ -405,7 +395,6 @@ export default {
 
       this.markers = [];
       this.infowindows = [];
-      console.log(this.nearStore.length);
       for (let i = 0; i < this.nearStore.length; i++) {
         /*  franchise_id 
             gs25: 646
@@ -418,10 +407,7 @@ export default {
           imageSrc = require("@/assets/icons/marker_cu.png");
         } else if (this.nearStore[i].franchiseId == 936) {
           imageSrc = require("@/assets/icons/marker_emart.png");
-        } /* else {
-          imageSrc = require("@/assets/icons/defaultmarker.png");
-        } */
-        //console.log("imageSrc:" + imageSrc);
+        }
 
         var imageSize = new kakao.maps.Size(45, 45); // 마커이미지의 크기입니다
         //imageOption = { offset: new kakao.maps.Point(25, 45) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -437,16 +423,10 @@ export default {
             this.nearStore[i].longitude
           ); // 마커가 표시될 위치입니다
 
-        /* latitude = this.nearStore[i].latitude;
-        longitude = this.nearStore[i].longitude;
-        var markerPosition = new kakao.maps.LatLng(latitude, longitude); */
         bounds.extend(markerPosition);
-        //console.log(latitude + " " + longitude);
 
         // 마커를 생성합니다
         var marker = new kakao.maps.Marker({
-          //map: this.map, // 마커를 표시할 지도
-          //position: this.nearStore[i].latlng, // 마커를 표시할 위치
           position: markerPosition,
           image: markerImage,
           title: this.nearStore[i].id,
@@ -469,8 +449,6 @@ export default {
     },
     getStockByStoreId(index, storeId) {
       return () => {
-        console.log("index:" + index + " storeId:" + storeId);
-
         Axios.getStockByStoreId(
           storeId,
           res => {
@@ -494,11 +472,6 @@ export default {
       this.$router.push("/detail/" + id);
     },
     searchMarker() {
-      //this.nearStore = [];
-      //this.nearStore.push(item);
-      //console.log(item);
-
-      //this.addMark();
       for (let i = 0; i < this.markers.length; i++) {
         this.markers[i].setMap(null);
       }
@@ -529,11 +502,7 @@ export default {
         //imageOption = { offset: new kakao.maps.Point(25, 45) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
         // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-        var markerImage = new kakao.maps.MarkerImage(
-          imageSrc,
-          imageSize
-          //imageOption
-        );
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
         // 마커를 생성합니다
         var marker = new kakao.maps.Marker({
@@ -543,7 +512,6 @@ export default {
 
         this.markers.push(marker);
         marker.setMap(this.map);
-        //this.map.setCenter(markerPosition);
 
         var iwContent = "<div>" + item.storeName + "</div>",
           iwRemoveable = true; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
@@ -558,11 +526,6 @@ export default {
 
         // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
         infowindow.open(this.map, marker);
-        // 마커에 클릭이벤트를 등록합니다
-        /* kakao.maps.event.addListener(marker, "click", function() {
-        // 마커 위에 인포윈도우를 표시합니다
-        infowindow.open(this.map, marker);
-      }); */
       }
     },
     focusSearch(item) {
@@ -600,7 +563,6 @@ export default {
 
 <style>
 #map {
-  /* width: 1000px; */
   height: calc(100vh - 120px);
   position: sticky;
 }
@@ -642,12 +604,8 @@ export default {
   height: 34px;
   margin-bottom: 0;
   margin-left: 1px;
-  /* border-bottom: 0 none; */
   border-radius: 5px;
-  /*   border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0; */
   background-color: white;
-  /* box-shadow: 0px 0px 4px 2px rgba(128, 128, 128, 0.7); */
   border: none;
 }
 
@@ -656,12 +614,8 @@ export default {
   width: 34px;
   height: 34px;
   margin: 1px 0 0 1px;
-  /* border-top: 0 none; */
   border-radius: 5px;
-  /*   border-top-left-radius: 0;
-  border-top-right-radius: 0; */
   background-color: white;
-  /* box-shadow: 0px 0px 4px 2px rgba(128, 128, 128, 0.7); */
   border: none;
 }
 
@@ -692,7 +646,6 @@ export default {
   width: auto !important;
   height: 100%;
   padding-bottom: 20px;
-  /* font-size: 10; */
   white-space: nowrap;
 }
 

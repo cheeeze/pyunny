@@ -110,7 +110,6 @@ export default {
             this.lg = this.tempnum;
             this.tempnum = "";
           }
-          console.log(res);
           alert("멤버십 등록이 완료 되었습니다!");
         },
         error => {

@@ -9,14 +9,6 @@
       </div>
       <div style="margin-top:40px;">
         <div>
-          <!-- <div class="avatar-preview">
-          <div
-            class="c2"
-            id="imagePreview"
-            v-bind:style="{'background-image': 'url('+ review.profileImg +')'}"
-            style="float:left;"
-          ></div>
-          </div>-->
           <h1>{{recipe.title}}</h1>
           <h2>필요재료: {{recipe.ingredient}}</h2>
 
@@ -45,7 +37,7 @@
         <editor-content id="tiptaparea" class="editor__content" v-html="recipe.content" />
       </div>
 
-      <!-- 한줄평 부분 || 채은이를 위한 선물 -->
+      <!-- 한줄평 부분  -->
       <div v-if="userId==0" style="margin-top:50px;">
         <router-link to="/">로그인</router-link>후 사용하실수 있습니다
       </div>
@@ -111,9 +103,6 @@
               </div>
               <!-- 대댓 모음 -->
               <div class="rereply" v-for="(childreply, index) in reply.childComment" :key="index">
-                <!-- <p>
-              <small>{{childreply.nickname}}</small>
-                </p>-->
                 <p>
                   <img
                     src="@/assets/icons/rereply.png"
@@ -145,21 +134,18 @@ export default {
     EditorContent,
     Navbar
   },
-  props: [
-    //param: { type: Object },
-    "id"
-  ],
+  props: ["id"],
   data() {
     return {
       recipe: {},
       user: {},
       products: [],
-      //reply: true,
       replys: [],
       text: "",
       childtext: "",
       userId: 0,
       islike: false,
+      nickname: "",
       editor: new Editor()
     };
   },
@@ -169,6 +155,15 @@ export default {
     if (sessionStorage.getItem("user") != null) {
       this.userId = JSON.parse(sessionStorage.getItem("user"));
       this.getLike();
+      UserAxios.mypage(
+        this.userId,
+        res => {
+          this.nickname = res.data.nickname;
+        },
+        err => {
+          console.log(err);
+        }
+      );
     }
   },
   methods: {
@@ -176,8 +171,6 @@ export default {
       Axios.getRecipeById(
         this.id,
         res => {
-          console.log(res);
-
           let start = res.data.content.indexOf("<img ", 1);
           let prestart = 0;
 
@@ -188,11 +181,6 @@ export default {
                 ' style="width: 300px;"',
                 res.data.content.substring(start + 4)
               );
-            //console.log(newcontent);
-            //console.log(res.data.content.substring(prestart, start + 4));
-            //console.log(res.data.content.substring(start + 4));
-            //let last = element.content.indexOf('"', start);
-            //src = element.content.substring(start, last);
             res.data.content = newcontent;
 
             prestart = start;
@@ -225,7 +213,6 @@ export default {
         id,
         res => {
           this.products = [];
-          //console.log(res.data);
           res.data.forEach(element => {
             this.products.push({ text: element.name, key: element.id });
           });
@@ -254,11 +241,9 @@ export default {
       );
     },
     addComment(index, parentId) {
-      console.log("index:" + index + " parentId:" + parentId);
       let data = {
         userId: this.userId,
         recipeId: this.recipe.id,
-        //content: this.text,
         parentId: parentId
       };
       if (parentId == 0) {
@@ -267,8 +252,7 @@ export default {
         data.content = this.childtext;
       }
       Axios.insertRecipeComment(data, res => {
-        console.log(res.data);
-        res.data.nickname = this.user.nickname;
+        res.data.nickname = this.nickname;
         res.data.isreply = false;
         if (parentId == 0) {
           this.replys.push(res.data);
@@ -351,8 +335,6 @@ export default {
 </script>
 <style scoped>
 .max-small {
-  /* width: auto;
-  height: auto; */
   max-width: 100px;
   max-height: 100px;
 }
@@ -368,7 +350,6 @@ export default {
   background-color: #e9ecef;
   border-radius: 5px;
   padding-left: 10px;
-  /* margin-left: 0; */
 }
 #comment-btn {
   width: 8.5%;
@@ -382,8 +363,6 @@ export default {
 .comments {
   margin-top: 15px;
   text-align: left;
-  /* border: 1px solid lightgray;
-  border-radius: 5px; */
 }
 
 .comment {
