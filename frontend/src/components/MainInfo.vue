@@ -95,6 +95,12 @@
                 <!-- 할인 정보 -->
                 <b-tab title="할인 정보" @click="tabClick('sale')" active>
                   <item-card :items="saleShowItems"></item-card>
+                  <img
+                    v-if="saleShowItems.length === 0"
+                    src="@/assets/images/none_main.png"
+                    alt="준비 중입니다."
+                    width="100%"
+                  />
                 </b-tab>
                 <infinite-loading
                   v-show="selectedTab == 'sale'"
@@ -104,6 +110,12 @@
                 <!-- 상품 정보 -->
                 <b-tab title="상품 정보" @click="tabClick('all')">
                   <item-card :items="allShowItems"></item-card>
+                  <img
+                    v-if="allShowItems.length === 0"
+                    src="@/assets/images/none_main.png"
+                    alt="준비 중입니다."
+                    width="100%"
+                  />
                 </b-tab>
                 <infinite-loading
                   v-show="selectedTab == 'all'"

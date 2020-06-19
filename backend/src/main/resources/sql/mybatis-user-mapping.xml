@@ -57,4 +57,37 @@
         SELECT count(*) FROM User WHERE nickname=#{value}
     </select>
 
+    <select id="getUserRecipe" parameterType="int" resultType="recipe">
+        select id, ingredient, date, title
+        from Recipe
+        where user_id = #{value}
+    </select>
+
+    <select id="getUserRecipeLike" parameterType="int" resultType="recipe">
+        select r.id id, r.ingredient ingredient, r.date date, r.title title
+        from Recipe r inner join Recipe_like rl
+        on r.id = rl.recipe_id
+        where rl.user_id = #{value}
+    </select>
+
+    <select id="getUserRecipeComment" parameterType="int" resultType="recipeComment">
+        select rc.id id, rc.recipe_id recipe_id ,rc.content content, rc.date date, r.title nickname
+        from Recipe r inner join Recipe_comment rc
+        on r.id = rc.recipe_id
+        where rc.user_id = #{value}
+    </select>
+
+    <select id="getUserFavorite" parameterType="int" resultType="product">
+        select p.id id, p.name name, p.franchise_id franchise_id, p.price price, p.category category, p.image image, p.description description
+        from Product p inner join Favorite f 
+        on p.id = f.product_id 
+        where f.user_id = #{value}
+    </select>
+
+
+    <delete id="deleteUserFavorite" parameterType="favorite">
+        delete from Favorite 
+        where user_id = #{userId} and product_id = #{productId}
+    </delete>
+
 </mapper>
