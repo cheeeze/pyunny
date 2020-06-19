@@ -46,6 +46,7 @@
         <!-- ok캐시백1프로 적립 10프로 사용해서 15프로 할인 -->
         <img
           @click="choiceStore('ministop')"
+          id="ministop"
           class="barcode-conv-icon"
           src="@/assets/icons/ministop.png"
         />
@@ -244,6 +245,10 @@ export default {
       this.$emit("update:barcode", false);
     },
     choiceStore(value) {
+      if (this.store) {
+        document.getElementById(this.store).classList.remove("choice");
+      }
+
       this.store = value;
       this.gift = "";
       document.getElementById(value).classList.add("choice");
