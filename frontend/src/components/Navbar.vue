@@ -5,7 +5,7 @@
       <router-link to="/">
         <img class="nav_logo" src="@/assets/images/mainlogo_removebg.png" alt="Logo" />
       </router-link>
-      <div class="menu-toggle" id="mobile-menu">
+      <div class="menu-toggle" id="mobile-menu" @click="menuToggle()">
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
@@ -47,20 +47,6 @@
 <script>
 import UserSignModal from "@/components/LoginModal.vue";
 import BarcodeModal from "@/components/BarcodeModal.vue";
-import $ from "jquery";
-
-$(document).ready(function() {
-  $("#search-icon").click(function() {
-    $(".nav").toggleClass("search");
-    $(".nav").toggleClass("no-search");
-    $(".search-input").toggleClass("search-active");
-  });
-
-  $(".menu-toggle").click(function() {
-    $(".nav").toggleClass("mobile-nav");
-    $(this).toggleClass("is-active");
-  });
-});
 
 export default {
   data() {
@@ -80,6 +66,10 @@ export default {
     }
   },
   methods: {
+    menuToggle() {
+      document.querySelector(".nav").classList.toggle("mobile-nav");
+      document.querySelector("#mobile-menu").classList.toggle("is-active");
+    },
     handleClickButton() {
       this.visible = !this.visible;
     },

@@ -16,8 +16,8 @@
           <input type="text" v-model="nickname" placeholder="Nickname" />
           <input type="password" v-model="password" placeholder="Password" />
           <button type="submit" class="red-btn">회원가입</button>
-          <button class="ghost red-btn hide" id="signIn" @click="signInButtonActive">로그인으로 이동</button>
         </form>
+        <button class="ghost red-btn hide" id="signIn" @click="signInButtonActive">로그인으로 이동</button>
       </div>
       <!-- 로그인 -->
       <div class="form-container sign-in-container">
@@ -34,8 +34,8 @@
           <input type="password" v-model="password" placeholder="Password" />
           <p href="#">Forgot your password?</p>
           <button type="submit" class="red-btn">로그인</button>
-          <button class="ghost red-btn hide" id="signUp" @click="signUpButtonActive">회원가입으로 이동</button>
         </form>
+        <button class="ghost red-btn hide" id="signUp" @click="signUpButtonActive">회원가입으로 이동</button>
       </div>
       <div class="overlay-container">
         <div class="overlay">
@@ -282,7 +282,7 @@ form {
   justify-content: center;
   flex-direction: column;
   padding: 0 50px;
-  height: 100%;
+  height: auto;
   text-align: center;
 }
 
