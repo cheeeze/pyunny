@@ -106,12 +106,10 @@ a {
   }
 }
 .wrapper {
-  // max-width: 1920px;
   margin: 0 auto;
 }
 .main-container {
   padding: 2em 0 0.5em;
-  // overflow: hidden;
 }
 .part1 {
   background-image: url("../assets/images/mainimg.png");
@@ -119,13 +117,11 @@ a {
   background-size: cover;
   background-position: center center;
   display: flex;
-  // flex-flow: column;
 }
 .cover-holder {
   margin: 0 auto;
   max-width: 300px;
   padding: 0 12px;
-  // height: 100%;
   h1 {
     font-size: 2em;
     color: rgb(255, 255, 240);

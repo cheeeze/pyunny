@@ -141,7 +141,6 @@ export default {
     },
     recipeCreate() {
       if (sessionStorage.getItem("user") != null) {
-        //console.log("dd");
         this.userId = JSON.parse(sessionStorage.getItem("user"));
       }
 
@@ -154,7 +153,6 @@ export default {
       Axios.getRecipePopularOrdered(
         res => {
           this.cards = [];
-          //console.log(res.data);
           res.data.forEach(element => {
             let src = require("@/assets/icons/defaultrecipe.png");
             let start = element.content.indexOf("http", 1);
@@ -162,7 +160,6 @@ export default {
               let last = element.content.indexOf('"', start);
               src = element.content.substring(start, last);
             }
-            //console.log(src);
 
             this.cards.push({
               id: element.id,
@@ -183,7 +180,6 @@ export default {
       Axios.getRecipeRecentOrdered(
         res => {
           this.cards = [];
-          //console.log(res.data);
           res.data.forEach(element => {
             let src = require("@/assets/icons/defaultrecipe.png");
             let start = element.content.indexOf("http", 1);
@@ -191,8 +187,6 @@ export default {
               let last = element.content.indexOf('"', start);
               src = element.content.substring(start, last);
             }
-            //console.log(src);
-
             this.cards.push({
               id: element.id,
               userId: element.userId,
@@ -216,7 +210,6 @@ export default {
         this.keyword,
         res => {
           this.cards = [];
-          //console.log(res.data);
           res.data.forEach(element => {
             let src = require("@/assets/icons/defaultrecipe.png");
             let start = element.content.indexOf("http", 1);
@@ -224,7 +217,6 @@ export default {
               let last = element.content.indexOf('"', start);
               src = element.content.substring(start, last);
             }
-            //console.log(src);
 
             this.cards.push({
               id: element.id,

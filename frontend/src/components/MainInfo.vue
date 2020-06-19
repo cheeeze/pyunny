@@ -292,7 +292,6 @@ export default {
   height: auto;
   background-color: var(--white);
   overflow-x: hidden;
-  /* overflow-y: hidden; */
   font-size: 17px;
   line-height: 30px;
   -webkit-transition: all 300ms linear;
@@ -300,7 +299,6 @@ export default {
   font-family: "Kyobo";
 }
 p {
-  /* font-family: "Poppins", sans-serif; */
   font-size: 17px;
   line-height: 30px;
   color: var(--black);
@@ -336,7 +334,6 @@ mark {
 }
 
 .background-color {
-  /* position: fixed; */
   top: 0;
   left: 0;
   width: 100%;
@@ -360,7 +357,6 @@ mark {
 }
 
 .conv_icon {
-  /* height: 60px; */
   width: 8vw;
   max-width: 65px;
   min-width: 32px;
@@ -437,9 +433,6 @@ mark {
   line-height: 30px;
   letter-spacing: 1px;
   margin: 0 1.3vw 16px;
-  /* margin-left: 6px;
-  margin-right: 6px;
-  margin-bottom: 16px; */
   text-align: center;
   border-radius: 4px;
   cursor: pointer;

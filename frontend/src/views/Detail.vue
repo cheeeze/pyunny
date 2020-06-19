@@ -38,17 +38,6 @@
           <h1 id="item-title">{{ product.name }}</h1>
           <h2 id="item-price">
             {{ product.price }}원
-            <!-- <span style="margin-left: 15px;">
-              <b-badge v-if="product.category.includes('1＋1')" variant="info">1 + 1</b-badge>
-              <b-badge variant="info">1 + 1</b-badge>
-              <b-badge v-if="product.category.includes('2＋1')" variant="info">2 + 1</b-badge>
-            </span>-->
-          </h2>
-          <!-- <h3 id="item-origin-price">
-            (1개당 1,500원)<button id="item-btn">
-              <img height="40px;" src="@/assets/icons/plus.png" alt="" />
-            </button>
-          </h3>-->
           <h3 id="item-origin-price">
             (1개당 {{ product.price }}원)
             <b-button
@@ -116,7 +105,6 @@
       <!-- 제품 레시피 -->
       <div class="item-recipe">
         <h2 class="subtitle" style="font-size: 1.4rem;">이 제품을 사용한 레시피가 궁금하다면?</h2>
-        <!-- <p style="font-size: 1.3rem; margin-left:65%; color: blue;" @click="recipeSearch">→ 레시피 검색</p> -->
         <sale-card :items="recipes"></sale-card>
       </div>
       <!---->
@@ -138,7 +126,6 @@ export default {
     SaleCard
   },
   props: [
-    //param: { type: Object },
     "id"
   ],
   data() {
@@ -214,7 +201,6 @@ export default {
           element.isreply = false;
           this.replys.push(element);
         });
-        //console.log("replys", res);
       },
       err => {
         console.log(err);
@@ -234,10 +220,6 @@ export default {
               image: element.image,
               price: element.price
             };
-            /* element.price = element.price
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            element.price = element.price + "원"; */
             this.items.push(element);
           });
         },
@@ -266,7 +248,6 @@ export default {
       // 관심 제품 등록
 
       if (sessionStorage.getItem("user") != null) {
-        //console.log("dd");
         this.userId = JSON.parse(sessionStorage.getItem("user"));
       }
       if (this.userId == 0) {
@@ -289,7 +270,6 @@ export default {
     },
     itemLike() {
       if (sessionStorage.getItem("user") != null) {
-        //console.log("dd");
         this.userId = JSON.parse(sessionStorage.getItem("user"));
       }
       if (this.userId == 0) {
@@ -314,7 +294,6 @@ export default {
     },
     itemDislike() {
       if (sessionStorage.getItem("user") != null) {
-        //console.log("dd");
         this.userId = JSON.parse(sessionStorage.getItem("user"));
       }
 
@@ -339,7 +318,6 @@ export default {
     },
     addComment() {
       if (sessionStorage.getItem("user") != null) {
-        //console.log("dd");
         this.userId = JSON.parse(sessionStorage.getItem("user"));
       }
 
@@ -354,7 +332,6 @@ export default {
           userId: this.userId
         },
         res => {
-          console.log(res);
           alert("한줄평이 정상적으로 등록되었습니다!");
           this.replyResult = {
             content: res.data.content,
@@ -398,7 +375,6 @@ export default {
             element.isreply = false;
             this.replys.push(element);
           });
-          console.log("replys", res);
         },
         err => {
           console.log(err);
@@ -431,7 +407,6 @@ export default {
   width: 80%;
   min-width: 320px;
   max-width: 600px;
-  /* background-color: rgba(177, 177, 252, 0.616); */
 }
 
 .detail-info {
@@ -529,8 +504,6 @@ export default {
 .comments {
   margin-top: 15px;
   text-align: left;
-  /* border: 1px solid lightgray;
-  border-radius: 5px; */
 }
 
 .comment {
@@ -574,8 +547,5 @@ export default {
 
 .item-recipe {
   margin: 30px 0;
-}
-
-.sim-item {
 }
 </style>

@@ -1,15 +1,5 @@
 <template>
   <div class="overflow-auto">
-    <!-- <b-table
-      id="my-table"
-      :items="items"
-      :per-page="perPage"
-      :current-page="currentPage"
-      small
-      :hover="hover"
-      @row-clicked="myRowClickHandler"
-    ></b-table>
-    -->
     <sale-card :items="items"></sale-card>
     <div class="number">
       <b-pagination
@@ -37,23 +27,7 @@ export default {
       perPage: 10,
       currentPage: 1,
       userId: 0,
-      items: [
-        /*         {
-          id: 1,
-          제목: "이거슨 바로 shy정식",
-          작성일: "2020.06.01"
-        },
-        {
-          id: 2,
-          제목: "마크정식 업글!",
-          작성일: "2020.05.25"
-        },
-        {
-          id: 3,
-          제목: "편스토랑 신메뉴",
-          작성일: "2020.05.20"
-        } */
-      ]
+      items: []
     };
   },
   mounted() {

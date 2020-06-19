@@ -75,16 +75,13 @@ export default {
     BarcodeModal
   },
   mounted() {
-    //console.log(sessionStorage.getItem("user"));
     if (sessionStorage.getItem("user") != null) {
-      //console.log("dd");
       this.userId = JSON.parse(sessionStorage.getItem("user"));
     }
   },
   methods: {
     handleClickButton() {
       this.visible = !this.visible;
-      console.log("hello");
     },
     handleClickBarcode() {
       if (this.userId == 0) {
@@ -92,7 +89,6 @@ export default {
       }
 
       this.barcode = !this.barcode;
-      //console.log("hello");
     },
     logout() {
       sessionStorage.removeItem("user");

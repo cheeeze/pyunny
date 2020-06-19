@@ -1,9 +1,6 @@
 <template>
   <div class="icon" :class="[`icon--${name}`, `icon--${size}`, { 'has-align-fix': fixAlign }]">
-    <!-- <svg class="icon__svg"> -->
-    <!-- <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#icon--' + name" /> -->
     <img :src="getImg(this.name)" alt="icon" />
-    <!-- </svg> -->
   </div>
 </template>
 
@@ -28,7 +25,6 @@ export default {
   },
   created() {
     this.filename = "../../assets/icons/tiptap-icons/" + this.name + ".svg";
-    //console.log(this.name);
   },
   methods: {
     getImg(img) {
@@ -48,9 +44,6 @@ export default {
   margin: 0 0.3rem;
   top: -0.05rem;
   fill: currentColor;
-  // &.has-align-fix {
-  // 	top: -.1rem;
-  // }
   &__svg {
     display: inline-block;
     vertical-align: top;

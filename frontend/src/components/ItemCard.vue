@@ -71,7 +71,6 @@ a.routeLink {
   font-weight: 400;
   letter-spacing: 0;
   height: 100%;
-  /* padding: 1rem; */
 }
 
 .card-banner {
@@ -150,7 +149,6 @@ a.routeLink {
 
 .card_content {
   padding: 1rem;
-  /* background: linear-gradient(to bottom left, #ef8d9c 40%, #ffc39e 100%); */
   height: 100%;
 }
 

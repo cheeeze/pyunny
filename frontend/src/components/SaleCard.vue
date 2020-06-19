@@ -22,7 +22,6 @@ export default {
   props: {
     items: {
       type: Array
-      //required: true
     }
   }
 };
@@ -42,7 +41,6 @@ a.routeLink {
   font-weight: 400;
   letter-spacing: 0;
   height: 100%;
-  /* padding: 1rem; */
 }
 
 .card-img {
@@ -81,8 +79,6 @@ a.routeLink {
 .cards_item {
   display: flex;
   padding: 0.5rem 1rem 1rem;
-  /* height: 45%; */
-  /* max-height: 300px; */
 }
 
 @media (min-width: 40rem) {
@@ -105,12 +101,10 @@ a.routeLink {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* height: 300px; */
 }
 
 .card_content {
   padding: 1rem;
-  /* background: linear-gradient(to bottom left, #ef8d9c 40%, #ffc39e 100%); */
   height: 100%;
 }
 

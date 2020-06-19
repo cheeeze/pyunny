@@ -10,14 +10,7 @@
           <h1 id="sign-title" style="color: black;">
             <img id="sign-logo" src="@/assets/images/mainlogo_removebg.png" alt />&nbsp;회원가입
           </h1>
-          <!-- <a href="#" class="social" style="margin-bottom: 5px;">
-            <img src="@/assets/icons/kakao.png" alt width="95%;" />
-          </a>-->
           <span>or use your email for registration</span>
-          <!-- <div class="nick">
-            <input type="text" class="nickname" placeholder="Nickname" />
-            <input type="submit" value="랜덤" class="random_btn" />
-          </div>-->
           <input type="text" v-model="email" placeholder="Email" />
           <input type="text" v-model="name" placeholder="Name" />
           <input type="text" v-model="nickname" placeholder="Nickname" />
@@ -35,17 +28,7 @@
           <h1 id="sign-title" style="color: black;">
             <img id="sign-logo" src="@/assets/images/mainlogo_removebg.png" alt />&nbsp;로그인
           </h1>
-          <div class="social-container">
-            <!--<a href="#" class="social">
-              <img src="@/assets/icons/kakaotalk.png" @click="KakaoLogin" alt height="40px" />
-            </a>
-             <a href="#" class="social"
-              ><img src="@/assets/icons/google.png" alt="" height="40px"
-            /></a>
-            <a href="#" class="social"
-              ><img src="@/assets/icons/naver.png" alt="" height="40px"
-            /></a>-->
-          </div>
+          <div class="social-container"></div>
           <span>or use your account</span>
           <input type="email" v-model="email" placeholder="Email" />
           <input type="password" v-model="password" placeholder="Password" />
@@ -151,7 +134,7 @@ export default {
       Axios.insertUser(
         data,
         res => {
-          console.log(res);
+          res;
           alert("환영합니다! 로그인하러 고~");
           this.signInButtonActive();
           this.email = "";
@@ -172,19 +155,14 @@ export default {
         password: this.password
       };
 
-      console.log(data);
-
       Axios.login(
         data,
         res => {
-          console.log(res.data);
-          //this.visible = false;
           if (res.data.id == null) {
             this.email = "";
             this.password = "";
             return alert("아이디나 비밀번호가 일치하지 않습니다.");
           }
-          console.log("로그인 되었다.");
           this.$emit("update:visible", false);
           this.$emit("update:userId", res.data.id);
           sessionStorage.setItem("user", res.data.id);
@@ -212,17 +190,6 @@ export default {
   box-sizing: border-box;
   font-family: "Kyobo";
 }
-
-/* body {
-	background: #f6f5f7;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	font-family: 'Montserrat', sans-serif;
-	height: 100vh;
-	margin: -20px 0 50px;
-} */
 
 #container-wrap {
   display: flex;
@@ -329,7 +296,6 @@ input {
 
 .nick {
   display: inline-block;
-  /* padding: 5px; */
   background-color: #eee;
   font-size: 9px;
 }

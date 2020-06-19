@@ -48,28 +48,16 @@ export default {
       let formData = new FormData();
       for (let i = 0; i < this.files.length; i++)
         formData.append("files", this.files[i]);
-      //formData.append("file", this.files);
 
       RecipeAxios.uploadFiles(formData, res => {
-        console.log(res.data);
         this.imageNames = [];
         res.data.forEach(element => {
-          //datas.push({userId: this.userId, image: `http://k02d1021.p.ssafy.io:8080/api/upload/${element}`});
           this.imageNames.push(
             `http://k02d1021.p.ssafy.io:8080/api/upload/${element}`
           );
         });
         this.submit();
       });
-      /*  .post("/single-file", formData, {
-          headers: { "Content-Type": "multipart/form-data" }
-        })
-        .then(function() {
-          console.log("SUCCESS!!");
-        })
-        .catch(function() {
-          console.log("FAILURE!!");
-        }); */
     },
     submit() {
       let data = {
