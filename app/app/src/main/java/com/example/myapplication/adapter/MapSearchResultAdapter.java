@@ -13,10 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.vo.MapSearchResult;
-import com.example.myapplication.vo.StoreProduct;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MapSearchResultAdapter extends RecyclerView.Adapter<MapSearchResultAdapter.ViewHolder>{

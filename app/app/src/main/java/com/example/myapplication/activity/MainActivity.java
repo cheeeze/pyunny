@@ -19,8 +19,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -34,7 +32,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
-    //footer fragment
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentMain fragmentMain = new FragmentMain();
     private FragmentRecipe fragmentRecipe = new FragmentRecipe();
@@ -86,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
-//          //권한 획득
+            //권한 획득
         }else{
             //권한 거부
         }

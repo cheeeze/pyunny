@@ -38,11 +38,10 @@ public class MainAllAdapter extends RecyclerView.Adapter<MainAllAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Sale sale = list.get(position);
-        //holder.sale_type.setText(sale.getType());
         DecimalFormat format = new DecimalFormat("###,###");
         holder.sale_product_price.setText(format.format(sale.getProduct_price())+"원");
         holder.sale_product_name.setText(sale.getProduct_name());
-        Glide.with(mContext).load(sale.getProduct_image()).into(holder.sale_product_image);
+        Glide.with(mContext).load(sale.getProduct_image()).error(R.drawable.defaultproduct).into(holder.sale_product_image);
         switch (sale.getFranchise_id()){
             case 0:
             case 646:
@@ -73,14 +72,12 @@ public class MainAllAdapter extends RecyclerView.Adapter<MainAllAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView sale_product_image;
-       // private TextView sale_type;
         private TextView sale_product_name;
         private TextView sale_product_price;
         private ImageView sale_franchise_image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             sale_product_image = itemView.findViewById(R.id.image_sale_cardview_product_image);
-            //sale_type = itemView.findViewById(R.id.txt_sale_cardview_type);
             sale_product_name = itemView.findViewById(R.id.txt_sale_cardview_product_name);
             sale_product_price = itemView.findViewById(R.id.txt_sale_cardview_product_price);
             sale_franchise_image = itemView.findViewById(R.id.image_sale_cardview_franchise);

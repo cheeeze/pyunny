@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -17,18 +15,15 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,7 +42,6 @@ import org.json.JSONException;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -80,11 +74,10 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
 
     private TextView txt_mypage_agency;
 
-
     private int btnNum=1;
 
     private SharedPreferences sf;
-    private SharedPreferences gifticonSF;
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view =inflater.inflate(R.layout.fragment_mypage,container,false);
         init(view);
@@ -107,7 +100,6 @@ public class FragmentMypage extends Fragment implements View.OnClickListener{
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(layoutManager);
         imageList = getImageArrayPref("gifticon");
-        Log.d("image",imageList.size()+"");
         mypageGifticonAdapter = new MypageGifticonAdapter(imageList,getContext());
         recyclerView.setAdapter(mypageGifticonAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {

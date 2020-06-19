@@ -68,9 +68,6 @@
             android:padding="10dp"
             android:id="@+id/btn_main_ministop"
             android:layout_weight="1"/>
-
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -108,13 +105,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/image_main_nodata" />
-
     </LinearLayout>
-
-<!--    <androidx.viewpager.widget.ViewPager-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="7"-->
-<!--        android:id="@+id/pager_content"/>-->
 
 </LinearLayout>
