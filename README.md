@@ -133,6 +133,8 @@ backend : nohup
 nohup java -jar filename.jar&
 ```
 android : playstore 배포
+또는 아래의 apk파일을 통해 설치할 수 있습니다.
+[apk](app-release.apk)
 
 ## Test
 테스트 계정
